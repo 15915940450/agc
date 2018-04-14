@@ -6935,6 +6935,9 @@
       }
       return arr;
     }
+    function logErr(err){
+      return console.error(err);
+    }
     //====================================ili()
 
     /**
@@ -16581,6 +16584,7 @@
     lodash.stampToHMS = stampToHMS;
     lodash.querystringParse = querystringParse;
     lodash.createArray = createArray;
+    lodash.logErr = logErr;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;

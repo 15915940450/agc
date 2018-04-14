@@ -4,6 +4,14 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 
+import im from 'axios';
+import apiURLs from './api';
+
+//axios=>$im
+Vue.prototype.$im=im;
+//apiURLs=>$apiURLs
+Vue.prototype.$apiURLs=apiURLs;
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
