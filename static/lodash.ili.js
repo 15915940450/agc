@@ -6874,7 +6874,7 @@
     }
     //====================================ili(follow chunk)
     function ele(){
-      return '#app';
+      return '#vue_root';
     }
     function toHKstring(dateObject) {
       let result='';
@@ -6895,15 +6895,12 @@
     //计算num天以前的日期对象 2017-10-24T00:00:00.000+08:00
     function dateAgo(num){
       var today=new Date();
-      if(dobjServerTime){
+      if(window.dobjServerTime){
         today=dobjServerTime;
       }
 
       var strTodayChina=toHKstring(today).substring(0,10)+'T00:00:00.000+08:00';
       var dateTodayChina0=new Date(strTodayChina);
-      // console.log(today);
-      // console.log(dobjServerTime);
-
 
       dateTodayChina0.setDate(dateTodayChina0.getDate()-num);
       return dateTodayChina0;

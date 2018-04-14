@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>thilina--{{nowTime}}</p>
   </div>
 </template>
 
@@ -12,11 +11,6 @@ export default {
     return {
       msg: '歡迎'
     };
-  },
-  computed:{
-    nowTime:function(){
-      return _.toHKstring(new Date());
-    }
   }
 };
 </script>
