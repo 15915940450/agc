@@ -10,7 +10,7 @@
   "title-require": true,
   "tag-self-close": true,
   "attr-no-duplication": true,
-  "head-script-disabled": true,
+  "head-script-disabled": false,
   "alt-require": true,
   "doctype-html5": true,
   "style-disabled": true,
