@@ -1,0 +1,29 @@
+"*":
+  core:
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "ayu-atom-syntax"
+    ]
+    uriHandlerRegistration: "always"
+  editor:
+    fontSize: 15
+    softWrap: true
+    tabType: "soft"
+    zoomFontWhenCtrlScrolling: false
+  "exception-reporting":
+    userId: "f0a89cae-bd28-40ca-9e62-78618d53389b"
+  "linter-eslint":
+    scopes: [
+      "javascript"
+      "source.js"
+      "source.jsx"
+      "source.js.jsx"
+      "source.babel"
+      "source.js-semantic"
+      "text.html.vue"
+    ]
+  "linter-ui-default":
+    showPanel: true
+  welcome:
+    showOnStartup: false

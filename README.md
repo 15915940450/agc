@@ -2,6 +2,17 @@
 
 > A Vue.js project
 
+## atom editor
+
+* packages: atom-vue, ayu-atom-syntax, busy-signal, intentions, linter, linter-eslint, linter-htmlhint, linter-ui-default.
+* config.cson
+* github.cson
+* keymap.cson
+* snippets.cson
+* styles.less
+
+
+
 ## Build Setup
 
 ``` bash
