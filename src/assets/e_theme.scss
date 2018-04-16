@@ -9,3 +9,13 @@ $--color-info:#FC8181;
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
+
+//TopBar下拉菜单 宽度
+.el-menu--popup{
+  min-width: 100px;
+  width:100px;
+  // margin-left:15px;
+}
+.el-menu--horizontal{
+  margin-left:15px;
+}
