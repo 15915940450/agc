@@ -20,3 +20,37 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   margin-left:15px;
   border-bottom: none;
 }
+#left_nav_wrap{
+  width:180px;
+  max-width: 180px;
+  min-height:calc(100vh - 62px);
+}
+#main_wrap{
+  position: relative;
+  width:calc( 100% - 180px );
+  padding:20px 20px 0 20px;
+  background:rgba(237,240,245,1);
+  min-height:calc(100vh - 62px);
+}
+.copyright{
+  position: absolute;
+  bottom:0px;
+  left: 0;
+  width: 100%;
+}
+.copyright p{
+  color: #666;
+  font-size: 12px;
+  text-align:center;
+}
+.onelogin{
+  border-radius: 10px;
+}
+.need_login-phone input{
+  background: url(./user.png) no-repeat 5px center !important;
+  padding-left: 35px;
+}
+.need_login-password input{
+  background: url(./lock.jpg) no-repeat 5px center !important;
+  padding-left: 35px;
+}

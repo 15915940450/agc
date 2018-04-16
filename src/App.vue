@@ -44,30 +44,5 @@ html,body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-#left_nav_wrap{
-  width:180px;
-  max-width: 180px;
-  min-height:calc(100vh - 62px);
-}
-#main_wrap{
-  position: relative;
-  width:calc( 100% - 180px );
-  padding:20px 20px 0 20px;
-  background:rgba(237,240,245,1);
-  min-height:calc(100vh - 62px);
-}
-.copyright{
-  position: absolute;
-  bottom:0px;
-  left: 0;
-  width: 100%;
-}
-.copyright p{
-  color: #666;
-  font-size: 12px;
-  text-align:center;
-}
-.onelogin{
-  border-radius: 10px;
-}
+
 </style>

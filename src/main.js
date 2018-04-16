@@ -7,10 +7,13 @@ import im from 'axios';
 import apiURLs from './api';
 import EUI from 'element-ui';
 import './assets/e_theme.scss';
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon';
 
 import App from './App';
 
 Vue.use(EUI);
+Vue.component('icon', Icon);
 
 //axios=>$im
 Vue.prototype.$im=im;
