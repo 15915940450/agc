@@ -14,18 +14,21 @@
       </el-col>
     </el-row>
 
+    <NeedLogin />
   </div>
 </template>
 
 <script>
 import TopBar from './components/TopBar.vue';
 import LeftNav from './components/LeftNav.vue';
+import NeedLogin from './components/NeedLogin.vue';
 
 export default {
   name: 'App',
   components:{
     TopBar,
-    LeftNav
+    LeftNav,
+    NeedLogin
   }
 };
 </script>
@@ -63,5 +66,8 @@ html,body{
   color: #666;
   font-size: 12px;
   text-align:center;
+}
+.onelogin{
+  border-radius: 10px;
 }
 </style>
