@@ -46,6 +46,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.top_bar{
+  border-bottom:1px solid #edf0f5;
+  box-shadow:2px 0px 6px rgba(204,204,204,0.21)
+}
 #agc_logo{
   margin: 0;
   padding: 0;

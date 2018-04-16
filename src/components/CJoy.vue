@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="demo">
     <el-row>
       <el-button>默认de按钮</el-button>
       <el-button type="primary">主要按钮</el-button>
@@ -20,4 +20,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.demo{
+  margin-top:300px;
+}
 </style>
