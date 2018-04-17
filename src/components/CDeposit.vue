@@ -99,7 +99,7 @@
     </el-row>
 
     <div class="table_wrap">
-      <h3 class="table_wrap-title">押金记录</h3>
+      <h3 class="title">押金记录</h3>
       <!-- 押金记录表格 -->
       <el-table
         :data="tableData5" stripe
@@ -239,15 +239,6 @@ export default {
 .table_wrap{
   background: #FFF;
   margin-top: 10px;
-}
-.table_wrap-title{
-  font-size: 14px;
-  color: #000;
-  font-weight: 500;
-  line-height: 50px;
-  height: 50px;
-  padding: 0 20px;
-  margin: 0;
 }
 .table_wrap-pagination{
   padding-top:20px;

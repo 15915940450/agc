@@ -49,8 +49,13 @@ html,body{
   text-decoration: none;
   transition:all 0.2s ease-out;
   font-weight: 300;
+  outline:none;
 }
 #app a:hover{
   color: #ff3333;
+  outline:none;
+}
+#app a:active{
+  outline:none;
 }
 </style>

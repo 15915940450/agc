@@ -1,11 +1,11 @@
 <template lang="html">
   <div class="left_nav">
-    <el-menu default-active="1" class="el-menu-vertical-menu">
+    <el-menu default-active="3" class="el-menu-vertical-menu">
 
       <el-menu-item index="1" class="nav_home" @click="rrPush('/')">
         <span slot="title">首页概览</span>
       </el-menu-item>
-      <el-menu-item index="2" class="nav_group">
+      <el-menu-item index="2" class="nav_group" @click="rrPush('/group')">
         <span slot="title">群组管理</span>
       </el-menu-item>
       <el-menu-item index="3" class="nav_money" @click="rrPush('/deposit/1')">
