@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+  <head>
+    <title>支付中。。。</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="qrcode"></div>
+    <script src="./static/qrcode.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+      document.getElementById('qrcode').onclick=function(){
+        window.open('https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open');
+      };
+    </script>
+  </body>
+</html>

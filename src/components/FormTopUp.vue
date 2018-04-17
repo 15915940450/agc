@@ -33,6 +33,7 @@ export default {
   data:function(){
     return ({
       dataTopUp: {
+        phone:'',
         name: '',
         amount:9099,
         region: '',
