@@ -217,7 +217,6 @@ export default {
   line-height: 60px;
   text-align: center;
   border-radius: 100px;
-  background: red;
   box-shadow:4px 8px 20px rgba(102,255,204,1);
   background: #66FFCC;
   background: linear-gradient(-10deg, #00CC66, #66FFCC);
