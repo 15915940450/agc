@@ -19,12 +19,14 @@
           <p class="need_login-hint">* 手机号码不正确</p>
         </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button type="success" @click="dialogFormVisible = false" id="btn_login">登录</el-button>
       </div>
+
+      <p class="kefu">客服：400-618-7238     2018 ◎深圳易马达科技有限公司版权所有</p>
     </el-dialog>
 
-    <p class="kefu">客服：400-618-7238     2018 ◎深圳易马达科技有限公司版权所有</p>
   </div>
 </template>
 

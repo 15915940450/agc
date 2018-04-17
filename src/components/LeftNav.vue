@@ -2,13 +2,13 @@
   <div class="left_nav">
     <el-menu default-active="1" class="el-menu-vertical-menu">
 
-      <el-menu-item index="1" class="nav_home">
+      <el-menu-item index="1" class="nav_home" @click="rrPush('/')">
         <span slot="title">首页概览</span>
       </el-menu-item>
       <el-menu-item index="2" class="nav_group">
         <span slot="title">群组管理</span>
       </el-menu-item>
-      <el-menu-item index="3" class="nav_money" @click="rrPush()">
+      <el-menu-item index="3" class="nav_money" @click="rrPush('/deposit/1')">
         <span slot="title">押金管理</span>
       </el-menu-item>
       <el-menu-item index="4" class="nav_bike">
@@ -27,10 +27,9 @@
 export default {
   name:'LeftNav',
   methods:{
-    rrPush:function(){
-      var rr='deposit';
+    rrPush:function(rr){
       this.$router.push({
-        path:`/${rr}/1`
+        path:rr
       });
       // router.push({ path: `/user/${userId}` }) // -> /user/123
     }
