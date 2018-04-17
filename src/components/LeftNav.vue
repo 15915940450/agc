@@ -8,7 +8,7 @@
       <el-menu-item index="2" class="nav_group">
         <span slot="title">群组管理</span>
       </el-menu-item>
-      <el-menu-item index="3" class="nav_money">
+      <el-menu-item index="3" class="nav_money" @click="rrPush()">
         <span slot="title">押金管理</span>
       </el-menu-item>
       <el-menu-item index="4" class="nav_bike">
@@ -27,6 +27,13 @@
 export default {
   name:'LeftNav',
   methods:{
+    rrPush:function(){
+      var rr='deposit';
+      this.$router.push({
+        path:`/${rr}/1`
+      });
+      // router.push({ path: `/user/${userId}` }) // -> /user/123
+    }
   }
 };
 </script>
