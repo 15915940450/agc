@@ -17,7 +17,7 @@
               设置
             </el-menu-item>
             <el-menu-item index="2-2" class="sub_item">
-              退出so
+              退出
             </el-menu-item>
           </el-submenu>
         </el-menu>
