@@ -54,3 +54,28 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background: url(./lock.jpg) no-repeat 5px center !important;
   padding-left: 35px;
 }
+
+.table_wrap .el-pagination__jump{
+  margin-right:20px;
+}
+.table_wrap .el-table__body-wrapper{
+  min-height: 480px;
+}
+.el-table__row--striped{
+  background:#F9F9F9;
+}
+
+.table_wrap .el-table .cell{
+  text-align: center;
+}
+.el-table__header-wrapper th{
+  background:#f5f5f5;
+}
+.el-table__header-wrapper .cell{
+  color:#333;
+  font-weight: 500;
+  font-size:12px;
+}
+.el-table td,.el-table th{
+  border:none !important;
+}
