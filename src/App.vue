@@ -44,5 +44,13 @@ html,body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+#app a{
+  color:#fc8181;
+  text-decoration: none;
+  transition:all 0.2s ease-out;
+  font-weight: 300;
+}
+#app a:hover{
+  color: #ff3333;
+}
 </style>
