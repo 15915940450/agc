@@ -2,12 +2,12 @@
   <div class="table_wrap">
     <el-row>
       <el-col :span="6">
-        <h3 class="title">押金记录</h3>
+        <h3 class="title">用户列表</h3>
       </el-col>
       <el-col :span="18">
         <div class="table_wrap-search">
           <div class="table_wrap-search_wrap">
-            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入车牌号(SN)" v-model="searchSN" suffix-icon="el-icon-search"></el-input>
+            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入手机号" v-model="searchPhone" suffix-icon="el-icon-search"></el-input>
             <!-- <el-button size="small" type="primary" class="table_wrap-btn_search">搜索</el-button> -->
           </div>
           <el-button size="small" class="table_wrap-btn_reset" type="warning">重置</el-button>
@@ -73,7 +73,7 @@ export default {
   data:function(){
     return {
       center:'center',
-      searchSN:'',
+      searchPhone:'',
       tableData5: [{
         id: '12987122',
         name: '好滋好味鸡蛋仔',

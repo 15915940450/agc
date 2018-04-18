@@ -13,16 +13,21 @@
       <BaseTableWrap />
     </div>
 
+    <!-- 新建 -->
+    <BaseModalWrap />
+
   </div>
 </template>
 
 <script>
 import BaseTableWrap from '@/components/BaseTableWrap'; //@/=>src/
+import BaseModalWrap from './BaseModalWrap';
 
 export default {
   name:'CUser',
   components:{
-    BaseTableWrap
+    BaseTableWrap,
+    BaseModalWrap
   }
 };
 </script>
