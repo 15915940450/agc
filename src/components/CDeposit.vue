@@ -146,7 +146,7 @@
         </el-table-column>
       </el-table>
       <!-- 分页 -->
-      <el-pagination :background="true" layout="->,jumper,prev,pager,next,total" :total="93" class="table_wrap-pagination">
+      <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="93" class="table_wrap-pagination">
 
       </el-pagination>
     </div>
