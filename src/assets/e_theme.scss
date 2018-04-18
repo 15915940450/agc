@@ -10,6 +10,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
 
+//===================im start
 //TopBar下拉菜单 宽度
 .el-menu--popup{
   min-width: 100px;
@@ -20,11 +21,13 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   margin-left:15px;
   border-bottom: none;
 }
+//左侧导航
 #left_nav_wrap{
   width:180px;
   max-width: 180px;
   min-height:calc(100vh - 62px);
 }
+//页面主内容区
 #main_wrap{
   position: relative;
   width:calc( 100% - 180px );
@@ -32,6 +35,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background:rgba(237,240,245,1);
   min-height:calc(100vh - 62px);
 }
+// 页脚
 .copyright{
   position: absolute;
   bottom:0px;
@@ -43,6 +47,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   font-size: 12px;
   text-align:center;
 }
+//登录
 .onelogin{
   border-radius: 10px;
 }
@@ -54,7 +59,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background: url(./lock.jpg) no-repeat 5px center !important;
   padding-left: 35px;
 }
-
+.need_login-vcode .el-input__inner{
+  padding-right:110px !important;
+}
+// ele扩展：Base表格
+.table_wrap{
+  background: #FFF;
+  margin-top: 10px;
+}
 .table_wrap .el-pagination__jump{
   margin-right:20px;
 }
@@ -64,7 +76,6 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-table__row--striped{
   background:#F9F9F9;
 }
-
 .table_wrap .el-table .cell{
   text-align: center;
 }
@@ -79,14 +90,28 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-table td,.el-table th{
   border:none !important;
 }
-
-.need_login-vcode .el-input__inner{
-  padding-right:110px !important;
+.im-table-expand {
+  font-size: 0;
+}
+.im-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.im-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+.table_wrap-pagination{
+  padding:20px;
 }
 
+
+//通用或测试
 .im_img{
   border:1px solid black;
 }
+//内容区二级标题
 .title{
   font-size: 14px;
   color: #000;
