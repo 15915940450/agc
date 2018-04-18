@@ -67,6 +67,25 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background: #FFF;
   margin-top: 10px;
 }
+.table_wrap-search{
+  text-align: right;
+  line-height: 50px;
+  height: 50px;
+  padding-right: 20px;
+}
+.table_wrap-input_serach{
+  /* width: 220px; */
+}
+.table_wrap-search_wrap{
+  position: relative;
+  display: inline-block;
+  width: 220px;
+}
+.table_wrap-btn_search{
+  position: absolute;
+  top:9px;
+  right:0;
+}
 .table_wrap .el-pagination__jump{
   margin-right:20px;
 }

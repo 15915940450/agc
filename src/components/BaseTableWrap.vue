@@ -1,6 +1,20 @@
 <template lang="html">
   <div class="table_wrap">
-    <h3 class="title">押金记录</h3>
+    <el-row>
+      <el-col :span="6">
+        <h3 class="title">押金记录</h3>
+      </el-col>
+      <el-col :span="18">
+        <div class="table_wrap-search">
+          <div class="table_wrap-search_wrap">
+            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入车牌号(SN)" v-model="searchSN"></el-input>
+            <!-- <el-button size="small" type="primary" class="table_wrap-btn_search">搜索</el-button> -->
+          </div>
+          <el-button size="small" class="table_wrap-btn_reset" type="warning">重置</el-button>
+          <el-button size="small" class="table_wrap-btn_new" type="primary">新建</el-button>
+        </div>
+      </el-col>
+    </el-row>
     <!-- 押金记录表格 -->
     <el-table
       :data="tableData5" stripe
@@ -59,6 +73,7 @@ export default {
   data:function(){
     return {
       center:'center',
+      searchSN:'',
       tableData5: [{
         id: '12987122',
         name: '好滋好味鸡蛋仔',
@@ -75,4 +90,7 @@ export default {
 
 <style lang="css" scoped>
 
+/* .table_wrap-search > *{
+  border-radius: 0;
+} */
 </style>
