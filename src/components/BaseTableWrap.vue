@@ -11,7 +11,7 @@
             <!-- <el-button size="small" type="primary" class="table_wrap-btn_search">搜索</el-button> -->
           </div>
           <el-button size="small" class="table_wrap-btn_reset" type="warning">重置</el-button>
-          <el-button size="small" class="table_wrap-btn_new" type="primary">新建</el-button>
+          <el-button size="small" class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
         </div>
       </el-col>
     </el-row>
@@ -84,6 +84,11 @@ export default {
         shopId: '10333'
       }]
     };
+  },
+  methods:{
+    showNewUser:function(){
+      this.$store.commit('showNewUser');
+    }
   }
 };
 </script>
