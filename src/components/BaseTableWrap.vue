@@ -7,7 +7,7 @@
       <el-col :span="18">
         <div class="table_wrap-search">
           <div class="table_wrap-search_wrap">
-            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入车牌号(SN)" v-model="searchSN"></el-input>
+            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入车牌号(SN)" v-model="searchSN" suffix-icon="el-icon-search"></el-input>
             <!-- <el-button size="small" type="primary" class="table_wrap-btn_search">搜索</el-button> -->
           </div>
           <el-button size="small" class="table_wrap-btn_reset" type="warning">重置</el-button>
