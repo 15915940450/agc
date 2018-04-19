@@ -5,6 +5,8 @@ import CGroup from '@/components/CGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 
+import HelloWorld from '@/components/HelloWorld';
+
 Vue.use(Router);
 
 export default new Router({
@@ -28,6 +30,11 @@ export default new Router({
       path: '/deposit/:pn', //pn=>pageNum 	页码
       name: 'CDeposit',
       component: CDeposit
+    },
+    {
+      path: '/thilina', //pn=>pageNum 	页码
+      name: 'HelloWorld',
+      component: HelloWorld
     }
   ]
 });
