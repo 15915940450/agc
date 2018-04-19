@@ -22,7 +22,7 @@
                 <el-input v-model="formLabelAlign.region"></el-input>
               </el-form-item>
               <el-form-item class="btn_wrap">
-                <el-button type="primary">查询</el-button>
+                <el-button type="primary" @click="openFullScreen" v-loading.fullscreen.lock="fullscreenLoading">查询</el-button>
                 <el-button type="">最近20天</el-button>
               </el-form-item>
             </el-form>
@@ -31,6 +31,7 @@
         <el-col :span="18">
           <div class="map">
             <!-- amap -->
+            <MapTrack />
           </div>
         </el-col>
       </el-row>
@@ -40,6 +41,8 @@
 </template>
 
 <script>
+import MapTrack from './MapTrack';
+
 export default {
   name:'EVtrack',
   data:function(){
@@ -47,8 +50,20 @@ export default {
       formLabelAlign: {
         name: '',
         region: ''
-      }
+      },
+      fullscreenLoading: false
     });
+  },
+  methods:{
+    openFullScreen() {
+      this.fullscreenLoading = true;
+      setTimeout(() => {
+        this.fullscreenLoading = false;
+      }, 2000);
+    }
+  },
+  components:{
+    MapTrack
   }
 };
 </script>

@@ -7,7 +7,7 @@
 <script>
 import {urls,imPostForm,imGet} from '../api/urls.js';
 
-console.log(urls.depositList);
+// console.log(urls.depositList);
 var sendData={
   pageNum:1,
   pageSize:2,

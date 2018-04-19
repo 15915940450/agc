@@ -9,7 +9,9 @@ module.exports = {
     browser: true,
   },
   globals:{
-    _:true
+    _:true,
+    AMap:true,
+    AMapUI:true
   },
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
