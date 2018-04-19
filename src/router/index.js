@@ -5,8 +5,10 @@ import CGroup from '@/components/CGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 import EVs from '@/components/EVs';
-import EVtrack from '@/components/EVtrack';
+import EV from '@/components/EV';
 import CSys from '@/components/CSys';
+import MapTrack from '@/components/MapTrack';
+import MapPoint from '@/components/MapPoint';
 
 import HelloWorld from '@/components/HelloWorld';
 import AjaxTest from '@/components/AjaxTest';
@@ -17,16 +19,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'CJoy',
+      name: 'CJoy', //首页
       component: CJoy
     },
     {
-      path: '/group',
+      path: '/group', //群组
       name: 'CGroup',
       component: CGroup
     },
     {
-      path: '/user/:pn',
+      path: '/user/:pn',  //用户
       name: 'CUser',
       component: CUser
     },
@@ -36,17 +38,27 @@ export default new Router({
       component: CDeposit
     },
     {
-      path: '/evs/:pn', //pn=>pageNum 	页码
+      path: '/evs/:pn', //电动车
       name: 'EVs',
       component: EVs
     },
     {
-      path: '/ev/:id/track', //pn=>pageNum 	页码
-      name: 'EVtrack',
-      component: EVtrack
+      path: '/ev/:id', //轨迹与定位
+      name: 'EV',
+      component: EV,
+      children:[
+        {
+          path:'track',
+          component:MapTrack
+        },
+        {
+          path:'point',
+          component:MapPoint
+        }
+      ]
     },
     {
-      path: '/sys', //pn=>pageNum 	页码
+      path: '/sys', //系统管理
       name: 'CSys',
       component: CSys
     },
@@ -54,12 +66,12 @@ export default new Router({
 
     // just for thilina
     {
-      path: '/thilina', //pn=>pageNum 	页码
+      path: '/thilina',
       name: 'HelloWorld',
       component: HelloWorld
     },
     {
-      path: '/ajax', //pn=>pageNum 	页码
+      path: '/ajax',
       name: 'AjaxTest',
       component: AjaxTest
     }

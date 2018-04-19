@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="e_vtrack">
+  <div class="e_v">
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
@@ -31,7 +31,8 @@
         <el-col :span="18">
           <div class="map">
             <!-- amap -->
-            <MapTrack />
+            <router-view></router-view>
+            <!-- <MapTrack /> -->
           </div>
         </el-col>
       </el-row>
@@ -41,8 +42,6 @@
 </template>
 
 <script>
-import MapTrack from './MapTrack';
-
 export default {
   name:'EVtrack',
   data:function(){
@@ -61,9 +60,6 @@ export default {
         this.fullscreenLoading = false;
       }, 2000);
     }
-  },
-  components:{
-    MapTrack
   }
 };
 </script>
