@@ -36,7 +36,7 @@ export default {
   name:'NeedLogin',
   data() {
     return {
-      dialogFormVisible: true,
+      dialogFormVisible: false,
       width:'380px',
       customClass:'onelogin',
       form: {

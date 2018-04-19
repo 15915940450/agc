@@ -7,7 +7,7 @@
     <!-- 没有电动车 -->
     <div class="empty_evs">
       <h3 class="title">电动车列表</h3>
-      <img class="empty_evs-img" src="" alt="还没有电动车切片" />
+      <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有电动车切片" />
       <p>您还没有电动车哦！</p>
     </div>
   </div>
