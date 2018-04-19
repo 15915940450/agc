@@ -7,17 +7,20 @@
 <script>
 import {urls,imPostForm,imGet} from '../api/urls.js';
 
-// console.log(imGet);
-// var sendData={
-//   phone:'15820480937'
-// };
-// imPostForm(urls.baseInfo,sendData,function(rps){
-//   console.log(rps);
-// });
-imGet(urls.baseInfo+'?phone=15820480937',function(rps){
+console.log(urls.depositList);
+var sendData={
+  pageNum:1,
+  pageSize:2,
+  phone:'15820480937'
+};
+imPostForm(urls.depositList,sendData,function(rps){
   console.log(rps);
 });
 
+// imGet(urls.depositList+'?phone=15820480937',function(rps){
+//   console.log(rps);
+// });
+//
 export default {
   name:'AjaxTest'
 };

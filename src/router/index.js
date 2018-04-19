@@ -5,6 +5,7 @@ import CGroup from '@/components/CGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 import EVs from '@/components/EVs';
+import EVtrack from '@/components/EVtrack';
 import CSys from '@/components/CSys';
 
 import HelloWorld from '@/components/HelloWorld';
@@ -38,6 +39,11 @@ export default new Router({
       path: '/evs/:pn', //pn=>pageNum 	页码
       name: 'EVs',
       component: EVs
+    },
+    {
+      path: '/ev/:id/track', //pn=>pageNum 	页码
+      name: 'EVtrack',
+      component: EVtrack
     },
     {
       path: '/sys', //pn=>pageNum 	页码
