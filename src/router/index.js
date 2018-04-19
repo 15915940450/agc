@@ -6,6 +6,7 @@ import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 
 import HelloWorld from '@/components/HelloWorld';
+import AjaxTest from '@/components/AjaxTest';
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/thilina', //pn=>pageNum 	页码
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path: '/ajax', //pn=>pageNum 	页码
+      name: 'AjaxTest',
+      component: AjaxTest
     }
   ]
 });
