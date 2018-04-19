@@ -15,11 +15,16 @@
         <el-col :span="6">
           <div class="condition">
             <el-form label-position="top" label-width="80px" :model="formLabelAlign" size="small">
-              <el-form-item label="电动车SN">
-                <el-input v-model="formLabelAlign.name"></el-input>
+              <el-form-item label="电动车SN" class="ev_icon-wrap">
+                <el-input v-model="formLabelAlign.name">
+                  <template slot="prepend"><img class="ev_icon" src="../assets/ev_icon.png" /></template>
+                </el-input>
+
               </el-form-item>
               <el-form-item label="日期">
-                <el-input v-model="formLabelAlign.region"></el-input>
+                <el-input v-model="formLabelAlign.region">
+                  <template slot="prepend"><img class="ev_icon" src="../assets/datepicker_icon.png" /></template>
+                </el-input>
               </el-form-item>
               <el-form-item class="btn_wrap">
                 <el-button type="primary" @click="openFullScreen" v-loading.fullscreen.lock="fullscreenLoading">查询</el-button>
@@ -89,4 +94,12 @@ export default {
   margin-right: 20px;
   margin-bottom: 20px;
 }
+/* .ev_icon-wrap{
+  position: relative;
+}
+.ev_icon{
+  position: absolute;
+  left:0;
+  top:0;
+} */
 </style>

@@ -143,3 +143,15 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   padding: 0 20px;
   margin: 0;
 }
+// 电动车
+.e_v .el-input-group__prepend{
+  width:33px !important;
+  padding-left: 0;
+  padding-right: 0;
+  position: relative;
+}
+.e_v .el-input-group__prepend img{
+  position: absolute;
+  top:4px;
+  left:6px;
+}
