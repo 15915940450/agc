@@ -179,7 +179,7 @@ export default {
         shop: '王小虎夫妻店',
         shopId: '10333'
       }],
-      deposit:0
+      deposit:9
     };
   },
   components:{
