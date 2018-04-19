@@ -11,7 +11,7 @@
       <el-menu-item index="3" class="nav_money" @click="rrPush('/deposit/1')">
         <span slot="title">押金管理</span>
       </el-menu-item>
-      <el-menu-item index="4" class="nav_bike">
+      <el-menu-item index="4" class="nav_bike" @click="rrPush('/evs/1')">
         <span slot="title">车辆管理</span>
       </el-menu-item>
       <el-menu-item index="5" class="nav_system">

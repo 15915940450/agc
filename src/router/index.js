@@ -4,6 +4,7 @@ import CJoy from '@/components/CJoy';
 import CGroup from '@/components/CGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
+import EVs from '@/components/EVs';
 
 import HelloWorld from '@/components/HelloWorld';
 import AjaxTest from '@/components/AjaxTest';
@@ -31,6 +32,11 @@ export default new Router({
       path: '/deposit/:pn', //pn=>pageNum 	页码
       name: 'CDeposit',
       component: CDeposit
+    },
+    {
+      path: '/evs/:pn', //pn=>pageNum 	页码
+      name: 'EVs',
+      component: EVs
     },
     {
       path: '/thilina', //pn=>pageNum 	页码
