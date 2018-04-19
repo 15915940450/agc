@@ -5,6 +5,7 @@ import CGroup from '@/components/CGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 import EVs from '@/components/EVs';
+import CSys from '@/components/CSys';
 
 import HelloWorld from '@/components/HelloWorld';
 import AjaxTest from '@/components/AjaxTest';
@@ -38,6 +39,14 @@ export default new Router({
       name: 'EVs',
       component: EVs
     },
+    {
+      path: '/sys', //pn=>pageNum 	页码
+      name: 'CSys',
+      component: CSys
+    },
+
+
+    // just for thilina
     {
       path: '/thilina', //pn=>pageNum 	页码
       name: 'HelloWorld',

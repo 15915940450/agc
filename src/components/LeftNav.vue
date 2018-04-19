@@ -14,7 +14,7 @@
       <el-menu-item index="4" class="nav_bike" @click="rrPush('/evs/1')">
         <span slot="title">车辆管理</span>
       </el-menu-item>
-      <el-menu-item index="5" class="nav_system">
+      <el-menu-item index="5" class="nav_system" @click="rrPush('/sys')">
         <span slot="title">系统管理</span>
       </el-menu-item>
 
