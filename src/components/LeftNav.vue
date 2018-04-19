@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="left_nav">
-    <el-menu default-active="3" class="el-menu-vertical-menu">
+    <el-menu :default-active="defaultNavActive" class="el-menu-vertical-menu">
 
       <el-menu-item index="1" class="nav_home" @click="rrPush('/')">
         <span slot="title">首页概览</span>
@@ -24,14 +24,36 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
+
 export default {
   name:'LeftNav',
+  data:function(){
+    return ({
+      defaultNavActive:this.findDefaultNavActive()
+    });
+  },
+  computed:{
+    ...mapState(['navActive'])
+  },
   methods:{
     rrPush:function(rr){
       this.$router.push({
         path:rr
       });
       // router.push({ path: `/user/${userId}` }) // -> /user/123
+    },
+    findDefaultNavActive:function(){
+      var arrRs=['pre_http://localhost:1590/#/_fix','group','deposit','evs','sys'];
+      var defaultNavActive='1';
+      arrRs.forEach(function(v,i){
+        if(window.location.href.indexOf(v)!==-1){
+          defaultNavActive=''+(i+1);
+          // console.log(defaultNavActive);
+        }
+      });
+      return defaultNavActive;
     }
   }
 };
