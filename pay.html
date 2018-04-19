@@ -1,11 +1,177 @@
 <!DOCTYPE html>
 <html lang="zh" dir="ltr">
   <head>
-    <title>支付中。。。</title>
+    <title>易马达--我的收银台</title>
     <meta charset="utf-8" />
+    <style media="screen">
+      *{
+        margin:0;
+        padding: 0;
+      }
+      html,body{
+        background: #EDF0F5;
+        font-family: 'PingFang SC', Helvetica, Arial, sans-serif;
+        color:#333;
+        font-size:12px;
+      }
+      .top_bar{
+        background: #FFF;
+        height: 60px;
+      }
+      .top_bar-content{
+        width: 980px;
+        margin:0 auto;
+      }
+      .top_bar-h1{
+        font-size: 16px;
+        color: #555;
+        height: 60px;
+        line-height: 60px;
+        font-weight: 500;
+      }
+      .top_bar-img{
+        height: 42px;
+        /* border:1px solid #333; */
+        display: inline-block;
+        /* margin-top:9px; */
+        vertical-align: middle;
+        width: 110px;
+        border-right: 1px solid #000;
+        background: #AAA;
+        margin-right: 10px;
+      }
+      .top_bar-titie{
+        vertical-align: middle;
+      }
+      /* 概要 */
+      .about{
+        width: 980px;
+        margin: 0 auto;
+        padding: 20px 0;
+      }
+      .about-p{}
+      .about-h3{
+        font-size: 16px;
+        margin-top:10px;
+        font-weight: 500;
+      }
+      .about-num{
+        display: inline-block;
+        width: 60px;
+        padding-right: 10px;
+        text-align: right;
+      }
+      .about-money{
+        color:#FF6600;
+        margin:0 2px;
+      }
+      .about-company{
+        font-size: 14px;
+        color:#000;
+        margin-left: 50px;
+      }
+      .code_wrap{
+        width: 980px;
+        background: #FFF;
+        margin:0 auto;
+        text-align: center;
+        padding: 90px 0 70px;
+        position: relative;
+      }
+      .code_wrap-h6{
+        font-size: 12px;
+        font-weight: normal;
+        margin-bottom: 12px;
+        color: #000;
+      }
+      .code_wrap-h2{
+        font-size: 30px;
+        color: #FF6600;
+        margin-bottom: 20px;
+      }
+      #qrcode img{
+        width: 180px;
+        margin: 0 auto;
+      }
+      .code_wrap-open{
+        text-align: center;
+      }
+      .code_wrap-open img{
+        height: 60px;
+        width: 150px;
+        border: 1px solid #333;
+        display: inline-block;
+      }
+      .code_wrap-link_wrap{
+        text-align: center;
+        margin-top: 10px;
+      }
+      .code_wrap-link_wrap a{
+        font-size: 12px;
+        color: #888;
+        text-decoration: underline;
+      }
+      .code_wrap-tip{
+        width: 300px;
+        height: 375px;
+        border:1px solid #aaa;
+        display: block;
+        position: absolute;
+        left: 600px;
+        top:60px;
+      }
+      /* 页脚 */
+      .footer{
+        color: #666;
+        text-align: center;
+        font-size: 12px;
+        position: absolute;
+        left:0;
+        bottom: 0;
+        width: 100%;
+        padding: 10px 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="qrcode"></div>
+    <div id="container">
+      <!-- 顶条 -->
+      <div class="top_bar">
+        <div class="top_bar-content">
+
+          <h1 class="top_bar-h1">
+            <img src="" alt="logo" class="top_bar-img" />
+            <span class="top_bar-titie">我的收银台</span>
+          </h1>
+        </div>
+      </div>
+      <!-- about -->
+      <div class="about">
+        <p class="about-p">正在使用即时到账交易</p>
+        <h3 class="about-h3">虚拟电池押金充值<strong class="about-num">2</strong>个 共<strong class="about-money">999.00</strong>元， <span class="about-company">收款方：深圳易马达科技有限公司</span></h3>
+      </div>
+      <!-- 扫码 -->
+      <div class="code_wrap">
+        <h6 class="code_wrap-h6">扫一扫付款(元）</h6>
+        <h2 class="code_wrap-h2">999.00</h2>
+        <div id="qrcode"></div>
+        <p class="code_wrap-open"><img src="" /></p>
+        <p class="code_wrap-link_wrap">
+          <a href="javascript:;">首次使用请下载微信APP</a>
+        </p>
+
+        <img class="code_wrap-tip" src="" alt="扫一扫提示" />
+      </div>
+      <!-- 页脚 -->
+      <div class="footer">
+        客服：400-618-7238 2018 ◎深圳易马达科技有限公司版权所有
+      </div>
+
+
+    </div>
+
+
+
     <script src="./static/qrcode.min.js" charset="utf-8"></script>
     <script type="text/javascript">
       new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
