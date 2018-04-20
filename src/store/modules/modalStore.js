@@ -6,7 +6,8 @@ var state={
 var mutations={
   showLogin:function(state){
     //需要登录时清空会话存贮
-    window.sessionStorage.agentphone='';
+    // window.sessionStorage.agentphone='';
+    window.sessionStorage.clear();
     state.needLogin=true;
   },
   hideLogin:function(state){

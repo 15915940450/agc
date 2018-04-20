@@ -5,7 +5,7 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_img" src="" width="40" height="40" />
-          <span>55u，E换电祝您开心每一天！</span>
+          <span>{{agent.name}}，E换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">
@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import {urls,imPostForm} from '../api/urls.js';
 
 export default {
@@ -119,6 +120,9 @@ export default {
       availableBattery:'加载中...',
       usedBattery:'加载中...'
     });
+  },
+  computed:{
+    ...mapState(['agent'])
   },
   methods:{
     fetchData:function(){

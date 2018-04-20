@@ -92,11 +92,20 @@ export default {
       }
     },
     handleSuccess:function(objRps){
-      //设置登录信息
+      //设置登录信息,手机号必须
       window.sessionStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
       //清空密码
       this.formLogin.password='';
+
+      //设置完整登录用户信息
+      window.sessionStorage.setItem('agentname',objRps.result.name);
+      window.sessionStorage.setItem('agentid',objRps.result.id);
+      this.$store.commit('setAgent',{
+        phone:objRps.result.phone,
+        name:objRps.result.name,
+        id:objRps.result.id
+      });
     }
   } //methods
 };

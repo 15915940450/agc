@@ -9,14 +9,15 @@
       <el-col :span="18">
         <el-menu :default-active="activeIndex" class="el-menu-wrap" mode="horizontal" @select="handleSelect">
 
-          <el-submenu index="2">
+          <el-submenu index="1">
             <template slot="title">
-              <i class="top_bar-head"></i>harry
+              <i class="top_bar-head"></i>
+              {{agent.name}}
             </template>
-            <el-menu-item index="2-1" class="sub_item">
+            <el-menu-item index="1-1" class="sub_item">
               设置
             </el-menu-item>
-            <el-menu-item index="2-2" class="sub_item" @click="logout()">
+            <el-menu-item index="1-2" class="sub_item" @click="logout()">
               退出
             </el-menu-item>
           </el-submenu>
@@ -29,18 +30,23 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import {urls,imPostForm} from '../api/urls.js';
 
 export default {
   name:'TopBar',
-  data() {
+  data(){
     return {
       activeIndex: '1',
       activeIndex2: '1'
     };
   },
+  computed:{
+    ...mapState(['agent'])
+  },
   methods: {
     handleSelect(key, keyPath) {
+      // console.log(this.$store.state.agent.id);
       // console.log(key, keyPath);
     },
     logout:function(){
@@ -51,7 +57,7 @@ export default {
         }
       });
     }
-  }
+  } //methods
 };
 </script>
 
