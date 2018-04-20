@@ -13,7 +13,7 @@ import Icon from 'vue-awesome/components/Icon';
 
 import App from './App';
 
-Vue.use(EUI);
+Vue.use(EUI,{size:'small'});
 Vue.component('icon', Icon);
 
 //axios=>$im
