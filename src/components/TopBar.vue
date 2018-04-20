@@ -16,7 +16,7 @@
             <el-menu-item index="2-1" class="sub_item">
               设置
             </el-menu-item>
-            <el-menu-item index="2-2" class="sub_item">
+            <el-menu-item index="2-2" class="sub_item" @click="logout()">
               退出
             </el-menu-item>
           </el-submenu>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import {urls,imPostForm} from '../api/urls.js';
+
 export default {
   name:'TopBar',
   data() {
@@ -39,7 +41,21 @@ export default {
   },
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
+    },
+    logout:function(){
+      var vueThis=this;
+      imPostForm(urls.logout,{},function(rps){
+        // console.log(rps);
+        try{
+          var objRps=JSON.parse(rps);
+          if(objRps.code===1000){
+            vueThis.$store.commit('showLogin');
+          }
+        }catch(err){
+          _.logErr(err);
+        }
+      });
     }
   }
 };

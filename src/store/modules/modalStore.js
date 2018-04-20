@@ -5,6 +5,7 @@ var state={
 
 var mutations={
   showLogin:function(state){
+    window.sessionStorage.agentphone='';
     state.needLogin=true;
   },
   hideLogin:function(state){

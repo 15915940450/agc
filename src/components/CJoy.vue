@@ -127,7 +127,7 @@ export default {
         phone:''+window.sessionStorage.agentphone
       };
       imPostForm(urls.baseInfo,sendData,function(rps){
-        console.log(rps);
+        // console.log(rps);
         try{
           var objRps=JSON.parse(rps);
           if(objRps.code===1050){
