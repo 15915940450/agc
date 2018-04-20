@@ -31,7 +31,7 @@
                   用户数
                 </h3>
                 <p class="im_card-value">
-                  2928
+                  {{userNum}}
                 </p>
               </el-col>
             </el-row>
@@ -51,7 +51,7 @@
                   可用电池数
                 </h3>
                 <p class="im_card-value">
-                  90
+                  {{availableBattery}}
                 </p>
               </el-col>
             </el-row>
@@ -71,13 +71,13 @@
                   剩余免费天数
                 </h3>
                 <p class="im_card-value">
-                  22988
+                  {{freeDays}}
                 </p>
               </el-col>
             </el-row>
           </div>
         </el-col>
-        <!-- 已用电池数(个) -->
+        <!-- 电动车数 -->
         <el-col :span="6">
           <div class="im_card im_card_4">
             <el-row>
@@ -91,7 +91,7 @@
                   电动车数
                 </h3>
                 <p class="im_card-value">
-                  3000
+                  {{scooterNum}}
                 </p>
               </el-col>
             </el-row>
@@ -133,6 +133,12 @@ export default {
       imPostForm(urls.baseInfo,sendData,function(objRps){
         if(objRps.code===1050){
           vueThis.$store.commit('showLogin');
+        }else{
+          // vueThis.availableDeposite=objRps.result.availableDeposite;
+          Object.keys(objRps.result).forEach(function(v){
+            // console.log(v);
+            vueThis[v]=objRps.result[v];
+          });
         }
       });
     }
