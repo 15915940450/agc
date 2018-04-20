@@ -5,12 +5,12 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_img" src="" width="40" height="40" />
-          <span>Harry，E换电祝您开心每一天！</span>
+          <span>{{login.name}}，E换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">
         <p class="im_key">我的押金</p>
-        <p class="im_value">2,229.00</p>
+        <p class="im_value">{{availableDeposite}}</p>
       </el-col>
     </el-row>
     <!-- 代理商最关心的卡片 -->
@@ -105,8 +105,58 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+import {urls,imPostForm} from '../api/urls.js';
+
 export default {
-  name:'CJoy'
+  name:'CJoy',
+  data:function(){
+    return ({
+      availableDeposite:'--',
+      userNum:'加载中...',
+      freeDays:'加载中...',
+      scooterNum:'加载中...',
+      refundableDeposit:'加载中...',
+      availableBattery:'加载中...',
+      usedBattery:'加载中...'
+    });
+  },
+  computed:{
+    ...mapState(['login'])
+  },
+  watch:{
+    login:{
+      handler: function (newVal, oldVal) {
+        console.log(this.login.phone);
+        console.log(newVal.phone);
+        // console.log(oldVal.phone);
+        this.fetchData();
+      },
+      deep: true
+    }
+  },
+  methods:{
+    fetchData:function(){
+      var vueThis=this;
+      var sendData={
+        phone:''+this.login.phone
+      };
+      imPostForm(urls.baseInfo,sendData,function(rps){
+        console.log(rps);
+        try{
+          var objRps=JSON.parse(rps);
+          if(objRps.code===1050){
+            vueThis.$store.commit('showLogin');
+          }
+        }catch(err){
+          _.logErr(err);
+        }
+      });
+    }
+  },
+  created:function(){
+    this.fetchData();
+  } //created
 };
 </script>
 

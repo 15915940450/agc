@@ -23,6 +23,24 @@ Vue.prototype.$apiURLs=apiURLs;
 
 Vue.config.productionTip = false;
 
+// router.beforeEach((to, from, next) => {
+//   // ...
+// });
+// router.beforeEach((to, from, next) => {
+//   //NProgress.start();
+//   // if (to.path == '/login') {
+//   //   sessionStorage.removeItem('user');
+//   // }
+//   let user = JSON.parse(sessionStorage.getItem('user'));
+//   var agentloginuser=JSON.parse(window.sessionStorage.getItem('agentloginuser'));
+//   if(){}else{}
+//   if (!user && to.path != '/login') {
+//     next({ path: '/login' })
+//   } else {
+//     next()
+//   }
+// })
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

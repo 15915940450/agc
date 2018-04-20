@@ -1,5 +1,5 @@
 var state={
-  needLogin:true,
+  needLogin:false,
   newUser:true
 };
 
