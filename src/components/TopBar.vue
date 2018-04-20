@@ -45,15 +45,9 @@ export default {
     },
     logout:function(){
       var vueThis=this;
-      imPostForm(urls.logout,{},function(rps){
-        // console.log(rps);
-        try{
-          var objRps=JSON.parse(rps);
-          if(objRps.code===1000){
-            vueThis.$store.commit('showLogin');
-          }
-        }catch(err){
-          _.logErr(err);
+      imPostForm(urls.logout,{},function(objRps){
+        if(objRps.code===1000){
+          vueThis.$store.commit('showLogin');
         }
       });
     }

@@ -68,21 +68,13 @@ export default {
       var vueThis=this;
       this.$refs[refName].validate((valid) => {
         if (valid) {
-          //发送ajax请求
-          // alert('subm');
+          //发送ajax请求,带上用户输入的手机号和密码
           var sendData={
             phone:''+this.formLogin.phone,
             password:''+this.formLogin.password
           };
-          imPostForm(urls.login,sendData,function(rps){
-            // console.log(rps);
-            try{
-              var objRps=JSON.parse(rps);
-              vueThis.handleLoginRps(objRps);
-              // console.log(objRps.code);
-            }catch(err){
-              _.logErr(err);
-            }
+          imPostForm(urls.login,sendData,function(objRps){
+            vueThis.handleLoginRps(objRps);
           });
         } else {
           _.logErr('error submit!!');
@@ -91,10 +83,8 @@ export default {
       });
     },
     handleLoginRps:function(objRps){
-      // console.log(objRps.code);
       switch (objRps.code) {
       case 1000:  //登录成功
-      //{"code":1000,"msg":"","result":{"batteryAmount":100.00,"phone":"15820480937","name":"chao","id":2}}
         this.handleSuccess(objRps);
         break;
       default:
@@ -105,15 +95,10 @@ export default {
       //设置登录信息
       window.sessionStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
-      // this.$store.commit('setLogin',objRps.result.phone,objRps.result.name,objRps.result.id);
+      //清空密码
+      this.formLogin.password='';
     }
-
-
-
-  },
-  created:function(){
-    // console.log(this.modalStore.needLogin);
-  }
+  } //methods
 };
 </script>
 

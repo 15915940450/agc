@@ -5,16 +5,16 @@
 </template>
 
 <script>
-import {urls,imPostForm,imGet} from '../api/urls.js';
+// import {urls,imPostForm,imGet} from '../api/urls.js';
 
 // console.log(urls.depositList);
-var sendData={
-  pageNum:1,
-  pageSize:2,
-  phone:'15820480937'
-};
-// imPostForm(urls.depositList,sendData,function(rps){
-//   console.log(rps);
+// var sendData={
+//   pageNum:1,
+//   pageSize:2,
+//   phone:'15820480937'
+// };
+// imPostForm(urls.depositList,sendData,function(objRps){
+//   console.log(objRps);
 // });
 
 

@@ -2,6 +2,15 @@
 
 > A Vue.js project
 
+## 常用语句
+
+* import {urls,imPostForm} from '../api/urls.js'; //引入api(ajax)
+* computed:{
+  ...mapState(['modalStore'])
+},
+
+
+
 ## atom editor
 
 * packages: atom-vue, ayu-atom-syntax, busy-signal, intentions, linter, linter-eslint, linter-htmlhint, linter-ui-default.

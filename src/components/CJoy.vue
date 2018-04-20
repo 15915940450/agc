@@ -126,15 +126,9 @@ export default {
       var sendData={
         phone:''+window.sessionStorage.agentphone
       };
-      imPostForm(urls.baseInfo,sendData,function(rps){
-        // console.log(rps);
-        try{
-          var objRps=JSON.parse(rps);
-          if(objRps.code===1050){
-            vueThis.$store.commit('showLogin');
-          }
-        }catch(err){
-          _.logErr(err);
+      imPostForm(urls.baseInfo,sendData,function(objRps){
+        if(objRps.code===1050){
+          vueThis.$store.commit('showLogin');
         }
       });
     }
