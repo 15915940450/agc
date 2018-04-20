@@ -6928,6 +6928,14 @@
       search=search || window.location.search.substring(1);
       return search?JSON.parse('{"'+search.replace(/&/g,'","').replace(/=/g,'":"')+'"}',function(key,value){return key===''?value:decodeURIComponent(value);}):{};
     }
+    function serialize2querystring(obj){
+      var str = [];
+      for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    }
     function createArray(num){
       var arr=[];
       for(var i=0;i<num;i++){
@@ -16583,6 +16591,7 @@
     lodash.dateAgo = dateAgo;
     lodash.stampToHMS = stampToHMS;
     lodash.querystringParse = querystringParse;
+    lodash.serialize2querystring = serialize2querystring;
     lodash.createArray = createArray;
     lodash.logErr = logErr;
     //===========================================ili
