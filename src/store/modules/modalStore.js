@@ -1,5 +1,5 @@
 var state={
-  needLogin:false,
+  needLogin:window.sessionStorage.agentphone?false:true,
   newUser:true
 };
 

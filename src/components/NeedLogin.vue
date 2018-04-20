@@ -104,11 +104,15 @@ export default {
     handleSuccess:function(objRps){
       //设置登录信息
       this.$store.commit('hideLogin');
-      this.$store.commit('setLogin',objRps.result.phone,objRps.result.name,objRps.result.id);
+      // this.$store.commit('setLogin',objRps.result.phone,objRps.result.name,objRps.result.id);
+      window.sessionStorage.setItem('agentphone',objRps.result.phone);
     }
 
 
 
+  },
+  created:function(){
+    console.log(this.modalStore.needLogin);
   }
 };
 </script>

@@ -5,7 +5,7 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_img" src="" width="40" height="40" />
-          <span>{{login.name}}，E换电祝您开心每一天！</span>
+          <span>55u，E换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">
@@ -105,7 +105,6 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
 import {urls,imPostForm} from '../api/urls.js';
 
 export default {
@@ -121,25 +120,11 @@ export default {
       usedBattery:'加载中...'
     });
   },
-  computed:{
-    ...mapState(['login'])
-  },
-  watch:{
-    login:{
-      handler: function (newVal, oldVal) {
-        console.log(this.login.phone);
-        console.log(newVal.phone);
-        // console.log(oldVal.phone);
-        this.fetchData();
-      },
-      deep: true
-    }
-  },
   methods:{
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        phone:''+this.login.phone
+        phone:''+window.sessionStorage.agentphone
       };
       imPostForm(urls.baseInfo,sendData,function(rps){
         console.log(rps);
@@ -156,6 +141,7 @@ export default {
   },
   created:function(){
     this.fetchData();
+    // console.log(this.$store.state.modalStore.needLogin);
   } //created
 };
 </script>
