@@ -1,19 +1,19 @@
 <template lang="html">
   <div class="need_login">
-
-    <el-dialog :visible.sync="dialogFormVisible" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
+    <el-dialog :visible.sync="bNeedLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
       <img class="login_logo" src="../assets/login_logo.png" alt="immotor" width="56" />
       <h2 class="project_name">代理商管理后台</h2>
+      <!-- <input v-model.trim="formLogin.phone"> -->
       <!-- 表单开始 -->
-      <el-form :model="form" size="small">
-        <el-form-item>
-          <el-input v-model="form.phone" auto-complete="off" placeholder="请输入手机号码" class="need_login-phone"></el-input>
+      <el-form :model="formLogin" size="small" :rules="rules">
+        <el-form-item prop="phone">
+          <el-input v-model.number="formLogin.phone" auto-complete="off" placeholder="请输入手机号码" class="need_login-phone"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input type="password" v-model="form.password" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
+          <el-input type="password" v-model="formLogin.password" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
         </el-form-item>
         <el-form-item class="need_login-vcode">
-          <el-input v-model="form.validateCode" auto-complete="off" placeholder="请输入验证码"></el-input>
+          <el-input v-model="formLogin.validateCode" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img src="../assets/validateCode.jpeg" height="30" />
         </el-form-item>
         <el-form-item>
@@ -22,7 +22,7 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogFormVisible = false" id="btn_login">登录</el-button>
+        <el-button type="primary" @click="bNeedLogin = false" id="btn_login">登录</el-button>
       </div>
 
       <p class="kefu">客服：400-618-7238     2018 ◎深圳易马达科技有限公司版权所有</p>
@@ -36,13 +36,18 @@ export default {
   name:'NeedLogin',
   data() {
     return {
-      dialogFormVisible: false,
+      bNeedLogin: true,
       width:'380px',
       customClass:'onelogin',
-      form: {
+      formLogin: {
         phone: '',
         password: '',
         validateCode:''
+      },
+      rules:{
+        phone: [
+          {type:'number',required:true,min:10000000000,max:99999999999,message:'手机号必须为11位数字',trigger:'change'}
+        ]
       }
     };
   }

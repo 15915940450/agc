@@ -5,7 +5,7 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_img" src="" width="40" height="40" />
-          <span>harry，E换电祝您开心每一天！</span>
+          <span>Harry，E换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">

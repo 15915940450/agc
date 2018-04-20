@@ -65,6 +65,9 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .need_login .el-dialog--center .el-dialog__body{
   padding-bottom: 0;
 }
+.need_login .el-form-item--small.el-form-item{
+  margin-bottom: 25px;
+}
 // ele扩展：Base表格
 .table_wrap{
   background: #FFF;

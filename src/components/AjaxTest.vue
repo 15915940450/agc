@@ -13,9 +13,9 @@ var sendData={
   pageSize:2,
   phone:'15820480937'
 };
-imPostForm(urls.depositList,sendData,function(rps){
-  console.log(rps);
-});
+// imPostForm(urls.depositList,sendData,function(rps){
+//   console.log(rps);
+// });
 
 // imGet(urls.depositList+'?phone=15820480937',function(rps){
 //   console.log(rps);
