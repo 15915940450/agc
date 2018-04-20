@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {mapState,mapMutations} from 'vuex';
+import {mapState} from 'vuex';
 // import {mapState,mapMutations} from 'vuex';
 import {urls,imPostForm} from '../api/urls.js';
 
@@ -63,14 +63,13 @@ export default {
     ...mapState(['modalStore'])
   },
   methods:{
-    ...mapMutations(['login']),
     //登录接口=> /user/login
     loginSend:function(refName){
       var vueThis=this;
       this.$refs[refName].validate((valid) => {
         if (valid) {
           //发送ajax请求
-          alert('subm');
+          // alert('subm');
           var sendData={
             phone:''+this.formLogin.phone,
             password:''+this.formLogin.password
@@ -103,7 +102,9 @@ export default {
       }
     },
     handleSuccess:function(objRps){
-      this.$store.state.modalStore.commit('hideLogin');
+      //设置登录信息
+      this.$store.commit('hideLogin');
+      this.$store.commit('setLogin',objRps.result.phone,objRps.result.name,objRps.result.id);
     }
 
 
