@@ -1,24 +1,24 @@
 <template lang="html">
   <div class="need_login">
-    <el-dialog :visible.sync="bNeedLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
+    <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
       <img class="login_logo" src="../assets/login_logo.png" alt="immotor" width="56" />
       <h2 class="project_name">代理商管理后台</h2>
       <!-- <input v-model.trim="formLogin.phone"> -->
       <!-- 表单开始 -->
       <el-form ref="formLogin" :model="formLogin" size="small" :rules="rules">
         <el-form-item prop="phone">
-          <el-input v-model.number="formLogin.phone" auto-complete="off" placeholder="请输入手机号码" class="need_login-phone"></el-input>
+          <el-input v-model.number="formLogin.phone" @input="hintMsg=''" auto-complete="off" placeholder="请输入手机号码" class="need_login-phone"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="formLogin.password" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
+          <el-input type="password" v-model="formLogin.password" @input="hintMsg=''" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
         </el-form-item>
         <el-form-item class="need_login-vcode" v-if="need_vcode">
-          <el-input v-model="formLogin.validateCode" auto-complete="off" placeholder="请输入验证码"></el-input>
+          <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img src="../assets/validateCode.jpeg" height="30" />
         </el-form-item>
-        <!-- <el-form-item>
-          <p class="need_login-hint">* 手机号码不正确</p>
-        </el-form-item> -->
+        <el-form-item class="need_login-hint_wrap">
+          <p class="need_login-hint" v-if="hintMsg">* {{hintMsg}}</p>
+        </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -32,18 +32,18 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex';
+import {mapState,mapMutations} from 'vuex';
 // import {mapState,mapMutations} from 'vuex';
-import {urls,imPostForm,imGet} from '../api/urls.js';
+import {urls,imPostForm} from '../api/urls.js';
 
 export default {
   name:'NeedLogin',
   data() {
     return {
-      bNeedLogin: true,
       width:'380px',
       customClass:'onelogin',
       need_vcode:false,
+      hintMsg:'',
       formLogin: {
         phone: '',
         password: '',
@@ -59,13 +59,14 @@ export default {
       }
     };
   },
-  // computed:{
-  //   ...mapState(['login'])
-  // },
+  computed:{
+    ...mapState(['modalStore'])
+  },
   methods:{
     ...mapMutations(['login']),
     //登录接口=> /user/login
     loginSend:function(refName){
+      var vueThis=this;
       this.$refs[refName].validate((valid) => {
         if (valid) {
           //发送ajax请求
@@ -75,14 +76,38 @@ export default {
             password:''+this.formLogin.password
           };
           imPostForm(urls.login,sendData,function(rps){
-            console.log(rps);
+            // console.log(rps);
+            try{
+              var objRps=JSON.parse(rps);
+              vueThis.handleLoginRps(objRps);
+              // console.log(objRps.code);
+            }catch(err){
+              _.logErr(err);
+            }
           });
         } else {
-          console.log('error submit!!');
+          _.logErr('error submit!!');
           return false;
         }
       });
+    },
+    handleLoginRps:function(objRps){
+      // console.log(objRps.code);
+      switch (objRps.code) {
+      case 1000:  //登录成功
+      //{"code":1000,"msg":"","result":{"batteryAmount":100.00,"phone":"15820480937","name":"chao","id":2}}
+        this.handleSuccess(objRps);
+        break;
+      default:
+        this.hintMsg=objRps.msg;
+      }
+    },
+    handleSuccess:function(objRps){
+      this.$store.state.modalStore.commit('hideLogin');
     }
+
+
+
   }
 };
 </script>
@@ -115,6 +140,9 @@ export default {
   right:4px;
   top:4px;
   max-height: 24px;
+}
+.need_login-hint_wrap{
+  height: 32px;
 }
 .need_login-hint{
   color:red;
