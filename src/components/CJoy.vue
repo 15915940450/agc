@@ -138,20 +138,25 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      var sendData={
-        phone:''+window.sessionStorage.agentphone
-      };
-      imPostForm(urls.baseInfo,sendData,function(objRps){
-        if(objRps.code===1050){
-          vueThis.$store.commit('showLogin');
-        }else{
-          // vueThis.availableDeposite=objRps.result.availableDeposite;
-          Object.keys(objRps.result).forEach(function(v){
-            // console.log(v);
-            vueThis[v]=objRps.result[v];
-          });
-        }
-      });
+      if(window.sessionStorage.agentphone){
+        //else:没有用户手机则不发送请求
+        var sendData={
+          phone:''+window.sessionStorage.agentphone
+        };
+        imPostForm(urls.baseInfo,sendData,function(objRps){
+          if(objRps.code===1050){
+            // console.log(window.sessionStorage.agentphone);
+            vueThis.$store.commit('showLogin');
+          }else{
+            // vueThis.availableDeposite=objRps.result.availableDeposite;
+            Object.keys(objRps.result).forEach(function(v){
+              // console.log(v);
+              vueThis[v]=objRps.result[v];
+            });
+          }
+        });
+      }
+
     }
   },
   created:function(){
