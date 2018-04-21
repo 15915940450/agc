@@ -22,7 +22,7 @@
           <div class="im_card im_card_1">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
+                <div class="im_card-icon card_user">
                   用户数
                 </div>
               </el-col>
@@ -42,7 +42,7 @@
           <div class="im_card im_card_2">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
+                <div class="im_card-icon card_battery">
                   可用电池数
                 </div>
               </el-col>
@@ -62,7 +62,7 @@
           <div class="im_card im_card_3">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
+                <div class="im_card-icon card_day">
                   剩余免费天数
                 </div>
               </el-col>
@@ -82,7 +82,7 @@
           <div class="im_card im_card_4">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
+                <div class="im_card-icon card_ev">
                 电动车数
                 </div>
               </el-col>
@@ -249,8 +249,23 @@ export default {
   line-height: 60px;
   text-align: center;
   border-radius: 100px;
-  background: rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.2);
+  background-position: center center;
+  background-repeat: no-repeat;
   color: #FFF;
+  text-indent: -969em;
+}
+.im_card-icon.card_user{
+  background-image: url(../assets/card_user.png);
+}
+.im_card-icon.card_battery{
+  background-image: url(../assets/card_battery.png);
+}
+.im_card-icon.card_day{
+  background-image: url(../assets/card_day.png);
+}
+.im_card-icon.card_ev{
+  background-image: url(../assets/card_ev.png);
 }
 .joy_cards{
   background: #FFF;
