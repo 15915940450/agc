@@ -115,7 +115,7 @@
           </el-table-column>
           <el-table-column
             label="类型"
-            prop="payType" :formatter="formatter">
+            prop="type" :formatter="formatter">
           </el-table-column>
           <el-table-column
             label="金额(元)"
@@ -131,7 +131,7 @@
           </el-table-column>
         </el-table>
         <!-- 分页 -->
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" class="table_wrap-pagination">
+        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" class="table_wrap-pagination" @current-change="handleCurrentChange">
 
         </el-pagination>
       </div>
@@ -158,7 +158,9 @@ export default {
       center:'center',
       total:'--',
       deposit:[],
-      statusZHPayType:['','充值','退款'], //押金类型 1充值，2退款
+
+      pageNum:1,
+      statusZHType:['','充值','退款'], //押金类型 1充值，2退款
       statusZH:['','充值待确认','充值成功','退款待审核','拒绝退款','待退款','已退款','充值失败','审核拒绝退款'] //1充值待确认,2充值成功,3退款待审核,4拒绝退款, 5待退款,6已退款,7充值失败,8审核拒绝退款
     };
   },
@@ -174,6 +176,9 @@ export default {
         }
       },
       deep:true
+    },
+    pageNum:function(){
+      this.fetchData();
     }
   },
   components:{
@@ -186,7 +191,7 @@ export default {
         //else:没有用户手机则不发送请求
         var sendData={
           phone:''+window.sessionStorage.agentphone,
-          pageNum:urls.pageNum,
+          pageNum:vueThis.pageNum,
           pageSize:urls.pageSize
         };
         imPostForm(urls.depositList,sendData,function(objRps){
@@ -200,12 +205,15 @@ export default {
     },
     formatter:function(row, column, cellValue){
       // console.log(JSON.stringify(column));
-      if(column.property==='payType'){
-        return (this.statusZHPayType[cellValue]);
+      if(column.property==='type'){
+        return (this.statusZHType[cellValue]);
       }
       if(column.property==='status'){
         return (this.statusZH[cellValue]);
       }
+    },
+    handleCurrentChange:function(val){
+      this.pageNum=val;
     }
   },
   created:function(){
