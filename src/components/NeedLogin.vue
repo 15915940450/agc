@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="need_login">
     <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
-      <img class="login_logo" src="../assets/login_logo.png" alt="immotor" width="56" />
+      <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
       <h2 class="project_name">代理商管理后台</h2>
       <!-- <input v-model.trim="formLogin.phone"> -->
       <!-- 表单开始 -->

@@ -72,11 +72,16 @@ export default {
   padding-left:20px;
 }
 #agc_logo a{
-  text-indent: -969em;
+  /* text-indent: -969em; */
   display: inline-block;
-  width: 120px;
+  width: 95px;
+  padding-left: 30px;
   height: 60px;
-  background: url(../assets/agc_logo.jpg) no-repeat center center;
+  line-height: 60px;
+  background: url(../assets/e_logo.png) no-repeat 0 center;
+  background-size: 26px 26px;
+  font-size: 18px;
+  color: #333333;
 }
 /* .top_bar-head{
   margin-right: 10px;
