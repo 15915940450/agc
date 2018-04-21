@@ -12,7 +12,8 @@
         <p class="im_key">我的押金</p>
         <!-- <p class="im_value">{{availableDeposite}}</p> -->
         <p class="im_value">
-          <router-link to="/deposit/1">{{availableDeposite}}</router-link>
+          <!-- <router-link to="/deposit/1"></router-link> -->
+          <a href="javascript:;" @click="rrPush()">{{availableDeposite}}</a>
         </p>
 
       </el-col>
@@ -161,6 +162,12 @@ export default {
         });
       }
 
+    },
+    rrPush:function(){
+      this.$store.commit('setNavActive',3);
+      this.$router.push({
+        path:'/deposit/1'
+      });
     }
   },
   created:function(){
