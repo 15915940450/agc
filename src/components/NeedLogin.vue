@@ -27,7 +27,7 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="loginSend('formLogin')" id="btn_login">登录</el-button>
+        <el-button :loading="loading" type="primary" @click="loginSend('formLogin')" id="btn_login">登录</el-button>
       </div>
 
       <p class="kefu">客服：400-618-7238     2018 ◎深圳易马达科技有限公司版权所有</p>
@@ -49,6 +49,7 @@ export default {
       customClass:'onelogin',
       need_vcode:false,
       hintMsg:'',
+      loading:false,
       formLogin: {
         phone: '',
         password: '',
@@ -73,12 +74,15 @@ export default {
       var vueThis=this;
       this.$refs[refName].validate((valid) => {
         if (valid) {
+          vueThis.loading=true;
           //发送ajax请求,带上用户输入的手机号和密码
           var sendData={
             phone:''+this.formLogin.phone,
             password:''+this.formLogin.password
           };
           imPostForm(urls.login,sendData,function(objRps){
+            //响应已到达
+            vueThis.loading=false;
             vueThis.handleLoginRps(objRps);
           });
         } else {
