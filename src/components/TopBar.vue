@@ -11,7 +11,8 @@
 
           <el-submenu index="1">
             <template slot="title">
-              <i class="top_bar-head"></i>
+              <!-- <i class="top_bar-head"></i> -->
+              <img class="top_bar-head" src="../assets/default_head.png" width="20" />
               {{agent.name}}
             </template>
             <el-menu-item index="1-1" class="sub_item">
@@ -77,12 +78,16 @@ export default {
   height: 60px;
   background: url(../assets/agc_logo.jpg) no-repeat center center;
 }
-.top_bar-head{
+/* .top_bar-head{
   margin-right: 10px;
   display: inline-block;
   width:20px;
   height: 60px;
   background:url(../assets/default_head.png) no-repeat center center;
+} */
+.top_bar-head{
+  background: #6DCFF6;
+  border-radius: 90px;
 }
 .top_bar .el-menu--horizontal > .el-submenu{
   float: right;

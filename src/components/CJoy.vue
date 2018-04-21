@@ -4,7 +4,7 @@
     <el-row class="im_joy-wrap">
       <el-col :span="16">
         <p class="im_joy">
-          <img class="im_img" src="" width="40" height="40" />
+          <img class="im_joy-head" src="../assets/default_head.png" width="40" height="40" />
           <span>{{agent.name}}，E换电祝您开心每一天！</span>
         </p>
       </el-col>
@@ -182,6 +182,9 @@ export default {
 .im_joy img{
   vertical-align: middle;
   border-radius: 90px;
+}
+.im_joy-head{
+  background: #6DCFF6;
 }
 .im_joy span{
   vertical-align: middle;
