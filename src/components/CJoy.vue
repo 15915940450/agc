@@ -149,13 +149,9 @@ export default {
           phone:''+window.sessionStorage.agentphone
         };
         imPostForm(urls.baseInfo,sendData,function(objRps){
-          if(objRps.code===1050){
-            // console.log(window.sessionStorage.agentphone);
-            vueThis.$store.commit('showLogin');
-          }else{
+          if(objRps.code===1000){
             // vueThis.availableDeposite=objRps.result.availableDeposite;
             Object.keys(objRps.result).forEach(function(v){
-              // console.log(v);
               vueThis[v]=objRps.result[v];
             });
           }

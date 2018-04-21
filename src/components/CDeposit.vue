@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="component_deposit">
-    <div v-if="deposit">
+    <div v-if="deposit.length">
       <el-row :gutter="10">
 
         <!-- 押金 -->
@@ -103,47 +103,31 @@
         <h3 class="title">押金记录</h3>
         <!-- 押金记录表格 -->
         <el-table
-          :data="tableData5" stripe
+          :data="deposit" stripe
           style="width: 100%" class="table_wrap-table">
-          <!-- 展开行 -->
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="left" inline class="im-table-expand">
-                <el-form-item label="商品名称">
-                  <span>{{ props.row.name }}</span>
-                </el-form-item>
-                <el-form-item label="所属店铺">
-                  <span>{{ props.row.shop }}</span>
-                </el-form-item>
-                <el-form-item label="商品 ID">
-                  <span>{{ props.row.id }}</span>
-                </el-form-item>
-                <el-form-item label="店铺 ID">
-                  <span>{{ props.row.shopId }}</span>
-                </el-form-item>
-                <el-form-item label="商品分类">
-                  <span>{{ props.row.category }}</span>
-                </el-form-item>
-                <el-form-item label="店铺地址">
-                  <span>{{ props.row.address }}</span>
-                </el-form-item>
-                <el-form-item label="商品描述">
-                  <span>{{ props.row.desc }}</span>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
           <el-table-column
-            label="商品 ID"
+            label="ID"
             prop="id">
           </el-table-column>
           <el-table-column
-            label="商品名称"
-            prop="name">
+            label="时间"
+            prop="createTime">
           </el-table-column>
           <el-table-column
-            label="描述"
-            prop="desc">
+            label="类型"
+            prop="payType" :formatter="formatter">
+          </el-table-column>
+          <el-table-column
+            label="金额(元)"
+            prop="amount">
+          </el-table-column>
+          <el-table-column
+            label="数量(个)"
+            prop="batteryNum">
+          </el-table-column>
+          <el-table-column
+            label="状态"
+            prop="status" :formatter="formatter">
           </el-table-column>
         </el-table>
         <!-- 分页 -->
@@ -153,7 +137,7 @@
       </div>
 
     </div>
-    <div v-if="!deposit" class="empty_deposit">
+    <div v-if="!deposit.length" class="empty_deposit">
       <h3 class="title">我的押金</h3>
       <img src="../assets/empty_deposit.png" />
       <p>您还没有押金哦！</p>
@@ -163,6 +147,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+import {urls,imPostForm} from '../api/urls.js';
 import FormTopUp from './FormTopUp.vue';
 
 export default {
@@ -170,106 +156,141 @@ export default {
   data() {
     return {
       center:'center',
-      tableData5: [{
-        id: '12987122',
-        name: '好滋好味鸡蛋仔',
-        category: '江浙小吃、小吃零食',
-        desc: '荷兰优质淡奶，奶香浓而不腻',
-        address: '上海市普陀区真北路',
-        shop: '王小虎夫妻店',
-        shopId: '10333'
-      }],
-      deposit:0
+      deposit:[],
+      statusZHPayType:['','充值','退款'], //押金类型 1充值，2退款
+      statusZH:['','充值待确认','充值成功','退款待审核','拒绝退款','待退款','已退款','充值失败','审核拒绝退款'] //1充值待确认,2充值成功,3退款待审核,4拒绝退款, 5待退款,6已退款,7充值失败,8审核拒绝退款
     };
+  },
+  computed:{
+    ...mapState(['agent','modalStore'])
+  },
+  watch:{
+    modalStore:{
+      handler:function(newVal){
+        if(!newVal.needLogin){
+          // console.log('watch modalStore deep.');
+          this.fetchData();
+        }
+      },
+      deep:true
+    }
   },
   components:{
     FormTopUp
   },
   methods: {
+    fetchData:function(){
+      var vueThis=this;
+      if(window.sessionStorage.agentphone){
+        //else:没有用户手机则不发送请求
+        var sendData={
+          phone:''+window.sessionStorage.agentphone,
+          pageNum:urls.pageNum,
+          pageSize:urls.pageSize
+        };
+        imPostForm(urls.depositList,sendData,function(objRps){
+          if(objRps.code===1000){
+            vueThis.deposit=objRps.result.list;
+          }
+        });
+      }
 
+    },
+    formatter:function(row, column, cellValue){
+      // console.log(JSON.stringify(column));
+      if(column.property==='payType'){
+        return (this.statusZHPayType[cellValue]);
+      }
+      if(column.property==='status'){
+        return (this.statusZH[cellValue]);
+      }
+    }
+  },
+  created:function(){
+    this.fetchData();
   }
 };
 </script>
 
 <style lang="css" scoped>
-.im_card{
-  background: #FFF;
-  font-size: 12px;
-  max-height: 100px;
-  height: 100px;
-  padding: 20px;
-  border-radius: 5px;
-  box-sizing:border-box;
-  box-shadow:2px 0px 8px rgba(204,204,204,1)
-}
-.im_card-title{
-  margin: 0;
-  font-weight: normal;
-  text-align: right;
-}
-.im_card-value{
-  text-align: right;
-  font-size: 30px;
-  color: #333;
-  margin: 0;
-  margin-top:10px;
-}
-.im_card-value .fa-icon{
-  cursor: pointer;
-  margin-right: 10px;
-}
-.im_card-top_up{
-  margin-left: 10px;
-}
-.im_card-icon{
-  width:60px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  border-radius: 100px;
-  box-shadow:4px 8px 20px rgba(102,255,204,1);
-  background: #66FFCC;
-  background: linear-gradient(-10deg, #00CC66, #66FFCC);
-  color: #FFF;
-}
+  .im_card{
+    background: #FFF;
+    font-size: 12px;
+    max-height: 100px;
+    height: 100px;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing:border-box;
+    box-shadow:2px 0px 8px rgba(204,204,204,1)
+  }
+  .im_card-title{
+    margin: 0;
+    font-weight: normal;
+    text-align: right;
+  }
+  .im_card-value{
+    text-align: right;
+    font-size: 30px;
+    color: #333;
+    margin: 0;
+    margin-top:10px;
+  }
+  .im_card-value .fa-icon{
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .im_card-top_up{
+    margin-left: 10px;
+  }
+  .im_card-icon{
+    width:60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 100px;
+    box-shadow:4px 8px 20px rgba(102,255,204,1);
+    background: #66FFCC;
+    background: linear-gradient(-10deg, #00CC66, #66FFCC);
+    color: #FFF;
+  }
 
-/* table */
-.im-table-expand {
-  font-size: 0;
-}
-.im-table-expand label {
-  width: 90px;
-  color: #99a9bf;
-}
-.im-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 50%;
-}
-.table_wrap{
-  background: #FFF;
-  margin-top: 10px;
-}
-.table_wrap-pagination{
-  padding-top:20px;
-  padding-bottom:20px;
-}
-/* 押金为空 */
-.empty_deposit{
-  background: #FFF;
-  text-align: center;
-  padding-bottom: 30px;
-  min-height: calc(100vh - 60px - 60px - 30px);
-}
-.empty_deposit .title{
-  text-align: left;
-}
-.empty_deposit img{
-  margin-top:100px;
-}
-.empty_deposit p{
-  color: #999;
-  font-size: 14px;
-  margin-bottom: 30px;
-}
+  /* table */
+  .im-table-expand {
+    font-size: 0;
+  }
+  .im-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .im-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+  .table_wrap{
+    background: #FFF;
+    margin-top: 10px;
+  }
+  .table_wrap-pagination{
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  /* 押金为空 */
+  .empty_deposit{
+    background: #FFF;
+    text-align: center;
+    padding-bottom: 30px;
+    min-height: calc(100vh - 60px - 60px - 30px);
+  }
+  .empty_deposit .title{
+    text-align: left;
+  }
+  .empty_deposit img{
+    margin-top:100px;
+  }
+  .empty_deposit p{
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
 </style>
