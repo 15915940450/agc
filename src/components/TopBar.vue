@@ -37,8 +37,7 @@ export default {
   name:'TopBar',
   data(){
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
+      activeIndex: ''
     };
   },
   computed:{
