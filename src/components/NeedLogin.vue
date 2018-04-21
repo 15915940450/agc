@@ -14,7 +14,7 @@
         <el-form-item prop="password">
           <el-input type="password" v-model="formLogin.password" @input="hintMsg=''" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
         </el-form-item>
-        <!-- 验证码 -->
+        <!-- 验证码:need_vcode依赖于sendLoginCount（初始化为0,响应到达一次则加加,登录成功则清零） -->
         <el-form-item class="need_login-vcode" v-if="need_vcode">
           <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img src="../assets/validateCode.jpeg" height="30" />
@@ -41,13 +41,19 @@ import {mapState} from 'vuex';
 // import {mapState,mapMutations} from 'vuex';
 import {urls,imPostForm} from '../api/urls.js';
 
+//5次则需要验证码
+/* localStorage的值是字符串类型，而this.sendLoginCount则需保证是数字类型 */
+// console.log(window.localStorage.sendLoginCount);  //undefined
+var sendLoginCount=window.localStorage.sendLoginCount?window.Number(window.localStorage.sendLoginCount):0;
+// console.log({name:sendLoginCount});
+
 export default {
   name:'NeedLogin',
   data() {
     return {
       width:'380px',
       customClass:'onelogin',
-      need_vcode:false,
+      sendLoginCount:sendLoginCount,
       hintMsg:'',
       loading:false,
       formLogin: {
@@ -66,7 +72,14 @@ export default {
     };
   },
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    need_vcode:function(){
+      var bNeedVcode=false;
+      if(this.sendLoginCount>=5){
+        bNeedVcode=true;
+      }
+      return (bNeedVcode);
+    }
   },
   methods:{
     //登录接口=> /user/login
@@ -83,6 +96,9 @@ export default {
           imPostForm(urls.login,sendData,function(objRps){
             //响应已到达
             vueThis.loading=false;
+
+            // console.log(window.localStorage.sendLoginCount);
+            // console.log(vueThis.sendLoginCount);
             vueThis.handleLoginRps(objRps);
           });
         } else {
@@ -97,15 +113,20 @@ export default {
         this.handleSuccess(objRps);
         break;
       default:
+        //失败
         this.hintMsg=objRps.msg;
+        this.sendLoginCount++;
+        window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
     handleSuccess:function(objRps){
       //设置登录信息,手机号必须
       window.sessionStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
-      //清空密码
+      //清空密码,验证码次数(localStorage)
       this.formLogin.password='';
+      this.sendLoginCount=0;
+      window.localStorage.removeItem('sendLoginCount');
 
       //设置完整登录用户信息
       window.sessionStorage.setItem('agentname',objRps.result.name);
