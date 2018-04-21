@@ -122,7 +122,18 @@ export default {
     });
   },
   computed:{
-    ...mapState(['agent'])
+    ...mapState(['agent','modalStore'])
+  },
+  watch:{
+    modalStore:{
+      handler:function(newVal){
+        if(!newVal.needLogin){
+          // console.log('watch modalStore deep.');
+          this.fetchData();
+        }
+      },
+      deep:true
+    }
   },
   methods:{
     fetchData:function(){
