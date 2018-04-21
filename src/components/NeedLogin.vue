@@ -6,19 +6,24 @@
       <!-- <input v-model.trim="formLogin.phone"> -->
       <!-- 表单开始 -->
       <el-form ref="formLogin" :model="formLogin" size="small" :rules="rules">
+        <!-- 手机号 -->
         <el-form-item prop="phone">
-          <el-input v-model.number="formLogin.phone" @input="hintMsg=''" auto-complete="off" placeholder="请输入手机号码" class="need_login-phone"></el-input>
+          <el-input v-model.number="formLogin.phone" @input="hintMsg=''" auto-complete="on" placeholder="请输入手机号码" class="need_login-phone" autofocus="true"></el-input>
         </el-form-item>
+        <!-- 密码 -->
         <el-form-item prop="password">
           <el-input type="password" v-model="formLogin.password" @input="hintMsg=''" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
         </el-form-item>
+        <!-- 验证码 -->
         <el-form-item class="need_login-vcode" v-if="need_vcode">
           <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img src="../assets/validateCode.jpeg" height="30" />
         </el-form-item>
+        <!-- ajax响应后提示框 -->
         <el-form-item class="need_login-hint_wrap">
           <p class="need_login-hint" v-if="hintMsg">* {{hintMsg}}</p>
         </el-form-item>
+
       </el-form>
 
       <div slot="footer" class="dialog-footer">
