@@ -1,7 +1,9 @@
 var state={
   needLogin:window.sessionStorage.agentphone?false:true,
   topUp:false,
+  refund:false,
   statusTopUp:false,
+  statusRefund:false,
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   newUser:true
 };
@@ -23,12 +25,24 @@ var mutations={
   hideTopUp:function(state){
     state.topUp=false;
   },
+  showRefund:function(state){
+    state.refund=true;
+  },
+  hideRefund:function(state){
+    state.refund=false;
+  },
   showStatusTopUp:function(state){
     state.statusTopUp=true;
   },
   hideStatusTopUp:function(state){
     window.sessionStorage.removeItem('payurl');
     state.statusTopUp=false;
+  },
+  showStatusRefund:function(state){
+    state.statusRefund=true;
+  },
+  hideStatusRefund:function(state){
+    state.statusRefund=false;
   },
   setBatteryAmount:function(state,num){
     window.sessionStorage.setItem('batteryAmount',num);

@@ -15,7 +15,7 @@
               <el-col :span="14">
                 <h3 class="im_card-title">
                   我的押金(元)
-                  <a href="javascript:;" v-popover:top_up class="im_card-top_up" @click="handleTopUp()">充值</a>
+                  <a href="javascript:;" class="im_card-top_up" @click="handleTopUp()">充值</a>
                 </h3>
                 <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
@@ -37,7 +37,7 @@
               <el-col :span="14">
                 <h3 class="im_card-title">
                   可退押金(元)
-                  <a href="javascript:;" class="im_card-top_up">退款</a>
+                  <a href="javascript:;" class="im_card-refund" @click="handleRefund()">退款</a>
                 </h3>
                 <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
@@ -139,6 +139,8 @@
     <!-- 充值模态 -->
     <FormTopUp />
     <StatusTopUp />
+    <FormRefund />
+    <StatusRefund />
   </div>
 </template>
 
@@ -147,6 +149,8 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormTopUp from './FormTopUp.vue';
 import StatusTopUp from './StatusTopUp.vue';
+import FormRefund from './FormRefund.vue';
+import StatusRefund from './StatusRefund.vue';
 
 export default {
   name:'CDeposit',
@@ -190,7 +194,9 @@ export default {
   },
   components:{
     FormTopUp,
-    StatusTopUp
+    StatusTopUp,
+    FormRefund,
+    StatusRefund
   },
   methods: {
     fetchData:function(){
@@ -244,6 +250,9 @@ export default {
     handleTopUp:function(){
       this.$store.commit('showTopUp');
     },
+    handleRefund:function(){
+      this.$store.commit('showRefund');
+    },
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/deposit/'+val);
@@ -283,7 +292,7 @@ export default {
     cursor: pointer;
     margin-right: 10px;
   }
-  .im_card-top_up{
+  .im_card-top_up,.im_card-refund{
     margin-left: 10px;
   }
   .im_card-icon{
