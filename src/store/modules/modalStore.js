@@ -1,7 +1,7 @@
 var state={
   needLogin:window.sessionStorage.agentphone?false:true,
   topUp:false,
-  batteryAmount:0,
+  batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   newUser:true
 };
 
@@ -23,6 +23,7 @@ var mutations={
     state.topUp=false;
   },
   setBatteryAmount:function(state,num){
+    window.sessionStorage.setItem('batteryAmount',num);
     state.batteryAmount=num;
   },
   showNewUser:function(state){
