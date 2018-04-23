@@ -8,8 +8,8 @@
           <div class="im_card">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
-                  押金
+                <div class="im_card-icon im_card-icon _card1">
+                  <img src="../assets/deposit_card_1.png" />
                 </div>
               </el-col>
               <el-col :span="14">
@@ -39,8 +39,8 @@
           <div class="im_card">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
-                  可退押金
+                <div class="im_card-icon im_card-icon_card2">
+                  <img src="../assets/deposit_card_2.png" />
                 </div>
               </el-col>
               <el-col :span="14">
@@ -61,8 +61,8 @@
           <div class="im_card">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
-                  可用电池数
+                <div class="im_card-icon im_card-icon_card3">
+                  <img src="../assets/deposit_battery_1.png" />
                 </div>
               </el-col>
               <el-col :span="14">
@@ -81,8 +81,8 @@
           <div class="im_card">
             <el-row>
               <el-col :span="10">
-                <div class="im_card-icon">
-                已用电池数
+                <div class="im_card-icon im_card-icon_card4">
+                  <img src="../assets/deposit_battery_2.png" />
                 </div>
               </el-col>
               <el-col :span="14">
@@ -262,6 +262,25 @@ export default {
     background: #66FFCC;
     background: linear-gradient(-10deg, #00CC66, #66FFCC);
     color: #FFF;
+    position: relative;
+  }
+  .im_card-icon img{
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+  }
+  .im_card-icon_card1{
+    background: linear-gradient(-10deg, #00CC66, #66FFCC);
+  }
+  .im_card-icon_card2{
+    background: linear-gradient(-10deg, #3399FF, #33CCFF);
+  }
+  .im_card-icon_card3{
+    background: linear-gradient(-10deg, #FF66CC, #FF99CC);
+  }
+  .im_card-icon_card4{
+    background: linear-gradient(-10deg, #FF6699, #FF9966);
   }
 
   /* table */
