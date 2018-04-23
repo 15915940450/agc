@@ -53,10 +53,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 }
 .need_login-phone input{
   background: url(./user.png) no-repeat 5px center !important;
+  background-size: 20px 20px !important;
   padding-left: 35px;
 }
 .need_login-password input{
-  background: url(./lock.jpg) no-repeat 5px center !important;
+  background: url(./lock.png) no-repeat 5px center !important;
+  background-size: 20px 20px !important;
   padding-left: 35px;
 }
 .need_login-vcode .el-input__inner{

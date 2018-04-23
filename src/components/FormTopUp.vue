@@ -68,32 +68,35 @@ export default {
       if(window.sessionStorage.agentphone){
         //else:没有用户手机则不发送请求
         ajaxs.imPostJson(urls.topUp,sendData,function(objRps){
-          console.log(objRps);
+          // console.log(objRps);
           if(objRps.code===1000){
-            var yapAli={
+            var ecYap=window.encodeURIComponent(JSON.stringify({
               amount:window.Number(vueThis.amount), //pay
               batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
               qrCode:objRps.result.qrCode
-            };
+            }));
             //pay=>qrCode
-            window.open(window.encodeURI('http://localhost/agc/pay_ali.html?yap='+window.encodeURIComponent(JSON.stringify(yapAli))));
+            if(vueThis.formTopUp.payType==='1'){
+              // 支付宝
+              window.open(window.encodeURI('http://localhost/agc/pay_ali.html?yap='+ecYap));
+            }else{
+              window.open(window.encodeURI('http://localhost/agc/pay_wx.html?yap='+ecYap));
+            }
           }
         });
       }
     },
     handleComfirm:function(){
       var vueThis=this;
-      if(vueThis.formTopUp.payType==='1'){
-        var yap={
-          phone:''+window.sessionStorage.agentphone,
-          type:1,
-          payType:1,
-          amount:window.Number(vueThis.amount), //pay
-          batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-          status:1
-        };
-        vueThis.topUp(yap);
-      }
+      var yap={
+        phone:''+window.sessionStorage.agentphone,
+        type:1,
+        payType:window.Number(vueThis.formTopUp.payType),  //支付类型 1支付宝，2微信
+        amount:window.Number(vueThis.amount), //pay
+        batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
+        status:1
+      };
+      vueThis.topUp(yap);
     }
   }
 };
