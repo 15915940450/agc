@@ -16,9 +16,6 @@
                 <h3 class="im_card-title">
                   我的押金(元)
                   <a href="javascript:;" v-popover:top_up class="im_card-top_up" @click="handleTopUp()">充值</a>
-                  <!-- 充值模态 -->
-                  <FormTopUp />
-                  <StatusTopUp />
                 </h3>
                 <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
@@ -138,6 +135,10 @@
       <p>您还没有押金哦！</p>
       <el-button type="primary" size="small" @click="handleTopUp()">充值</el-button>
     </div>
+
+    <!-- 充值模态 -->
+    <FormTopUp />
+    <StatusTopUp />
   </div>
 </template>
 
@@ -237,7 +238,6 @@ export default {
       }
     },
     handleTopUp:function(){
-      // console.log(9);
       this.$store.commit('showTopUp');
     },
     handleCurrentChange:function(val){
