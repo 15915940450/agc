@@ -15,16 +15,9 @@
               <el-col :span="14">
                 <h3 class="im_card-title">
                   我的押金(元)
-                  <a href="javascript:;" v-popover:top_up class="im_card-top_up">充值</a>
-                  <el-popover
-                    ref="top_up"
-                    placement="bottom"
-                    width="400"
-                    trigger="click">
-                    <!-- 表单 -->
-                    <FormTopUp />
+                  <a href="javascript:;" v-popover:top_up class="im_card-top_up" @click="handleTopUp()">充值</a>
 
-                  </el-popover>
+                  <FormTopUp />
                 </h3>
                 <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
@@ -236,6 +229,9 @@ export default {
       if(column.property==='status'){
         return (this.statusZH[cellValue]);
       }
+    },
+    handleTopUp:function(){
+      this.$store.commit('showTopUp');
     },
     handleCurrentChange:function(val){
       this.pageNum=val;

@@ -123,10 +123,14 @@ export default {
       //设置登录信息,手机号必须
       window.sessionStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
+
       //清空密码,验证码次数(localStorage)
       this.formLogin.password='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
+
+      //电池单价
+      this.$store.commit('setBatteryAmount',objRps.result.batteryAmount);
 
       //设置完整登录用户信息
       window.sessionStorage.setItem('agentname',objRps.result.name);
