@@ -10,7 +10,7 @@
         <el-form :model="formRefund">
           <el-form-item label="退还数量" :label-width="formLabelWidth">
             <!-- <el-input size="small" v-model="formRefund.batteryNum" auto-complete="off"></el-input> -->
-            <el-input-number v-model="formRefund.batteryNum" :min="1"></el-input-number>
+            <el-input-number v-model="formRefund.batteryNum" :min="1" :max="max"></el-input-number>
           </el-form-item>
           <el-form-item label="退还金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount.toFixed(2)}}</strong>元
@@ -41,10 +41,14 @@ export default {
       formLabelWidth:'80px'
     });
   },
+  props:['refundableDeposit'],
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
       return (window.Number(this.modalStore.batteryAmount) * window.Number(this.formRefund.batteryNum));
+    },
+    max:function(){
+      return Math.floor(this.refundableDeposit/this.modalStore.batteryAmount);
     },
     title:function(){
       return ('每个虚拟电池退还押金 '+this.modalStore.batteryAmount+' 元');

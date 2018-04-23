@@ -139,7 +139,7 @@
     <!-- 充值模态 -->
     <FormTopUp />
     <StatusTopUp />
-    <FormRefund />
+    <FormRefund :refundable-deposit="card.refundableDeposit" />
     <StatusRefund />
   </div>
 </template>
@@ -183,6 +183,12 @@ export default {
       }
     },
     'modalStore.statusTopUp':function(val){
+      if(!val){
+        this.fetchData();
+        this.fetchDataCard();
+      }
+    },
+    'modalStore.statusRefund':function(val){
       if(!val){
         this.fetchData();
         this.fetchDataCard();
