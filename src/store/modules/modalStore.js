@@ -1,6 +1,7 @@
 var state={
   needLogin:window.sessionStorage.agentphone?false:true,
   topUp:false,
+  statusTopUp:false,
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   newUser:true
 };
@@ -21,6 +22,12 @@ var mutations={
   },
   hideTopUp:function(state){
     state.topUp=false;
+  },
+  showStatusTopUp:function(state){
+    state.statusTopUp=true;
+  },
+  hideStatusTopUp:function(state){
+    state.statusTopUp=false;
   },
   setBatteryAmount:function(state,num){
     window.sessionStorage.setItem('batteryAmount',num);

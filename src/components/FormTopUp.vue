@@ -64,6 +64,7 @@ export default {
       vueThis.$store.commit('hideTopUp');
     },
     topUp:function(sendData){
+      // 充值操作
       var vueThis=this;
       if(window.sessionStorage.agentphone){
         //else:没有用户手机则不发送请求
@@ -75,6 +76,9 @@ export default {
               batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
               qrCode:objRps.result.qrCode
             }));
+            //跳往支付页面(监听充值状态)，显示是否成功
+            vueThis.$store.commit('hideTopUp');
+            vueThis.$store.commit('showStatusTopUp');
             //pay=>qrCode
             if(vueThis.formTopUp.payType==='1'){
               // 支付宝

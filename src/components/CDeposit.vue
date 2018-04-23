@@ -16,8 +16,9 @@
                 <h3 class="im_card-title">
                   我的押金(元)
                   <a href="javascript:;" v-popover:top_up class="im_card-top_up" @click="handleTopUp()">充值</a>
-
+                  <!-- 充值模态 -->
                   <FormTopUp />
+                  <StatusTopUp />
                 </h3>
                 <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
@@ -144,6 +145,7 @@
 import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormTopUp from './FormTopUp.vue';
+import StatusTopUp from './StatusTopUp.vue';
 
 export default {
   name:'CDeposit',
@@ -168,22 +170,25 @@ export default {
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    modalStore:{
-      handler:function(newVal){
-        if(!newVal.needLogin){
-          // console.log('watch modalStore deep.');
-          this.fetchData();
-          this.fetchDataCard();
-        }
-      },
-      deep:true
+    'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+        this.fetchDataCard();
+      }
+    },
+    'modalStore.statusTopUp':function(val){
+      if(!val){
+        this.fetchData();
+        this.fetchDataCard();
+      }
     },
     pageNum:function(){
       this.fetchData();
     }
   },
   components:{
-    FormTopUp
+    FormTopUp,
+    StatusTopUp
   },
   methods: {
     fetchData:function(){

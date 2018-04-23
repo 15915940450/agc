@@ -130,14 +130,10 @@ export default {
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    modalStore:{
-      handler:function(newVal){
-        if(!newVal.needLogin){
-          // console.log('watch modalStore deep.');
-          this.fetchData();
-        }
-      },
-      deep:true
+    'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+      }
     }
   },
   methods:{
