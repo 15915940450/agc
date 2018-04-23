@@ -13,20 +13,20 @@
             <el-input-number v-model="formTopUp.batteryNum" :min="1"></el-input-number>
           </el-form-item>
           <el-form-item label="充值金额" :label-width="formLabelWidth">
-            <strong class="amount">{{amount}}</strong>元
+            <strong class="amount">{{amount.toFixed(2)}}</strong>元
           </el-form-item>
-          <el-form-item label="车类型" :label-width="formLabelWidth">
-            <el-select size="small" v-model="formTopUp.region" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="支付方式" :label-width="formLabelWidth">
+            <el-radio-group v-model="formTopUp.payType" size="small">
+              <el-radio label="1" border>支付宝</el-radio>
+              <el-radio label="2" border>微信</el-radio>
+            </el-radio-group>
           </el-form-item>
           <!-- 用户手机号,城市,用户群组,返还金额 -->
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="handleCancel()">取 消</el-button>
-        <el-button size="small" type="primary" @click="handleComfirm()">确 定</el-button>
+        <el-button @click="handleCancel()">取 消</el-button>
+        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -34,6 +34,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormTopUp',
@@ -42,7 +43,7 @@ export default {
     return ({
       formTopUp:{
         batteryNum:0,
-        region:''
+        payType:'1'
       },
 
       formLabelWidth:'80px'
@@ -51,10 +52,48 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(this.formTopUp.batteryNum)).toFixed(2);
+      return (window.Number(this.modalStore.batteryAmount) * window.Number(this.formTopUp.batteryNum));
     },
     title:function(){
       return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
+    }
+  },
+  methods:{
+    handleCancel:function(){
+      var vueThis=this;
+      vueThis.$store.commit('hideTopUp');
+    },
+    topUp:function(sendData){
+      var vueThis=this;
+      if(window.sessionStorage.agentphone){
+        //else:没有用户手机则不发送请求
+        ajaxs.imPostJson(urls.topUp,sendData,function(objRps){
+          console.log(objRps);
+          if(objRps.code===1000){
+            var yapAli={
+              amount:window.Number(vueThis.amount), //pay
+              batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
+              qrCode:objRps.result.qrCode
+            };
+            //pay=>qrCode
+            window.open(window.encodeURI('http://localhost/agc/pay_ali.html?yap='+window.encodeURIComponent(JSON.stringify(yapAli))));
+          }
+        });
+      }
+    },
+    handleComfirm:function(){
+      var vueThis=this;
+      if(vueThis.formTopUp.payType==='1'){
+        var yap={
+          phone:''+window.sessionStorage.agentphone,
+          type:1,
+          payType:1,
+          amount:window.Number(vueThis.amount), //pay
+          batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
+          status:1
+        };
+        vueThis.topUp(yap);
+      }
     }
   }
 };

@@ -15,7 +15,7 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,imPostForm} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 import BaseTableWrap from '@/components/BaseTableWrap'; //@/=>src/
 
 export default {
@@ -53,7 +53,7 @@ export default {
           pageSize:urls.pageSize
         };
         //请求地址
-        imPostForm(urls.evsList,sendData,function(objRps){
+        ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
           console.log(objRps);
           return;
           if(objRps.code===1000){

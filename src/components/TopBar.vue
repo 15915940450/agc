@@ -32,7 +32,7 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,imPostForm} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'TopBar',
@@ -51,7 +51,7 @@ export default {
     },
     logout:function(){
       var vueThis=this;
-      imPostForm(urls.logout,{},function(objRps){
+      ajaxs.imPostForm(urls.logout,{},function(objRps){
         if(objRps.code===1000){
           vueThis.$store.commit('showLogin');
         }

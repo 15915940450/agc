@@ -39,7 +39,7 @@
 <script>
 import {mapState} from 'vuex';
 // import {mapState,mapMutations} from 'vuex';
-import {urls,imPostForm} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 
 //5次则需要验证码
 /* localStorage的值是字符串类型，而this.sendLoginCount则需保证是数字类型 */
@@ -93,7 +93,7 @@ export default {
             phone:''+this.formLogin.phone,
             password:''+this.formLogin.password
           };
-          imPostForm(urls.login,sendData,function(objRps){
+          ajaxs.imPostForm(urls.login,sendData,function(objRps){
             //响应已到达
             vueThis.loading=false;
 

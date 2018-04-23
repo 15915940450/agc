@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import {urls,imPostForm,imGet} from '../api/urls.js';
+// import {urls,ajaxs} from '../api/urls.js';
 
 // console.log(urls.depositList);
 // var sendData={

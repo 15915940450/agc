@@ -111,7 +111,7 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,imPostForm} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'CJoy',
@@ -148,7 +148,7 @@ export default {
         var sendData={
           phone:''+window.sessionStorage.agentphone
         };
-        imPostForm(urls.baseInfo,sendData,function(objRps){
+        ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
           if(objRps.code===1000){
             // vueThis.availableDeposite=objRps.result.availableDeposite;
             Object.keys(objRps.result).forEach(function(v){

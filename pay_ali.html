@@ -149,12 +149,12 @@
       <!-- about -->
       <div class="about">
         <p class="about-p">正在使用即时到账交易</p>
-        <h3 class="about-h3">虚拟电池押金充值<strong class="about-num">2</strong>个 共<strong class="about-money">999.00</strong>元， <span class="about-company">收款方：深圳易马达科技有限公司</span></h3>
+        <h3 class="about-h3">虚拟电池押金充值<strong class="about-num" id="battery_num">--</strong>个 共<strong class="about-money" id="amount">--</strong>元， <span class="about-company">收款方：深圳易马达科技有限公司</span></h3>
       </div>
       <!-- 扫码 -->
       <div class="code_wrap">
         <h6 class="code_wrap-h6">扫一扫付款(元）</h6>
-        <h2 class="code_wrap-h2">999.00</h2>
+        <h2 class="code_wrap-h2" id="amount_again">--</h2>
         <div id="qrcode"></div>
         <p class="code_wrap-open"><img src="./static/ali_scan_tip.png" width="180" /></p>
         <p class="code_wrap-link_wrap">
@@ -175,10 +175,25 @@
 
     <script src="./static/qrcode.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
-      document.getElementById('qrcode').onclick=function(){
-        window.open('https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open');
-      };
+      function QueryStringToJSON() {
+      var pairs = window.location.search.slice(1).split('&');
+
+      var result = {};
+      pairs.forEach(function(pair) {
+      pair = pair.split('=');
+      result[pair[0]] = decodeURIComponent(pair[1] || '');
+      });
+
+      return JSON.parse(JSON.stringify(result));
+      }
+
+      var pay = JSON.parse(window.decodeURIComponent(QueryStringToJSON().yap));
+
+      new QRCode(document.getElementById("qrcode"), pay.qrCode);
+
+      document.getElementById('battery_num').innerHTML=pay.batteryNum;
+      document.getElementById('amount').innerHTML=pay.amount.toFixed(2);
+      document.getElementById('amount_again').innerHTML=pay.amount.toFixed(2);
     </script>
   </body>
 </html>

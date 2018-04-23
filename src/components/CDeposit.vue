@@ -142,7 +142,7 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,imPostForm} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 import FormTopUp from './FormTopUp.vue';
 
 export default {
@@ -195,7 +195,7 @@ export default {
           pageNum:vueThis.pageNum,
           pageSize:urls.pageSize
         };
-        imPostForm(urls.depositList,sendData,function(objRps){
+        ajaxs.imPostForm(urls.depositList,sendData,function(objRps){
           if(objRps.code===1000){
             vueThis.total=objRps.result.total;
             vueThis.deposit=objRps.result.list;
@@ -211,7 +211,7 @@ export default {
         var sendData={
           phone:''+window.sessionStorage.agentphone
         };
-        imPostForm(urls.baseInfo,sendData,function(objRps){
+        ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
           if(objRps.code===1000){
             vueThis.card.availableDeposite=objRps.result.availableDeposite;
             vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
