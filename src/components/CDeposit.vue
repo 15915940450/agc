@@ -97,7 +97,8 @@
         <!-- 押金记录表格 -->
         <el-table
           :data="deposit" stripe
-          style="width: 100%" class="table_wrap-table">
+          style="width: 100%" class="table_wrap-table" size="medium">
+          <!-- medium / small / mini -->
           <el-table-column
             label="ID"
             prop="id">
