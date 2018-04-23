@@ -80,13 +80,18 @@ export default {
             //跳往支付页面(监听充值状态)，显示是否成功
             vueThis.$store.commit('hideTopUp');
             vueThis.$store.commit('showStatusTopUp');
+            //保存链接到存贮
+            var payurl='';
+
             //pay=>qrCode
             if(vueThis.formTopUp.payType==='1'){
               // 支付宝
-              window.open(window.encodeURI('http://localhost/agc/pay_ali.html?yap='+ecYap));
+              payurl=window.encodeURI('http://localhost/agc/pay_ali.html?yap='+ecYap);
             }else{
-              window.open(window.encodeURI('http://localhost/agc/pay_wx.html?yap='+ecYap));
+              payurl=window.encodeURI('http://localhost/agc/pay_wx.html?yap='+ecYap);
             }
+            window.sessionStorage.setItem('payurl',payurl);
+            window.open(payurl);
           }
         });
       }

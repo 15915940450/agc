@@ -28,7 +28,7 @@ export default {
   },
   methods:{
     handleRetry:function(){
-      console.log('retry');
+      window.open(window.sessionStorage.payurl);
     },
     handleComfirm:function(){
       var vueThis=this;

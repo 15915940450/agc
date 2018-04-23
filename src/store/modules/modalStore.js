@@ -27,6 +27,7 @@ var mutations={
     state.statusTopUp=true;
   },
   hideStatusTopUp:function(state){
+    window.sessionStorage.removeItem('payurl');
     state.statusTopUp=false;
   },
   setBatteryAmount:function(state,num){
