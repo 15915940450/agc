@@ -26,9 +26,9 @@
 
                   </el-popover>
                 </h3>
-                <p class="im_card-value">
+                <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
-                  7988
+                  {{card.availableDeposite}}
                 </p>
               </el-col>
             </el-row>
@@ -48,9 +48,9 @@
                   可退押金(元)
                   <a href="javascript:;" class="im_card-top_up">退款</a>
                 </h3>
-                <p class="im_card-value">
+                <p class="im_card-value overtext">
                   <icon name="eye-slash" scale="1.3"></icon>
-                  90
+                  {{card.refundableDeposit}}
                 </p>
               </el-col>
             </el-row>
@@ -69,8 +69,8 @@
                 <h3 class="im_card-title">
                   可用电池数(个)
                 </h3>
-                <p class="im_card-value">
-                  22988
+                <p class="im_card-value overtext">
+                  {{card.availableBattery}}
                 </p>
               </el-col>
             </el-row>
@@ -89,8 +89,8 @@
                 <h3 class="im_card-title">
                   已用电池数(个)
                 </h3>
-                <p class="im_card-value">
-                  3000
+                <p class="im_card-value overtext">
+                  {{card.usedBattery}}
                 </p>
               </el-col>
             </el-row>
@@ -158,6 +158,12 @@ export default {
       center:'center',
       total:'--',
       deposit:[],
+      card:{
+        availableDeposite:'加载中...',
+        refundableDeposit:'加载中...',
+        availableBattery:'加载中...',
+        usedBattery:'加载中...'
+      },
 
       pageNum:1,
       statusZHType:['','充值','退款'], //押金类型 1充值，2退款
@@ -173,6 +179,7 @@ export default {
         if(!newVal.needLogin){
           // console.log('watch modalStore deep.');
           this.fetchData();
+          this.fetchDataCard();
         }
       },
       deep:true
@@ -203,6 +210,24 @@ export default {
       }
 
     },
+    fetchDataCard:function(){
+      var vueThis=this;
+      if(window.sessionStorage.agentphone){
+        //else:没有用户手机则不发送请求
+        var sendData={
+          phone:''+window.sessionStorage.agentphone
+        };
+        imPostForm(urls.baseInfo,sendData,function(objRps){
+          if(objRps.code===1000){
+            vueThis.card.availableDeposite=objRps.result.availableDeposite;
+            vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
+            vueThis.card.availableBattery=objRps.result.availableBattery;
+            vueThis.card.usedBattery=objRps.result.usedBattery;
+          }
+        });
+      }
+
+    },
     formatter:function(row, column, cellValue){
       // console.log(JSON.stringify(column));
       if(column.property==='type'){
@@ -218,6 +243,7 @@ export default {
   },
   created:function(){
     this.fetchData();
+    this.fetchDataCard();
   }
 };
 </script>

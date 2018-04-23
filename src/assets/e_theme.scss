@@ -158,3 +158,11 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   top:4px;
   left:6px;
 }
+
+//classes
+.overtext{
+  width: 100%;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
