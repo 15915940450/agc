@@ -26,7 +26,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm()" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -45,6 +45,7 @@ export default {
         batteryNum:0,
         payType:'1'
       },
+      loading:false,
 
       formLabelWidth:'80px'
     });
@@ -90,6 +91,7 @@ export default {
             }else{
               payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
             }
+            vueThis.loading=false;
             window.sessionStorage.setItem('payurl',payurl);
             window.open(payurl);
           }
@@ -98,6 +100,7 @@ export default {
     },
     handleComfirm:function(){
       var vueThis=this;
+
       var yap={
         phone:''+window.sessionStorage.agentphone,
         type:1,
@@ -106,7 +109,9 @@ export default {
         batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
         status:1
       };
+
       vueThis.topUp(yap);
+      vueThis.loading=true;
     }
   }
 };

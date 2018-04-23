@@ -19,7 +19,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm()" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -37,6 +37,7 @@ export default {
       formRefund:{
         batteryNum:0
       },
+      loading:false,
 
       formLabelWidth:'80px'
     });
@@ -61,6 +62,7 @@ export default {
     },
     handleComfirm:function(){
       var vueThis=this;
+      vueThis.loading=true;
       var sendRefund={
         phone:''+window.sessionStorage.agentphone,
         type:2,
@@ -69,6 +71,7 @@ export default {
         status:3
       };
       ajaxs.imPostJson(urls.refund,sendRefund,function(objRps){
+        vueThis.loading=false;
         if(objRps.code===1000){
           vueThis.$store.commit('hideRefund');
           vueThis.$store.commit('showStatusRefund');
