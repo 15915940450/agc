@@ -136,7 +136,7 @@
       <h3 class="title">我的押金</h3>
       <img src="../assets/empty_deposit.png" />
       <p>您还没有押金哦！</p>
-      <el-button type="primary" size="small">充值</el-button>
+      <el-button type="primary" size="small" @click="handleTopUp()">充值</el-button>
     </div>
   </div>
 </template>
@@ -237,6 +237,7 @@ export default {
       }
     },
     handleTopUp:function(){
+      // console.log(9);
       this.$store.commit('showTopUp');
     },
     handleCurrentChange:function(val){

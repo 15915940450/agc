@@ -9,12 +9,12 @@
         </p>
       </el-col>
       <el-col :span="8">
-        <p class="im_key">我的押金</p>
-        <!-- <p class="im_value">{{availableDeposite}}</p> -->
-        <p class="im_value">
-          <!-- <router-link to="/deposit/1"></router-link> -->
-          <a href="javascript:;" @click="rrPush()">{{availableDeposite}}</a>
-        </p>
+        <a class="to_deposit" href="javascript:;" @click="rrPush()">
+          <p class="im_key">我的押金</p>
+          <p class="im_value">
+            <span>{{availableDeposite}}</span>
+          </p>
+        </a>
 
       </el-col>
     </el-row>
@@ -192,9 +192,13 @@ export default {
 .im_joy span{
   vertical-align: middle;
 }
-.im_key{
+.to_deposit{
+  float: right;
+}
+.to_deposit .im_key{
   margin: 0;
   text-align: right;
+  color:#333;
 }
 .im_value{
   text-align: right;
