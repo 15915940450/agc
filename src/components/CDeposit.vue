@@ -99,11 +99,11 @@
           <!-- medium / small / mini -->
           <el-table-column
             label="ID"
-            prop="id">
+            prop="tradeId">
           </el-table-column>
           <el-table-column
             label="时间"
-            prop="createTime">
+            prop="createTime" :formatter="formatter">
           </el-table-column>
           <el-table-column
             label="类型"
@@ -230,6 +230,9 @@ export default {
     },
     formatter:function(row, column, cellValue){
       // console.log(JSON.stringify(column));
+      if(column.property==='createTime'){
+        return (cellValue.slice(0,-2));
+      }
       if(column.property==='type'){
         return (this.statusZHType[cellValue]);
       }
