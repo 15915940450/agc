@@ -123,7 +123,7 @@
           </el-table-column>
         </el-table>
         <!-- 分页 -->
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" class="table_wrap-pagination" @current-change="handleCurrentChange">
+        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
 
         </el-pagination>
       </div>
@@ -162,7 +162,8 @@ export default {
         usedBattery:'加载中...'
       },
 
-      pageNum:1,
+      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1),
+      // currentPage:,
       statusZHType:['','充值','退款'], //押金类型 1充值，2退款
       statusZH:['','充值待确认','充值成功','退款待审核','拒绝退款','待退款','已退款','充值失败','审核拒绝退款'] //1充值待确认,2充值成功,3退款待审核,4拒绝退款, 5待退款,6已退款,7充值失败,8审核拒绝退款
     };
@@ -245,6 +246,7 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
+      this.$router.push('/deposit/'+val);
     }
   },
   created:function(){
