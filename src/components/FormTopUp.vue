@@ -74,7 +74,8 @@ export default {
             var ecYap=window.encodeURIComponent(JSON.stringify({
               amount:window.Number(vueThis.amount), //pay
               batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-              qrCode:objRps.result.qrCode
+              tradeId:''+objRps.result.tradeId, //pay
+              qrCode:objRps.result.qrCode //pay
             }));
             //跳往支付页面(监听充值状态)，显示是否成功
             vueThis.$store.commit('hideTopUp');

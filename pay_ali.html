@@ -175,6 +175,15 @@
 
     <script src="./static/qrcode.min.js" charset="utf-8"></script>
     <script type="text/javascript">
+      function serialize2querystring(obj){
+        var str = [];
+        for (var p in obj)
+          if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          }
+        return str.join("&");
+      }
+
       function QueryStringToJSON() {
       var pairs = window.location.search.slice(1).split('&');
 
@@ -187,6 +196,35 @@
       return JSON.parse(JSON.stringify(result));
       }
 
+      //1.imPostForm
+      var imPostForm=function (url,sendData,callback){
+        callback=callback || function(){};
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+          xmlhttp=new XMLHttpRequest();
+        } else {
+          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        xmlhttp.onreadystatechange=function() {
+          if(xmlhttp.readyState===4 && xmlhttp.status===200){
+            if(xmlhttp.responseText){
+              try{
+                var objRps=JSON.parse(xmlhttp.responseText);
+                callback(objRps);
+              }catch(err){
+                _.logErr(err);
+              }
+            }else{
+              _.logErr('返回值为：'+xmlhttp.responseText);
+            }
+          }
+        };
+        xmlhttp.open('POST',url,true);
+        xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xmlhttp.withCredentials = true;
+        xmlhttp.send(serialize2querystring(sendData));
+      };
+
       var pay = JSON.parse(window.decodeURIComponent(QueryStringToJSON().yap));
 
       new QRCode(document.getElementById("qrcode"), pay.qrCode);
@@ -194,6 +232,19 @@
       document.getElementById('battery_num').innerHTML=pay.batteryNum;
       document.getElementById('amount').innerHTML=pay.amount.toFixed(2);
       document.getElementById('amount_again').innerHTML=pay.amount.toFixed(2);
+
+
+      //监听充值状态 /trade/check
+      var bCheck=0;
+      var timer_topup=window.setInterval(function(){
+        imPostForm('http://119.23.133.72:8764/agent/trade/check',{tradeId:pay.tradeId},function(objRps){
+          if(objRps.result===2){
+            alert('充值成功');
+            window.clearInterval(timer_topup);
+            window.close();
+          }
+        });
+      },1500);
     </script>
   </body>
 </html>
