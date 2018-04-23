@@ -86,9 +86,9 @@ export default {
             //pay=>qrCode
             if(vueThis.formTopUp.payType==='1'){
               // 支付宝
-              payurl=window.encodeURI('http://localhost/agc/pay_ali.html?yap='+ecYap);
+              payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
             }else{
-              payurl=window.encodeURI('http://localhost/agc/pay_wx.html?yap='+ecYap);
+              payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
             }
             window.sessionStorage.setItem('payurl',payurl);
             window.open(payurl);
