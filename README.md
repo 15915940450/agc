@@ -4,7 +4,7 @@
 
 ## 常用语句
 
-* import {urls,imPostForm} from '../api/urls.js'; //引入api(ajax)
+* import {urls,ajaxs} from '../api/urls.js'; //引入api(ajax)
 * computed:{
   ...mapState(['modalStore'])
 },
