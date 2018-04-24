@@ -52,9 +52,29 @@
             label="电量"
             prop="soc">
           </el-table-column>
-          <el-table-column
-            label="操作"
-            prop="thilina">
+          <el-table-column label="操作" width="190">
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                size="small">
+                唤醒
+              </el-button>
+              <el-button
+                type="text"
+                size="small">
+                熄火
+              </el-button>
+              <el-button
+                type="text"
+                size="small">
+                轨迹
+              </el-button>
+              <el-button
+                type="text"
+                size="small">
+                解绑
+              </el-button>
+            </template>
           </el-table-column>
         </el-table>
         <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
