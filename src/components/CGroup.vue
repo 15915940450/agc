@@ -90,7 +90,7 @@ export default {
       }
     },
     groupCreate:function(){
-
+      this.$store.commit('showGroupCreate');
     }
   },  //methods
   created:function(){

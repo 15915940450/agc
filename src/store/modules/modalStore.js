@@ -5,7 +5,7 @@ var state={
   statusTopUp:false,
   statusRefund:false,
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
-  groupCreate:true,
+  groupCreate:false,
   newUser:true
 };
 
@@ -19,6 +19,12 @@ var mutations={
     window.sessionStorage.removeItem('batteryAmount');
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
+    state.topUp=false;
+    state.refund=false;
+    state.statusTopUp=false;
+    state.statusRefund=false;
+    state.groupCreate=false;
+    state.newUser=false;
   },
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
@@ -53,10 +59,10 @@ var mutations={
     window.sessionStorage.setItem('batteryAmount',num);
     state.batteryAmount=num;
   },
-  showGroupCrate:function(state){
+  showGroupCreate:function(state){
     state.groupCreate=true;
   },
-  hideGroupCrate:function(state){
+  hideGroupCreate:function(state){
     state.groupCreate=false;
   },
   showNewUser:function(state){

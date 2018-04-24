@@ -64,8 +64,8 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="modalStore.groupCreate = false">取 消</el-button>
-        <el-button type="primary" @click="modalStore.groupCreate = false">确 定</el-button>
+        <el-button @click="handleCancel()">取 消</el-button>
+        <el-button type="primary" @click="handleComfirm()" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -90,6 +90,7 @@ export default {
       typePackage:['月套卡','次套卡','免费套餐'],
       options_depositListScheme: [],
       options_packageListScheme: [],
+      loading:false,
 
       formLabelWidth:'70px'
     });
@@ -112,7 +113,7 @@ export default {
         };
         ajaxs.imPostJson(urls[type],sendData,function(objRps){
           if(objRps.code===1000){
-            console.log(type);
+            // console.log(type);
             // vueThis['.options_'+type]=objRps.result.list;
             if(type==='depositListScheme'){
               vueThis.options_depositListScheme=objRps.result.list;
@@ -123,7 +124,44 @@ export default {
           }
         });
       }
+    },
+    handleCancel:function(){
+      this.$store.commit('hideGroupCreate');
+    },
+    handleComfirm:function(){
+      // /group/create groupCreate
+//       name	string
+// 必须
+// 群组名称
+// depositScheme	string []
+// 必须
+// 押金方案
+// item 类型: string
+//
+// packageScheme	string []
+// 必须
+// 套餐方案
+// item 类型: string
+//
+// agentId	string
+// 必须
+// 代理商ID
+// canRefund	integer
+// 必须
+// 是否可退（0不可退，1可退）
+      var vueThis=this;
+      if(window.sessionStorage.agentphone){
+        vueThis.loading=true;
+        ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
+          console.log(objRps);
+          if(objRps.code===1000){
+
+          }
+        });
+      }
+
     }
+
   },  //methods
   created:function(){
     this.fetchOptionsScheme('depositListScheme');

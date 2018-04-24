@@ -100,6 +100,8 @@ export default {
             // console.log(window.localStorage.sendLoginCount);
             // console.log(vueThis.sendLoginCount);
             vueThis.handleLoginRps(objRps);
+          },{
+            imLogin:true
           });
         } else {
           _.logErr('error submit!!');
