@@ -221,7 +221,6 @@ export default {
           }
         });
       }
-
     },
     fetchDataCard:function(){
       var vueThis=this;

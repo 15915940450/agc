@@ -17,9 +17,9 @@ var sendData={
   advancedParam:advancedParam
 };
 
-ajaxs.imPostJson(urls.packageList,sendData,function(objRps){
-  console.log(objRps,'/ajax');
-});
+// ajaxs.imPostJson(urls.packageList,sendData,function(objRps){
+//   console.log(objRps,'/ajax');
+// });
 
 export default {
   name:'AjaxTest'

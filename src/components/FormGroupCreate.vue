@@ -3,7 +3,7 @@
     <el-dialog
       title="创建群组"
       :visible.sync="modalStore.groupCreate"
-      width="400px"
+      width="460px"
       :show-close="false"
       :close-on-click-modal="false"
       center>
@@ -40,18 +40,24 @@
           // 是否可退（0不可退，1可退） -->
           <el-form-item label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
+              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
-                v-for="item in optionsDepositScheme"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in options_depositListScheme"
+                :key="item.id"
+                :label="(item.name+' / ¥'+item.deposit+' / '+item.num+'颗电池')"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="套餐方案" :label-width="formLabelWidth">
-            <el-select v-model="formGroupCreate.region" placeholder="请选择">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="formGroupCreate.packageScheme" multiple placeholder="请选择">
+              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
+              <el-option
+                v-for="item in options_packageListScheme"
+                :key="item.id"
+                :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
+                :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
           <!-- 用户手机号,城市,用户群组,返还金额 -->
@@ -67,6 +73,7 @@
 
 <script>
 import {mapState} from 'vuex';
+import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'BaseModalWrap',
@@ -80,47 +87,52 @@ export default {
         agentId:window.sessionStorage.agentid,
         region:''
       },
-      optionsDepositScheme: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
-      optionsPackageScheme: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
-      }],
+      typePackage:['月套卡','次套卡','免费套餐'],
+      options_depositListScheme: [],
+      options_packageListScheme: [],
 
       formLabelWidth:'70px'
     });
   },
   computed:{
     ...mapState(['modalStore'])
+  },
+  methods:{
+    fetchOptionsScheme:function(type){
+      var vueThis=this;
+      if(window.sessionStorage.agentphone){
+        //else:没有用户手机则不发送请求
+        var advancedParam=JSON.stringify({
+          groupCode:null
+        });
+        var sendData={
+          advancedParam:advancedParam,
+          pageNum:1,
+          pageSize:969
+        };
+        ajaxs.imPostJson(urls[type],sendData,function(objRps){
+          if(objRps.code===1000){
+            console.log(type);
+            // vueThis['.options_'+type]=objRps.result.list;
+            if(type==='depositListScheme'){
+              vueThis.options_depositListScheme=objRps.result.list;
+            }
+            if(type==='packageListScheme'){
+              vueThis.options_packageListScheme=objRps.result.list;
+            }
+          }
+        });
+      }
+    }
+  },  //methods
+  created:function(){
+    this.fetchOptionsScheme('depositListScheme');
+    this.fetchOptionsScheme('packageListScheme');
   }
+
 };
 </script>
 
 <style lang="css" scoped>
+
 </style>
