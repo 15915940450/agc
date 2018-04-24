@@ -11,8 +11,12 @@ var state={
 var mutations={
   showLogin:function(state){
     //需要登录时清空会话存贮
-    // window.sessionStorage.agentphone='';
-    window.sessionStorage.clear();
+    // window.sessionStorage.clear();
+    window.sessionStorage.removeItem('agentphone');
+    window.sessionStorage.removeItem('agentname');
+    window.sessionStorage.removeItem('agentid');
+    window.sessionStorage.removeItem('batteryAmount');
+    window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
   },
   hideLogin:function(state){
