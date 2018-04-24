@@ -5,23 +5,22 @@
 </template>
 
 <script>
-// import {urls,ajaxs} from '../api/urls.js';
+import {urls,ajaxs} from '../api/urls.js';
 
-// console.log(urls.depositList);
-// var sendData={
-//   pageNum:1,
-//   pageSize:2,
-//   phone:'15820480937'
-// };
-// imPostForm(urls.depositList,sendData,function(objRps){
-//   console.log(objRps);
-// });
+var advancedParam=JSON.stringify({
+  agentId:window.sessionStorage.agentid
+});
 
+var sendData={
+  pageNum:1,
+  pageSize:3,
+  advancedParam:advancedParam
+};
 
-// imGet(urls.depositList+'?phone=15820480937',function(rps){
-//   console.log(rps);
-// });
-//
+ajaxs.imPostJson(urls.groupList,sendData,function(objRps){
+  // console.log(objRps,'/ajax');
+});
+
 export default {
   name:'AjaxTest'
 };
