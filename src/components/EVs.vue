@@ -22,44 +22,41 @@
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-form label-position="left" inline class="im-table-expand">
-                <el-form-item label="商品名称">
-                  <span>{{ props.row.name }}</span>
+                <el-form-item label="坐标：">
+                  <span>{{ props.row.location }}</span>
                 </el-form-item>
-                <el-form-item label="所属店铺">
-                  <span>{{ props.row.shop }}</span>
-                </el-form-item>
-                <el-form-item label="商品 ID">
-                  <span>{{ props.row.id }}</span>
-                </el-form-item>
-                <el-form-item label="店铺 ID">
-                  <span>{{ props.row.shopId }}</span>
-                </el-form-item>
-                <el-form-item label="商品分类">
-                  <span>{{ props.row.category }}</span>
-                </el-form-item>
-                <el-form-item label="店铺地址">
-                  <span>{{ props.row.address }}</span>
-                </el-form-item>
-                <el-form-item label="商品描述">
-                  <span>{{ props.row.desc }}</span>
+                <el-form-item label="坐标更新时间：" label-width="300">
+                  <span>{{ props.row.locationUpdateTime }}</span>
                 </el-form-item>
               </el-form>
             </template>
           </el-table-column>
           <el-table-column
-            label="商品 ID"
-            prop="id">
+            label="#"
+            type="index"
+            width="50">
           </el-table-column>
           <el-table-column
-            label="商品名称"
-            prop="name">
+            label="电动车SN"
+            prop="sn">
           </el-table-column>
           <el-table-column
-            label="描述"
-            prop="desc">
+            label="用户名"
+            prop="userName">
+          </el-table-column>
+          <el-table-column
+            label="手机号"
+            prop="owner">
+          </el-table-column>
+          <el-table-column
+            label="电量"
+            prop="soc">
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            prop="thilina">
           </el-table-column>
         </el-table>
-
         <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
           <!-- 分页 -->
         </el-pagination>
@@ -185,4 +182,5 @@ export default {
     border:1px solid #AAA;
     margin:180px auto 10px;
   }
+
 </style>
