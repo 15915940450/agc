@@ -124,32 +124,23 @@ export default {
       this.$store.commit('hideGroupCreate');
     },
     handleComfirm:function(){
-      // /group/create groupCreate
-//       name	string
-// 必须
-// 群组名称
-// depositScheme	string []
-// 必须
-// 押金方案
-// item 类型: string
-//
-// packageScheme	string []
-// 必须
-// 套餐方案
-// item 类型: string
-//
-// agentId	string
-// 必须
-// 代理商ID
-// canRefund	integer
-// 必须
-// 是否可退（0不可退，1可退）
       var vueThis=this;
+      var sendData={
+        name:vueThis.formGroupCreate.name,
+        depositScheme:vueThis.formGroupCreate.depositScheme,
+        packageScheme:vueThis.formGroupCreate.packageScheme,
+        agentId:window.sessionStorage.agentid,
+        cityCode:0,
+        canRefund:window.Number(vueThis.formGroupCreate.canRefund)
+      };
+      // console.log(JSON.stringify(sendData));
       vueThis.loading=true;
       ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
-        console.log(objRps);
+        // console.log(objRps);
+        vueThis.loading=false;
         if(objRps.code===1000){
-
+          vueThis.$store.commit('hideGroupCreate');
+          vueThis.$store.commit('showStatusGroupCreate');
         }
       });
     }

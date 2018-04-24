@@ -8,7 +8,14 @@
 * computed:{
   ...mapState(['modalStore'])
 },
+var vueThis=this;
+vueThis.loading=true;
+ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
+  console.log(objRps);
+  if(objRps.code===1000){
 
+  }
+});
 
 
 ## atom editor

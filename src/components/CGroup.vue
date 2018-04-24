@@ -27,6 +27,7 @@
     </div>
 
     <FormGroupCreate />
+    <StatusGroupCreate />
 
   </div>
 </template>
@@ -35,6 +36,7 @@
 import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormGroupCreate from './FormGroupCreate.vue';
+import StatusGroupCreate from './StatusGroupCreate.vue';
 
 export default {
   name:'CGroup',
@@ -67,7 +69,8 @@ export default {
     }
   },
   components:{
-    FormGroupCreate
+    FormGroupCreate,
+    StatusGroupCreate
   },
   methods:{
     fetchData:function(){
@@ -91,6 +94,7 @@ export default {
     }
   },  //methods
   created:function(){
+    // console.log(JSON.stringify((this.$store.state.modalStore.statusGroupCreate)));
     this.fetchData();
   }
 
