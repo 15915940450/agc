@@ -207,37 +207,31 @@ export default {
   methods: {
     fetchData:function(){
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        var sendData={
-          phone:''+window.sessionStorage.agentphone,
-          pageNum:vueThis.pageNum,
-          pageSize:urls.pageSize
-        };
-        ajaxs.imPostForm(urls.depositList,sendData,function(objRps){
-          if(objRps.code===1000){
-            vueThis.total=objRps.result.total;
-            vueThis.deposit=objRps.result.list;
-          }
-        });
-      }
+      var sendData={
+        phone:''+window.sessionStorage.agentphone,
+        pageNum:vueThis.pageNum,
+        pageSize:urls.pageSize
+      };
+      ajaxs.imPostForm(urls.depositList,sendData,function(objRps){
+        if(objRps.code===1000){
+          vueThis.total=objRps.result.total;
+          vueThis.deposit=objRps.result.list;
+        }
+      });
     },
     fetchDataCard:function(){
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        var sendData={
-          phone:''+window.sessionStorage.agentphone
-        };
-        ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
-          if(objRps.code===1000){
-            vueThis.card.availableDeposite=objRps.result.availableDeposite;
-            vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
-            vueThis.card.availableBattery=objRps.result.availableBattery;
-            vueThis.card.usedBattery=objRps.result.usedBattery;
-          }
-        });
-      }
+      var sendData={
+        phone:''+window.sessionStorage.agentphone
+      };
+      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
+        if(objRps.code===1000){
+          vueThis.card.availableDeposite=objRps.result.availableDeposite;
+          vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
+          vueThis.card.availableBattery=objRps.result.availableBattery;
+          vueThis.card.usedBattery=objRps.result.usedBattery;
+        }
+      });
 
     },
     formatter:function(row, column, cellValue){

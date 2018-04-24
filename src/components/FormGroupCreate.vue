@@ -101,29 +101,24 @@ export default {
   methods:{
     fetchOptionsScheme:function(type){
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        var advancedParam=JSON.stringify({
-          groupCode:null
-        });
-        var sendData={
-          advancedParam:advancedParam,
-          pageNum:1,
-          pageSize:969
-        };
-        ajaxs.imPostJson(urls[type],sendData,function(objRps){
-          if(objRps.code===1000){
-            // console.log(type);
-            // vueThis['.options_'+type]=objRps.result.list;
-            if(type==='depositListScheme'){
-              vueThis.options_depositListScheme=objRps.result.list;
-            }
-            if(type==='packageListScheme'){
-              vueThis.options_packageListScheme=objRps.result.list;
-            }
+      var advancedParam=JSON.stringify({
+        groupCode:null
+      });
+      var sendData={
+        advancedParam:advancedParam,
+        pageNum:1,
+        pageSize:969
+      };
+      ajaxs.imPostJson(urls[type],sendData,function(objRps){
+        if(objRps.code===1000){
+          if(type==='depositListScheme'){
+            vueThis.options_depositListScheme=objRps.result.list;
           }
-        });
-      }
+          if(type==='packageListScheme'){
+            vueThis.options_packageListScheme=objRps.result.list;
+          }
+        }
+      });
     },
     handleCancel:function(){
       this.$store.commit('hideGroupCreate');
@@ -150,16 +145,13 @@ export default {
 // 必须
 // 是否可退（0不可退，1可退）
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        vueThis.loading=true;
-        ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
-          console.log(objRps);
-          if(objRps.code===1000){
+      vueThis.loading=true;
+      ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
+        console.log(objRps);
+        if(objRps.code===1000){
 
-          }
-        });
-      }
-
+        }
+      });
     }
 
   },  //methods

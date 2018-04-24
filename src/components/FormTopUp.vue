@@ -68,36 +68,33 @@ export default {
     topUp:function(sendData){
       // 充值操作
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        ajaxs.imPostJson(urls.topUp,sendData,function(objRps){
-          // console.log(objRps);
-          if(objRps.code===1000){
-            var ecYap=window.encodeURIComponent(JSON.stringify({
-              amount:window.Number(vueThis.amount), //pay
-              batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-              tradeId:''+objRps.result.tradeId, //pay
-              qrCode:objRps.result.qrCode //pay
-            }));
-            //跳往支付页面(监听充值状态)，显示是否成功
-            vueThis.$store.commit('hideTopUp');
-            vueThis.$store.commit('showStatusTopUp');
-            //保存链接到存贮
-            var payurl='';
+      ajaxs.imPostJson(urls.topUp,sendData,function(objRps){
+        // console.log(objRps);
+        if(objRps.code===1000){
+          var ecYap=window.encodeURIComponent(JSON.stringify({
+            amount:window.Number(vueThis.amount), //pay
+            batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
+            tradeId:''+objRps.result.tradeId, //pay
+            qrCode:objRps.result.qrCode //pay
+          }));
+          //跳往支付页面(监听充值状态)，显示是否成功
+          vueThis.$store.commit('hideTopUp');
+          vueThis.$store.commit('showStatusTopUp');
+          //保存链接到存贮
+          var payurl='';
 
-            //pay=>qrCode
-            if(vueThis.formTopUp.payType==='1'){
-              // 支付宝
-              payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
-            }else{
-              payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
-            }
-            vueThis.loading=false;
-            window.sessionStorage.setItem('payurl',payurl);
-            window.open(payurl);
+          //pay=>qrCode
+          if(vueThis.formTopUp.payType==='1'){
+            // 支付宝
+            payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
+          }else{
+            payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
           }
-        });
-      }
+          vueThis.loading=false;
+          window.sessionStorage.setItem('payurl',payurl);
+          window.open(payurl);
+        }
+      });
     },
     handleComfirm:function(){
       var vueThis=this;

@@ -139,21 +139,17 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        var sendData={
-          phone:''+window.sessionStorage.agentphone
-        };
-        ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
-          if(objRps.code===1000){
-            // vueThis.availableDeposite=objRps.result.availableDeposite;
-            Object.keys(objRps.result).forEach(function(v){
-              vueThis[v]=objRps.result[v];
-            });
-          }
-        });
-      }
-
+      var sendData={
+        phone:''+window.sessionStorage.agentphone
+      };
+      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
+        if(objRps.code===1000){
+          // vueThis.availableDeposite=objRps.result.availableDeposite;
+          Object.keys(objRps.result).forEach(function(v){
+            vueThis[v]=objRps.result[v];
+          });
+        }
+      });
     },
     rrPush:function(){
       this.$store.commit('setNavActive',3);

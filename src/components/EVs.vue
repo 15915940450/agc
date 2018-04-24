@@ -142,23 +142,19 @@ export default {
   methods: {
     fetchData:function(){
       var vueThis=this;
-      if(window.sessionStorage.agentphone){
-        //else:没有用户手机则不发送请求
-        var sendData={
-          phone:''+window.sessionStorage.agentphone,
-          pageNum:vueThis.pageNum,
-          pageSize:urls.pageSize
-        };
-        //请求地址
-        ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
-          // console.log(objRps);
-          if(objRps.code===1000){
-            vueThis.total=objRps.result.total;
-            vueThis.evs=objRps.result.list;
-          }
-        });
-      }
-
+      var sendData={
+        phone:''+window.sessionStorage.agentphone,
+        pageNum:vueThis.pageNum,
+        pageSize:urls.pageSize
+      };
+      //请求地址
+      ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
+        // console.log(objRps);
+        if(objRps.code===1000){
+          vueThis.total=objRps.result.total;
+          vueThis.evs=objRps.result.list;
+        }
+      });
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
