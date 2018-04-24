@@ -9,7 +9,7 @@
             <p>{{item.count}} 个用户</p>
             <p>{{item.depositNum}} 个押金方案</p>
             <p>{{item.packageNum}} 种套餐方案</p>
-            <p><strong>不</strong> 可退押金</p>
+            <p><strong v-if="item.type===2">不</strong> 可退押金</p>
             <div class="group_card-footer">
               <el-button type="primary" size="mini">设置</el-button>
               <el-button type="primary" size="mini">查看用户</el-button>
@@ -54,6 +54,7 @@ export default {
         // id: 11
         // name: "测试群组"
         // packageNum: 2
+        // "type":1//1=可退 2=不可退
         // }
       ]
     });
@@ -63,6 +64,11 @@ export default {
   },
   watch:{
     'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.statusGroupCreate':function(val){
       if(!val){
         this.fetchData();
       }
