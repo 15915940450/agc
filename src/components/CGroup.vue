@@ -16,34 +16,25 @@
             </div>
           </div>
         </el-col>
-        <!-- <el-col :span="8">
-          <div class="group_card">
-            <h4 class="group_card-title">线上交押金</h4>
-            <p>99个用户</p>
-            <p>99个押金方案</p>
-            <p>99种套餐方案</p>
-            <p>可退押金</p>
-            <div class="group_card-footer">
-              <el-button type="primary" size="mini">设置</el-button>
-              <el-button type="primary" size="mini">查看用户</el-button>
-            </div>
-          </div>
-        </el-col>
         <el-col :span="8">
-          <a href="javascript:;">
+          <a href="javascript:;" @click="groupCreate()">
             <div class="group_card group_card-new">
               <p class="group_card-title"><i class="el-icon-plus"></i> 新建群组</p>
             </div>
           </a>
-        </el-col> -->
+        </el-col>
       </el-row>
     </div>
+
+    <FormGroupCreate />
+
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
+import FormGroupCreate from './FormGroupCreate.vue';
 
 export default {
   name:'CGroup',
@@ -75,6 +66,9 @@ export default {
       }
     }
   },
+  components:{
+    FormGroupCreate
+  },
   methods:{
     fetchData:function(){
       var vueThis=this;
@@ -94,12 +88,34 @@ export default {
           }
         });
       }
+    },
+    groupCreate:function(){
+
     }
   },  //methods
   created:function(){
     this.fetchData();
   }
 
+  // name	string
+  // 必须
+  // 群组名称
+  // depositScheme	string []
+  // 必须
+  // 押金方案
+  // item 类型: string
+  //
+  // packageScheme	string []
+  // 必须
+  // 套餐方案
+  // item 类型: string
+  //
+  // agentId	string
+  // 必须
+  // 代理商ID
+  // canRefund	integer
+  // 必须
+  // 是否可退（0不可退，1可退）
 };
 </script>
 

@@ -5,6 +5,7 @@ var state={
   statusTopUp:false,
   statusRefund:false,
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
+  groupCreate:true,
   newUser:true
 };
 
@@ -51,6 +52,12 @@ var mutations={
   setBatteryAmount:function(state,num){
     window.sessionStorage.setItem('batteryAmount',num);
     state.batteryAmount=num;
+  },
+  showGroupCrate:function(state){
+    state.groupCreate=true;
+  },
+  hideGroupCrate:function(state){
+    state.groupCreate=false;
   },
   showNewUser:function(state){
     state.newUser=true;
