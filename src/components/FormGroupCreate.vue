@@ -3,16 +3,53 @@
     <el-dialog
       title="创建群组"
       :visible.sync="modalStore.groupCreate"
-      width="300px"
+      width="400px"
       :show-close="false"
+      :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
         <el-form :model="formGroupCreate">
-          <el-form-item label="电动车SN" :label-width="formLabelWidth">
-            <el-input v-model="formGroupCreate.name" auto-complete="off"></el-input>
+          <el-form-item label="群组名称" :label-width="formLabelWidth">
+            <el-input v-model="formGroupCreate.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
-          <el-form-item label="车类型" :label-width="formLabelWidth">
-            <el-select v-model="formGroupCreate.region" placeholder="请选择活动区域">
+          <el-form-item label="群组类型" :label-width="formLabelWidth">
+            <el-select v-model="formGroupCreate.canRefund" placeholder="请选择">
+              <!-- 0不可退，1可退 -->
+              <el-option label="可退押金" value="1"></el-option>
+              <el-option label="不可退押金" value="0"></el-option>
+            </el-select>
+          </el-form-item>
+          <!-- // name	string
+          // 必须
+          // 群组名称
+          // depositScheme	string []
+          // 必须
+          // 押金方案
+          // item 类型: string
+          //
+          // packageScheme	string []
+          // 必须
+          // 套餐方案
+          // item 类型: string
+          //
+          // agentId	string
+          // 必须
+          // 代理商ID
+          // canRefund	integer
+          // 必须
+          // 是否可退（0不可退，1可退） -->
+          <el-form-item label="押金方案" :label-width="formLabelWidth">
+            <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
+              <el-option
+                v-for="item in optionsDepositScheme"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="套餐方案" :label-width="formLabelWidth">
+            <el-select v-model="formGroupCreate.region" placeholder="请选择">
               <el-option label="区域一" value="shanghai"></el-option>
               <el-option label="区域二" value="beijing"></el-option>
             </el-select>
@@ -37,9 +74,46 @@ export default {
     return ({
       formGroupCreate:{
         name:'',
+        canRefund:'',
+        depositScheme:'',
+        packageScheme:'',
+        agentId:window.sessionStorage.agentid,
         region:''
       },
-      formLabelWidth:'80px'
+      optionsDepositScheme: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      optionsPackageScheme: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+
+      formLabelWidth:'70px'
     });
   },
   computed:{

@@ -5,6 +5,7 @@
       :visible.sync="modalStore.statusRefund"
       width="200px"
       :show-close="false"
+      :close-on-click-modal="false"
       center>
 
       <span slot="footer" class="dialog-footer">

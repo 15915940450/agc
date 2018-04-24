@@ -97,25 +97,7 @@ export default {
     this.fetchData();
   }
 
-  // name	string
-  // 必须
-  // 群组名称
-  // depositScheme	string []
-  // 必须
-  // 押金方案
-  // item 类型: string
-  //
-  // packageScheme	string []
-  // 必须
-  // 套餐方案
-  // item 类型: string
-  //
-  // agentId	string
-  // 必须
-  // 代理商ID
-  // canRefund	integer
-  // 必须
-  // 是否可退（0不可退，1可退）
+
 };
 </script>
 

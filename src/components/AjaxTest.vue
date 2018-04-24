@@ -8,7 +8,7 @@
 import {urls,ajaxs} from '../api/urls.js';
 
 var advancedParam=JSON.stringify({
-  agentId:window.sessionStorage.agentid
+  groupCode:11
 });
 
 var sendData={
@@ -17,8 +17,8 @@ var sendData={
   advancedParam:advancedParam
 };
 
-ajaxs.imPostJson(urls.groupList,sendData,function(objRps){
-  // console.log(objRps,'/ajax');
+ajaxs.imPostJson(urls.packageList,sendData,function(objRps){
+  console.log(objRps,'/ajax');
 });
 
 export default {

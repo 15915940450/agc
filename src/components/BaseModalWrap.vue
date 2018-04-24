@@ -5,6 +5,7 @@
       :visible.sync="modalStore.groupCreate"
       width="300px"
       :show-close="false"
+      :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
         <el-form :model="formGroupCreate">
