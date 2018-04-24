@@ -7,17 +7,17 @@
       <el-col :span="18">
         <div class="table_wrap-search">
           <div class="table_wrap-search_wrap">
-            <el-input size="small" class="table_wrap-input_serach" placeholder="请输入手机号" v-model="searchPhone" suffix-icon="el-icon-search"></el-input>
-            <!-- <el-button size="small" type="primary" class="table_wrap-btn_search">搜索</el-button> -->
+            <el-input class="table_wrap-input_serach" placeholder="请输入手机号" v-model="searchPhone" suffix-icon="el-icon-search"></el-input>
+            <!-- <el-button type="primary" class="table_wrap-btn_search">搜索</el-button> -->
           </div>
-          <el-button size="small" class="table_wrap-btn_reset" type="warning">重置</el-button>
-          <el-button size="small" class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
+          <el-button class="table_wrap-btn_reset" type="warning">重置</el-button>
+          <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
         </div>
       </el-col>
     </el-row>
     <!-- 押金记录表格 -->
     <el-table
-      :data="tableData5" stripe
+      :data="tableData5" size="medium" stripe
       style="width: 100%" class="table_wrap-table">
       <!-- 展开行 -->
       <el-table-column type="expand">
