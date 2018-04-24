@@ -12,7 +12,10 @@
             <p><strong v-if="item.type===2">不</strong> 可退押金</p>
             <div class="group_card-footer">
               <el-button type="primary" size="mini">设置</el-button>
-              <el-button type="primary" size="mini">查看用户</el-button>
+              <el-button type="primary" size="mini" @click="rrPush(item.code)">
+                查看用户
+                <!-- <router-link :to="{ name: 'CUser', params: {groupcode:item.code,pn:1} }"></router-link> -->
+              </el-button>
             </div>
           </div>
         </el-col>
@@ -97,6 +100,13 @@ export default {
     },
     groupCreate:function(){
       this.$store.commit('showGroupCreate');
+    },
+    rrPush:function(groupCode){
+      // console.log(groupCode);
+      this.$store.commit('setNavActive',2);
+      this.$router.push({
+        path:'/user/'+groupCode+'/1'
+      });
     }
   },  //methods
   created:function(){
