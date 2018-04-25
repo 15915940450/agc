@@ -140,7 +140,7 @@ export default {
         pageSize:urls.pageSize
       };
       //请求地址
-      ajaxs.imPostJson(urls.userList,sendData,function(objRps){
+      ajaxs.imGet(urls.userList,sendData,function(objRps){
         console.log(objRps);
         if(objRps.code===1000){
           vueThis.total=objRps.result.total;
