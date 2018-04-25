@@ -69,9 +69,18 @@
                 轨迹
               </el-button>
               <el-button
+                v-if="(scope.row.owner)"
+                @click="handleEVunbind(scope)"
                 type="text"
                 size="small">
                 解绑
+              </el-button>
+              <el-button
+                v-if="!(scope.row.owner)"
+                @click="handleEVbind(scope)"
+                type="text"
+                size="small">
+                绑定
               </el-button>
             </template>
           </el-table-column>
@@ -178,6 +187,22 @@ export default {
           vueThis.$store.commit('showStatusEVoperation');
         }
       });
+    },
+    handleEVunbind:function(scope){
+      var vueThis=this;
+      var sendData={
+        scooterSid:scope.row.sid,
+        userId:scope.row.owner
+      };
+      ajaxs.imPostJson(urls.EVunbind,sendData,function(objRps){
+        if(objRps.code===1000){
+          vueThis.msg=objRps.msg;
+          vueThis.$store.commit('showStatusEVoperation');
+        }
+      });
+    },
+    handleEVbind:function(scope){
+      console.log(scope);
     }
   },
   created:function(){

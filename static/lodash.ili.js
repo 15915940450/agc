@@ -6943,6 +6943,11 @@
       }
       return arr;
     }
+    function isPhone(phone){
+      if((/^1(3|4|5|7|8)\d{9}$/.test(''+phone))){
+        return true;
+      }
+    }
     function logErr(err){
       return console.error(err);
     }
@@ -16593,6 +16598,7 @@
     lodash.querystringParse = querystringParse;
     lodash.serialize2querystring = serialize2querystring;
     lodash.createArray = createArray;
+    lodash.isPhone = isPhone;
     lodash.logErr = logErr;
     //===========================================ili
     lodash.compact = compact;
