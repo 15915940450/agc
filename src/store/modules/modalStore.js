@@ -1,5 +1,7 @@
 var state={
   needLogin:window.sessionStorage.agentphone?false:true,
+  baseStatus:false,
+
   topUp:false,
   refund:false,
   statusTopUp:false,
@@ -22,6 +24,7 @@ var mutations={
     window.sessionStorage.removeItem('batteryAmount');
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
+    state.baseStatus=false;
     state.topUp=false;
     state.refund=false;
     state.statusTopUp=false;
@@ -36,6 +39,13 @@ var mutations={
     //登录成功，在每个组件中设置会话
     state.needLogin=false;
   },
+  showBaseStatus:function(state){
+    state.baseStatus=true;
+  },
+  hideBaseStatus:function(state){
+    state.baseStatus=false;
+  },
+
   showTopUp:function(state){
     state.topUp=true;
   },
