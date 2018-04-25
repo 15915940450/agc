@@ -19,25 +19,7 @@
               <el-option label="不可退押金" value="0"></el-option>
             </el-select>
           </el-form-item>
-          <!-- // name	string
-          // 必须
-          // 群组名称
-          // depositScheme	string []
-          // 必须
-          // 押金方案
-          // item 类型: string
-          //
-          // packageScheme	string []
-          // 必须
-          // 套餐方案
-          // item 类型: string
-          //
-          // agentId	string
-          // 必须
-          // 代理商ID
-          // canRefund	integer
-          // 必须
-          // 是否可退（0不可退，1可退） -->
+
           <el-form-item label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
@@ -60,7 +42,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <!-- 用户手机号,城市,用户群组,返还金额 -->
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">

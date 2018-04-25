@@ -11,7 +11,7 @@ var state={
   statusGroupCreate:false,
   statusEVoperation:false,
   statusEditPW:false,
-  newUser:true
+  newUser:false
 };
 
 var mutations={
