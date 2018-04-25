@@ -54,9 +54,7 @@
           </el-table-column>
           <el-table-column label="操作" width="190">
             <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="small">
+              <el-button type="text" size="small" @click="handleEVwake(scope)">
                 唤醒
               </el-button>
               <el-button
@@ -88,12 +86,16 @@
       <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有电动车切片" />
       <p>您还没有电动车哦！</p>
     </div>
+
+    <!-- 操作响应 -->
+    <StatusEVoperation :msg="msg" />
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
+import StatusEVoperation from './StatusEVoperation.vue';
 
 // /scooter/list
 
@@ -121,6 +123,7 @@ export default {
       //   "locationUpdateTime": "1515118511269"//坐标更新时间
       // }
       ],
+      msg:'',
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -138,6 +141,7 @@ export default {
     }
   },
   components:{
+    StatusEVoperation
   },
   methods: {
     fetchData:function(){
@@ -159,6 +163,20 @@ export default {
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/evs/'+val);
+    },
+    handleEVwake:function(scope){
+      var vueThis=this;
+      // console.log(scope.row.sid);  需要传sid
+      var sendData={
+        scooterSid:scope.row.sid
+      };
+      ajaxs.imPostJson(urls.EVwake,sendData,function(objRps){
+        // console.log(objRps);
+        if(objRps.code===1000){
+          vueThis.msg=objRps.msg;
+          vueThis.$store.commit('showStatusEVoperation');
+        }
+      });
     }
   },
   created:function(){

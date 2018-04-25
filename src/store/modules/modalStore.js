@@ -7,6 +7,7 @@ var state={
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   groupCreate:false,
   statusGroupCreate:false,
+  statusEVoperation:false,
   newUser:true
 };
 
@@ -26,6 +27,7 @@ var mutations={
     state.statusRefund=false;
     state.groupCreate=false;
     state.statusGroupCreate=false;
+    state.statusEVoperation=false;
     state.newUser=false;
   },
   hideLogin:function(state){
@@ -72,6 +74,12 @@ var mutations={
   },
   hideStatusGroupCreate:function(state){
     state.statusGroupCreate=false;
+  },
+  showStatusEVoperation:function(state){
+    state.statusEVoperation=true;
+  },
+  hideStatusEVoperation:function(state){
+    state.statusEVoperation=false;
   },
   showNewUser:function(state){
     state.newUser=true;
