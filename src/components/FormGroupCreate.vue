@@ -76,7 +76,7 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 
 export default {
-  name:'BaseModalWrap',
+  name:'FormGroupCreate',
   data:function(){
     return ({
       formGroupCreate:{
