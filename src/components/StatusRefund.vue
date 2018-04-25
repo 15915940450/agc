@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="modal_wrap_status_refund">
+  <div class="modal_wrap modal_wrap-empty_body">
     <el-dialog
       :title="title"
       :visible.sync="modalStore.statusRefund"
