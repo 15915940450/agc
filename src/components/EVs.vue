@@ -54,10 +54,11 @@
           </el-table-column>
           <el-table-column label="操作" width="190">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="handleEVwake(scope)">
+              <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
                 唤醒
               </el-button>
               <el-button
+                @click="handleEVoperation(scope,'EVflameout')"
                 type="text"
                 size="small">
                 熄火
@@ -164,13 +165,13 @@ export default {
       this.pageNum=val;
       this.$router.push('/evs/'+val);
     },
-    handleEVwake:function(scope){
+    handleEVoperation:function(scope,url){
       var vueThis=this;
       // console.log(scope.row.sid);  需要传sid
       var sendData={
         scooterSid:scope.row.sid
       };
-      ajaxs.imPostJson(urls.EVwake,sendData,function(objRps){
+      ajaxs.imPostJson(urls[url],sendData,function(objRps){
         // console.log(objRps);
         if(objRps.code===1000){
           vueThis.msg=objRps.msg;
