@@ -36,14 +36,22 @@
 
 
         <el-form-item class="btn_wrap">
-            <el-button type="primary">确定</el-button>
+            <el-button type="primary" @click="handleEditPW()" :loading="loading">确定</el-button>
         </el-form-item>
       </el-form>
     </div>
+
+
+    <StatusEditPW :msg="msg" />
+
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex';
+import {urls,ajaxs} from '../api/urls.js';
+import StatusEditPW from './StatusEditPW.vue';
+
 export default {
   name:'CSys',
   data:function(){
@@ -55,8 +63,16 @@ export default {
       },
       typeOld:'password',
       typeNew:'password',
-      typeCheck:'password'
+      typeCheck:'password',
+      msg:'',
+      loading:false
     });
+  },
+  computed:{
+    ...mapState(['agent','modalStore'])
+  },
+  components:{
+    StatusEditPW
   },
   methods:{
     handleShowPW:function(imKey){
@@ -65,6 +81,26 @@ export default {
     },
     handleHidePW:function(imKey){
       this[imKey]='password';
+    },
+    handleEditPW:function(){
+      var vueThis=this;
+      vueThis.loading=true;
+      var sendData={
+        phone:window.sessionStorage.agentphone,
+        oldPassword:vueThis.imPW.oldPassword,
+        newPassword:vueThis.imPW.newPassword
+      };
+
+      ajaxs.imPostForm(urls.editPW,sendData,function(objRps){
+        // console.log(objRps);
+        // v-focus
+        if(objRps.code===1000){
+          //修改成功，回到登录页面
+          vueThis.msg='密码修改成功，请重新登录！';
+          vueThis.$store.commit('showStatusEditPW');
+        }
+        vueThis.loading=false;
+      });
     }
   }
 };

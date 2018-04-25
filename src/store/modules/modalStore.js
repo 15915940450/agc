@@ -8,6 +8,7 @@ var state={
   groupCreate:false,
   statusGroupCreate:false,
   statusEVoperation:false,
+  statusEditPW:false,
   newUser:true
 };
 
@@ -28,6 +29,7 @@ var mutations={
     state.groupCreate=false;
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
+    state.statusEditPW=false;
     state.newUser=false;
   },
   hideLogin:function(state){
@@ -80,6 +82,12 @@ var mutations={
   },
   hideStatusEVoperation:function(state){
     state.statusEVoperation=false;
+  },
+  showStatusEditPW:function(state){
+    state.statusEditPW=true;
+  },
+  hideStatusEditPW:function(state){
+    state.statusEditPW=false;
   },
   showNewUser:function(state){
     state.newUser=true;
