@@ -15,7 +15,7 @@
           <el-input type="password" v-model="formLogin.password" @input="hintMsg=''" auto-complete="off" placeholder="请输入密码" class="need_login-password"></el-input>
         </el-form-item>
         <!-- 验证码:need_vcode依赖于sendLoginCount（初始化为0,响应到达一次则加加,登录成功则清零） -->
-        <el-form-item class="need_login-vcode" v-if="need_vcode">
+        <el-form-item prop="validateCode" class="need_login-vcode" v-if="need_vcode">
           <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img src="../assets/validateCode.jpeg" height="30" />
         </el-form-item>
@@ -67,6 +67,9 @@ export default {
         ],
         password:[
           {required:true,message:'密码不能为空',trigger:'change'}
+        ],
+        validateCode:[
+          {required:true,message:'验证码不能为空',trigger:'change'}
         ]
       }
     };
@@ -81,6 +84,7 @@ export default {
       return (bNeedVcode);
     }
   },
+  
   methods:{
     //登录接口=> /user/login
     loginSend:function(refName){
@@ -97,8 +101,8 @@ export default {
             //响应已到达
             vueThis.loading=false;
 
-            // console.log(window.localStorage.sendLoginCount);
-            // console.log(vueThis.sendLoginCount);
+            console.log(window.localStorage.sendLoginCount);
+            console.log(vueThis.sendLoginCount);
             vueThis.handleLoginRps(objRps);
           },{
             imLogin:true
@@ -148,49 +152,49 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.need_login .el-dialog__wrapper{
-  background: #333 url(../assets/bg_login.png) no-repeat center center;
-}
-.login_logo{
-  display: block;
-  margin:0 auto;
-}
-#btn_login{
-  width:100%;
-  margin-bottom: 40px;
-}
-.project_name{
-  font-size: 26px;
-  font-weight: 300;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  color: #333;
-  text-align: center;
-}
-.need_login-vcode{
-  position: relative;
-}
-.need_login-vcode img{
-  position: absolute;
-  right:4px;
-  top:4px;
-  max-height: 24px;
-}
-.need_login-hint_wrap{
-  height: 32px;
-}
-.need_login-hint{
-  color:red;
-  font-size: 12px;
-}
-.kefu{
-  position: fixed;
-  bottom: 20px;
-  left: 0;
-  color:#FFF;
-  font-size: 16px;
-  z-index: 10000;
-  width: 100%;
-  text-align: center;
-}
+  .need_login .el-dialog__wrapper{
+    background: #333 url(../assets/bg_login.png) no-repeat center center;
+  }
+  .login_logo{
+    display: block;
+    margin:0 auto;
+  }
+  #btn_login{
+    width:100%;
+    margin-bottom: 40px;
+  }
+  .project_name{
+    font-size: 26px;
+    font-weight: 300;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    color: #333;
+    text-align: center;
+  }
+  .need_login-vcode{
+    position: relative;
+  }
+  .need_login-vcode img{
+    position: absolute;
+    right:4px;
+    top:4px;
+    max-height: 24px;
+  }
+  .need_login-hint_wrap{
+    height: 32px;
+  }
+  .need_login-hint{
+    color:red;
+    font-size: 12px;
+  }
+  .kefu{
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    color:#FFF;
+    font-size: 16px;
+    z-index: 10000;
+    width: 100%;
+    text-align: center;
+  }
 </style>
