@@ -121,29 +121,29 @@ export default {
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
         // console.log(valid);
-        if(!valid){
-          return false;
+        if(valid){
+          var sendData={
+            name:vueThis.formGroupCreate.name,
+            depositScheme:vueThis.formGroupCreate.depositScheme,
+            packageScheme:vueThis.formGroupCreate.packageScheme,
+            agentId:window.sessionStorage.agentid,
+            cityCode:0,
+            canRefund:window.Number(vueThis.formGroupCreate.canRefund)
+          };
+          // console.log(JSON.stringify(sendData));
+          vueThis.loading=true;
+          ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
+            // console.log(objRps);
+            vueThis.loading=false;
+            if(objRps.code===1000){
+              vueThis.$store.commit('hideGroupCreate');
+              vueThis.$store.commit('showStatusGroupCreate');
+              vueThis.resetData();
+            }
+          });
         }
       });
-      var sendData={
-        name:vueThis.formGroupCreate.name,
-        depositScheme:vueThis.formGroupCreate.depositScheme,
-        packageScheme:vueThis.formGroupCreate.packageScheme,
-        agentId:window.sessionStorage.agentid,
-        cityCode:0,
-        canRefund:window.Number(vueThis.formGroupCreate.canRefund)
-      };
-      // console.log(JSON.stringify(sendData));
-      vueThis.loading=true;
-      ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
-        // console.log(objRps);
-        vueThis.loading=false;
-        if(objRps.code===1000){
-          vueThis.$store.commit('hideGroupCreate');
-          vueThis.$store.commit('showStatusGroupCreate');
-          vueThis.resetData();
-        }
-      });
+
     },
     resetData:function(){
       this.formGroupCreate.name='';
