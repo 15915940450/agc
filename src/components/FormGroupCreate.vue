@@ -63,8 +63,8 @@ export default {
       formGroupCreate:{
         name:'',
         canRefund:'',
-        depositScheme:'',
-        packageScheme:'',
+        depositScheme:[],
+        packageScheme:[],
         agentId:window.sessionStorage.agentid
       },
       rules:{
@@ -148,8 +148,8 @@ export default {
     resetData:function(){
       this.formGroupCreate.name='';
       this.formGroupCreate.canRefund='';
-      this.formGroupCreate.depositScheme='';
-      this.formGroupCreate.packageScheme='';
+      this.formGroupCreate.depositScheme=[];
+      this.formGroupCreate.packageScheme=[];
     }
 
   },  //methods
