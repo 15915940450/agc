@@ -116,7 +116,7 @@ export default {
       });
     },
     handleCancel:function(){
-      this.$store.commit('hideGroupCreate');
+      this.$store.commit('hideGroupSet');
     },
     handleComfirm:function(refName){
       var vueThis=this;
@@ -132,6 +132,7 @@ export default {
         packageScheme:vueThis.formGroupSet.packageScheme,
         agentId:window.sessionStorage.agentid,
         cityCode:0,
+        groupCode:vueThis.formGroupSet.code,
         canRefund:window.Number(vueThis.formGroupSet.canRefund)
       };
       // console.log(JSON.stringify(sendData));
@@ -140,8 +141,8 @@ export default {
         // console.log(objRps);
         vueThis.loading=false;
         if(objRps.code===1000){
-          vueThis.$store.commit('hideGroupCreate');
-          vueThis.$store.commit('showStatusGroupCreate');
+          vueThis.$store.commit('hideGroupSet');
+          vueThis.$store.commit('showBaseStatus');
         }
       });
     }

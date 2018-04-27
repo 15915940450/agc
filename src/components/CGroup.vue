@@ -32,7 +32,7 @@
     <FormGroupCreate />
     <FormGroupSet :formGroupSet="item" />
     <StatusGroupCreate />
-    <BaseStatus />
+    <BaseStatus :msg="msg" />
 
   </div>
 </template>
@@ -64,6 +64,7 @@ export default {
         // "type":1//1=可退 2=不可退
         // }
       ],
+      msg:'群组设置成功',
       item:{}
     });
   },
@@ -77,6 +78,11 @@ export default {
       }
     },
     'modalStore.statusGroupCreate':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.baseStatus':function(val){
       if(!val){
         this.fetchData();
       }
