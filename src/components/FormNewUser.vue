@@ -20,7 +20,7 @@
             <el-radio v-model="formNewUser.scooterType" label="0">新车</el-radio>
             <el-radio v-model="formNewUser.scooterType" label="1">改装车</el-radio>
           </el-form-item>
-          <el-form-item prop="cityCode" label="城市" :label-width="formLabelWidth">
+          <!-- <el-form-item prop="cityCode" label="城市" :label-width="formLabelWidth">
             <el-select v-model="formNewUser.cityCode" filterable placeholder="请选择">
               <el-option
                 v-for="item in optionsCity"
@@ -29,7 +29,7 @@
                 :value="item.value">
               </el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item label="所属群组" :label-width="formLabelWidth">
             <el-input v-model="formNewUser.groupCode" auto-complete="off"></el-input>
           </el-form-item> -->
@@ -61,7 +61,7 @@ export default {
         phone:'',
         scooterSN:'',
         scooterType:'0',
-        cityCode:'',
+        // cityCode:'',
 
         // giftCode:'',
         groupCode:this.$route.params.groupcode,
@@ -73,10 +73,10 @@ export default {
         ],
         scooterSN:[
           {required:true,message:'请输入车牌号',trigger:'blur'}
-        ],
-        cityCode:[
-          {required:true,message:'请选择城市',trigger:'change'}
         ]
+        // cityCode:[
+        //   {required:true,message:'请选择城市',trigger:'change'}
+        // ]
       },
       optionsCity:[],
       formLabelWidth:'100px',
@@ -88,6 +88,15 @@ export default {
     ...mapState(['modalStore'])
   },
   methods:{
+    //获取城市列表，暂时没用上
+    // fetchCityList:function(){
+    //   var vueThis=this;
+    //   ajaxs.imGet(urls.cityList,{},function(objRps){
+    //     if(objRps.code===1000){
+    //       vueThis.optionsCity=objRps.result.list;
+    //     }
+    //   });
+    // },
     handleCancel:function(refName){
       this.$refs[refName].resetFields();
       this.$store.commit('hideNewUser');
@@ -102,7 +111,7 @@ export default {
             scooterSN:vueThis.formNewUser.scooterSN,
             scooterType:vueThis.formNewUser.scooterType,
             agentId:window.sessionStorage.agentid,
-            cityCode:vueThis.formNewUser.cityCode,
+            // cityCode:vueThis.formNewUser.cityCode,
             // giftCode:vueThis.formNewUser.giftCode,
             groupCode:vueThis.formNewUser.groupCode
           };
@@ -123,6 +132,7 @@ export default {
   },  //methods
   created:function(){
     // console.log(this.$route.params);
+    // this.fetchCityList();
   }
 
 };
