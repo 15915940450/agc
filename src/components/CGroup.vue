@@ -11,7 +11,7 @@
             <p>{{item.packageNum}} 种套餐方案</p>
             <p><strong v-if="item.type===2">不</strong> 可退押金</p>
             <div class="group_card-footer">
-              <el-button type="primary" size="mini">设置</el-button>
+              <el-button type="primary" size="mini" @click="groupSet(item)">设置</el-button>
               <el-button type="primary" size="mini" @click="rrPush(item.code)">
                 查看用户
                 <!-- <router-link :to="{ name: 'CUser', params: {groupcode:item.code,pn:1} }"></router-link> -->
@@ -30,7 +30,9 @@
     </div>
 
     <FormGroupCreate />
+    <FormGroupSet :formGroupSet="item" />
     <StatusGroupCreate />
+    <BaseStatus />
 
   </div>
 </template>
@@ -40,6 +42,8 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormGroupCreate from './FormGroupCreate.vue';
 import StatusGroupCreate from './StatusGroupCreate.vue';
+import FormGroupSet from './FormGroupSet.vue';
+import BaseStatus from './BaseStatus.vue';
 
 export default {
   name:'CGroup',
@@ -59,7 +63,8 @@ export default {
         // packageNum: 2
         // "type":1//1=可退 2=不可退
         // }
-      ]
+      ],
+      item:{}
     });
   },
   computed:{
@@ -79,7 +84,9 @@ export default {
   },
   components:{
     FormGroupCreate,
-    StatusGroupCreate
+    StatusGroupCreate,
+    FormGroupSet,
+    BaseStatus
   },
   methods:{
     fetchData:function(){
@@ -100,6 +107,10 @@ export default {
     },
     groupCreate:function(){
       this.$store.commit('showGroupCreate');
+    },
+    groupSet:function(item){
+      this.item=item;
+      this.$store.commit('showGroupSet');
     },
     rrPush:function(groupCode){
       // console.log(groupCode);
