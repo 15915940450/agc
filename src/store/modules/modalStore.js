@@ -8,6 +8,7 @@ var state={
   statusRefund:false,
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   groupCreate:false,
+  EVbind:false,
   groupSet:false,
   statusGroupCreate:false,
   statusEVoperation:false,
@@ -31,6 +32,7 @@ var mutations={
     state.statusTopUp=false;
     state.statusRefund=false;
     state.groupCreate=false;
+    state.EVbind=false;
     state.groupSet=false;
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
@@ -82,6 +84,12 @@ var mutations={
   },
   hideGroupCreate:function(state){
     state.groupCreate=false;
+  },
+  showEVbind:function(state){
+    state.EVbind=true;
+  },
+  hideEVbind:function(state){
+    state.EVbind=false;
   },
   showGroupSet:function(state){
     state.groupSet=true;

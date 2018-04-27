@@ -98,6 +98,7 @@
     </div>
 
     <!-- 操作响应 -->
+    <FormEVbind :scooterSid="scooterSid" />
     <StatusEVoperation :msg="msg" />
   </div>
 </template>
@@ -105,6 +106,7 @@
 <script>
 import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
+import FormEVbind from './FormEVbind.vue';
 import StatusEVoperation from './StatusEVoperation.vue';
 
 // /scooter/list
@@ -134,6 +136,7 @@ export default {
       // }
       ],
       msg:'',
+      scooterSid:'',
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -151,6 +154,7 @@ export default {
     }
   },
   components:{
+    FormEVbind,
     StatusEVoperation
   },
   methods: {
@@ -202,7 +206,9 @@ export default {
       });
     },
     handleEVbind:function(scope){
-      console.log(scope);
+      // console.log(scope);
+      this.scooterSid=scope.row.sid;
+      this.$store.commit('showEVbind');
     }
   },
   created:function(){
