@@ -89,7 +89,7 @@
 
     <!-- 新建 -->
     <FormNewUser />
-    <BaseStatus />
+    <BaseStatus :msg="msg" />
 
 
   </div>
@@ -106,6 +106,7 @@ export default {
   data:function(){
     return ({
       total:100,
+      msg:'车辆已激活',
       searchPhone:'',
 
       users:[
@@ -122,6 +123,11 @@ export default {
       this.fetchData();
     },
     'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.baseStatus':function(val){
       if(!val){
         this.fetchData();
       }
