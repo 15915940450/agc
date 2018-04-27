@@ -8,11 +8,11 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formGroupCreate">
-          <el-form-item label="群组名称" :label-width="formLabelWidth">
+        <el-form :model="formGroupCreate" :rules="rules" ref="formGroupCreate">
+          <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
             <el-input v-model="formGroupCreate.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
-          <el-form-item label="群组类型" :label-width="formLabelWidth">
+          <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.canRefund" placeholder="请选择">
               <!-- 0不可退，1可退 -->
               <el-option label="可退押金" value="1"></el-option>
@@ -20,7 +20,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="押金方案" :label-width="formLabelWidth">
+          <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
@@ -31,7 +31,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="套餐方案" :label-width="formLabelWidth">
+          <el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.packageScheme" multiple placeholder="请选择">
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
@@ -46,7 +46,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()" :loading="loading">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm('formGroupCreate')" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -65,15 +65,28 @@ export default {
         canRefund:'',
         depositScheme:'',
         packageScheme:'',
-        agentId:window.sessionStorage.agentid,
-        region:''
+        agentId:window.sessionStorage.agentid
+      },
+      rules:{
+        name:[
+          {required:true,message:'群组名称不能为空',trigger:'change'}
+        ],
+        canRefund:[
+          {required:true,message:'请选择群组类型',trigger:'change'}
+        ],
+        depositScheme:[
+          {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
+        ],
+        packageScheme:[
+          {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
+        ]
       },
       typePackage:['月套卡','次套卡','免费套餐'],
       options_depositListScheme: [],
       options_packageListScheme: [],
       loading:false,
 
-      formLabelWidth:'70px'
+      formLabelWidth:'90px'
     });
   },
   computed:{
@@ -104,8 +117,14 @@ export default {
     handleCancel:function(){
       this.$store.commit('hideGroupCreate');
     },
-    handleComfirm:function(){
+    handleComfirm:function(refName){
       var vueThis=this;
+      vueThis.$refs[refName].validate((valid) => {
+        console.log(valid);
+        if(!valid){
+          return false;
+        }
+      });
       var sendData={
         name:vueThis.formGroupCreate.name,
         depositScheme:vueThis.formGroupCreate.depositScheme,
