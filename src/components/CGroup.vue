@@ -28,9 +28,9 @@
       </el-row>
     </div>
 
-    <!-- <FormGroupCreate /> -->
+    <FormGroupCreate />
     <FormGroupSet v-bind="groupSetItem" />
-    <!-- <StatusGroupCreate /> -->
+    <StatusGroupCreate />
     <BaseStatus :msg="msg" />
 
   </div>

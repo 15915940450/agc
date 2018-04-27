@@ -45,7 +45,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel()">取 消</el-button>
+        <el-button @click="handleCancel('formGroupCreate')">取 消</el-button>
         <el-button type="primary" @click="handleComfirm('formGroupCreate')" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
@@ -114,7 +114,9 @@ export default {
         }
       });
     },
-    handleCancel:function(){
+    handleCancel:function(refName){
+      var vueThis=this;
+      vueThis.$refs[refName].resetFields();
       this.$store.commit('hideGroupCreate');
     },
     handleComfirm:function(refName){
@@ -138,18 +140,12 @@ export default {
             if(objRps.code===1000){
               vueThis.$store.commit('hideGroupCreate');
               vueThis.$store.commit('showStatusGroupCreate');
-              vueThis.resetData();
+              vueThis.$refs[refName].resetFields();
             }
           });
         }
       });
 
-    },
-    resetData:function(){
-      this.formGroupCreate.name='';
-      this.formGroupCreate.canRefund='';
-      this.formGroupCreate.depositScheme=[];
-      this.formGroupCreate.packageScheme=[];
     }
 
   },  //methods

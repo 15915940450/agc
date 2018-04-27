@@ -150,6 +150,7 @@ export default {
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
+      // this.$refs['formLogin'].clearValidate();
 
       //电池单价
       this.$store.commit('setBatteryAmount',objRps.result.batteryAmount);
