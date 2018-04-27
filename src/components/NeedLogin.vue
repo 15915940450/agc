@@ -67,10 +67,10 @@ export default {
           {type:'number',required:true,min:10000000000,max:99999999999,message:'手机号必须为11位数字',trigger:'change'}
         ],
         password:[
-          {required:true,message:'密码不能为空',trigger:'change'}
+          {required:true,message:'密码不能为空',trigger:'blur'}
         ],
         validateCode:[
-          {required:true,message:'验证码不能为空',trigger:'change'}
+          {required:true,message:'验证码不能为空',trigger:'blur'}
         ]
       }
     };
