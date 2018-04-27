@@ -14,7 +14,6 @@
               <el-button type="primary" size="mini" @click="groupSet(item)">设置</el-button>
               <el-button type="primary" size="mini" @click="rrPush(item.code)">
                 查看用户
-                <!-- <router-link :to="{ name: 'CUser', params: {groupcode:item.code,pn:1} }"></router-link> -->
               </el-button>
             </div>
           </div>
@@ -30,7 +29,7 @@
     </div>
 
     <FormGroupCreate />
-    <FormGroupSet :formGroupSet="item" />
+    <FormGroupSet v-bind="groupSetItem" />
     <StatusGroupCreate />
     <BaseStatus :msg="msg" />
 
@@ -49,23 +48,9 @@ export default {
   name:'CGroup',
   data:function(){
     return ({
-      group:[
-        // {
-        // activityNum: 2
-        // activitys: Array [ {…} ]
-        // agentCode: 0
-        // agentId: ""
-        // code: 11
-        // count: 0
-        // depositNum: 2
-        // id: 11
-        // name: "测试群组"
-        // packageNum: 2
-        // "type":1//1=可退 2=不可退
-        // }
-      ],
+      group:[],
       msg:'群组设置成功',
-      item:{}
+      groupSetItem:null
     });
   },
   computed:{
@@ -115,11 +100,10 @@ export default {
       this.$store.commit('showGroupCreate');
     },
     groupSet:function(item){
-      this.item=item;
+      this.groupSetItem=item;
       this.$store.commit('showGroupSet');
     },
     rrPush:function(groupCode){
-      // console.log(groupCode);
       this.$store.commit('setNavActive',2);
       this.$router.push({
         path:'/user/'+groupCode+'/1'
@@ -127,7 +111,6 @@ export default {
     }
   },  //methods
   created:function(){
-    // console.log(JSON.stringify((this.$store.state.modalStore.statusGroupCreate)));
     this.fetchData();
   }
 
