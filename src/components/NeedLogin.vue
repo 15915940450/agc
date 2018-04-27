@@ -17,7 +17,7 @@
         <!-- 验证码:need_vcode依赖于sendLoginCount（初始化为0,响应到达一次则加加,登录成功则清零） -->
         <el-form-item prop="validateCode" class="need_login-vcode" v-if="need_vcode">
           <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
-          <img :src="vImg" height="30" />
+          <img class="v_img" :loading="true" title="看不清，换一张" :src="vImg" height="30" @click="updateVimg()" />
         </el-form-item>
         <!-- ajax响应后提示框 -->
         <el-form-item class="need_login-hint_wrap">
@@ -56,7 +56,7 @@ export default {
       sendLoginCount:sendLoginCount,
       hintMsg:'',
       loading:false,
-      vImg:urls.validateCode,
+      vImg:'',
       formLogin: {
         phone: '',
         password: '',
@@ -85,7 +85,14 @@ export default {
       return (bNeedVcode);
     }
   },
-
+  watch:{
+    need_vcode:function(val){
+      //首次更新验证码
+      if(val){
+        this.updateVimg();
+      }
+    }
+  },
   methods:{
     //登录接口=> /user/login
     loginSend:function(refName){
@@ -124,6 +131,7 @@ export default {
         //失败
         this.hintMsg=objRps.msg;
         this.sendLoginCount++;
+
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
@@ -132,8 +140,10 @@ export default {
       window.sessionStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
 
-      //清空密码,验证码次数(localStorage)
+      //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
+      this.formLogin.validateCode='';
+      this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
 
@@ -148,8 +158,16 @@ export default {
         name:objRps.result.name,
         id:objRps.result.id
       });
+    },
+    updateVimg:function(){
+      this.vImg=urls.validateCode+'?n='+(Math.random()+'').substring(3,15);
     }
-  } //methods
+  }, //methods
+  created:function(){
+    if(this.need_vcode){
+      this.updateVimg();
+    }
+  }
 };
 </script>
 
@@ -198,5 +216,9 @@ export default {
     z-index: 10000;
     width: 100%;
     text-align: center;
+  }
+  .v_img{
+    cursor: pointer;
+    min-width: 50px;
   }
 </style>
