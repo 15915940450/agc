@@ -8,39 +8,41 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formNewUser">
-          <el-form-item label="手机号码" :label-width="formLabelWidth">
-            <el-input v-model="formNewUser.phone" auto-complete="off"></el-input>
+        <el-form :model="formNewUser" :rules="rules" ref="formNewUser">
+          <el-form-item prop="phone" label="手机号码" :label-width="formLabelWidth">
+            <el-input v-model="formNewUser.phone" auto-complete="off" placeholder="请输入手机号码"></el-input>
           </el-form-item>
 
-          <el-form-item label="车牌号(SN)" :label-width="formLabelWidth">
+          <el-form-item prop="scooterSN" label="车牌号(SN)" :label-width="formLabelWidth">
             <el-input v-model="formNewUser.scooterSN" auto-complete="off"></el-input>
           </el-form-item>
           <el-form-item label="车型" :label-width="formLabelWidth">
-            <el-input v-model="formNewUser.scooterType" auto-complete="off"></el-input>
+            <el-radio v-model="formNewUser.scooterType" label="0">新车</el-radio>
+            <el-radio v-model="formNewUser.scooterType" label="1">改装车</el-radio>
           </el-form-item>
-          <el-form-item label="城市" :label-width="formLabelWidth">
-            <el-input v-model="formNewUser.cityCode" auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="所属群组" :label-width="formLabelWidth">
-            <el-input v-model="formNewUser.groupCode" auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="红包" :label-width="formLabelWidth">
-            <el-input v-model="formNewUser.giftCode" auto-complete="off"></el-input>
-          </el-form-item>
-
-          <el-form-item label="车类型" :label-width="formLabelWidth">
-            <el-select v-model="formNewUser.region" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+          <el-form-item prop="cityCode" label="城市" :label-width="formLabelWidth">
+            <el-select v-model="formNewUser.cityCode" filterable placeholder="请选择">
+              <el-option
+                v-for="item in optionsCity"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
             </el-select>
           </el-form-item>
-          <!-- 用户手机号,城市,用户群组,返还金额 -->
+          <!-- <el-form-item label="所属群组" :label-width="formLabelWidth">
+            <el-input v-model="formNewUser.groupCode" auto-complete="off"></el-input>
+          </el-form-item> -->
+          <!-- <el-form-item label="红包" :label-width="formLabelWidth">
+            <el-input v-model="formNewUser.giftCode" auto-complete="off"></el-input>
+          </el-form-item> -->
+
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
+        <el-button @click="handleCancel('formNewUser')">取 消</el-button>
+        <el-button type="primary" @click="handleComfirm('formNewUser')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -58,15 +60,26 @@ export default {
       formNewUser:{
         phone:'',
         scooterSN:'',
-        scooterType:'',
+        scooterType:'0',
         cityCode:'',
-        groupCode:'',
-        giftCode:'',
-        agentId:'',
 
-        region:''
+        // giftCode:'',
+        groupCode:this.$route.params.groupcode,
+        agentId:window.sessionStorage.agentid
       },
-      formLabelWidth:'90px',
+      rules:{
+        phone:[
+          {required:true,message:'请输入手机号码',trigger:'blur'}
+        ],
+        scooterSN:[
+          {required:true,message:'请输入车牌号',trigger:'blur'}
+        ],
+        cityCode:[
+          {required:true,message:'请选择城市',trigger:'change'}
+        ]
+      },
+      optionsCity:[],
+      formLabelWidth:'100px',
       loading:false
 
     });
@@ -75,33 +88,41 @@ export default {
     ...mapState(['modalStore'])
   },
   methods:{
-    handleCancel:function(){
+    handleCancel:function(refName){
+      this.$refs[refName].resetFields();
       this.$store.commit('hideNewUser');
     },
-    handleComfirm:function(){
+    handleComfirm:function(refName){
       var vueThis=this;
-      var sendData={
-        phone:vueThis.formNewUser.phone,
-        scooterSN:vueThis.formNewUser.scooterSN,
-        scooterType:vueThis.formNewUser.scooterType,
-        agentId:window.sessionStorage.agentid,
-        cityCode:vueThis.formNewUser.cityCode,
-        giftCode:vueThis.formNewUser.giftCode,
-        groupCode:vueThis.formNewUser.groupCode
-      };
-      // console.log(JSON.stringify(sendData));
-      vueThis.loading=true;
-      ajaxs.imPostJson(urls.newUser,sendData,function(objRps){
-        console.log(objRps);
-        vueThis.loading=false;
-        if(objRps.code===1000){
-          vueThis.$store.commit('hideNewUser');
-          vueThis.$store.commit('showBaseStatus');
+
+      vueThis.$refs[refName].validate((valid) => {
+        if(valid){
+          var sendData={
+            phone:vueThis.formNewUser.phone,
+            scooterSN:vueThis.formNewUser.scooterSN,
+            scooterType:vueThis.formNewUser.scooterType,
+            agentId:window.sessionStorage.agentid,
+            cityCode:vueThis.formNewUser.cityCode,
+            // giftCode:vueThis.formNewUser.giftCode,
+            groupCode:vueThis.formNewUser.groupCode
+          };
+          // console.log(JSON.stringify(sendData));
+          vueThis.loading=true;
+          ajaxs.imPostJson(urls.newUser,sendData,function(objRps){
+            console.log(objRps);
+            vueThis.loading=false;
+            if(objRps.code===1000){
+              vueThis.$store.commit('hideNewUser');
+              vueThis.$store.commit('showBaseStatus');
+            }
+          });
         }
       });
+
     }
   },  //methods
   created:function(){
+    // console.log(this.$route.params);
   }
 
 };
