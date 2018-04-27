@@ -37,7 +37,7 @@
                   <span>{{ props.row.id }}</span>
                 </el-form-item>
                 <el-form-item label="注册时间">
-                  <span>{{ props.row.time }}</span>
+                  <span>{{ new Date(props.row.time) }}</span>
                 </el-form-item>
               </el-form>
             </template>
@@ -53,11 +53,11 @@
           </el-table-column>
           <el-table-column
             label="电池SN"
-            prop="batteries">
+            prop="batteries" :formatter="formatter">
           </el-table-column>
           <el-table-column
             label="电动车SN"
-            prop="scooters">
+            prop="scooters" :formatter="formatter">
           </el-table-column>
 
           <el-table-column label="操作" width="90">
@@ -149,8 +149,8 @@ export default {
         pageSize:urls.pageSize
       };
       //请求地址
-      ajaxs.imPostJson(urls.userList,sendData,function(objRps){
-        console.log(objRps);
+      ajaxs.imGet(urls.userList,sendData,function(objRps){
+        // console.log(objRps);
         if(objRps.code===1000){
           vueThis.total=objRps.result.total;
           vueThis.users=objRps.result.list;
@@ -164,6 +164,18 @@ export default {
     },
     showNewUser:function(){
       this.$store.commit('showNewUser');
+    },
+    formatter:function(row, column, cellValue){
+      if(column.property==='batteries' && cellValue.length){
+        return (cellValue.map(function(v){
+          return v.sn;
+        }).join(' , '));
+      }
+      if(column.property==='scooters' && cellValue.length){
+        return (cellValue.map(function(v){
+          return v.sn;
+        }).join(' , '));
+      }
     }
   },
   created:function(){
