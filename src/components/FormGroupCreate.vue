@@ -69,7 +69,7 @@ export default {
       },
       rules:{
         name:[
-          {required:true,message:'群组名称不能为空',trigger:'change'}
+          {required:true,message:'群组名称不能为空',trigger:'blur'}
         ],
         canRefund:[
           {required:true,message:'请选择群组类型',trigger:'change'}
@@ -120,7 +120,7 @@ export default {
     handleComfirm:function(refName){
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
-        console.log(valid);
+        // console.log(valid);
         if(!valid){
           return false;
         }
@@ -141,8 +141,15 @@ export default {
         if(objRps.code===1000){
           vueThis.$store.commit('hideGroupCreate');
           vueThis.$store.commit('showStatusGroupCreate');
+          vueThis.resetData();
         }
       });
+    },
+    resetData:function(){
+      this.formGroupCreate.name='';
+      this.formGroupCreate.canRefund='';
+      this.formGroupCreate.depositScheme='';
+      this.formGroupCreate.packageScheme='';
     }
 
   },  //methods
