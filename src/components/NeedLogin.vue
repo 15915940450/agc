@@ -131,6 +131,10 @@ export default {
         //失败
         this.hintMsg=objRps.msg;
         this.sendLoginCount++;
+        //失败就更换验证码，以防不停试密码
+        if(this.need_vcode){
+          this.updateVimg();
+        }
 
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
