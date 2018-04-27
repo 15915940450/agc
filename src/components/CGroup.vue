@@ -7,8 +7,8 @@
           <div class="group_card">
             <h4 class="group_card-title">{{item.name}}</h4>
             <p>{{item.count}} 个用户</p>
-            <p>{{item.depositNum}} 个押金方案</p>
-            <p>{{item.packageNum}} 种套餐方案</p>
+            <p>{{item.deposits.length}} 个押金方案</p>
+            <p>{{item.packages.length}} 种套餐方案</p>
             <p><strong v-if="item.type===2">不</strong> 可退押金</p>
             <div class="group_card-footer">
               <el-button type="primary" size="mini" @click="groupSet(item)">设置</el-button>

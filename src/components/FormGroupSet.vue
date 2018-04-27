@@ -12,13 +12,13 @@
           <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
             <el-input v-model="formGroupSet.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
-          <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
+          <!-- <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.canRefund" placeholder="请选择">
-              <!-- 0不可退，1可退 -->
+              0不可退，1可退
               <el-option label="可退押金" value="1"></el-option>
               <el-option label="不可退押金" value="0"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.depositScheme" multiple placeholder="请选择">
@@ -27,7 +27,7 @@
                 v-for="item in options_depositListScheme"
                 :key="item.id"
                 :label="(item.name+' / ¥'+item.deposit+' / '+item.num+'颗电池')"
-                :value="item.id">
+                :value="(''+item.id)">
               </el-option>
             </el-select>
           </el-form-item>
@@ -38,7 +38,7 @@
                 v-for="item in options_packageListScheme"
                 :key="item.id"
                 :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
-                :value="item.id">
+                :value="(''+item.id)">
               </el-option>
             </el-select>
           </el-form-item>
@@ -58,22 +58,16 @@ import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormGroupSet',
+  props:['code','name','deposits','packages'],
   data:function(){
     return ({
-      // formGroupSet:{
-      //   name:'',
-      //   canRefund:'',
-      //   depositScheme:[],
-      //   packageScheme:[],
-      //   agentId:window.sessionStorage.agentid
-      // },
       rules:{
         name:[
           {required:true,message:'群组名称不能为空',trigger:'blur'}
         ],
-        canRefund:[
-          {required:true,message:'请选择群组类型',trigger:'change'}
-        ],
+        // canRefund:[
+        //   {required:true,message:'请选择群组类型',trigger:'change'}
+        // ],
         depositScheme:[
           {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
         ],
@@ -86,12 +80,21 @@ export default {
       options_packageListScheme: [],
       loading:false,
 
-      formLabelWidth:'90px'
+      formLabelWidth:'85px'
     });
   },
-  props:['formGroupSet'],
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    formGroupSet:function(){
+      return ({
+        name:this.name,
+        // canRefund:'',
+        depositScheme:_.cloneDeep(this.deposits),
+        packageScheme:_.cloneDeep(this.packages),
+        groupCode:this.code,
+        agentId:window.sessionStorage.agentid
+      });
+    }
   },
   methods:{
     fetchOptionsScheme:function(type){
@@ -132,10 +135,10 @@ export default {
         packageScheme:vueThis.formGroupSet.packageScheme,
         agentId:window.sessionStorage.agentid,
         cityCode:0,
-        groupCode:vueThis.formGroupSet.code,
-        canRefund:window.Number(vueThis.formGroupSet.canRefund)
+        // canRefund:window.Number(vueThis.formGroupSet.canRefund),
+        groupCode:vueThis.formGroupSet.groupCode
       };
-      // console.log(JSON.stringify(sendData));
+      console.log(JSON.stringify(sendData));
       vueThis.loading=true;
       ajaxs.imPostJson(urls.groupSet,sendData,function(objRps){
         // console.log(objRps);
