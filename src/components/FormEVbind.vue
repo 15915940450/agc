@@ -42,10 +42,10 @@ export default {
   },
   methods:{
     handleComfirm:function(){
-      console.log(this.scooterSid);
+      // console.log(this.scooterSid);
       var vueThis=this;
       var sendData={
-        userId:vueThis.userId,
+        userId:vueThis.formEVbind.userId,
         scooterSid:vueThis.scooterSid
       };
       //请求地址

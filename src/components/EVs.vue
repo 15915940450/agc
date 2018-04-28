@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="e_vs">
+    <transition name="el-fade-in">
     <div class="evs_list" v-if="evs.length">
       <!-- table wrap -->
       <div class="table_wrap">
@@ -90,6 +91,8 @@
         </el-pagination>
       </div>
     </div>
+    </transition>
+
     <!-- 没有电动车 -->
     <div class="empty_evs" v-if="!evs.length">
       <h3 class="title">电动车列表</h3>
