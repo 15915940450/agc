@@ -64,7 +64,7 @@
             <template slot-scope="scope">
               <el-button
                 type="text"
-                size="small">
+                size="small" @click="unbindUser(scope)">
                 解绑
               </el-button>
               <el-button
@@ -90,6 +90,7 @@
     <!-- 新建 -->
     <FormNewUser />
     <BaseStatus :msg="msg" />
+    <FormUnbindUser :phone="unbindPhone" />
 
 
   </div>
@@ -100,14 +101,16 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormNewUser from './FormNewUser.vue';
 import BaseStatus from './BaseStatus.vue';
+import FormUnbindUser from './FormUnbindUser.vue';
 
 export default {
   name:'CUser',
   data:function(){
     return ({
       total:100,
-      msg:'车辆已激活',
+      msg:'',
       searchPhone:'',
+      unbindPhone:'',
 
       users:[
 
@@ -135,7 +138,8 @@ export default {
   },
   components:{
     FormNewUser,
-    BaseStatus
+    BaseStatus,
+    FormUnbindUser
   },
   methods: {
     fetchData:function(){
@@ -163,6 +167,7 @@ export default {
       this.$router.push('/user/'+this.$route.params.groupcode+'/'+val);
     },
     showNewUser:function(){
+      this.msg='车辆已激活';
       this.$store.commit('showNewUser');
     },
     formatter:function(row, column, cellValue){
@@ -176,6 +181,12 @@ export default {
           return v.sn;
         }).join(' , '));
       }
+    },
+    unbindUser:function(scope){
+      this.msg='用户已解绑';
+      // console.log(scope.row.phone);
+      this.unbindPhone=scope.row.phone;
+      this.$store.commit('showUserUnbind');
     }
   },
   created:function(){
