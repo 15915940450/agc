@@ -14,13 +14,13 @@
           <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
             <el-input v-model="formGroupSet.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
-          <!-- <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
+          <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.canRefund" placeholder="请选择">
-              0不可退，1可退
+              <!-- 0不可退，1可退 -->
               <el-option label="可退押金" value="1"></el-option>
-              <el-option label="不可退押金" value="0"></el-option>
+              <el-option label="不可退押金" value="2"></el-option>
             </el-select>
-          </el-form-item> -->
+          </el-form-item>
 
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.depositScheme" multiple placeholder="请选择">
@@ -62,12 +62,12 @@ import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormGroupSet',
-  props:['code','name','deposits','packages'],
+  props:['code','name','deposits','packages','type'],
   data:function(){
     return ({
       formGroupSet:{
         name:'',
-        // canRefund:'',
+        canRefund:'',
         depositScheme:[],
         packageScheme:[],
         groupCode:-1,
@@ -102,6 +102,7 @@ export default {
     'modalStore.groupSet':function(val){
       if(val){
         this.formGroupSet.name=this.name;
+        this.formGroupSet.canRefund=this.type+'';
         this.formGroupSet.depositScheme=this.deposits?this.deposits.map(function(v){return window.Number(v);}):[];
         this.formGroupSet.packageScheme=this.deposits?this.packages.map(function(v){return window.Number(v);}):[];
         this.formGroupSet.groupCode=this.code;
@@ -146,7 +147,7 @@ export default {
             packageScheme:vueThis.formGroupSet.packageScheme,
             agentId:window.sessionStorage.agentid,
             cityCode:0,
-            // canRefund:window.Number(vueThis.formGroupSet.canRefund),
+            canRefund:window.Number(vueThis.formGroupSet.canRefund),
             groupCode:vueThis.formGroupSet.groupCode
           };
           console.log(JSON.stringify(sendData));
