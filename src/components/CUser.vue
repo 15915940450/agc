@@ -69,7 +69,7 @@
               </el-button>
               <el-button
                 type="text"
-                size="small">
+                size="small" @click="setUser(scope)">
                 设置
               </el-button>
             </template>
@@ -91,6 +91,7 @@
     <FormNewUser />
     <BaseStatus :msg="msg" />
     <FormUnbindUser :phone="unbindPhone" />
+    <FormSetUser :phone="setPhone" />
 
 
   </div>
@@ -102,6 +103,7 @@ import {urls,ajaxs} from '../api/urls.js';
 import FormNewUser from './FormNewUser.vue';
 import BaseStatus from './BaseStatus.vue';
 import FormUnbindUser from './FormUnbindUser.vue';
+import FormSetUser from './FormSetUser.vue';
 
 export default {
   name:'CUser',
@@ -111,6 +113,7 @@ export default {
       msg:'',
       searchPhone:'',
       unbindPhone:'',
+      setPhone:'',
 
       users:[
 
@@ -139,7 +142,8 @@ export default {
   components:{
     FormNewUser,
     BaseStatus,
-    FormUnbindUser
+    FormUnbindUser,
+    FormSetUser
   },
   methods: {
     fetchData:function(){
@@ -187,6 +191,10 @@ export default {
       // console.log(scope.row.phone);
       this.unbindPhone=scope.row.phone;
       this.$store.commit('showUserUnbind');
+    },
+    setUser:function(scope){
+      this.setPhone=scope.row.phone;
+      this.$store.commit('showSetUser');
     }
   },
   created:function(){

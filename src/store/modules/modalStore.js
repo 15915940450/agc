@@ -10,6 +10,7 @@ var state={
   groupCreate:false,
   EVbind:false,
   userUnbind:false,
+  setUser:false,
   groupSet:false,
   statusGroupCreate:false,
   statusEVoperation:false,
@@ -35,6 +36,7 @@ var mutations={
     state.groupCreate=false;
     state.EVbind=false;
     state.userUnbind=false;
+    state.setUser=false;
     state.groupSet=false;
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
@@ -98,6 +100,12 @@ var mutations={
   },
   hideUserUnbind:function(state){
     state.userUnbind=false;
+  },
+  showSetUser:function(state){
+    state.setUser=true;
+  },
+  hideSetUser:function(state){
+    state.setUser=false;
   },
   showGroupSet:function(state){
     state.groupSet=true;
