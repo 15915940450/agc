@@ -66,7 +66,7 @@ import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormSetUser',
-  props:['name','groupCode','depositId','freeDays','scooters','phone'],
+  props:['name','groupCode','depositCode','freeDays','scooters','phone'],
   data:function(){
     return ({
       formSetUser:{
@@ -106,7 +106,7 @@ export default {
       if(val){
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
-        this.formSetUser.depositId=this.depositId;
+        this.formSetUser.depositId=this.depositCode;
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSN=['G5A1A100702'];
         this.formSetUser.scooterSN=this.scooters;
@@ -173,8 +173,8 @@ export default {
           // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
           ajaxs.imPostJson(urls.setUser,sendData,function(objRps){
-            console.log(objRps);
-            return ;
+            // console.log(objRps);
+            // return ;
             vueThis.loading=false;
             if(objRps.code===1000){
               vueThis.$store.commit('hideSetUser');
