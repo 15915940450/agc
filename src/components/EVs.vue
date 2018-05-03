@@ -207,6 +207,7 @@ export default {
     },
     handleEVbind:function(scope){
       // console.log(scope);
+      this.msg='绑定成功！';
       this.scooterSid=scope.row.sid;
       this.$store.commit('showEVbind');
     }
