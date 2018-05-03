@@ -103,6 +103,7 @@
     <!-- 操作响应 -->
     <FormEVbind :scooterSid="scooterSid" />
     <StatusEVoperation :msg="msg" />
+    <FormEVunbind :scooterSid="scooterSid" :userId="userId" />
   </div>
 </template>
 
@@ -111,6 +112,7 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 import FormEVbind from './FormEVbind.vue';
 import StatusEVoperation from './StatusEVoperation.vue';
+import FormEVunbind from './FormEVunbind.vue';
 
 // /scooter/list
 
@@ -140,6 +142,7 @@ export default {
       ],
       msg:'',
       scooterSid:'',
+      userId:'',
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -158,6 +161,7 @@ export default {
   },
   components:{
     FormEVbind,
+    FormEVunbind,
     StatusEVoperation
   },
   methods: {
@@ -196,17 +200,10 @@ export default {
       });
     },
     handleEVunbind:function(scope){
-      var vueThis=this;
-      var sendData={
-        scooterSid:scope.row.sid,
-        userId:scope.row.owner
-      };
-      ajaxs.imPostJson(urls.EVunbind,sendData,function(objRps){
-        if(objRps.code===1000){
-          vueThis.msg=objRps.msg;
-          vueThis.$store.commit('showStatusEVoperation');
-        }
-      });
+      this.scooterSid=scope.row.sid;
+      this.userId=scope.row.owner;
+      this.$store.commit('showEVunbind');
+      this.msg='已解绑';
     },
     handleEVbind:function(scope){
       // console.log(scope);

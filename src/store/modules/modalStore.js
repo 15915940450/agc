@@ -9,6 +9,7 @@ var state={
   batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
   groupCreate:false,
   EVbind:false,
+  EVunbind:false,
   userUnbind:false,
   setUser:false,
   groupSet:false,
@@ -35,6 +36,7 @@ var mutations={
     state.statusRefund=false;
     state.groupCreate=false;
     state.EVbind=false;
+    state.EVunbind=false;
     state.userUnbind=false;
     state.setUser=false;
     state.groupSet=false;
@@ -94,6 +96,12 @@ var mutations={
   },
   hideEVbind:function(state){
     state.EVbind=false;
+  },
+  showEVunbind:function(state){
+    state.EVunbind=true;
+  },
+  hideEVunbind:function(state){
+    state.EVunbind=false;
   },
   showUserUnbind:function(state){
     state.userUnbind=true;
