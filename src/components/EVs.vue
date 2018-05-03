@@ -101,7 +101,7 @@
     </div>
 
     <!-- 操作响应 -->
-    <FormEVbind :scooterSid="scooterSid" />
+    <FormEVbind :scooterSid="scooterSid" :scooterSN="scooterSN" />
     <StatusEVoperation :msg="msg" />
     <FormEVunbind :scooterSid="scooterSid" :userId="userId" />
   </div>
@@ -122,6 +122,7 @@ export default {
     return ({
       total:0,
       searchSN:'',
+      scooterSN:'',
       evs:[
       //   {
       //   "id": "1",//车id
@@ -209,6 +210,7 @@ export default {
       // console.log(scope);
       this.msg='绑定成功！';
       this.scooterSid=scope.row.sid;
+      this.scooterSN=scope.row.sn;
       this.$store.commit('showEVbind');
     }
   },

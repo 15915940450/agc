@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="modal_wrap">
     <el-dialog
-      title="绑定电动车"
+      :title="title"
       :visible.sync="modalStore.EVbind"
       width="350px"
       :show-close="false"
@@ -37,7 +37,7 @@ import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormEVbind',
-  props:['scooterSid'],
+  props:['scooterSid','scooterSN'],
   data:function(){
     return ({
       formEVbind:{
@@ -53,7 +53,10 @@ export default {
     });
   },
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    title:function(){
+      return ('绑定电动车('+this.scooterSN+')');
+    }
   },
   methods:{
     handleCancel:function(refName){
@@ -71,8 +74,8 @@ export default {
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
           ajaxs.imPostJson(urls.EVbind,sendData,function(objRps){
-            console.log(objRps);
-            if(objRps.code===1002){
+            // console.log(objRps);
+            if(objRps.code===1000){
               vueThis.$refs[refName].resetFields();
               vueThis.$store.commit('hideEVbind');
               vueThis.$store.commit('showStatusEVoperation');
