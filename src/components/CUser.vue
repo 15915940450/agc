@@ -91,7 +91,7 @@
     <FormNewUser />
     <BaseStatus :msg="msg" />
     <FormUnbindUser :phone="unbindPhone" />
-    <FormSetUser :phone="setPhone" />
+    <FormSetUser v-bind="userSet" />
 
 
   </div>
@@ -113,7 +113,7 @@ export default {
       msg:'',
       searchPhone:'',
       unbindPhone:'',
-      setPhone:'',
+      userSet:null,
 
       users:[
 
@@ -193,7 +193,8 @@ export default {
       this.$store.commit('showUserUnbind');
     },
     setUser:function(scope){
-      this.setPhone=scope.row.phone;
+      // console.log(JSON.stringify(scope.row));
+      this.userSet=scope.row;
       this.$store.commit('showSetUser');
     }
   },
