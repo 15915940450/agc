@@ -194,6 +194,7 @@ export default {
     },
     setUser:function(scope){
       // console.log(JSON.stringify(scope.row));
+      this.msg='设置成功';
       this.userSet=scope.row;
       this.$store.commit('showSetUser');
     }

@@ -22,7 +22,7 @@
           </el-form-item>
 
           <el-form-item prop="depositId" label="押金方案" :label-width="formLabelWidth">
-            <el-select v-model="formSetUser.depositId" multiple placeholder="请选择">
+            <el-select v-model="formSetUser.depositId" placeholder="请选择">
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_depositListScheme"
@@ -43,8 +43,8 @@
             <el-input v-model.number="formSetUser.name" auto-complete="off" placeholder="剩余可分配电池 100 天"></el-input>
           </el-form-item> -->
 
-          <el-form-item prop="scooterSN" label="车牌号(SN)" :label-width="formLabelWidth">
-            <el-select v-model="formSetUser.scooterSN" multiple filterable placeholder="请选择">
+          <el-form-item prop="scooterSNs" label="车牌号(SN)" :label-width="formLabelWidth">
+            <el-select v-model="formSetUser.scooterSNs" multiple filterable placeholder="请选择">
               <el-option
                 v-for="item in optionsEVs"
                 :key="item.sn"
@@ -70,14 +70,14 @@ import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormSetUser',
-  props:['name','groupCode','depositCode','freeDays','scooters','phone'],
+  props:['name','groupCode','depositID','freeDays','scooters','phone'],
   data:function(){
     return ({
       formSetUser:{
-        scooterSN:[],
+        scooterSNs:[],
         freeDay:-1,
         groupCode:'',
-        depositId:[],
+        depositId:'',
         phone:''
       },
       rules:{
@@ -85,13 +85,13 @@ export default {
           {required:true,message:'请选择一个群组',trigger:'change'}
         ],
         depositId:[
-          {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
+          {required:true,message:'请选择押金方案',trigger:'change'}
         ],
         freeDay:[
           {required:true,message:'免费天数不能为空',trigger:'change'}
         ],
-        scooterSN:[
-          {required:true,message:'请选择一辆电动车',trigger:'change'}
+        scooterSNs:[
+          {required:true,message:'请选择电动车',trigger:'change'}
         ]
       },
       agentFreeDays:0,
@@ -114,10 +114,10 @@ export default {
       if(val){
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
-        this.formSetUser.depositId=this.depositCode;
+        this.formSetUser.depositId=this.depositID;
         this.formSetUser.freeDay=window.Number(this.freeDays);
-        // this.formSetUser.scooterSN=['G5A1A100702'];
-        this.formSetUser.scooterSN=this.scooters;
+        // this.formSetUser.scooterSNs=['G5A1A100702'];
+        this.formSetUser.scooterSNs=this.scooters;
         this.formSetUser.phone=this.phone;
       }
     }
@@ -186,7 +186,7 @@ export default {
             groupCode:vueThis.formSetUser.groupCode,
             depositId:vueThis.formSetUser.depositId,
             freeDay:vueThis.formSetUser.freeDay,
-            scooterSN:vueThis.formSetUser.scooterSN,
+            scooterSNs:vueThis.formSetUser.scooterSNs,
             phone:vueThis.formSetUser.phone
           };
           // console.log(JSON.stringify(sendData));
