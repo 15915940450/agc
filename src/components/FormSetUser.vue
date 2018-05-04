@@ -34,7 +34,9 @@
           </el-form-item>
 
           <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
-            <el-input-number v-model="formSetUser.freeDay" :min="0" :max="9999"></el-input-number>
+            <el-input-number v-model="formSetUser.freeDay" :min="0" :max="maxFD">
+            </el-input-number>
+            <small>(剩余 <strong :class="{red:(agentFreeDays<=0)}">{{agentFreeDays}}</strong> 天)</small>
           </el-form-item>
 
           <!-- <el-form-item label="可用电池数" :label-width="formLabelWidth">
@@ -92,6 +94,7 @@ export default {
           {required:true,message:'请选择一辆电动车',trigger:'change'}
         ]
       },
+      agentFreeDays:0,
       optionsEVs:[],
       optionsGroups:[],
       options_depositListScheme: [],
@@ -100,6 +103,9 @@ export default {
     });
   },
   computed:{
+    maxFD:function(){
+      return (this.freeDays+this.agentFreeDays);
+    },
     ...mapState(['modalStore'])
   },
   watch:{
@@ -117,6 +123,17 @@ export default {
     }
   },
   methods:{
+    fetchBaseInfo:function(){
+      var vueThis=this;
+      var sendData={
+        phone:''+window.sessionStorage.agentphone
+      };
+      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
+        if(objRps.code===1000){
+          vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
+        }
+      });
+    },
     fetchGroupList:function(){
       var vueThis=this;
       var advancedParam=JSON.stringify({
@@ -204,6 +221,7 @@ export default {
     }
   },  //methods
   created:function(){
+    this.fetchBaseInfo();
     this.fetchOptionsScheme('depositListScheme');
     this.fetchEVlist();
     this.fetchGroupList();
