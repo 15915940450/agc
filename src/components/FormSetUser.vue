@@ -117,7 +117,7 @@ export default {
         this.formSetUser.depositId=this.depositID;
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
-        this.formSetUser.scooterSNs=this.scooters;
+        this.formSetUser.scooterSNs=_.cloneDeep(this.scooters);
         this.formSetUser.phone=this.phone;
       }
     }
