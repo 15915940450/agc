@@ -10,8 +10,8 @@
       <div class="modal_wrap-body">
         <el-form :model="formEVbind" :rules="rules" ref="formEVbind">
 
-          <el-form-item prop="userId" label="用户手机号" :label-width="formLabelWidth">
-            <el-select v-model="formEVbind.userId" filterable placeholder="请选择">
+          <el-form-item prop="userPhone" label="用户手机号" :label-width="formLabelWidth">
+            <el-select v-model="formEVbind.userPhone" filterable placeholder="请选择">
               <el-option
                 v-for="item in optionsUsers"
                 :key="item.phone"
@@ -41,10 +41,10 @@ export default {
   data:function(){
     return ({
       formEVbind:{
-        userId:''
+        userPhone:''
       },
       rules:{
-        userId:[
+        userPhone:[
           {required:true,message:'请选择用户',trigger:'change'}
         ]
       },
@@ -67,7 +67,7 @@ export default {
       // console.log(this.scooterSid);
       var vueThis=this;
       var sendData={
-        userId:vueThis.formEVbind.userId,
+        userPhone:vueThis.formEVbind.userPhone,
         scooterSid:vueThis.scooterSid
       };
       //请求地址

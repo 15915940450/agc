@@ -103,7 +103,7 @@
     <!-- 操作响应 -->
     <FormEVbind :scooterSid="scooterSid" :scooterSN="scooterSN" />
     <StatusEVoperation :msg="msg" />
-    <FormEVunbind :scooterSid="scooterSid" :userId="userId" />
+    <FormEVunbind :scooterSid="scooterSid" :scooterSN="scooterSN" />
   </div>
 </template>
 
@@ -143,7 +143,6 @@ export default {
       ],
       msg:'',
       scooterSid:'',
-      userId:'',
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -155,6 +154,11 @@ export default {
       this.fetchData();
     },
     'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.statusEVoperation':function(val){
       if(!val){
         this.fetchData();
       }
@@ -202,16 +206,16 @@ export default {
     },
     handleEVunbind:function(scope){
       this.scooterSid=scope.row.sid;
-      this.userId=scope.row.owner;
+      this.scooterSN=scope.row.sn;
       this.$store.commit('showEVunbind');
-      this.msg='已解绑';
+      this.msg='已成功解绑';
     },
     handleEVbind:function(scope){
       // console.log(scope);
-      this.msg='绑定成功！';
       this.scooterSid=scope.row.sid;
       this.scooterSN=scope.row.sn;
       this.$store.commit('showEVbind');
+      this.msg='绑定成功！';
     }
   },
   created:function(){

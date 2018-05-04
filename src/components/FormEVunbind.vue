@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="modal_wrap">
     <el-dialog
-      :title="userId"
+      :title="scooterSN"
       :visible.sync="modalStore.EVunbind"
       width="300px"
       :show-close="false"
@@ -24,7 +24,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormEVunbind',
-  props:['scooterSid','userId'],
+  props:['scooterSid','scooterSN'],
   data:function(){
     return ({
       loading:false
@@ -42,8 +42,7 @@ export default {
       var vueThis=this;
       vueThis.loading=true;
       var sendData={
-        scooterSid:vueThis.scooterSid,
-        userId:vueThis.userId
+        scooterSid:vueThis.scooterSid
       };
       // console.log(sendData);
       ajaxs.imPostJson(urls.EVunbind,sendData,function(objRps){
