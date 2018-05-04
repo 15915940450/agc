@@ -36,9 +36,11 @@
           <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
             <el-input-number v-model="formSetUser.freeDay" :min="0" :max="9999"></el-input-number>
           </el-form-item>
+
           <!-- <el-form-item label="可用电池数" :label-width="formLabelWidth">
             <el-input v-model.number="formSetUser.name" auto-complete="off" placeholder="剩余可分配电池 100 天"></el-input>
           </el-form-item> -->
+
           <el-form-item prop="scooterSN" label="车牌号(SN)" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.scooterSN" multiple filterable placeholder="请选择">
               <el-option
@@ -84,7 +86,7 @@ export default {
           {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
         ],
         freeDay:[
-          {required:true,message:'免费天数不能为空',trigger:'blur'}
+          {required:true,message:'免费天数不能为空',trigger:'change'}
         ],
         scooterSN:[
           {required:true,message:'请选择一辆电动车',trigger:'change'}
