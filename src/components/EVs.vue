@@ -252,7 +252,7 @@ export default {
     width: 170px;
     height: 130px;
     display: block;
-    border:1px solid #AAA;
+    /*border:1px solid #AAA;*/
     margin:180px auto 10px;
   }
 
