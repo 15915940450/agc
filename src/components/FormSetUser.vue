@@ -110,14 +110,16 @@ export default {
   },
   watch:{
     'modalStore.setUser':function(val){
-      // console.log(window.Number(this.freeDays));
+      // console.log(JSON.stringify(this.scooters));
       if(val){
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
         this.formSetUser.depositId=this.depositID;
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
-        this.formSetUser.scooterSNs=_.cloneDeep(this.scooters);
+        this.formSetUser.scooterSNs=this.scooters.map(function(v){
+          return (v.sn);
+        });
         this.formSetUser.phone=this.phone;
       }
     }
