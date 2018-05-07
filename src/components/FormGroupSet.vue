@@ -15,8 +15,7 @@
             <el-input v-model="formGroupSet.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
           <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
-            <el-select v-model="formGroupSet.canRefund" placeholder="请选择">
-              <!-- 0不可退，1可退 -->
+            <el-select v-model="formGroupSet.canRefund" placeholder="请选择" disabled>
               <el-option label="可退押金" value="1"></el-option>
               <el-option label="不可退押金" value="2"></el-option>
             </el-select>
@@ -147,7 +146,7 @@ export default {
             packageScheme:vueThis.formGroupSet.packageScheme,
             agentId:window.sessionStorage.agentid,
             cityCode:0,
-            canRefund:window.Number(vueThis.formGroupSet.canRefund),
+            // canRefund:window.Number(vueThis.formGroupSet.canRefund),
             groupCode:vueThis.formGroupSet.groupCode
           };
           console.log(JSON.stringify(sendData));

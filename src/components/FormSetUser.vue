@@ -23,6 +23,7 @@
 
           <el-form-item prop="depositId" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.depositId" placeholder="请选择">
+              <el-option key="-1" label="空" value=""></el-option>
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_depositListScheme"
@@ -84,9 +85,9 @@ export default {
         groupCode:[
           {required:true,message:'请选择一个群组',trigger:'change'}
         ],
-        depositId:[
-          {required:true,message:'请选择押金方案',trigger:'change'}
-        ],
+        // depositId:[
+        //   {required:true,message:'请选择押金方案',trigger:'change'}
+        // ],
         freeDay:[
           {required:true,message:'免费天数不能为空',trigger:'change'}
         ],
@@ -213,7 +214,6 @@ export default {
           });
         }
       });
-
     },
     fetchEVlist:function(){
       var vueThis=this;

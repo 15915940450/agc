@@ -15,8 +15,8 @@
           <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.canRefund" placeholder="请选择">
               <!-- 0不可退，1可退 -->
-              <el-option label="可退押金" value="1"></el-option>
-              <el-option label="不可退押金" value="0"></el-option>
+              <el-option v-if="grouptype!==0" label="可退押金" value="1"></el-option>
+              <el-option v-if="grouptype!==1" label="不可退押金" value="0"></el-option>
             </el-select>
           </el-form-item>
 
@@ -81,6 +81,7 @@ export default {
           {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
         ]
       },
+      grouptype:window.Number(window.sessionStorage.grouptype),
       typePackage:['月套卡','次套卡','免费套餐'],
       options_depositListScheme: [],
       options_packageListScheme: [],
@@ -152,6 +153,7 @@ export default {
   created:function(){
     this.fetchOptionsScheme('depositListScheme');
     this.fetchOptionsScheme('packageListScheme');
+    // console.log(this.grouptype);
   }
 
 };
