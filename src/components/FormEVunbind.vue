@@ -50,6 +50,13 @@ export default {
         if(objRps.code===1000){
           vueThis.$store.commit('hideEVunbind');
           vueThis.$store.commit('showStatusEVoperation');
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
         vueThis.loading=false;
       });

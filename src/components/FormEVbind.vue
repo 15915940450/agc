@@ -79,6 +79,13 @@ export default {
               vueThis.$refs[refName].resetFields();
               vueThis.$store.commit('hideEVbind');
               vueThis.$store.commit('showStatusEVoperation');
+            }else{
+              vueThis.$notify.error({
+                title: '提示',
+                message:objRps.msg,
+                offset: 50,
+                duration: 5000  //0
+              });
             }
           });
         }
@@ -100,6 +107,13 @@ export default {
         // console.log(objRps);
         if(objRps.code===1000){
           vueThis.optionsUsers=objRps.result.list;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     }

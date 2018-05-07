@@ -127,6 +127,13 @@ export default {
           if(type==='packageListScheme'){
             vueThis.options_packageListScheme=objRps.result.list;
           }
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -149,7 +156,7 @@ export default {
             // canRefund:window.Number(vueThis.formGroupSet.canRefund),
             groupCode:vueThis.formGroupSet.groupCode
           };
-          console.log(JSON.stringify(sendData));
+          // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
           ajaxs.imPostJson(urls.groupSet,sendData,function(objRps){
             // console.log(objRps);
@@ -157,6 +164,13 @@ export default {
             if(objRps.code===1000){
               vueThis.$store.commit('hideGroupSet');
               vueThis.$store.commit('showBaseStatus');
+            }else{
+              vueThis.$notify.error({
+                title: '提示',
+                message:objRps.msg,
+                offset: 50,
+                duration: 5000  //0
+              });
             }
           });
         }

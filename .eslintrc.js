@@ -10,6 +10,7 @@ module.exports = {
   },
   globals:{
     _:true,
+    ActiveXObject:true,
     AMap:true,
     AMapUI:true
   },

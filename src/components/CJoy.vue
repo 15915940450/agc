@@ -148,6 +148,13 @@ export default {
           Object.keys(objRps.result).forEach(function(v){
             vueThis[v]=objRps.result[v];
           });
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },

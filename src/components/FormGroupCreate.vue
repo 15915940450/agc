@@ -112,6 +112,13 @@ export default {
           if(type==='packageListScheme'){
             vueThis.options_packageListScheme=objRps.result.list;
           }
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -142,6 +149,13 @@ export default {
               vueThis.$store.commit('hideGroupCreate');
               vueThis.$store.commit('showStatusGroupCreate');
               vueThis.$refs[refName].resetFields();
+            }else{
+              vueThis.$notify.error({
+                title: '提示',
+                message:objRps.msg,
+                offset: 50,
+                duration: 5000  //0
+              });
             }
           });
         }

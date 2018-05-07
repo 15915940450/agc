@@ -216,6 +216,13 @@ export default {
         if(objRps.code===1000){
           vueThis.total=objRps.result.total;
           vueThis.deposit=objRps.result.list;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -230,6 +237,13 @@ export default {
           vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
           vueThis.card.availableBattery=objRps.result.availableBattery;
           vueThis.card.usedBattery=objRps.result.usedBattery;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });          
         }
       });
 

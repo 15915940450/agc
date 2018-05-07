@@ -29,7 +29,7 @@
                 v-for="item in options_depositListScheme"
                 :key="item.id"
                 :label="(item.name+' / ¥'+item.deposit+' / '+item.num+'颗电池')"
-                :value="item.id">
+                :value="(item.id+'')">
               </el-option>
             </el-select>
           </el-form-item>
@@ -112,11 +112,22 @@ export default {
   },
   watch:{
     'modalStore.setUser':function(val){
-      // console.log((this.depositID));
+      var vueThis=this;
       if(val){
+        // console.log(Math.random());
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
-        this.formSetUser.depositId=this.depositID;  //7
+
+        var isFind=vueThis.options_depositListScheme.find(function(v){
+          return (window.Number(v.id)===window.Number(vueThis.depositID));
+        });
+        // console.log(JSON.stringify(isFind));  //undefined
+        if(!isFind){
+          vueThis.formSetUser.depositId='';
+        }else{
+          vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
+        }
+
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
         this.formSetUser.scooterSNs=this.scooters.map(function(v){
@@ -135,6 +146,13 @@ export default {
       ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
         if(objRps.code===1000){
           vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -152,6 +170,13 @@ export default {
         // console.log(JSON.stringify(objRps));
         if(objRps.code===1000){
           vueThis.optionsGroups=objRps.result.list;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -171,17 +196,17 @@ export default {
           if(type==='depositListScheme'){
             vueThis.options_depositListScheme=objRps.result.list;
             // console.log(JSON.stringify(vueThis.options_depositListScheme));
-            var isFind=vueThis.options_depositListScheme.find(function(v){
-              return (v.value===vueThis.formSetUser.depositId);
-            });
-
-            if(!isFind){
-              vueThis.formSetUser.depositId='';
-            }
           }
           if(type==='packageListScheme'){
             vueThis.options_packageListScheme=objRps.result.list;
           }
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     },
@@ -210,6 +235,13 @@ export default {
             if(objRps.code===1000){
               vueThis.$store.commit('hideSetUser');
               vueThis.$store.commit('showBaseStatus');
+            }else{
+              vueThis.$notify.error({
+                title: '提示',
+                message:objRps.msg,
+                offset: 50,
+                duration: 5000  //0
+              });
             }
           });
         }
@@ -227,6 +259,13 @@ export default {
         // console.log(objRps);
         if(objRps.code===1000){
           vueThis.optionsEVs=objRps.result.list;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
       });
     }

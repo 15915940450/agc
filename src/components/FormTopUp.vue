@@ -90,10 +90,17 @@ export default {
           }else{
             payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
           }
-          vueThis.loading=false;
           window.sessionStorage.setItem('payurl',payurl);
           window.open(payurl);
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
+        vueThis.loading=false;
       });
     },
     handleComfirm:function(){
