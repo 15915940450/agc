@@ -1,29 +1,57 @@
 <template lang="html">
   <div class="ajax_test">
-    66666
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+    <el-button type="text" @click="load()">load</el-button>
+    <!-- <el-button type="text" @click="load()" disabled>load</el-button> -->
   </div>
 </template>
 
 <script>
-import {urls,ajaxs} from '../api/urls.js';
-
-var advancedParam=JSON.stringify({
-  groupCode:11
-});
-
-var sendData={
-  pageNum:1,
-  pageSize:3,
-  advancedParam:advancedParam
-};
-
-// ajaxs.imPostJson(urls.packageList,sendData,function(objRps){
-//   console.log(objRps,'/ajax');
-// });
-
 export default {
-  name:'AjaxTest'
+  name:'AjaxTest',
+  data() {
+    return {
+      options: [],
+      value: 'ff'
+    };
+  },
+  methods:{
+    load:function(){
+      var vueThis=this;
+      vueThis.options=[{
+        value: 'aa',
+        label: '黄金糕'
+      }, {
+        value: 'bb',
+        label: '双皮奶'
+      }, {
+        value: 'cc',
+        label: '蚵仔煎'
+      }, {
+        value: 'dd',
+        label: '龙须面'
+      }, {
+        value: 'ee',
+        label: '北京烤鸭'
+      }];
+      var isFind=vueThis.options.find(function(v){
+        return (v.value===vueThis.value);
+      });
+
+      if(!isFind){
+        vueThis.value='';
+      }
+    }
+  }
 };
+
 
 </script>
 

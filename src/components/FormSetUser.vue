@@ -98,6 +98,7 @@ export default {
       optionsEVs:[],
       optionsGroups:[],
       options_depositListScheme: [],
+      // [{"id":7,"code":7,"name":"租两颗电池","deposit":1798,"num":2},{"id":11,"code":11,"name":"租一颗电池","deposit":999,"num":1},{"id":13,"code":13,"name":"租一颗电池","deposit":500,"num":1}]
       loading:false,
       formLabelWidth:'100px'
     });
@@ -110,11 +111,11 @@ export default {
   },
   watch:{
     'modalStore.setUser':function(val){
-      // console.log(JSON.stringify(this.scooters));
+      // console.log((this.depositID));
       if(val){
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
-        this.formSetUser.depositId=this.depositID;
+        this.formSetUser.depositId=this.depositID;  //7
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
         this.formSetUser.scooterSNs=this.scooters.map(function(v){
@@ -168,6 +169,14 @@ export default {
         if(objRps.code===1000){
           if(type==='depositListScheme'){
             vueThis.options_depositListScheme=objRps.result.list;
+            // console.log(JSON.stringify(vueThis.options_depositListScheme));
+            var isFind=vueThis.options_depositListScheme.find(function(v){
+              return (v.value===vueThis.formSetUser.depositId);
+            });
+
+            if(!isFind){
+              vueThis.formSetUser.depositId='';
+            }
           }
           if(type==='packageListScheme'){
             vueThis.options_packageListScheme=objRps.result.list;
