@@ -158,14 +158,14 @@ export default {
     fetchOptionsScheme:function(type){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        groupCode:vueThis.$route.params.groupcode
+        groupCode:window.Number(vueThis.$route.params.groupcode)
       });
       var sendData={
         advancedParam:advancedParam,
         pageNum:1,
         pageSize:96900000
       };
-      ajaxs.imPostJson(urls[type],sendData,function(objRps){
+      ajaxs.imGet(urls[type],sendData,function(objRps){
         // console.log(JSON.stringify(objRps));
         if(objRps.code===1000){
           if(type==='depositListScheme'){

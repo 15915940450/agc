@@ -98,6 +98,13 @@ export default {
           //修改成功，回到登录页面
           vueThis.msg='密码修改成功，请重新登录！';
           vueThis.$store.commit('showStatusEditPW');
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
         }
         vueThis.loading=false;
       });
