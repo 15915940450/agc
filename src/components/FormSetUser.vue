@@ -157,7 +157,7 @@ export default {
     fetchOptionsScheme:function(type){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        groupCode:null
+        groupCode:vueThis.$route.params.groupcode
       });
       var sendData={
         advancedParam:advancedParam,
