@@ -18,6 +18,22 @@ ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
 });
 
 
+## vim
+
+* vandle
+* nerdtree
+* ctrlp
+* nerdcommenter
+* emmet
+* syntastic
+* bufexplorer
+* maximizer
+* easygrep
+* vue
+
+## sublime editor
+
+
 ## atom editor
 
 * packages: atom-vue, ayu-atom-syntax, busy-signal, intentions, linter, linter-eslint, linter-htmlhint, linter-ui-default.
