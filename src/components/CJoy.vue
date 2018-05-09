@@ -140,7 +140,7 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.sessionStorage.agentphone
+        phone:''+window.localStorage.agentphone
       };
       ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
         if(objRps.code===1000){

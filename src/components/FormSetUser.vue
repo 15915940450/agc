@@ -141,7 +141,7 @@ export default {
     fetchBaseInfo:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.sessionStorage.agentphone
+        phone:''+window.localStorage.agentphone
       };
       ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
         if(objRps.code===1000){
@@ -250,7 +250,7 @@ export default {
     fetchEVlist:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.sessionStorage.agentphone,
+        phone:''+window.localStorage.agentphone,
         pageNum:1,
         pageSize:96900000
       };

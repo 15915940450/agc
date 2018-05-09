@@ -65,7 +65,7 @@ export default {
       var vueThis=this;
       vueThis.loading=true;
       var sendRefund={
-        phone:''+window.sessionStorage.agentphone,
+        phone:''+window.localStorage.agentphone,
         type:2,
         batteryNum:window.Number(vueThis.formRefund.batteryNum), //pay
         amount:window.Number(vueThis.amount), //pay

@@ -109,7 +109,7 @@ export default {
     fetchEVlist:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.sessionStorage.agentphone,
+        phone:''+window.localStorage.agentphone,
         pageNum:1,
         pageSize:96900000
       };

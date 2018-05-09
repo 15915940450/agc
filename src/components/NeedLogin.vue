@@ -149,7 +149,7 @@ export default {
     },
     handleSuccess:function(objRps){
       //设置登录信息,手机号必须
-      window.sessionStorage.setItem('agentphone',objRps.result.phone);
+      window.localStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
 
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换

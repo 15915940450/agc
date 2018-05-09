@@ -86,7 +86,7 @@ export default {
       var vueThis=this;
       vueThis.loading=true;
       var sendData={
-        phone:window.sessionStorage.agentphone,
+        phone:window.localStorage.agentphone,
         oldPassword:vueThis.imPW.oldPassword,
         newPassword:vueThis.imPW.newPassword
       };

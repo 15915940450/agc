@@ -83,7 +83,7 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.sessionStorage.agentphone,
+        phone:''+window.localStorage.agentphone,
         pageNum:vueThis.pageNum,
         pageSize:urls.pageSize
       };

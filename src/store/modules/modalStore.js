@@ -1,5 +1,5 @@
 var state={
-  needLogin:window.sessionStorage.agentphone?false:true,
+  needLogin:window.localStorage.agentphone?false:true,
   baseStatus:false,
 
   topUp:false,
@@ -23,7 +23,7 @@ var mutations={
   showLogin:function(state){
     //需要登录时清空会话存贮
     // window.sessionStorage.clear();
-    window.sessionStorage.removeItem('agentphone');
+    window.localStorage.removeItem('agentphone');
     window.sessionStorage.removeItem('agentname');
     window.sessionStorage.removeItem('agentid');
     window.sessionStorage.removeItem('batteryAmount');

@@ -107,7 +107,7 @@ export default {
       var vueThis=this;
 
       var yap={
-        phone:''+window.sessionStorage.agentphone,
+        phone:''+window.localStorage.agentphone,
         type:1,
         payType:window.Number(vueThis.formTopUp.payType),  //支付类型 1支付宝，2微信
         amount:window.Number(vueThis.amount), //pay
