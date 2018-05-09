@@ -56,6 +56,18 @@ import StatusEditPW from './StatusEditPW.vue';
 export default {
   name:'CSys',
   data:function(){
+    var validateNewPassword=(rule,value,callback) => {
+      if(this.imPW.newPasswordCheck!==''){
+        this.$refs.formPW.validateField('newPasswordCheck');
+      }
+      callback();
+    };
+    var validateNewPasswordCheck=(rule,value,callback) => {
+      if(value!==this.imPW.newPassword){
+        callback(new Error('两次输入密码不一致!'));
+      }
+      callback();
+    };
     return ({
       imPW: {
         oldPassword: '',
@@ -68,10 +80,12 @@ export default {
           {pattern:/^[0-9a-zA-Z]{6}$/,message:'密码必须是6位数字，字母',trigger:'blur'}
         ],
         newPassword:[
+          {validator:validateNewPassword,trigger:'blur'},
           {required:true,message:'请输入新密码',trigger:'blur'},
           {pattern:/^[0-9a-zA-Z]{6}$/,message:'密码必须是6位数字，字母',trigger:'blur'}
         ],
         newPasswordCheck:[
+          {validator:validateNewPasswordCheck,trigger:'blur'},
           {required:true,message:'请再输一次新密码',trigger:'blur'},
           {pattern:/^[0-9a-zA-Z]{6}$/,message:'密码必须是6位数字，字母',trigger:'blur'}
         ]
