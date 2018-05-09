@@ -164,7 +164,7 @@ export default {
       this.$store.commit('setBatteryAmount',objRps.result.batteryAmount);
 
       //设置完整登录用户信息
-      window.sessionStorage.setItem('agentname',objRps.result.name);
+      window.localStorage.setItem('agentname',objRps.result.name);
       window.sessionStorage.setItem('agentid',objRps.result.id);
       window.sessionStorage.setItem('grouptype',objRps.result.groupType);
       this.$store.commit('setAgent',{

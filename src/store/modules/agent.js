@@ -1,6 +1,6 @@
 var state={
   phone:window.localStorage.agentphone,
-  name:window.sessionStorage.agentname,
+  name:window.localStorage.agentname,
   id:window.sessionStorage.agentid
 };
 
