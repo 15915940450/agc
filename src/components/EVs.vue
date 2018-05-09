@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="e_vs">
     <transition name="el-fade-in">
-    <div class="evs_list" v-if="evs.length">
+    <div class="evs_list" v-if="(evs.length || !isNotSearch)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -94,7 +94,7 @@
     </transition>
 
     <!-- 没有电动车 -->
-    <div class="empty_evs" v-if="!evs.length">
+    <div class="empty_evs" v-if="(!evs.length && isNotSearch)">
       <h3 class="title">电动车列表</h3>
       <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有电动车切片" />
       <p>您还没有电动车哦！</p>
@@ -122,6 +122,7 @@ export default {
     return ({
       total:0,
       search:'',
+      isNotSearch:true,
       scooterSN:'',
       evs:[
       //   {
@@ -235,6 +236,7 @@ export default {
       this.msg='绑定成功！';
     },
     imSearch:_.debounce(function(){
+      this.isNotSearch=false;
       this.fetchData();
     },690)
   },
