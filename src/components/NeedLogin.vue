@@ -19,6 +19,10 @@
           <el-input v-model="formLogin.validateCode" @input="hintMsg=''" auto-complete="off" placeholder="请输入验证码"></el-input>
           <img class="v_img" :loading="true" title="看不清，换一张" :src="vImg" height="30" @click="updateVimg()" />
         </el-form-item>
+
+        <el-form-item>
+          <el-checkbox v-model="formLogin.isRemember">下次自动登录</el-checkbox>
+        </el-form-item>
         <!-- ajax响应后提示框 -->
         <el-form-item class="need_login-hint_wrap">
           <p class="need_login-hint" v-if="hintMsg">* {{hintMsg}}</p>
@@ -60,6 +64,7 @@ export default {
       formLogin: {
         phone: '',
         password: '',
+        isRemember:0,
         validateCode:''
       },
       rules:{
@@ -104,8 +109,11 @@ export default {
           var sendData={
             phone:''+this.formLogin.phone,
             password:''+this.formLogin.password,
+            isRemember:window.Number(this.formLogin.isRemember),
             validateCode:''+this.formLogin.validateCode
           };
+          // console.log(JSON.stringify(sendData));
+          // return false;
           ajaxs.imPostForm(urls.login,sendData,function(objRps){
             //响应已到达
             vueThis.loading=false;
