@@ -56,9 +56,18 @@ import StatusEditPW from './StatusEditPW.vue';
 export default {
   name:'CSys',
   data:function(){
+    var validateOldPassword=(rule,value,callback) => {
+      if(this.imPW.newPassword!==''){
+        this.$refs.formPW.validateField('newPassword');
+      }
+      callback();
+    };
     var validateNewPassword=(rule,value,callback) => {
       if(this.imPW.newPasswordCheck!==''){
         this.$refs.formPW.validateField('newPasswordCheck');
+      }
+      if(value===this.imPW.oldPassword){
+        callback(new Error('不能设置正在使用的密码!'));
       }
       callback();
     };
@@ -76,6 +85,7 @@ export default {
       },
       rules:{
         oldPassword:[
+          {validator:validateOldPassword,trigger:'blur'},
           {required:true,message:'请输入旧密码',trigger:'blur'},
           {pattern:/^[0-9a-zA-Z]{6}$/,message:'密码必须是6位数字，字母',trigger:'blur'}
         ],
