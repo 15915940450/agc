@@ -11,7 +11,7 @@
         <el-form :model="formSetUser" :rules="rules" ref="formSetUser">
 
           <el-form-item prop="groupCode" label="群组" :label-width="formLabelWidth">
-            <el-select v-model="formSetUser.groupCode" placeholder="请选择">
+            <el-select v-model="formSetUser.groupCode" placeholder="请选择" @change="handleGroupSelectChange()">
               <el-option
                 v-for="item in optionsGroups"
                 :key="item.code"
@@ -135,6 +135,9 @@ export default {
           return (v.sn);
         });
         this.formSetUser.phone=this.phone;
+
+        //deposit depend on groupcode
+        this.fetchOptionsScheme('depositListScheme');
       }
     }
   },
@@ -184,7 +187,7 @@ export default {
     fetchOptionsScheme:function(type){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        groupCode:window.Number(vueThis.$route.params.groupcode)
+        groupCode:vueThis.formSetUser.groupCode
       });
       var sendData={
         advancedParam:advancedParam,
@@ -269,11 +272,15 @@ export default {
           });
         }
       });
+    },
+    handleGroupSelectChange:function(){
+      // console.log(this.formSetUser.groupCode);
+      this.fetchOptionsScheme('depositListScheme');
     }
   },  //methods
   created:function(){
     this.fetchBaseInfo();
-    this.fetchOptionsScheme('depositListScheme');
+    
     this.fetchEVlist();
     this.fetchGroupList();
     // console.log(this.$route.params);
