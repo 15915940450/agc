@@ -65,6 +65,7 @@
                 熄火
               </el-button>
               <el-button
+                v-if="false"
                 type="text"
                 size="small">
                 轨迹
