@@ -175,7 +175,7 @@ export default {
     handleCurrentChange:function(val){
       this.pageNum=val;
       // console.log(this.$route.params.groupcode);
-      this.$router.push('/user/'+this.$route.params.groupcode+'/'+val);
+      this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+val);
     },
     showNewUser:function(){
       this.msg='车辆已激活';

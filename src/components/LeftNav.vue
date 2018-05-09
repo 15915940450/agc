@@ -57,7 +57,7 @@ export default {
     rrPush:function(item){
       // 点击导航的时候 设置当前导航active
       this.$store.commit('setNavActive',item.id);
-      // 编程式导航 router.push({ path: `/user/${userId}` }) // -> /user/123
+      // 编程式导航
       this.$router.push({
         path:item.link
       });
