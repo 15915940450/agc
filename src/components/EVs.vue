@@ -11,7 +11,7 @@
           <el-col :span="18">
             <div class="table_wrap-search">
               <div class="table_wrap-search_wrap">
-                <el-input class="table_wrap-input_serach" placeholder="请输入车牌号（SN）" v-model="searchSN" suffix-icon="el-icon-search"></el-input>
+                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入车牌号（SN）" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
               <el-button class="table_wrap-btn_reset" type="warning">重置</el-button>
             </div>
@@ -121,7 +121,7 @@ export default {
   data:function(){
     return ({
       total:0,
-      searchSN:'',
+      search:'',
       scooterSN:'',
       evs:[
       //   {
@@ -172,13 +172,16 @@ export default {
   methods: {
     fetchData:function(){
       var vueThis=this;
+      var advancedParam=JSON.stringify({
+        scooterSN:vueThis.search
+      });
       var sendData={
-        phone:''+window.localStorage.agentphone,
+        advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
         pageSize:urls.pageSize
       };
       //请求地址
-      ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
+      ajaxs.imGet(urls.evsList,sendData,function(objRps){
         // console.log(objRps);
         if(objRps.code===1000){
           vueThis.total=objRps.result.total;
@@ -230,7 +233,10 @@ export default {
       this.scooterSN=scope.row.sn;
       this.$store.commit('showEVbind');
       this.msg='绑定成功！';
-    }
+    },
+    imSearch:_.debounce(function(){
+      this.fetchData();
+    },690)
   },
   created:function(){
     this.fetchData();
