@@ -81,7 +81,7 @@ export default {
           {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
         ]
       },
-      grouptype:window.Number(window.sessionStorage.grouptype),
+      grouptype:window.Number(window.localStorage.grouptype),
       typePackage:['月套卡','次套卡','免费套餐'],
       options_depositListScheme: [],
       options_packageListScheme: [],
