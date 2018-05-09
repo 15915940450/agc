@@ -36,7 +36,7 @@ export default {
     // console.log(JSON.stringify((this.$store.state.modalStore)));
     return ({
       formRefund:{
-        batteryNum:0
+        batteryNum:1
       },
       loading:false,
 
@@ -56,9 +56,17 @@ export default {
       return ('每个虚拟电池退还押金 '+this.modalStore.batteryAmount+' 元');
     }
   },
+  watch:{
+    'modalStore.statusRefund':function(val){
+      if(!val){
+        this.formRefund.batteryNum=1;
+      }
+    }
+  },
   methods:{
     handleCancel:function(){
       var vueThis=this;
+      vueThis.formRefund.batteryNum=1;
       vueThis.$store.commit('hideRefund');
     },
     handleComfirm:function(){
