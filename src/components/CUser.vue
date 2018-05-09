@@ -8,7 +8,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="user_list" v-if="users.length">
+    <div class="user_list" v-if="(users.length || !isNotSearch)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -18,9 +18,9 @@
           <el-col :span="18">
             <div class="table_wrap-search">
               <div class="table_wrap-search_wrap">
-                <el-input class="table_wrap-input_serach" placeholder="请输入手机号" v-model="searchPhone" suffix-icon="el-icon-search"></el-input>
+                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入手机号" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
-              <el-button class="table_wrap-btn_reset" type="warning">重置</el-button>
+              <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
               <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
             </div>
           </el-col>
@@ -81,7 +81,7 @@
       </div>
 
     </div>
-    <div v-if="!users.length" class="empty_user">
+    <div v-if="(!users.length && isNotSearch)" class="empty_user">
       <img src="../assets/empty_user.png" />
       <p>您还没有用户哦！</p>
       <el-button type="primary" @click="showNewUser()">新建</el-button>
@@ -111,7 +111,8 @@ export default {
     return ({
       total:100,
       msg:'',
-      searchPhone:'',
+      search:'',
+      isNotSearch:true,
       unbindPhone:'',
       userSet:null,
 
@@ -149,7 +150,8 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        groupCode:window.Number(vueThis.$route.params.groupcode)
+        groupCode:window.Number(vueThis.$route.params.groupcode),
+        userPhone:vueThis.search
       });
       var sendData={
         advancedParam:advancedParam,
@@ -204,6 +206,14 @@ export default {
       this.msg='设置成功';
       this.userSet=scope.row;
       this.$store.commit('showSetUser');
+    },
+    imSearch:_.debounce(function(){
+      this.isNotSearch=false;
+      this.fetchData();
+    },690),
+    resetSearch:function(){
+      this.search='';
+      this.fetchData();
     }
   },
   created:function(){
