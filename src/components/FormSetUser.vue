@@ -22,7 +22,7 @@
           </el-form-item>
 
           <el-form-item prop="depositId" label="押金方案" :label-width="formLabelWidth">
-            <el-select v-model="formSetUser.depositId" placeholder="请选择">
+            <el-select v-model="formSetUser.depositId" placeholder="请选择" :disabled="disabledDeposit">
               <el-option key="-1" label="空" value=""></el-option>
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
@@ -95,6 +95,7 @@ export default {
           {required:true,message:'请选择电动车',trigger:'change'}
         ]
       },
+      disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)
       agentFreeDays:0,
       optionsEVs:[],
       optionsGroups:[],
@@ -275,6 +276,7 @@ export default {
     this.fetchOptionsScheme('depositListScheme');
     this.fetchEVlist();
     this.fetchGroupList();
+    // console.log(this.$route.params);
   }
 };
 </script>

@@ -28,7 +28,7 @@ export default new Router({
       component: CGroup
     },
     {
-      path: '/user/:groupcode/:pn',  //用户
+      path: '/user/:groupcode/:type/:pn',  //用户
       name: 'CUser',
       component: CUser
     },
