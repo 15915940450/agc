@@ -8,7 +8,8 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formTopUp">
+        <el-form :model="formTopUp" ref="formTopUp">
+
           <el-form-item label="电池数量" :label-width="formLabelWidth">
             <!-- <el-input size="small" v-model="formTopUp.batteryNum" auto-complete="off"></el-input> -->
             <el-input-number v-model="formTopUp.batteryNum" :min="1"></el-input-number>
@@ -22,7 +23,7 @@
               <el-radio label="2" border>微信</el-radio>
             </el-radio-group>
           </el-form-item>
-          <!-- 用户手机号,城市,用户群组,返还金额 -->
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -43,7 +44,7 @@ export default {
     // console.log(JSON.stringify((this.$store.state.modalStore)));
     return ({
       formTopUp:{
-        batteryNum:0,
+        batteryNum:1,
         payType:'1'
       },
       loading:false,
@@ -60,9 +61,20 @@ export default {
       return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
     }
   },
+  watch:{
+    'modalStore.statusTopUp':function(val){
+      if(!val){
+        this.formTopUp.batteryNum=1;
+        this.formTopUp.payType='1';
+      }
+    }
+  },
   methods:{
     handleCancel:function(){
       var vueThis=this;
+      // vueThis.$refs[refName].resetFields();
+      vueThis.formTopUp.batteryNum=1;
+      vueThis.formTopUp.payType='1';
       vueThis.$store.commit('hideTopUp');
     },
     topUp:function(sendData){
