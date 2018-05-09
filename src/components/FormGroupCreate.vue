@@ -69,7 +69,8 @@ export default {
       },
       rules:{
         name:[
-          {required:true,message:'群组名称不能为空',trigger:'blur'}
+          {required:true,message:'群组名称不能为空',trigger:'blur'},
+          {pattern:/^[A-Za-z0-9\u4e00-\u9fa5]{1,10}$/,message:'必须是1到10个汉字，字母，数字组合 ',trigger:'blur'}
         ],
         canRefund:[
           {required:true,message:'请选择群组类型',trigger:'change'}
