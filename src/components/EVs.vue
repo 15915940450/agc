@@ -13,7 +13,7 @@
               <div class="table_wrap-search_wrap">
                 <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入车牌号（SN）" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
-              <el-button class="table_wrap-btn_reset" type="warning">重置</el-button>
+              <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
             </div>
           </el-col>
         </el-row>
@@ -238,7 +238,11 @@ export default {
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
       this.fetchData();
-    },690)
+    },690),
+    resetSearch:function(){
+      this.search='';
+      this.fetchData();
+    }
   },
   created:function(){
     this.fetchData();
