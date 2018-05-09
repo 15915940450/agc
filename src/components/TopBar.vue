@@ -15,7 +15,7 @@
               <img class="top_bar-head" src="../assets/default_head.png" width="20" />
               {{agent.name}}
             </template>
-            <el-menu-item index="1-1" class="sub_item">
+            <el-menu-item index="1-1" class="sub_item" @click="toSys()">
               设置
             </el-menu-item>
             <el-menu-item index="1-2" class="sub_item" @click="logout()">
@@ -62,6 +62,14 @@ export default {
             duration: 5000  //0
           });
         }
+      });
+    },
+    toSys:function(){
+      // 点击导航的时候 设置当前导航active
+      this.$store.commit('setNavActive',5);
+      // 编程式导航 router.push({ path: `/user/${userId}` }) // -> /user/123
+      this.$router.push({
+        path:'/sys'
       });
     }
   } //methods
