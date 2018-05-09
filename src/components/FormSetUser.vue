@@ -159,7 +159,7 @@ export default {
     fetchGroupList:function(){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        agentId:window.sessionStorage.agentid
+        agentId:window.localStorage.agentid
       });
       var sendData={
         advancedParam:advancedParam,

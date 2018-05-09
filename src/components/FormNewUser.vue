@@ -73,7 +73,7 @@ export default {
 
         // giftCode:'',
         groupCode:this.$route.params.groupcode,
-        agentId:window.sessionStorage.agentid
+        agentId:window.localStorage.agentid
       },
       rules:{
         phone:[
@@ -141,7 +141,7 @@ export default {
             phone:vueThis.formNewUser.phone,
             scooterSN:vueThis.formNewUser.scooterSN,
             scooterType:vueThis.formNewUser.scooterType,
-            agentId:window.sessionStorage.agentid,
+            agentId:window.localStorage.agentid,
             // cityCode:vueThis.formNewUser.cityCode,
             // giftCode:vueThis.formNewUser.giftCode,
             groupCode:vueThis.formNewUser.groupCode

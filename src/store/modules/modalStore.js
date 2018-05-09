@@ -6,7 +6,7 @@ var state={
   refund:false,
   statusTopUp:false,
   statusRefund:false,
-  batteryAmount:window.sessionStorage.batteryAmount?window.sessionStorage.batteryAmount:0,
+  batteryAmount:window.localStorage.batteryAmount?window.localStorage.batteryAmount:0,
   groupCreate:false,
   EVbind:false,
   EVunbind:false,
@@ -25,8 +25,8 @@ var mutations={
     // window.sessionStorage.clear();
     window.localStorage.removeItem('agentphone');
     window.localStorage.removeItem('agentname');
-    window.sessionStorage.removeItem('agentid');
-    window.sessionStorage.removeItem('batteryAmount');
+    window.localStorage.removeItem('agentid');
+    window.localStorage.removeItem('batteryAmount');
     window.sessionStorage.removeItem('payurl');
     window.sessionStorage.removeItem('grouptype');
     state.needLogin=true;
@@ -83,7 +83,7 @@ var mutations={
     state.statusRefund=false;
   },
   setBatteryAmount:function(state,num){
-    window.sessionStorage.setItem('batteryAmount',num);
+    window.localStorage.setItem('batteryAmount',num);
     state.batteryAmount=num;
   },
   showGroupCreate:function(state){

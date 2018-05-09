@@ -70,7 +70,7 @@ export default {
         depositScheme:[],
         packageScheme:[],
         groupCode:-1,
-        agentId:window.sessionStorage.agentid
+        agentId:window.localStorage.agentid
       },
       rules:{
         name:[
@@ -151,7 +151,7 @@ export default {
             name:vueThis.formGroupSet.name,
             depositScheme:vueThis.formGroupSet.depositScheme,
             packageScheme:vueThis.formGroupSet.packageScheme,
-            agentId:window.sessionStorage.agentid,
+            agentId:window.localStorage.agentid,
             cityCode:0,
             // canRefund:window.Number(vueThis.formGroupSet.canRefund),
             groupCode:vueThis.formGroupSet.groupCode
