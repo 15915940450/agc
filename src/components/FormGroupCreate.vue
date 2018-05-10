@@ -20,6 +20,17 @@
             </el-select>
           </el-form-item>
 
+          <el-form-item prop="cityCode" label="选择城市" :label-width="formLabelWidth">
+            <el-select v-model="formGroupCreate.cityCode" placeholder="请选择">
+              <el-option
+                v-for="item in options_cityListScheme"
+                :key="item.cityCode"
+                :label="item.name"
+                :value="item.cityCode">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
               <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
@@ -63,6 +74,7 @@ export default {
       formGroupCreate:{
         name:'',
         canRefund:'',
+        cityCode:'',
         depositScheme:[],
         packageScheme:[],
         agentId:window.localStorage.agentid
@@ -71,6 +83,9 @@ export default {
         name:[
           {required:true,message:'群组名称不能为空',trigger:'blur'},
           {pattern:/^[A-Za-z0-9\u4e00-\u9fa5]{1,10}$/,message:'必须是1到10个汉字，字母，数字组合 ',trigger:'blur'}
+        ],
+        cityCode:[
+          {required:true,message:'请选择城市',trigger:'change'}
         ],
         canRefund:[
           {required:true,message:'请选择群组类型',trigger:'change'}
@@ -84,6 +99,7 @@ export default {
       },
       grouptype:window.Number(window.localStorage.grouptype),
       typePackage:['月套卡','次套卡','免费套餐'],
+      options_cityListScheme: [],
       options_depositListScheme: [],
       options_packageListScheme: [],
       loading:false,
@@ -95,6 +111,22 @@ export default {
     ...mapState(['modalStore'])
   },
   methods:{
+    fetchCityList:function(){
+      var vueThis=this;
+      ajaxs.imGet(urls.cityList,{},function(objRps){
+        // console.log(objRps);
+        if(objRps.code===1000){
+          vueThis.options_cityListScheme=objRps.result.list;
+        }else{
+          vueThis.$notify.error({
+            title: '提示',
+            message:objRps.msg,
+            offset: 50,
+            duration: 5000  //0
+          });
+        }
+      });
+    },
     fetchOptionsScheme:function(type){
       var vueThis=this;
       var advancedParam=JSON.stringify({
@@ -168,6 +200,7 @@ export default {
   created:function(){
     this.fetchOptionsScheme('depositListScheme');
     this.fetchOptionsScheme('packageListScheme');
+    this.fetchCityList();
     // console.log(this.grouptype);
   }
 

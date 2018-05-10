@@ -14,6 +14,7 @@
 </template>
 
 <script>
+//comments and componentnames(router s)
 export default {
   name:'AjaxTest',
   data() {
