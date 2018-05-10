@@ -4,19 +4,34 @@
 
 ## 常用语句
 
-* import {urls,ajaxs} from '../api/urls.js'; //引入api(ajax)
-* computed:{
+```
+//引入api(ajax)
+import {urls,ajaxs} from '../api/urls.js';
+
+//modal
+computed:{
   ...mapState(['modalStore'])
 },
+
+//ajaxs.im...
 var vueThis=this;
 vueThis.loading=true;
-ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
+var sendData={
+};
+ajaxs.imPostJson(urls.baseInfo,sendData,function(objRps){
   console.log(objRps);
   if(objRps.code===1000){
 
+  }else{
+    vueThis.$notify.error({
+      title:'提示',
+      message:objRps.msg,
+      offset:50,
+      duration:5000  //0
+    });
   }
 });
-
+```
 
 ## vim
 
@@ -32,6 +47,12 @@ ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
 * vue
 
 ## sublime editor
+
+* (Aglia) Theme
+* Package Control
+* SublimeLinter
+* SublimeLinter-eslint
+* Vue Syntax Hightlight
 
 
 ## atom editor
