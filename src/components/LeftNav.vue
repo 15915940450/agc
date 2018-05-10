@@ -18,6 +18,7 @@ export default {
   name:'LeftNav',
   data:function(){
     return ({
+      isActive:1,
       imNav:[
         {
           id:1,
@@ -48,10 +49,10 @@ export default {
     });
   },
   computed:{
-    ...mapState(['navActive']),
-    isActive:function(){
-      return (this.navActive.navActive);
-    }
+    // ...mapState(['navActive']),
+    // isActive:function(){
+    //   return (this.navActive.navActive);
+    // }
   },
   methods:{
     rrPush:function(item){
@@ -63,22 +64,39 @@ export default {
       });
 
     },
-    findDefaultNavActive:function(){
+    setDefaultNavActive:function(){
       var vueThis=this;
       var arrRs=['pre_http://localhost:1590/#/_fix','group','deposit','evs','sys'];
       var defaultNavActive='1';
       arrRs.forEach(function(v,i){
         if(window.location.href.indexOf(v)!==-1){
           defaultNavActive=(i+1);
-          vueThis.$store.commit('setNavActive',defaultNavActive);
+          // vueThis.$store.commit('setNavActive',defaultNavActive);
+          vueThis.isActive=defaultNavActive+1;
         }
       });
-      return defaultNavActive;
+    },
+    listenRouteChange:function(){
+      var vueThis=this;
+      var arrToName=['CJoy','CGroup-CUser','CDeposit','EVs-EV','CSys'];
+      vueThis.$router.beforeEach((to, from, next) => {
+        // console.log(to.name);
+        var navActive=arrToName.findIndex(function(v){
+          return v.indexOf(to.name)!==-1;
+        });
+        // console.log(vueThis.$store);
+        // vueThis.$store.commit('setNavActive',navActive+1);
+        vueThis.isActive=navActive+1;
+
+        next();
+      });
     }
   },
   created:function(){
-    //1.创建的时候找出当前激活的导航
-    this.findDefaultNavActive();
+    var vueThis=this;
+    //创建的时候找出当前激活的导航,and listening
+    vueThis.setDefaultNavActive();
+    vueThis.listenRouteChange();
   }
 };
 </script>
