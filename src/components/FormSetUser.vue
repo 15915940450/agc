@@ -274,7 +274,7 @@ export default {
       });
     },
     handleGroupSelectChange:function(){
-      // console.log(this.formSetUser.groupCode);
+      this.formSetUser.depositId='';
       this.fetchOptionsScheme('depositListScheme');
     }
   },  //methods
