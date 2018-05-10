@@ -1,20 +1,48 @@
 {
-	"color_scheme": "Packages/Agila Theme/Agila Cobalt.tmTheme",
+	"color_scheme": "Packages/Agila Theme/Agila Light Solarized.tmTheme",
+	"file_exclude_patterns":
+	[
+		"*.pyc",
+		"*.pyo",
+		"*.exe",
+		"*.dll",
+		"*.obj",
+		"*.o",
+		"*.a",
+		"*.lib",
+		"*.so",
+		"*.dylib",
+		"*.ncb",
+		"*.sdf",
+		"*.suo",
+		"*.pdb",
+		"*.idb",
+		".DS_Store",
+		"*.class",
+		"*.psd",
+		"*.db",
+		"*.sublime-workspace"
+	],
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		"TEST",
+		"batterystation",
+		"ccbike",
+		"node_modules",
+		"agent"
+	],
 	"font_face": "DejaVu Sans Mono",
 	"font_size": 11,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-
-	// folder_exclude_patterns and file_exclude_patterns control which files
-	// are listed in folders on the side bar. These can also be set on a per-
-	// project basis.
-	"folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", "TEST", "batterystation", "ccbike", "node_modules", "agent"],
-	"file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.lib", "*.so", "*.dylib", "*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store", "*.class", "*.psd", "*.db", "*.sublime-workspace"],
-	
-	"theme": "Default.sublime-theme",
-	"word_wrap": true,
 	"tab_size": 2,
-	"translate_tabs_to_spaces": true
+	"theme": "Agila Light.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"word_wrap": true
 }
