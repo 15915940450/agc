@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="left_nav">
     <ul id="im_nav">
-      <li v-for="(item) in imNav" :class="{active:isActive===item.id}" :key="item.id">
+      <li v-for="(item) in imNav" :class="{active:(isActive+'')===(item.id+'')}" :key="item.id">
         <a href="javascript:;" @click="rrPush(item)">{{item.name}}</a>
       </li>
     </ul>
@@ -14,7 +14,7 @@ export default {
   name:'LeftNav',
   data:function(){
     return ({
-      isActive:1,
+      isActive:1, //1,2,3,4,5
       imNav:[
         {
           id:1,
@@ -54,26 +54,18 @@ export default {
     },
     setDefaultNavActive:function(){
       var vueThis=this;
-      var arrRs=['pre_http://localhost:1590/#/_fix','group','deposit','evs','sys'];
-      var defaultNavActive='1';
-      arrRs.forEach(function(v,i){
-        if(window.location.href.indexOf(v)!==-1){
-          defaultNavActive=(i+1);
-          vueThis.isActive=defaultNavActive+1;
-        }
-      });
+      // console.log(this.$route.name);
+      var arrRouteName=['CJoy','CGroup-CUser','CDeposit','EVs-EV','CSys'];
+      var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
+      vueThis.isActive=(defaultNavActive===-1?1:defaultNavActive+1);
     },
     listenRouteChange:function(){
       var vueThis=this;
       var arrToName=['CJoy','CGroup-CUser','CDeposit','EVs-EV','CSys'];
       vueThis.$router.beforeEach((to, from, next) => {
-        // console.log(to.name);
-        var navActive=arrToName.findIndex(function(v){
-          return v.indexOf(to.name)!==-1;
-        });
-        // console.log(vueThis.$store);
-        // vueThis.$store.commit('setNavActive',navActive+1);
-        vueThis.isActive=navActive+1;
+        var navActive=_.findIndexVague(arrToName,to.name);
+        
+        vueThis.isActive=(navActive===-1?1:navActive+1);
 
         next();
       });

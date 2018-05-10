@@ -14,10 +14,6 @@
 </template>
 
 <script>
-var arr=['zzz','aaa','bbb','ccc'];
-var targetEle='cc';
-var x=_.findIndexVague(arr,targetEle);
-console.log(x);
 export default {
   name:'AjaxTest',
   data() {
