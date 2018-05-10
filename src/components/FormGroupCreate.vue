@@ -170,7 +170,7 @@ export default {
             depositScheme:vueThis.formGroupCreate.depositScheme,
             packageScheme:vueThis.formGroupCreate.packageScheme,
             agentId:window.localStorage.agentid,
-            cityCode:0,
+            cityCode:vueThis.formGroupCreate.cityCode,
             canRefund:window.Number(vueThis.formGroupCreate.canRefund)
           };
           // console.log(JSON.stringify(sendData));
