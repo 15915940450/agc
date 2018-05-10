@@ -16,6 +16,7 @@ var state={
   statusGroupCreate:false,
   statusEVoperation:false,
   statusEditPW:false,
+  EVin:false,
   newUser:false
 };
 
@@ -44,6 +45,7 @@ var mutations={
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
     state.statusEditPW=false;
+    state.EVin=false;
     state.newUser=false;
   },
   hideLogin:function(state){
@@ -139,6 +141,12 @@ var mutations={
   },
   hideStatusEditPW:function(state){
     state.statusEditPW=false;
+  },
+  showEVin:function(state){
+    state.EVin=true;
+  },
+  hideEVin:function(state){
+    state.EVin=false;
   },
   showNewUser:function(state){
     state.newUser=true;

@@ -22,6 +22,7 @@
               </div>
               <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
               <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
+              <el-button type="info" @click="showEVin()">激活</el-button>
             </div>
           </el-col>
         </el-row>
@@ -89,6 +90,7 @@
 
     <!-- 新建 -->
     <FormNewUser />
+    <FormEVin />
     <BaseStatus :msg="msg" />
     <FormUnbindUser :phone="unbindPhone" />
     <FormSetUser v-bind="userSet" />
@@ -103,6 +105,7 @@ import {urls,ajaxs} from '../api/urls.js';
 import FormNewUser from './FormNewUser.vue';
 import BaseStatus from './BaseStatus.vue';
 import FormUnbindUser from './FormUnbindUser.vue';
+import FormEVin from './FormEVin.vue';
 import FormSetUser from './FormSetUser.vue';
 
 export default {
@@ -142,6 +145,7 @@ export default {
   },
   components:{
     FormNewUser,
+    FormEVin,
     BaseStatus,
     FormUnbindUser,
     FormSetUser
@@ -180,8 +184,12 @@ export default {
       this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+val);
     },
     showNewUser:function(){
-      this.msg='车辆已激活';
+      this.msg='已成功添加用户';
       this.$store.commit('showNewUser');
+    },
+    showEVin:function(){
+      this.msg='车辆已激活';
+      this.$store.commit('showEVin');
     },
     formatter:function(row, column, cellValue){
       if(column.property==='batteries' && cellValue.length){
