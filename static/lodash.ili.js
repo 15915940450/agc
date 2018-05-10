@@ -6948,6 +6948,17 @@
         return true;
       }
     }
+    function findIndexVague(arr,eleSstrv){
+      var indexVague=-1;
+
+      arr.forEach(function(v,i){
+        if(_.includes(v,eleSstrv)){
+          indexVague=i;
+        }
+      });
+
+      return indexVague;
+    }
     function logErr(err){
       return console.error(err);
     }
@@ -16599,6 +16610,8 @@
     lodash.serialize2querystring = serialize2querystring;
     lodash.createArray = createArray;
     lodash.isPhone = isPhone;
+    lodash.findIndexVague = findIndexVague;
+    
     lodash.logErr = logErr;
     //===========================================ili
     lodash.compact = compact;

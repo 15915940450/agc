@@ -11,9 +11,6 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-
-
 export default {
   name:'LeftNav',
   data:function(){
@@ -47,12 +44,6 @@ export default {
         }
       ]
     });
-  },
-  computed:{
-    // ...mapState(['navActive']),
-    // isActive:function(){
-    //   return (this.navActive.navActive);
-    // }
   },
   methods:{
     rrPush:function(item){
