@@ -159,7 +159,6 @@ export default {
       });
     },
     rrPush:function(){
-      this.$store.commit('setNavActive',3);
       this.$router.push({
         path:'/deposit/1'
       });

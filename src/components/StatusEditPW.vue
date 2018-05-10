@@ -32,7 +32,6 @@ export default {
       //回到登录
       this.$router.push('/');
       this.$store.commit('showLogin');
-      this.$store.commit('setNavActive',1);
     }
   }
 };

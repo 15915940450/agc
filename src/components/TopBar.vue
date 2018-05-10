@@ -65,8 +65,6 @@ export default {
       });
     },
     toSys:function(){
-      // 点击导航的时候 设置当前导航active
-      this.$store.commit('setNavActive',5);
       // 编程式导航
       this.$router.push({
         path:'/sys'

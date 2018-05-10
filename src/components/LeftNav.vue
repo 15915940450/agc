@@ -2,7 +2,6 @@
   <div class="left_nav">
     <ul id="im_nav">
       <li v-for="(item) in imNav" :class="{active:isActive===item.id}" :key="item.id">
-        <!-- <router-link :to="item.link" @click="rrPush(item)">{{item.name}}</router-link>{{navActive.navActive}} -->
         <a href="javascript:;" @click="rrPush(item)">{{item.name}}</a>
       </li>
     </ul>
@@ -47,8 +46,6 @@ export default {
   },
   methods:{
     rrPush:function(item){
-      // 点击导航的时候 设置当前导航active
-      this.$store.commit('setNavActive',item.id);
       // 编程式导航
       this.$router.push({
         path:item.link
@@ -62,7 +59,6 @@ export default {
       arrRs.forEach(function(v,i){
         if(window.location.href.indexOf(v)!==-1){
           defaultNavActive=(i+1);
-          // vueThis.$store.commit('setNavActive',defaultNavActive);
           vueThis.isActive=defaultNavActive+1;
         }
       });

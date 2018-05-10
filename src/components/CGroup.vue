@@ -111,7 +111,6 @@ export default {
       this.$store.commit('showGroupSet');
     },
     rrPush:function(item){
-      this.$store.commit('setNavActive',2);
       this.$router.push({
         path:'/user/'+item.code+'/'+item.type+'/1'
       });
