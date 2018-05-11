@@ -35,7 +35,7 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 
 export default {
-  name:'TopBar',
+  name:'LayoutTopBar',
   data(){
     return {
       activeIndex: ''

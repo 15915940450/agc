@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TopBar />
+    <LayoutTopBar />
 
     <el-row>
       <el-col id="left_nav_wrap">
@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import TopBar from './components/TopBar.vue';
+import LayoutTopBar from './components/LayoutTopBar.vue';
 import LeftNav from './components/LeftNav.vue';
 import NeedLogin from './components/NeedLogin.vue';
 
 export default {
   name: 'App',
   components:{
-    TopBar,
+    LayoutTopBar,
     LeftNav,
     NeedLogin
   }
