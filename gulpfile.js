@@ -1,7 +1,7 @@
 var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
-var version='1100';
+var version='_1100_'+Math.random();
 
 gulp.task('moveToCMS',function(){
   //delete(agent/)

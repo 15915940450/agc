@@ -6,13 +6,10 @@
 <script>
 // import {ajaxsTest} from '../api/index.js';
 
-// //comments and componentnames(router s)
+// //comments and componentnames(router s) and notify | 1000
+
+
 // arr=['abc','def','g','hi','jklmn']
-
-// str,
-
-// shi xian
-// zhao chu str chu xian zai arr zhong de di ji ge yuan su dang zhong
 export default {
   name:'AjaxTest',
   data() {
