@@ -114,7 +114,7 @@ import {mapState} from 'vuex';
 import {urls,ajaxs} from '../api/urls.js';
 
 export default {
-  name:'CJoy',
+  name:'HeartJoy',
   data:function(){
     return ({
       availableDeposite:'--',

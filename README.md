@@ -5,6 +5,7 @@
 * spa: index.html
 * main: src/main.js (import Vue,router,store,EUI,vue-awesome,App)
 * App: App.vue (contain router-view... LayoutTopBar.vue,LayoutNavMaster.vue,LayoutLogin.vue)
+* router-view: (contain HeartJoy)
 
 ## 常用语句
 

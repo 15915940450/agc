@@ -45,7 +45,7 @@ import FormGroupSet from './FormGroupSet.vue';
 import BaseStatus from './BaseStatus.vue';
 
 export default {
-  name:'CGroup',
+  name:'HeartGroup',
   data:function(){
     return ({
       group:[],

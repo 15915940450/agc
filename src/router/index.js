@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import CJoy from '@/components/CJoy';
-import CGroup from '@/components/CGroup';
+
+import HeartJoy from '@/components/HeartJoy';
+import HeartGroup from '@/components/HeartGroup';
 import CUser from '@/components/CUser';
 import CDeposit from '@/components/CDeposit';
 import EVs from '@/components/EVs';
@@ -19,13 +20,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'CJoy', //首页
-      component: CJoy
+      name: 'HeartJoy', //首页
+      component: HeartJoy
     },
     {
       path: '/group', //群组
-      name: 'CGroup',
-      component: CGroup
+      name: 'HeartGroup',
+      component: HeartGroup
     },
     {
       path: '/user/:groupcode/:type/:pn',  //用户

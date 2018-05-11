@@ -55,13 +55,13 @@ export default {
     setDefaultNavActive:function(){
       var vueThis=this;
       // console.log(this.$route.name);
-      var arrRouteName=['CJoy','CGroup-CUser','CDeposit','EVs-EV','CSys'];
+      var arrRouteName=['HeartJoy','HeartGroup-CUser','CDeposit','EVs-EV','CSys'];
       var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
       vueThis.isActive=(defaultNavActive===-1?1:defaultNavActive+1);
     },
     listenRouteChange:function(){
       var vueThis=this;
-      var arrToName=['CJoy','CGroup-CUser','CDeposit','EVs-EV','CSys'];
+      var arrToName=['HeartJoy','HeartGroup-CUser','CDeposit','EVs-EV','CSys'];
       vueThis.$router.beforeEach((to, from, next) => {
         var navActive=_.findIndexVague(arrToName,to.name);
         
