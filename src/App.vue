@@ -34,28 +34,28 @@ export default {
 </script>
 
 <style>
-html,body{
-  margin:0;
-  padding:0;
-  background:#FFF;
-}
-#app {
-  font-family: 'PingFang SC', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-#app a{
-  color:#fc8181;
-  text-decoration: none;
-  transition:all 0.2s ease-out;
-  font-weight: 300;
-  outline:none;
-}
-#app a:hover{
-  color: #ff3333;
-  outline:none;
-}
-#app a:active{
-  outline:none;
-}
+  html,body{
+    margin:0;
+    padding:0;
+    background:#FFF;
+  }
+  #app {
+    font-family: 'PingFang SC', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  #app a{
+    color:#fc8181;
+    text-decoration: none;
+    transition:all 0.2s ease-out;
+    font-weight: 300;
+    outline:none;
+  }
+  #app a:hover{
+    color: #ff3333;
+    outline:none;
+  }
+  #app a:active{
+    outline:none;
+  }
 </style>

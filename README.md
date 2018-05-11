@@ -4,7 +4,7 @@
 
 * spa: index.html
 * main: src/main.js (import Vue,router,store,EUI,vue-awesome,App)
-* App: App.vue
+* App: App.vue (contain router-view... TopBar.vue,LeftNav.vue,NeedLogin.vue)
 
 ## 常用语句
 
