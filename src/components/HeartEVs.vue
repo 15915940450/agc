@@ -118,7 +118,7 @@ import FormEVunbind from './FormEVunbind.vue';
 // /scooter/list
 
 export default {
-  name:'EVs',
+  name:'HeartEVs',
   data:function(){
     return ({
       total:0,

@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name:'EVtrack',
+  name:'HeartEVamap',
   data:function(){
     return ({
       formLabelAlign: {

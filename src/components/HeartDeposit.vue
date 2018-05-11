@@ -153,7 +153,7 @@ import FormRefund from './FormRefund.vue';
 import StatusRefund from './StatusRefund.vue';
 
 export default {
-  name:'CDeposit',
+  name:'HeartDeposit',
   data() {
     return {
       center:'center',

@@ -109,7 +109,7 @@ import FormEVin from './FormEVin.vue';
 import FormSetUser from './FormSetUser.vue';
 
 export default {
-  name:'CUser',
+  name:'HeartUser',
   data:function(){
     return ({
       total:100,

@@ -3,10 +3,10 @@ import Router from 'vue-router';
 
 import HeartJoy from '@/components/HeartJoy';
 import HeartGroup from '@/components/HeartGroup';
-import CUser from '@/components/CUser';
-import CDeposit from '@/components/CDeposit';
-import EVs from '@/components/EVs';
-import EV from '@/components/EV';
+import HeartUser from '@/components/HeartUser';
+import HeartDeposit from '@/components/HeartDeposit';
+import HeartEVs from '@/components/HeartEVs';
+import HeartEVamap from '@/components/HeartEVamap';
 import CSys from '@/components/CSys';
 import MapTrack from '@/components/MapTrack';
 import MapPoint from '@/components/MapPoint';
@@ -30,23 +30,23 @@ export default new Router({
     },
     {
       path: '/user/:groupcode/:type/:pn',  //用户
-      name: 'CUser',
-      component: CUser
+      name: 'HeartUser',
+      component: HeartUser
     },
     {
       path: '/deposit/:pn', //pn=>pageNum 	页码
-      name: 'CDeposit',
-      component: CDeposit
+      name: 'HeartDeposit',
+      component: HeartDeposit
     },
     {
       path: '/evs/:pn', //电动车
-      name: 'EVs',
-      component: EVs
+      name: 'HeartEVs',
+      component: HeartEVs
     },
     {
       path: '/ev/:id', //轨迹与定位
-      name: 'EV',
-      component: EV,
+      name: 'HeartEVamap',
+      component: HeartEVamap,
       children:[
         {
           path:'track',
