@@ -7,9 +7,9 @@ import HeartUser from '@/components/HeartUser';
 import HeartDeposit from '@/components/HeartDeposit';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
-import CSys from '@/components/CSys';
+import HeartSysSetting from '@/components/HeartSysSetting';
 import MapTrack from '@/components/MapTrack';
-import MapPoint from '@/components/MapPoint';
+import MapGeographic from '@/components/MapGeographic';
 
 import HelloWorld from '@/components/HelloWorld';
 import AjaxTest from '@/components/AjaxTest';
@@ -54,14 +54,14 @@ export default new Router({
         },
         {
           path:'point',
-          component:MapPoint
+          component:MapGeographic
         }
       ]
     },
     {
       path: '/sys', //系统管理
-      name: 'CSys',
-      component: CSys
+      name: 'HeartSysSetting',
+      component: HeartSysSetting
     },
 
 

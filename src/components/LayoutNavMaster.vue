@@ -55,13 +55,13 @@ export default {
     setDefaultNavActive:function(){
       var vueThis=this;
       // console.log(this.$route.name);
-      var arrRouteName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','CSys'];
+      var arrRouteName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','HeartSysSetting'];
       var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
       vueThis.isActive=(defaultNavActive===-1?1:defaultNavActive+1);
     },
     listenRouteChange:function(){
       var vueThis=this;
-      var arrToName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','CSys'];
+      var arrToName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','HeartSysSetting'];
       vueThis.$router.beforeEach((to, from, next) => {
         var navActive=_.findIndexVague(arrToName,to.name);
         

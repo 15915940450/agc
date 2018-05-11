@@ -10,7 +10,7 @@ var map;
 var pathSimplifierIns;
 
 export default {
-  name:'MapTrack',
+  name:'MapGeographic',
   data:function(){
     return ({
       point:[]

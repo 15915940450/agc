@@ -54,7 +54,7 @@ import {urls,ajaxs} from '../api/urls.js';
 import StatusEditPW from './StatusEditPW.vue';
 
 export default {
-  name:'CSys',
+  name:'HeartSysSetting',
   data:function(){
     var validateOldPassword=(rule,value,callback) => {
       if(this.imPW.newPassword!==''){
