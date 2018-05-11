@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+* spa: index.html
+* main: src/main.js (import Vue,router,store,EUI,vue-awesome,App)
+* App: App.vue
+
 ## 常用语句
 
 ```

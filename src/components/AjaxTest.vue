@@ -14,7 +14,13 @@
 </template>
 
 <script>
-//comments and componentnames(router s)
+// //comments and componentnames(router s)
+// arr=['abc','def','g','hi','jklmn']
+
+// str,
+
+// shi xian
+// zhao chu str chu xian zai arr zhong de di ji ge yuan su dang zhong
 export default {
   name:'AjaxTest',
   data() {
