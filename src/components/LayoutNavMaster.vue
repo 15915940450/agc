@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name:'LeftNav',
+  name:'LayoutNavMaster',
   data:function(){
     return ({
       isActive:1, //1,2,3,4,5

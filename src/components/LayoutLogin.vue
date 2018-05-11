@@ -52,7 +52,7 @@ var sendLoginCount=window.localStorage.sendLoginCount?window.Number(window.local
 // console.log({name:sendLoginCount});
 
 export default {
-  name:'NeedLogin',
+  name:'LayoutLogin',
   data() {
     return {
       width:'380px',

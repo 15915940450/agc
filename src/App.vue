@@ -4,7 +4,7 @@
 
     <el-row>
       <el-col id="left_nav_wrap">
-        <LeftNav />
+        <LayoutNavMaster />
       </el-col>
       <el-col id="main_wrap">
         <router-view />
@@ -14,21 +14,21 @@
       </el-col>
     </el-row>
 
-    <NeedLogin />
+    <LayoutLogin />
   </div>
 </template>
 
 <script>
 import LayoutTopBar from './components/LayoutTopBar.vue';
-import LeftNav from './components/LeftNav.vue';
-import NeedLogin from './components/NeedLogin.vue';
+import LayoutNavMaster from './components/LayoutNavMaster.vue';
+import LayoutLogin from './components/LayoutLogin.vue';
 
 export default {
   name: 'App',
   components:{
     LayoutTopBar,
-    LeftNav,
-    NeedLogin
+    LayoutNavMaster,
+    LayoutLogin
   }
 };
 </script>
