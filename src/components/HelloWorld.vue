@@ -44,15 +44,6 @@ export default {
   },
   methods:{
     fetchData:function(){
-      // var vueThis=this;
-      // console.log(this.$im);
-      // vueThis.$im.get(vueThis.$apiURLs.commit+vueThis.currentBranch).then(function(rps){
-      //   // console.log(rps.data);
-      //   //im獲取數據 commits
-      //   vueThis.commits=rps.data;
-      // }).catch(function(err){
-      //   _.logErr(err);
-      // });
     }
   }
 };

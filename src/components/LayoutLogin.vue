@@ -114,13 +114,17 @@ export default {
           };
           // console.log(JSON.stringify(sendData));
           // return false;
-          ajaxs.imPostForm(urls.login,sendData,function(objRps){
+          ajaxs.imPostForm(urls.login,sendData,function(rps){
             //响应已到达
             vueThis.loading=false;
 
             // console.log(window.localStorage.sendLoginCount);
             // console.log(vueThis.sendLoginCount);
-            vueThis.handleLoginRps(objRps);
+            try{
+              vueThis.handleLoginRps(JSON.parse(rps));
+            }catch(err){
+              _.logErr(err);
+            }
           },{
             imLogin:true
           });
