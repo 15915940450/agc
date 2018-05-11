@@ -6,6 +6,7 @@
 * main: src/main.js (import Vue,router,store,EUI,vue-awesome,App)
 * App: App.vue (contain router-view... LayoutTopBar.vue,LayoutNavMaster.vue,LayoutLogin.vue)
 * router-view: (contain HeartJoy,HeartGroup,HeartUser,HeartDeposit,HeartEVs,HeartEVamap,HeartSysSetting...extra HelloWorld and AjaxTest just for test)
+* urls.js: some private setting(api接口列表,ajaxs[imPostForm,imGet,imPostJson])
 
 ## 常用语句
 
