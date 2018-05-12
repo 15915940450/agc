@@ -35,7 +35,10 @@ export default {
   methods:{
     load:function(){
 
-      this.$rqs();
+      this.$rqs('http://119.23.133.72:8764/agent/account/baseInfo','POSTform',function(rps){console.log(rps);},{
+        objSendData:{
+          phone:15915900000
+        }});
     }
   },
   created:function(){

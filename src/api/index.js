@@ -98,12 +98,14 @@ export default function(url,method,success,settings){
     ContentType='application/x-www-form-urlencoded';
   }
   if(method==='POSTform'){
+    method='POST';
     ContentType='application/x-www-form-urlencoded';
     if(settings && settings.objSendData){
       data2send=_.serialize2querystring(settings.objSendData);
     }
   }
   if(method==='POSTjson'){
+    method='POST';
     ContentType='application/json';
     if(settings && settings.objSendData){
       data2send=JSON.stringify(settings.objSendData);
