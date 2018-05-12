@@ -20,7 +20,7 @@ export default function(url,method,success,settings){
   // this is vm object
   var vueThis=this;
 
-  if(typeof url!=='string'){
+  if(typeof(url)!=='string'){
     return false;
   }
   method=method || 'GET';
@@ -29,7 +29,21 @@ export default function(url,method,success,settings){
     objSendData:null,
     isLoginRqs:false,
     fnHandleNOTjsonResult:function(error){_.logErr(error);},
-    fail:function(){}
+    fail:function(rps){
+      _.logErr(rps);
+      var msg;
+      if(typeof(rps)==='object'){
+        msg=rps.msg;
+      }else{
+        msg=rps;
+      }
+      vueThis.$notify.error({
+        title:'提示',
+        message:msg,
+        offset:44,
+        duration:5000
+      });
+    }
   };
 
   if(!window.localStorage.agentid && !settings.isLoginRqs){
