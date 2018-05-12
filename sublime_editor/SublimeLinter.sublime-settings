@@ -1,8 +1,10 @@
 // SublimeLinter Settings - User
 {
+  "lint_mode": "load_save",
   "linters": {
     "eslint": {
         "selector": "text.html.vue, source.js - meta.attribute-with-value"
     }
-  }
+  },
+  "show_panel_on_save": "view"
 }
