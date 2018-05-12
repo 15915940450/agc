@@ -16,16 +16,11 @@ success: if code is 1000
 6.handle success:success
 7.handle all out of success:fail,fnHandleNOTjsonResult
 */
-export default function(url,method,success,settings){
+export default function(url,method,success,paramSettings){
   // this is vm object
   var vueThis=this;
 
-  if(typeof(url)!=='string'){
-    return false;
-  }
-  method=method || 'GET';
-  success=success || function(objRps){_.logErr(objRps);};
-  settings=settings || {
+  var defaultSettings={
     objSendData:null,
     isLoginRqs:false,
     fnHandleNOTjsonResult:function(error){_.logErr(error);},
@@ -40,11 +35,23 @@ export default function(url,method,success,settings){
       vueThis.$notify.error({
         title:'提示',
         message:msg,
-        offset:44,
+        offset:55,
         duration:5000
       });
     }
   };
+
+  if(typeof(url)!=='string'){
+    return false;
+  }
+  method=method || 'GET';
+  success=success || function(objRps){_.logErr(objRps);};
+  var settings=_.cloneDeep(defaultSettings);
+  if(paramSettings){
+    _.forEach(paramSettings,function(v,k){
+      settings[k]=_.cloneDeep(v);
+    });
+  }
 
   if(!window.localStorage.agentid && !settings.isLoginRqs){
     store.commit('showLogin');
