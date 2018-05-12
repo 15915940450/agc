@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="ajax_test">
     <ul>
-      <li><a href=""></a></li>
-      <li><a href=""></a></li>
+      <li><a href="">kkk</a></li>
+      <li><a href="">ooo</a></li>
       <li><a href=""></a></li>
       <li><a href=""></a></li>
       <li><a href=""></a></li>
@@ -15,7 +15,11 @@
 </template>
 
 <script>
-// import {ajaxsTest} from '../api/index.js';
+import Vue from 'vue';
+import rqs from '../api/index.js';
+Vue.prototype.$rqs=rqs;
+
+
 
 // //comments and componentnames(router s) and notify | 1000
 
@@ -29,7 +33,10 @@ export default {
     };
   },
   methods:{
-    load:function(){}
+    load:function(){
+
+      this.$rqs();
+    }
   },
   created:function(){
     this.load();
