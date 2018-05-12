@@ -49,7 +49,11 @@ export default function(url,method,success,paramSettings){
   var settings=_.cloneDeep(defaultSettings);
   if(paramSettings){
     _.forEach(paramSettings,function(v,k){
-      settings[k]=_.cloneDeep(v);
+      if(typeof(v)==='object'){
+        settings[k]=_.cloneDeep(v);
+      }else{
+        settings[k]=v;
+      }
     });
   }
 

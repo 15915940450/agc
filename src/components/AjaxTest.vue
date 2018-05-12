@@ -38,7 +38,9 @@ export default {
       this.$rqs('http://119.23.133.72:8764/agent/account/baseInfo','POSTform',function(rps){console.log(rps);},{
         objSendData:{
           phone:15915900001
-        }});
+        },
+        isLoginRqs:true
+      });
     }
   },
   created:function(){
