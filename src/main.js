@@ -8,11 +8,16 @@ import EUI from 'element-ui';
 import './assets/e_theme.scss';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
+import rqs from './api';
+import yApi from './api/y_api.js';
 
 import App from './App';
 
 Vue.use(EUI,{size:'small'});
 Vue.component('icon', Icon);
+
+Vue.prototype.$rqs=rqs;
+Vue.prototype.$yApi=yApi;
 
 
 Vue.config.productionTip = false;
