@@ -5,9 +5,11 @@
 	],
 	"installed_packages":
 	[
-		"Agila Theme",
+		"ColorPicker",
+		"Desert Color Scheme",
 		"Emmet",
 		"ESLint-Formatter",
+		"GitGutter",
 		"Package Control",
 		"SublimeLinter",
 		"SublimeLinter-eslint",

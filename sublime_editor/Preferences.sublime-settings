@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Agila Theme/Agila Light Solarized.tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Sixteen.sublime-color-scheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
@@ -38,9 +38,12 @@
 	],
 	"font_face": "DejaVu Sans Mono",
 	"font_size": 11,
-	"ignored_packages": [],
+	"ignored_packages":
+	[
+	],
 	"tab_size": 2,
 	"theme": "Default.sublime-theme",
 	"translate_tabs_to_spaces": true,
+	"vintage_start_in_command_mode": true,
 	"word_wrap": true
 }
