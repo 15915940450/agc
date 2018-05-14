@@ -110,6 +110,13 @@ export default {
   computed:{
     ...mapState(['modalStore'])
   },
+  watch:{
+    'modalStore.groupCreate':function(val){
+      if(val){
+        this.fetchGroupType();
+      }
+    }
+  },
   methods:{
     fetchCityList:function(){
       var vueThis=this;
@@ -207,7 +214,7 @@ export default {
     this.fetchOptionsScheme('depositListScheme');
     this.fetchOptionsScheme('packageListScheme');
     this.fetchCityList();
-    this.fetchGroupType();
+    // this.fetchGroupType();
     // console.log(this.grouptype);
   }
 
