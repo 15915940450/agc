@@ -7,6 +7,8 @@
 * App: App.vue (contain router-view... LayoutTopBar.vue,LayoutNavMaster.vue,LayoutLogin.vue)
 * router-view: (contain HeartJoy,HeartGroup,HeartUser,HeartDeposit,HeartEVs,HeartEVamap,HeartSysSetting...extra HelloWorld and AjaxTest just for test)
 * api: some private setting(rqs,y_api接口列表)
+* LayoutLogin: make $rqs to $yApi.userLogin, while success set some item in localStorage(see all in y_api.js)
+* HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo.
 
 ## 常用语句
 

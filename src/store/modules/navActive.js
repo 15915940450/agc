@@ -1,3 +1,7 @@
+/*
+==warning: this module is discarded
+*/
+
 var state={
   navActive:1 //1,2,3,4,5...
 };

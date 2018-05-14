@@ -142,6 +142,14 @@ export default {
       var sendData={
         phone:''+window.localStorage.agentphone
       };
+      vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
+        Object.keys(objRps.result).forEach(function(v){
+          vueThis[v]=objRps.result[v];
+        });
+      },{
+        objSendData:sendData
+      });
+      return false;
       ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
         if(objRps.code===1000){
           // vueThis.availableDeposite=objRps.result.availableDeposite;

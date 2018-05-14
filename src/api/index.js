@@ -114,25 +114,23 @@ export default function(urlMethod,success,paramSettings){
   };
 
   var ContentType,data2send='';
+  if(!settings.isLoginRqs && window.localStorage.agentphone && settings.objSendData && !settings.objSendData.phone){
+    settings.objSendData.phone=window.localStorage.agentphone;
+  }
+
   if(method==='GET'){
-    if(settings && settings.objSendData){
-      url=url+'?'+_.serialize2querystring(settings.objSendData);
-    }
+    url=url+'?'+_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';
   }
   if(method==='POSTform'){
     method='POST';
+    data2send=_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';
-    if(settings && settings.objSendData){
-      data2send=_.serialize2querystring(settings.objSendData);
-    }
   }
   if(method==='POSTjson'){
     method='POST';
+    data2send=JSON.stringify(settings.objSendData);
     ContentType='application/json';
-    if(settings && settings.objSendData){
-      data2send=JSON.stringify(settings.objSendData);
-    }
   }
 
 
