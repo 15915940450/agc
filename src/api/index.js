@@ -21,7 +21,7 @@ export default function(urlMethod,success,paramSettings){
   var vueThis=this;
 
   var defaultSettings={
-    objSendData:null,
+    objSendData:{},
     isLoginRqs:false,
     fnHandleNOTjsonResult:function(error){_.logErr(error);},
     fail:function(rps){
@@ -114,10 +114,9 @@ export default function(urlMethod,success,paramSettings){
   };
 
   var ContentType,data2send='';
-  if(!settings.isLoginRqs && window.localStorage.agentphone && settings.objSendData && !settings.objSendData.phone){
+  if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone){
     settings.objSendData.phone=window.localStorage.agentphone;
   }
-
   if(method==='GET'){
     url=url+'?'+_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';

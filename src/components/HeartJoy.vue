@@ -111,7 +111,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'HeartJoy',
@@ -139,31 +138,10 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      var sendData={
-        phone:''+window.localStorage.agentphone
-      };
       vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
         Object.keys(objRps.result).forEach(function(v){
           vueThis[v]=objRps.result[v];
         });
-      },{
-        objSendData:sendData
-      });
-      return false;
-      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
-        if(objRps.code===1000){
-          // vueThis.availableDeposite=objRps.result.availableDeposite;
-          Object.keys(objRps.result).forEach(function(v){
-            vueThis[v]=objRps.result[v];
-          });
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
       });
     },
     rrPush:function(){
