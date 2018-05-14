@@ -8,38 +8,8 @@
 * router-view: (contain HeartJoy,HeartGroup,HeartUser,HeartDeposit,HeartEVs,HeartEVamap,HeartSysSetting...extra HelloWorld and AjaxTest just for test)
 * api: some private setting(rqs,y_api接口列表)
 * LayoutLogin: make $rqs to $yApi.userLogin, while success set some item in localStorage(see all in y_api.js)
-* HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo.
+* HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo(always add param phone).
 
-## 常用语句
-
-```
-//引入api(ajax)
-import {urls,ajaxs} from '../api/urls.js';
-
-//modal
-computed:{
-  ...mapState(['modalStore'])
-},
-
-//ajaxs.im...
-var vueThis=this;
-vueThis.loading=true;
-var sendData={
-};
-ajaxs.imPostJson(urls.baseInfo,sendData,function(objRps){
-  console.log(objRps);
-  if(objRps.code===1000){
-
-  }else{
-    vueThis.$notify.error({
-      title:'提示',
-      message:objRps.msg,
-      offset:50,
-      duration:5000  //0
-    });
-  }
-});
-```
 
 ## vim
 
@@ -56,11 +26,15 @@ ajaxs.imPostJson(urls.baseInfo,sendData,function(objRps){
 
 ## sublime editor
 
-* (Aglia) Theme
+* (Desert) Color Scheme
 * Package Control
 * SublimeLinter
 * SublimeLinter-eslint
 * Vue Syntax Hightlight
+* GitGutter
+* Emmet
+* ColorPicker
+* ESlint-Formatter
 
 
 ## atom editor
