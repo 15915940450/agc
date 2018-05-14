@@ -158,7 +158,6 @@ export default {
       //设置完整登录用户信息
       window.localStorage.setItem('agentname',objRps.result.name);
       window.localStorage.setItem('agentid',objRps.result.id);
-      window.localStorage.setItem('grouptype',objRps.result.groupType);
       this.$store.commit('setAgent',{
         phone:objRps.result.phone,
         name:objRps.result.name,

@@ -29,7 +29,6 @@ var mutations={
     window.localStorage.removeItem('agentid');
     window.localStorage.removeItem('batteryAmount');
     window.sessionStorage.removeItem('payurl');
-    window.localStorage.removeItem('grouptype');
     state.needLogin=true;
     state.baseStatus=false;
     state.topUp=false;
