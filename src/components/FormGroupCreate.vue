@@ -97,7 +97,7 @@ export default {
           {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
         ]
       },
-      grouptype:window.Number(window.localStorage.grouptype),
+      grouptype:0,
       typePackage:['月套卡','次套卡','免费套餐'],
       options_cityListScheme: [],
       options_depositListScheme: [],
@@ -194,6 +194,12 @@ export default {
         }
       });
 
+    },
+    fetchGroupType:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.grouptype=objRps.result.groupType;
+      });
     }
 
   },  //methods
@@ -201,6 +207,7 @@ export default {
     this.fetchOptionsScheme('depositListScheme');
     this.fetchOptionsScheme('packageListScheme');
     this.fetchCityList();
+    this.fetchGroupType();
     // console.log(this.grouptype);
   }
 
