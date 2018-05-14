@@ -9,6 +9,8 @@ yarn-error.log*
 selenium-debug.log
 
 /src/api/urls.js
+/src/api/y_api.js
+/agc.sublime-workspace
 
 # Editor directories and files
 .idea

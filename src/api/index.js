@@ -8,7 +8,7 @@ method: GET,POSTform,POSTjson
 success: if code is 1000
 
 ==the progress
-1.you must assign an url.
+1.you must assign an url width __method(1,2,3).
 2.if cannot get agentid, do NOT send, except making a login request
 3.create,open
 4.setRequestHeader,withCredentials
@@ -16,7 +16,7 @@ success: if code is 1000
 6.handle success:success
 7.handle all out of success:fail,fnHandleNOTjsonResult
 */
-export default function(url,method,success,paramSettings){
+export default function(urlMethod,success,paramSettings){
   // this is vm object
   var vueThis=this;
 
@@ -41,21 +41,22 @@ export default function(url,method,success,paramSettings){
     }
   };
 
-  if(typeof(url)!=='string'){
+  if(typeof(urlMethod)!=='string'){
     return false;
   }
-  method=method || 'GET';
-  success=success || function(objRps){_.logErr(objRps);};
-  var settings=_.cloneDeep(defaultSettings);
-  if(paramSettings){
-    _.forEach(paramSettings,function(v,k){
-      if(typeof(v)==='object'){
-        settings[k]=_.cloneDeep(v);
-      }else{
-        settings[k]=v;
-      }
-    });
+  var url=urlMethod.split('__')[0];
+  var method=window.parseInt(urlMethod.split('__')[1]); //1,2,3
+  if(method===1){
+    method='GET';
   }
+  if(method===2){
+    method='POSTjson';
+  }
+  if(method===3){
+    method='POSTform';
+  }
+  success=success || function(objRps){_.logErr(objRps);};
+  var settings=_.assign(defaultSettings,paramSettings);
 
   if(!window.localStorage.agentid && !settings.isLoginRqs){
     store.commit('showLogin');
