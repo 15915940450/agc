@@ -37,7 +37,7 @@
           <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
             <el-input-number v-model="formSetUser.freeDay" :min="0" :max="maxFD">
             </el-input-number>
-            <small>(剩余 <strong :class="{red:(agentFreeDays<=0)}">{{agentFreeDays}}</strong> 天)</small>
+            <small>(剩余 <strong :class="{red:(computedFreeDays<=0)}">{{computedFreeDays}}</strong> 天)</small>
           </el-form-item>
 
           <!-- <el-form-item label="可用电池数" :label-width="formLabelWidth">
@@ -109,6 +109,10 @@ export default {
     maxFD:function(){
       return (this.freeDays+this.agentFreeDays);
     },
+    computedFreeDays:function(){
+      return (this.maxFD-this.formSetUser.freeDay);
+    },
+
     ...mapState(['modalStore'])
   },
   watch:{
