@@ -72,12 +72,19 @@ export default function(urlMethod,success,paramSettings){
 
   xmlhttp.onreadystatechange=function(){
     if(xmlhttp.readyState===4){
+      //when complete, set loading to false
+      if(vueThis.loading){
+        vueThis.loading=false;
+      }
       if(xmlhttp.status===200){
-        if(settings.isLoginRqs){
-          success(xmlhttp.responseText);
-        }else{
-          try{
-            var objRps=JSON.parse(xmlhttp.responseText);
+        try{
+          var objRps=JSON.parse(xmlhttp.responseText);
+
+          if(settings.isLoginRqs){
+            //make login rqs
+            success(objRps);
+          }else{
+            //normal rqs
             //code...
             switch(objRps.code){
 
@@ -90,11 +97,15 @@ export default function(urlMethod,success,paramSettings){
               break;
             default:  //fail
               settings.fail(objRps);
+            //end switch
             }
-          }catch(error){
-            settings.fnHandleNOTjsonResult(error);
           }
+        //end try
+        }catch(error){
+          //when JSON.parse throw error
+          settings.fnHandleNOTjsonResult(error);
         }
+      //end if 200  
       }else{
         //status is not 200
         settings.fail(xmlhttp.status);

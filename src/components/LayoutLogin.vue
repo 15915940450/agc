@@ -113,20 +113,11 @@ export default {
             validateCode:''+this.formLogin.validateCode
           };
           // console.log(JSON.stringify(sendData));
-          // return false;
-          ajaxs.imPostForm(urls.login,sendData,function(rps){
-            //响应已到达
-            vueThis.loading=false;
-
-            // console.log(window.localStorage.sendLoginCount);
-            // console.log(vueThis.sendLoginCount);
-            try{
-              vueThis.handleLoginRps(JSON.parse(rps));
-            }catch(err){
-              _.logErr(err);
-            }
+          vueThis.$rqs(vueThis.$yApi.userLogin,function(objRps){
+            vueThis.handleLoginObjRps(objRps);
           },{
-            imLogin:true
+            isLoginRqs:true,
+            objSendData:sendData
           });
         } else {
           _.logErr('error submit!!');
@@ -134,7 +125,7 @@ export default {
         }
       });
     },
-    handleLoginRps:function(objRps){
+    handleLoginObjRps:function(objRps){
       switch (objRps.code) {
       case 1000:  //登录成功
         this.handleSuccess(objRps);
