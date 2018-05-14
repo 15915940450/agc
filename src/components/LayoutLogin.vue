@@ -42,8 +42,6 @@
 
 <script>
 import {mapState} from 'vuex';
-// import {mapState,mapMutations} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 //5次则需要验证码
 /* localStorage的值是字符串类型，而this.sendLoginCount则需保证是数字类型 */
@@ -112,7 +110,6 @@ export default {
             isRemember:window.Number(this.formLogin.isRemember),
             validateCode:''+this.formLogin.validateCode
           };
-          // console.log(JSON.stringify(sendData));
           vueThis.$rqs(vueThis.$yApi.userLogin,function(objRps){
             vueThis.handleLoginObjRps(objRps);
           },{
@@ -169,7 +166,7 @@ export default {
       });
     },
     updateVimg:function(){
-      this.vImg=urls.validateCode+'?n='+(Math.random()+'').substring(3,15);
+      this.vImg=this.$yApi.userValidateCode+'?n='+(Math.random()+'').substring(3,15);
     }
   }, //methods
   created:function(){
