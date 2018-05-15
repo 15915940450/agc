@@ -170,7 +170,6 @@ export default {
     handleComfirm:function(refName){
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
-        // console.log(valid);
         if(valid){
           var sendData={
             name:vueThis.formGroupCreate.name,
@@ -180,23 +179,13 @@ export default {
             cityCode:vueThis.formGroupCreate.cityCode,
             canRefund:window.Number(vueThis.formGroupCreate.canRefund)
           };
-          // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
-          ajaxs.imPostJson(urls.groupCreate,sendData,function(objRps){
-            // console.log(objRps);
-            vueThis.loading=false;
-            if(objRps.code===1000){
-              vueThis.$store.commit('hideGroupCreate');
-              vueThis.$store.commit('showStatusGroupCreate');
-              vueThis.$refs[refName].resetFields();
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.groupCreate,function(){
+            vueThis.$store.commit('hideGroupCreate');
+            vueThis.$store.commit('showStatusGroupCreate');
+            vueThis.$refs[refName].resetFields();
+          },{
+            objSendData:sendData
           });
         }
       });
