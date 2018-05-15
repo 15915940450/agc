@@ -4,8 +4,10 @@
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
       <h2 class="project_name">代理商管理后台</h2>
       <!-- <input v-model.trim="formLogin.phone"> -->
+
       <!-- 表单开始 -->
-      <el-form ref="formLogin" :model="formLogin" size="small" :rules="rules">
+      <el-form ref="formLogin" :model="formLogin" size="small" :rules="rules" @submit.native.prevent="handleSubmit">
+
         <!-- 手机号 -->
         <el-form-item prop="phone">
           <el-input v-model.number="formLogin.phone" @input="hintMsg=''" auto-complete="on" placeholder="请输入手机号码" class="need_login-phone" autofocus="true"></el-input>
@@ -27,6 +29,7 @@
         <el-form-item class="need_login-hint_wrap">
           <p class="need_login-hint" v-if="hintMsg">* {{hintMsg}}</p>
         </el-form-item>
+        <input type="submit" value="submit" class="hidden">
 
       </el-form>
 
@@ -166,6 +169,9 @@ export default {
     },
     updateVimg:function(){
       this.vImg=this.$yApi.userValidateCode+'?n='+(Math.random()+'').substring(3,15);
+    },
+    handleSubmit:function(){
+      this.loginSend('formLogin');
     }
   }, //methods
   created:function(){
