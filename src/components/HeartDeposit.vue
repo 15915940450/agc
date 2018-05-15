@@ -18,8 +18,11 @@
                   <a href="javascript:;" class="im_card-top_up" @click="handleTopUp()">充值</a>
                 </h3>
                 <p class="im_card-value overtext">
-                  <icon name="eye-slash" scale="1.3"></icon>
-                  {{card.availableDeposite}}
+                  <!-- eye-slash,eye -->
+                  <a href="javascript:;" @click="switchEye('eyenameDeposit')" class="eye_icon_wrap">
+                    <icon :name="eyenameDeposit" scale="1.3"></icon>
+                  </a>
+                  {{eyeDeposit}}
                 </p>
               </el-col>
             </el-row>
@@ -40,8 +43,10 @@
                   <a href="javascript:;" class="im_card-refund" @click="handleRefund()">退款</a>
                 </h3>
                 <p class="im_card-value overtext">
-                  <icon name="eye-slash" scale="1.3"></icon>
-                  {{card.refundableDeposit}}
+                  <a href="javascript:;" @click="switchEye('eyenameRefund')" class="eye_icon_wrap">
+                    <icon :name="eyenameRefund" scale="1.3"></icon>
+                  </a>
+                  {{eyeRefund}}
                 </p>
               </el-col>
             </el-row>
@@ -160,11 +165,13 @@ export default {
       total:'--',
       deposit:[],
       card:{
-        availableDeposite:'加载中...',
-        refundableDeposit:'加载中...',
-        availableBattery:'加载中...',
-        usedBattery:'加载中...'
+        availableDeposite:'*****',
+        refundableDeposit:'*****',
+        availableBattery:'*****',
+        usedBattery:'*****'
       },
+      eyenameDeposit:'eye',
+      eyenameRefund:'eye',
 
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1),
       // currentPage:,
@@ -173,7 +180,13 @@ export default {
     };
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    eyeDeposit:function(){
+      return (this.eyenameDeposit==='eye-slash'?this.card.availableDeposite:'*****');
+    },
+    eyeRefund:function(){
+      return (this.eyenameRefund==='eye-slash'?this.card.refundableDeposit:'*****');
+    }
   },
   watch:{
     'modalStore.needLogin':function(val){
@@ -269,6 +282,9 @@ export default {
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/deposit/'+val);
+    },
+    switchEye:function(iconName){
+      this[iconName]=this[iconName]==='eye'?'eye-slash':'eye';
     }
   },
   created:function(){
@@ -377,5 +393,8 @@ export default {
     color: #999;
     font-size: 14px;
     margin-bottom: 30px;
+  }
+  .eye_icon_wrap{
+    color:#222 !important;
   }
 </style>
