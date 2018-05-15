@@ -21,7 +21,7 @@
         <el-col :span="8">
           <a href="javascript:;" @click="groupCreate()">
             <div class="group_card group_card-new">
-              <p class="group_card-title"><i class="el-icon-plus"></i> 新建群组</p>
+              <p class="group_card-title"><i class="el-icon-plus"></i> 添加群组</p>
             </div>
           </a>
         </el-col>

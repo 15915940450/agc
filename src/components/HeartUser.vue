@@ -21,7 +21,7 @@
                 <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入手机号" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
               <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
-              <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
+              <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">添加</el-button>
               <el-button type="info" @click="showEVin()">激活</el-button>
             </div>
           </el-col>
@@ -85,10 +85,10 @@
     <div v-if="(!users.length && isNotSearch)" class="empty_user">
       <img src="../assets/empty_user.png" />
       <p>您还没有用户哦！</p>
-      <el-button type="primary" @click="showNewUser()">新建</el-button>
+      <el-button type="primary" @click="showNewUser()">添加</el-button>
     </div>
 
-    <!-- 新建 -->
+    <!-- 添加 -->
     <FormNewUser />
     <FormEVin />
     <BaseStatus :msg="msg" />

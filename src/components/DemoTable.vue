@@ -10,7 +10,7 @@
             <el-input class="table_wrap-input_serach" placeholder="请输入手机号" v-model="searchPhone" suffix-icon="el-icon-search"></el-input>
           </div>
           <el-button class="table_wrap-btn_reset" type="warning">重置</el-button>
-          <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">新建</el-button>
+          <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">添加</el-button>
         </div>
       </el-col>
     </el-row>
