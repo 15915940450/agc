@@ -5,11 +5,18 @@
         <a href="javascript:;" @click="rrPush(item)">{{item.name}}</a>
       </li>
     </ul>
-
   </div>
 </template>
 
 <script>
+var arrRouteName=[
+  'HeartJoy',
+  'HeartGroup-HeartUser',
+  'HeartDeposit',
+  'HeartEVs-HeartEVamap',
+  'HeartSysSetting'
+];
+
 export default {
   name:'LayoutNavMaster',
   data:function(){
@@ -54,19 +61,14 @@ export default {
     },
     setDefaultNavActive:function(){
       var vueThis=this;
-      // console.log(this.$route.name);
-      var arrRouteName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','HeartSysSetting'];
       var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
       vueThis.isActive=(defaultNavActive===-1?1:defaultNavActive+1);
     },
     listenRouteChange:function(){
       var vueThis=this;
-      var arrToName=['HeartJoy','HeartGroup-HeartUser','HeartDeposit','HeartEVs-HeartEVamap','HeartSysSetting'];
       vueThis.$router.beforeEach((to, from, next) => {
-        var navActive=_.findIndexVague(arrToName,to.name);
-        
+        var navActive=_.findIndexVague(arrRouteName,to.name);
         vueThis.isActive=(navActive===-1?1:navActive+1);
-
         next();
       });
     }
@@ -153,6 +155,4 @@ export default {
   #im_nav li:nth-child(5).active a{
     background: url(../assets/nav_system_active.png) no-repeat 20px center;
   }
-
-
 </style>
