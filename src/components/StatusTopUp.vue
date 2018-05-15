@@ -3,14 +3,14 @@
     <el-dialog
       :title="title"
       :visible.sync="modalStore.statusTopUp"
-      width="200px"
+      width="300px"
       :show-close="false"
       :close-on-click-modal="false"
       center>
 
       <span slot="footer" class="dialog-footer">
-        <el-button @click="handleRetry()">重 试</el-button>
-        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
+        <el-button @click="handleComfirm()">已完成支付</el-button>
+        <el-button @click="handleRetry()" type="primary">重新支付</el-button>
       </span>
     </el-dialog>
   </div>
@@ -24,7 +24,7 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     title:function(){
-      return ('充值成功？');
+      return ('请在新打开的第三方支付页面完成支付');
     }
   },
   methods:{
