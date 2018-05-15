@@ -85,9 +85,6 @@ export default {
         groupCode:[
           {required:true,message:'请选择一个群组',trigger:'change'}
         ],
-        // depositId:[
-        //   {required:true,message:'请选择押金方案',trigger:'change'}
-        // ],
         freeDay:[
           {required:true,message:'免费天数不能为空',trigger:'change'}
         ],
@@ -119,19 +116,21 @@ export default {
     'modalStore.setUser':function(val){
       var vueThis=this;
       if(val){
-        // console.log(Math.random());
         this.formSetUser.name=this.name;
         this.formSetUser.groupCode=this.groupCode;
 
-        var isFind=vueThis.options_depositListScheme.find(function(v){
-          return (window.Number(v.id)===window.Number(vueThis.depositID));
+
+        this.fetchOptionsScheme('depositListScheme',function(){
+          var isFind=vueThis.options_depositListScheme.find(function(v){
+            return (window.Number(v.id)===window.Number(vueThis.depositID));
+          });
+          if(!isFind){
+            vueThis.formSetUser.depositId='';
+          }else{
+            vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
+          }
         });
-        // console.log(JSON.stringify(isFind));  //undefined
-        if(!isFind){
-          vueThis.formSetUser.depositId='';
-        }else{
-          vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
-        }
+
 
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
@@ -139,9 +138,6 @@ export default {
           return (v.sn);
         });
         this.formSetUser.phone=this.phone;
-
-        //deposit depend on groupcode
-        this.fetchOptionsScheme('depositListScheme');
       }
     }
   },
@@ -188,7 +184,7 @@ export default {
         }
       });
     },
-    fetchOptionsScheme:function(type){
+    fetchOptionsScheme:function(type,done){
       var vueThis=this;
       var advancedParam=JSON.stringify({
         groupCode:vueThis.formSetUser.groupCode
@@ -208,6 +204,7 @@ export default {
           if(type==='packageListScheme'){
             vueThis.options_packageListScheme=objRps.result.list;
           }
+          done();
         }else{
           vueThis.$notify.error({
             title: '提示',
@@ -278,8 +275,15 @@ export default {
       });
     },
     handleGroupSelectChange:function(){
-      this.formSetUser.depositId='';
-      this.fetchOptionsScheme('depositListScheme');
+      var vueThis=this;
+      this.fetchOptionsScheme('depositListScheme',function(){
+        var isFind=vueThis.options_depositListScheme.find(function(v){
+          return (window.Number(v.id)===window.Number(vueThis.formSetUser.depositId));
+        });
+        if(!isFind){
+          vueThis.formSetUser.depositId='';
+        }
+      });
     }
   },  //methods
   created:function(){
