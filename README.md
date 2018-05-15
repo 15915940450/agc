@@ -9,7 +9,7 @@
 * api: some private setting(rqs,y_api接口列表)
 * LayoutLogin: make $rqs to $yApi.userLogin, while success set some item in localStorage(see all in y_api.js)
 * HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo(always add param phone).
-* BaseStatus.vue
+* BaseStatus.vue (Status...)
 * DemoModal.vue and DemoTable.vue is used frequently.
 
 
