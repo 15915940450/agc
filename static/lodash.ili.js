@@ -6873,9 +6873,11 @@
       return result;
     }
     //====================================ili(follow chunk)
+    //1.ele
     function ele(){
       return '#vue_root';
     }
+    //2.toHKstring
     function toHKstring(dateObject) {
       let result='';
       function pad(number){
@@ -6887,48 +6889,53 @@
       result=dateObject.getFullYear()+'-'+pad(dateObject.getMonth()+1)+'-'+pad(dateObject.getDate())+'T'+pad(dateObject.getHours())+':'+pad(dateObject.getMinutes())+':'+pad(dateObject.getSeconds())+'.'+(dateObject.getMilliseconds()/1000).toFixed(3).slice(2,5)+'+08:00';
       return result;
     }
+    //3.getMonday
     function getMonday(dateObject) {
       var numDay=dateObject.getDay() || 7;
       var result=new Date(dateObject.getFullYear(),dateObject.getMonth(),dateObject.getDate()+1-numDay);
       return result;
     }
-    //计算num天以前的日期对象 2017-10-24T00:00:00.000+08:00
+
+    //4.dateAgo 计算num天以前的日期对象 2017-10-24T00:00:00.000+08:00
     function dateAgo(num){
       var today=new Date();
       if(window.dobjServerTime){
         today=dobjServerTime;
       }
-
       var strTodayChina=toHKstring(today).substring(0,10)+'T00:00:00.000+08:00';
       var dateTodayChina0=new Date(strTodayChina);
-
       dateTodayChina0.setDate(dateTodayChina0.getDate()-num);
       return dateTodayChina0;
     }
+    //5.stampToHMS
     function stampToHMS(stamp13){
-          var result='';
-          var days = parseInt(stamp13 / (1000 * 60 * 60 * 24));
-          var hours = parseInt((stamp13 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          var minutes = parseInt((stamp13 % (1000 * 60 * 60)) / (1000 * 60));
-          var seconds = (stamp13 % (1000 * 60)) / 1000;
-          result=days + '<span class="time-mark d">天</span>' + hours + '<span class="time-mark hh">小时</span>' + minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
-          if(days===0){
-            result=hours + '<span class="time-mark hh">小时</span>' + minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
-            if(hours===0){
-              result=minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
-              if(minutes===0){
-                result=seconds + '<span class="time-mark ss">秒</span>';
-              }
-            }
+      var result='';
+      var days = parseInt(stamp13 / (1000 * 60 * 60 * 24));
+      var hours = parseInt((stamp13 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = parseInt((stamp13 % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = (stamp13 % (1000 * 60)) / 1000;
+      result=days + '<span class="time-mark d">天</span>' + hours + '<span class="time-mark hh">小时</span>' + minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
+      if(days===0){
+        result=hours + '<span class="time-mark hh">小时</span>' + minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
+        if(hours===0){
+          result=minutes + '<span class="time-mark mm">分钟</span>' + seconds + '<span class="time-mark ss">秒</span>';
+          if(minutes===0){
+            result=seconds + '<span class="time-mark ss">秒</span>';
           }
-
-          return result;
+        }
+      }
+      return result;
     }
+    //6.querystringParse
     function querystringParse(search){
       search=search || window.location.search.substring(1);
       return search?JSON.parse('{"'+search.replace(/&/g,'","').replace(/=/g,'":"')+'"}',function(key,value){return key===''?value:decodeURIComponent(value);}):{};
     }
+    //7.serialize2querystring
     function serialize2querystring(obj){
+      if(!obj || typeof(obj)!=='object'){
+        return '';
+      }
       var str = [];
       for (var p in obj)
         if (obj.hasOwnProperty(p)) {
@@ -6936,6 +6943,7 @@
         }
       return str.join("&");
     }
+    //8.createArray
     function createArray(num){
       var arr=[];
       for(var i=0;i<num;i++){
@@ -6943,22 +6951,23 @@
       }
       return arr;
     }
+    //9.isPhone
     function isPhone(phone){
       if((/^1(3|4|5|7|8)\d{9}$/.test(''+phone))){
         return true;
       }
     }
+    //10.findIndexVague
     function findIndexVague(arr,eleSstrv){
       var indexVague=-1;
-
       arr.forEach(function(v,i){
         if(_.includes(v,eleSstrv)){
           indexVague=i;
         }
       });
-
       return indexVague;
     }
+    //11.logErr
     function logErr(err){
       return console.error(err);
     }

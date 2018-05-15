@@ -51,7 +51,7 @@ export default {
   },
   created:function(){
     this.fetchData();
-    _.logErr(JSON.stringify(this.$store.state.modalStore));
+    // _.logErr(JSON.stringify(this.$store.state.modalStore));
   }
 };
 </script>
