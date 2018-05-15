@@ -23,7 +23,7 @@ import {urls,ajaxs} from '../api/urls.js'; //引入api(ajax)
 import {mapState} from 'vuex';
 
 export default {
-  name:'BaseModalWrap',
+  name:'FormUnbindUser',
   props:['phone'],
   data:function(){
     return ({

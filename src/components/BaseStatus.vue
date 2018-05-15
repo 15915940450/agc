@@ -11,6 +11,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="handleComfirm()">确 定</el-button>
       </span>
+
     </el-dialog>
   </div>
 </template>
@@ -18,6 +19,7 @@
 <script>
 import {mapState} from 'vuex';
 
+//show base status in modal, offten follow by Form...vue
 export default {
   name:'BaseStatus',
   props:['msg'],

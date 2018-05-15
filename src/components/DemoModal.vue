@@ -30,10 +30,11 @@
 </template>
 
 <script>
+// this is demo file for submit form in modal
 import {mapState} from 'vuex';
 
 export default {
-  name:'BaseModalWrap',
+  name:'DemoModal',
   data:function(){
     return ({
       formGroupCreate:{

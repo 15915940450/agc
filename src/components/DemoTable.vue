@@ -67,10 +67,9 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
-  name:'BaseTableWrap',
+  name:'DemoTable',
   data:function(){
     return {
       center:'center',
