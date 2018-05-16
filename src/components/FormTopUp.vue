@@ -28,7 +28,9 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()" :loading="loading">确 定</el-button>
+        <a :href="payurl" target="_blank" @click="handleComfirm()">
+          <el-button type="primary">确 定</el-button>
+        </a>
       </span>
     </el-dialog>
   </div>
@@ -40,13 +42,11 @@ import {mapState} from 'vuex';
 export default {
   name:'FormTopUp',
   data:function(){
-    // console.log(JSON.stringify((this.$store.state.modalStore)));
     return ({
       formTopUp:{
         batteryNum:1,
         payType:'1'
       },
-      loading:false,
 
       formLabelWidth:'80px'
     });
@@ -62,6 +62,25 @@ export default {
     },
     title:function(){
       return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
+    },
+    payurl:function(){
+      var payurl='';
+      var objSendData={
+        phone:''+window.localStorage.agentphone,
+        type:1,
+        payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
+        amount:window.Number(this.amount),
+        batteryNum:window.Number(this.formTopUp.batteryNum),
+        status:1
+      };
+      //stringify, then encodeURIComponent
+      var yap=window.encodeURIComponent(JSON.stringify(objSendData));
+      if(this.formTopUp.payType==='1'){
+        payurl=window.encodeURI('/pay_ali.html?yap='+yap);
+      }else{
+        payurl=window.encodeURI('/pay_wx.html?yap='+yap);
+      }
+      return (payurl);
     }
   },
   watch:{
@@ -75,54 +94,17 @@ export default {
   methods:{
     handleCancel:function(){
       var vueThis=this;
-      // vueThis.$refs[refName].resetFields();
       vueThis.formTopUp.batteryNum=1;
       vueThis.formTopUp.payType='1';
       vueThis.$store.commit('hideTopUp');
     },
-    topUp:function(sendData){
-      // 充值操作
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.tradeRecharge,function(objRps){
-        var ecYap=window.encodeURIComponent(JSON.stringify({
-          amount:window.Number(vueThis.amount), //pay
-          batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-          tradeId:''+objRps.result.tradeId, //pay
-          qrCode:objRps.result.qrCode //pay
-        }));
-        //跳往支付页面(监听充值状态)，显示是否成功
-        vueThis.$store.commit('hideTopUp');
-        vueThis.$store.commit('showStatusTopUp');
-        //保存链接到存贮
-        var payurl='';
-
-        //pay=>qrCode
-        if(vueThis.formTopUp.payType==='1'){
-          // 支付宝
-          payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
-        }else{
-          payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
-        }
-        window.sessionStorage.setItem('payurl',payurl);
-        window.open(payurl);
-      },{
-        objSendData:sendData
-      });
-    },
     handleComfirm:function(){
       var vueThis=this;
-
-      var yap={
-        phone:''+window.localStorage.agentphone,
-        type:1,
-        payType:window.Number(vueThis.formTopUp.payType),  //支付类型 1支付宝，2微信
-        amount:window.Number(vueThis.amount), //pay
-        batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-        status:1
-      };
-
-      vueThis.topUp(yap);
-      vueThis.loading=true;
+      //跳往支付页面(监听充值状态)，显示是否成功
+      vueThis.$store.commit('hideTopUp');
+      vueThis.$store.commit('showStatusTopUp');
+      //set item payurl
+      window.sessionStorage.setItem('payurl',vueThis.payurl);
     }
   }
 };

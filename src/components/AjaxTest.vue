@@ -4,20 +4,6 @@
   </div>
 </template>
 <script>
-var a=['yya','yyb','yyc'];  //++>yya5
-var start=5;
-var b=a.map(function(v){
-  var result='';
-  result=v.replace(/\w+/gi,function(m){
-    return (m+start);
-  });
-  start++;
-  return result;
-});
-
-console.log(b);
-
-
 import {mapState} from 'vuex';
 
 export default {
@@ -50,10 +36,6 @@ export default {
   },
   methods: {
     fetchData:function(){
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
-        console.log(objRps);
-      });
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
