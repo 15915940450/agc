@@ -75,11 +75,20 @@ export default {
       };
       //stringify, then encodeURIComponent
       var yap=window.encodeURIComponent(JSON.stringify(objSendData));
+
       if(this.formTopUp.payType==='1'){
         payurl=window.encodeURI('/pay_ali.html?yap='+yap);
       }else{
         payurl=window.encodeURI('/pay_wx.html?yap='+yap);
       }
+      /*==payurl
+      /pay_ali.html?yap=%257B%2522phone%2522%253A%252215915900000%2522%252C%2522type%2522%253A1%252C%2522payType%2522%253A1%252C%2522amount%2522%253A0.5%252C%2522batteryNum%2522%253A1%252C%2522status%2522%253A1%257D
+      */
+      if(window.location.hostname==='localhost'){
+        // http://localhost/agc/dist/pay_ali.html
+        payurl='http://localhost/agc/dist'+payurl;
+      }
+
       return (payurl);
     }
   },
