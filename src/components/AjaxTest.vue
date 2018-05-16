@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="ajax_test">
-    zyut mong dik siu jung.lau da wa
+    <div class="test">leon lai</div>
   </div>
 </template>
 <script>
@@ -70,4 +70,20 @@ export default {
   }
 };
 </script>
-<style lang="css" scoped></style>
+<style lang="css">
+/*scope*/
+@keyframes thilina{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(90deg);
+  }
+}
+  .test{
+    border: 2px solid violet;
+    width: 90px;
+    height: 60px;
+    animation: thilina 1.2s ease-out infinite alternate;
+  }
+</style>
