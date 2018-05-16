@@ -28,7 +28,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormRefund',
@@ -47,7 +46,11 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(this.formRefund.batteryNum));
+      var num=this.formRefund.batteryNum;
+      if(num===undefined){
+        num=0;
+      }
+      return (window.Number(this.modalStore.batteryAmount) * window.Number(num));
     },
     max:function(){
       return Math.floor(this.refundableDeposit/this.modalStore.batteryAmount);
@@ -73,25 +76,16 @@ export default {
       var vueThis=this;
       vueThis.loading=true;
       var sendRefund={
-        phone:''+window.localStorage.agentphone,
         type:2,
         batteryNum:window.Number(vueThis.formRefund.batteryNum), //pay
         amount:window.Number(vueThis.amount), //pay
         status:3
       };
-      ajaxs.imPostJson(urls.refund,sendRefund,function(objRps){
-        vueThis.loading=false;
-        if(objRps.code===1000){
-          vueThis.$store.commit('hideRefund');
-          vueThis.$store.commit('showStatusRefund');
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.tradeRefund,function(){
+        vueThis.$store.commit('hideRefund');
+        vueThis.$store.commit('showStatusRefund');
+      },{
+        objSendData:sendRefund
       });
     }
   }

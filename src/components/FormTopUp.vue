@@ -36,7 +36,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormTopUp',
@@ -55,7 +54,11 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(this.formTopUp.batteryNum));
+      var num=this.formTopUp.batteryNum;
+      if(num===undefined){
+        num=0;
+      }
+      return (window.Number(this.modalStore.batteryAmount) * window.Number(num));
     },
     title:function(){
       return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
@@ -80,39 +83,30 @@ export default {
     topUp:function(sendData){
       // 充值操作
       var vueThis=this;
-      ajaxs.imPostJson(urls.topUp,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          var ecYap=window.encodeURIComponent(JSON.stringify({
-            amount:window.Number(vueThis.amount), //pay
-            batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
-            tradeId:''+objRps.result.tradeId, //pay
-            qrCode:objRps.result.qrCode //pay
-          }));
-          //跳往支付页面(监听充值状态)，显示是否成功
-          vueThis.$store.commit('hideTopUp');
-          vueThis.$store.commit('showStatusTopUp');
-          //保存链接到存贮
-          var payurl='';
+      vueThis.$rqs(vueThis.$yApi.tradeRecharge,function(objRps){
+        var ecYap=window.encodeURIComponent(JSON.stringify({
+          amount:window.Number(vueThis.amount), //pay
+          batteryNum:window.Number(vueThis.formTopUp.batteryNum), //pay
+          tradeId:''+objRps.result.tradeId, //pay
+          qrCode:objRps.result.qrCode //pay
+        }));
+        //跳往支付页面(监听充值状态)，显示是否成功
+        vueThis.$store.commit('hideTopUp');
+        vueThis.$store.commit('showStatusTopUp');
+        //保存链接到存贮
+        var payurl='';
 
-          //pay=>qrCode
-          if(vueThis.formTopUp.payType==='1'){
-            // 支付宝
-            payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
-          }else{
-            payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
-          }
-          window.sessionStorage.setItem('payurl',payurl);
-          window.open(payurl);
+        //pay=>qrCode
+        if(vueThis.formTopUp.payType==='1'){
+          // 支付宝
+          payurl=window.encodeURI('/pay_ali.html?yap='+ecYap);
         }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
+          payurl=window.encodeURI('/pay_wx.html?yap='+ecYap);
         }
-        vueThis.loading=false;
+        window.sessionStorage.setItem('payurl',payurl);
+        window.open(payurl);
+      },{
+        objSendData:sendData
       });
     },
     handleComfirm:function(){
