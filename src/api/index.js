@@ -118,7 +118,7 @@ export default function(urlMethod,success,paramSettings){
     settings.objSendData.phone=window.localStorage.agentphone;
   }
   if(method==='GET'){
-    url=url+'?'+_.serialize2querystring(settings.objSendData);
+    url=url+'?now='+(new Date().getTime())+'&'+_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';
   }
   if(method==='POSTform'){
