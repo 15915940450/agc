@@ -50,7 +50,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 import StatusEditPW from './StatusEditPW.vue';
 
 export default {
@@ -127,27 +126,15 @@ export default {
         if(valid){
           vueThis.loading=true;
           var sendData={
-            phone:window.localStorage.agentphone,
             oldPassword:vueThis.imPW.oldPassword,
             newPassword:vueThis.imPW.newPassword
           };
-
-          ajaxs.imPostForm(urls.editPW,sendData,function(objRps){
-            // console.log(objRps);
-            // v-focus
-            if(objRps.code===1000){
-              //修改成功，回到登录页面
-              vueThis.msg='密码修改成功，请重新登录！';
-              vueThis.$store.commit('showStatusEditPW');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
-            vueThis.loading=false;
+          vueThis.$rqs(vueThis.$yApi.userEditPassword,function(){
+            //修改成功，回到登录页面
+            vueThis.msg='密码修改成功，请重新登录！';
+            vueThis.$store.commit('showStatusEditPW');
+          },{
+            objSendData:sendData
           });
         }
       });

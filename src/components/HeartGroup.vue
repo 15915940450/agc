@@ -38,7 +38,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 import FormGroupCreate from './FormGroupCreate.vue';
 import StatusGroupCreate from './StatusGroupCreate.vue';
 import FormGroupSet from './FormGroupSet.vue';
@@ -83,24 +82,14 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.localStorage.agentphone,
         pageNum:vueThis.pageNum,
-        pageSize:urls.pageSize
+        pageSize:vueThis.$yApi.defaultPS
       };
-      //请求地址
-      ajaxs.imPostJson(urls.groupList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.total=objRps.result.total;
-          vueThis.group=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.groupList,function(objRps){
+        vueThis.total=objRps.result.total;
+        vueThis.group=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     groupCreate:function(){
