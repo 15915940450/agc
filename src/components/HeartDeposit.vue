@@ -151,7 +151,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 import FormTopUp from './FormTopUp.vue';
 import StatusTopUp from './StatusTopUp.vue';
 import FormRefund from './FormRefund.vue';
@@ -174,7 +173,6 @@ export default {
       eyenameRefund:'eye',
 
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1),
-      // currentPage:,
       statusZHType:['','充值','退款'], //押金类型 1充值，2退款
       statusZH:['','充值待确认','充值成功','退款待审核','拒绝退款','待退款','已退款','充值失败','审核拒绝退款'] //1充值待确认,2充值成功,3退款待审核,4拒绝退款, 5待退款,6已退款,7充值失败,8审核拒绝退款
     };
@@ -221,45 +219,24 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.localStorage.agentphone,
         pageNum:vueThis.pageNum,
-        pageSize:urls.pageSize
+        pageSize:vueThis.$yApi.defaultPS
       };
-      ajaxs.imPostForm(urls.depositList,sendData,function(objRps){
-        if(objRps.code===1000){
-          vueThis.total=objRps.result.total;
-          vueThis.deposit=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.depositList,function(objRps){
+        vueThis.total=objRps.result.total;
+        vueThis.deposit=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     fetchDataCard:function(){
       var vueThis=this;
-      var sendData={
-        phone:''+window.localStorage.agentphone
-      };
-      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
-        if(objRps.code===1000){
-          vueThis.card.availableDeposite=objRps.result.availableDeposite;
-          vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
-          vueThis.card.availableBattery=objRps.result.availableBattery;
-          vueThis.card.usedBattery=objRps.result.usedBattery;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });          
-        }
+      vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
+        vueThis.card.availableDeposite=objRps.result.availableDeposite;
+        vueThis.card.refundableDeposit=objRps.result.refundableDeposit;
+        vueThis.card.availableBattery=objRps.result.availableBattery;
+        vueThis.card.usedBattery=objRps.result.usedBattery;
       });
-
     },
     formatter:function(row, column, cellValue){
       // console.log(JSON.stringify(column));
