@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import {urls,ajaxs} from '../api/urls.js'; //引入api(ajax)
 import {mapState} from 'vuex';
 
 export default {
@@ -44,20 +43,11 @@ export default {
       var sendData={
         phone:vueThis.phone
       };
-      ajaxs.imPostJson(urls.userUnbind,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.$store.commit('hideUserUnbind');
-          vueThis.$store.commit('showBaseStatus');
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
-        vueThis.loading=false;
+      vueThis.$rqs(vueThis.$yApi.userUnbind,function(){
+        vueThis.$store.commit('hideUserUnbind');
+        vueThis.$store.commit('showBaseStatus');
+      },{
+        objSendData:sendData
       });
     }
   }
