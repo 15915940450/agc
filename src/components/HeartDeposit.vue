@@ -136,7 +136,7 @@
     </div>
     <div v-if="!deposit.length" class="empty_deposit">
       <h3 class="title">我的押金</h3>
-      <img src="../assets/empty_deposit.png" />
+      <img src="../assets/deposit_empty.jpeg" />
       <p>您还没有押金哦！</p>
       <el-button type="primary" size="small" @click="handleTopUp()">充值</el-button>
     </div>
