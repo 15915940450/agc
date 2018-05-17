@@ -43,7 +43,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormEVin',
@@ -76,23 +75,13 @@ export default {
     fetchEVlist:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.localStorage.agentphone,
         pageNum:1,
         pageSize:96900000
       };
-      //请求地址
-      ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.optionsEVs=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.scooterList,function(objRps){
+        vueThis.optionsEVs=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleCancel:function(refName){
@@ -113,21 +102,12 @@ export default {
           };
           // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
-          ajaxs.imPostJson(urls.EVin,sendData,function(objRps){
-            // console.log(objRps);
-            vueThis.loading=false;
-            if(objRps.code===1000){
-              vueThis.$refs[refName].resetFields();
-              vueThis.$store.commit('hideEVin');
-              vueThis.$store.commit('showBaseStatus');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.scooterActive,function(){
+            vueThis.$refs[refName].resetFields();
+            vueThis.$store.commit('hideEVin');
+            vueThis.$store.commit('showBaseStatus');
+          },{
+            objSendData:sendData
           });
         }
       });
