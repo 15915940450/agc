@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="ajax_test">
-    <div class="test">leon lai</div>
+    <div class="test">LEON LAI</div>
   </div>
 </template>
 <script>

@@ -33,7 +33,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormEVbind',
@@ -73,20 +72,12 @@ export default {
       //请求地址
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
-          ajaxs.imPostJson(urls.EVbind,sendData,function(objRps){
-            // console.log(objRps);
-            if(objRps.code===1000){
-              vueThis.$refs[refName].resetFields();
-              vueThis.$store.commit('hideEVbind');
-              vueThis.$store.commit('showStatusEVoperation');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.scooterBind,function(){
+            vueThis.$refs[refName].resetFields();
+            vueThis.$store.commit('hideEVbind');
+            vueThis.$store.commit('showStatusEVoperation');
+          },{
+            objSendData:sendData
           });
         }
       });
@@ -102,19 +93,10 @@ export default {
         pageNum:1,
         pageSize:96900000
       };
-      //请求地址
-      ajaxs.imGet(urls.userList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.optionsUsers=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+        vueThis.optionsUsers=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     }
   },  //methods
