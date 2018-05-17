@@ -27,7 +27,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormNewUser',
@@ -64,20 +63,11 @@ export default {
             groupCode:vueThis.formNewUser.groupCode
           };
           vueThis.loading=true;
-          ajaxs.imPostJson(urls.newUser,sendData,function(objRps){
-            // console.log(objRps);
-            vueThis.loading=false;
-            if(objRps.code===1000){
-              vueThis.$store.commit('hideNewUser');
-              vueThis.$store.commit('showBaseStatus');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.userCreate,function(){
+            vueThis.$store.commit('hideNewUser');
+            vueThis.$store.commit('showBaseStatus');
+          },{
+            objSendData:sendData
           });
         }
       });
