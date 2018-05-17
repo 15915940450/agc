@@ -23,7 +23,6 @@
 
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.depositScheme" multiple placeholder="请选择">
-              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_depositListScheme"
                 :key="item.id"
@@ -57,7 +56,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormGroupSet',
@@ -119,33 +117,24 @@ export default {
         pageNum:1,
         pageSize:969
       };
-      ajaxs.imPostJson(urls[type],sendData,function(objRps){
-        if(objRps.code===1000){
-          if(type==='depositListScheme'){
-            vueThis.options_depositListScheme=objRps.result.list;
-          }
-          if(type==='packageListScheme'){
-            vueThis.options_packageListScheme=objRps.result.list;
-          }
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        if(type==='depositListScheme'){
+          vueThis.options_depositListScheme=objRps.result.list;
         }
+        if(type==='packageListScheme'){
+          vueThis.options_packageListScheme=objRps.result.list;
+        }
+      },{
+        objSendData:sendData
       });
     },
     handleCancel:function(){
-      // console.log(JSON.stringify(this.formGroupSet));  // resetFields,clearValidate
       this.$refs['formGroupSet'].resetFields();
       this.$store.commit('hideGroupSet');
     },
     handleComfirm:function(refName){
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
-        // console.log(valid);
         if(valid){
           var sendData={
             name:vueThis.formGroupSet.name,
@@ -153,25 +142,14 @@ export default {
             packageScheme:vueThis.formGroupSet.packageScheme,
             agentId:window.localStorage.agentid,
             cityCode:0,
-            // canRefund:window.Number(vueThis.formGroupSet.canRefund),
             groupCode:vueThis.formGroupSet.groupCode
           };
-          // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
-          ajaxs.imPostJson(urls.groupSet,sendData,function(objRps){
-            // console.log(objRps);
-            vueThis.loading=false;
-            if(objRps.code===1000){
-              vueThis.$store.commit('hideGroupSet');
-              vueThis.$store.commit('showBaseStatus');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.groupSet,function(){
+            vueThis.$store.commit('hideGroupSet');
+            vueThis.$store.commit('showBaseStatus');
+          },{
+            objSendData:sendData
           });
         }
       });
