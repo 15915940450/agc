@@ -65,7 +65,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormGroupCreate',
@@ -120,18 +119,8 @@ export default {
   methods:{
     fetchCityList:function(){
       var vueThis=this;
-      ajaxs.imGet(urls.cityList,{},function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.options_cityListScheme=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
+        vueThis.options_cityListScheme=objRps.result.list;
       });
     },
     fetchOptionsScheme:function(type){
@@ -144,22 +133,15 @@ export default {
         pageNum:1,
         pageSize:969
       };
-      ajaxs.imPostJson(urls[type],sendData,function(objRps){
-        if(objRps.code===1000){
-          if(type==='depositListScheme'){
-            vueThis.options_depositListScheme=objRps.result.list;
-          }
-          if(type==='packageListScheme'){
-            vueThis.options_packageListScheme=objRps.result.list;
-          }
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        if(type==='depositListScheme'){
+          vueThis.options_depositListScheme=objRps.result.list;
         }
+        if(type==='packageListScheme'){
+          vueThis.options_packageListScheme=objRps.result.list;
+        }
+      },{
+        objSendData:sendData
       });
     },
     handleCancel:function(refName){
