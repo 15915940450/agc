@@ -110,12 +110,9 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 import FormEVbind from './FormEVbind.vue';
 import StatusEVoperation from './StatusEVoperation.vue';
 import FormEVunbind from './FormEVunbind.vue';
-
-// /scooter/list
 
 export default {
   name:'HeartEVs',
@@ -180,47 +177,30 @@ export default {
       var sendData={
         advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
-        pageSize:urls.pageSize
+        pageSize:vueThis.$yApi.defaultPS
       };
-      //请求地址
-      ajaxs.imGet(urls.evsList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.total=objRps.result.total;
-          vueThis.evs=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.scooterList,function(objRps){
+        vueThis.total=objRps.result.total;
+        vueThis.evs=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/evs/'+val);
     },
-    handleEVoperation:function(scope,url){
+    handleEVoperation:function(scope,type){
       var vueThis=this;
       // console.log(scope.row.sid);  需要传sid
       var sendData={
         scooterSid:scope.row.sid
       };
-      ajaxs.imPostJson(urls[url],sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.msg=objRps.msg;
-          vueThis.$store.commit('showStatusEVoperation');
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        vueThis.msg=objRps.msg;
+        vueThis.$store.commit('showStatusEVoperation');
+      },{
+        objSendData:sendData
       });
     },
     handleEVunbind:function(scope){
