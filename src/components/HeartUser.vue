@@ -101,7 +101,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 import FormNewUser from './FormNewUser.vue';
 import BaseStatus from './BaseStatus.vue';
 import FormUnbindUser from './FormUnbindUser.vue';
@@ -160,22 +159,13 @@ export default {
       var sendData={
         advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
-        pageSize:urls.pageSize
+        pageSize:vueThis.$yApi.defaultPS
       };
-      //请求地址
-      ajaxs.imGet(urls.userList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.total=objRps.result.total;
-          vueThis.users=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+        vueThis.total=objRps.result.total;
+        vueThis.users=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleCurrentChange:function(val){
