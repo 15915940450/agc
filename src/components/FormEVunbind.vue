@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import {urls,ajaxs} from '../api/urls.js'; //引入api(ajax)
 import {mapState} from 'vuex';
 
 export default {
@@ -38,27 +37,16 @@ export default {
       this.$store.commit('hideEVunbind');
     },
     handleComfirm:function(){
-      // console.log('comfirm');
       var vueThis=this;
       vueThis.loading=true;
       var sendData={
         scooterSid:vueThis.scooterSid
       };
-      // console.log(sendData);
-      ajaxs.imPostJson(urls.EVunbind,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.$store.commit('hideEVunbind');
-          vueThis.$store.commit('showStatusEVoperation');
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
-        vueThis.loading=false;
+      vueThis.$rqs(vueThis.$yApi.scooterUnbind,function(){
+        vueThis.$store.commit('hideEVunbind');
+        vueThis.$store.commit('showStatusEVoperation');
+      },{
+        objSendData:sendData
       });
     }
   }
