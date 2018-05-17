@@ -67,7 +67,6 @@
 
 <script>
 import {mapState} from 'vuex';
-import {urls,ajaxs} from '../api/urls.js';
 
 export default {
   name:'FormSetUser',
@@ -144,20 +143,8 @@ export default {
   methods:{
     fetchBaseInfo:function(){
       var vueThis=this;
-      var sendData={
-        phone:''+window.localStorage.agentphone
-      };
-      ajaxs.imPostForm(urls.baseInfo,sendData,function(objRps){
-        if(objRps.code===1000){
-          vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
       });
     },
     fetchGroupList:function(){
@@ -170,18 +157,10 @@ export default {
         pageNum:1,
         pageSize:969
       };
-      ajaxs.imGet(urls.groupList,sendData,function(objRps){
-        // console.log(JSON.stringify(objRps));
-        if(objRps.code===1000){
-          vueThis.optionsGroups=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.groupList,function(objRps){
+        vueThis.optionsGroups=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     fetchOptionsScheme:function(type,done){
@@ -194,25 +173,16 @@ export default {
         pageNum:1,
         pageSize:96900000
       };
-      ajaxs.imGet(urls[type],sendData,function(objRps){
-        // console.log(JSON.stringify(objRps));
-        if(objRps.code===1000){
-          if(type==='depositListScheme'){
-            vueThis.options_depositListScheme=objRps.result.list;
-            // console.log(JSON.stringify(vueThis.options_depositListScheme));
-          }
-          if(type==='packageListScheme'){
-            vueThis.options_packageListScheme=objRps.result.list;
-          }
-          done();
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        if(type==='depositListScheme'){
+          vueThis.options_depositListScheme=objRps.result.list;
         }
+        if(type==='packageListScheme'){
+          vueThis.options_packageListScheme=objRps.result.list;
+        }
+        done();
+      },{
+        objSendData:sendData
       });
     },
     handleCancel:function(refName){
@@ -231,23 +201,12 @@ export default {
             scooterSNs:vueThis.formSetUser.scooterSNs,
             phone:vueThis.formSetUser.phone
           };
-          // console.log(JSON.stringify(sendData));
           vueThis.loading=true;
-          ajaxs.imPostJson(urls.setUser,sendData,function(objRps){
-            // console.log(objRps);
-            // return ;
-            vueThis.loading=false;
-            if(objRps.code===1000){
-              vueThis.$store.commit('hideSetUser');
-              vueThis.$store.commit('showBaseStatus');
-            }else{
-              vueThis.$notify.error({
-                title: '提示',
-                message:objRps.msg,
-                offset: 50,
-                duration: 5000  //0
-              });
-            }
+          vueThis.$rqs(vueThis.$yApi.userSet,function(){
+            vueThis.$store.commit('hideSetUser');
+            vueThis.$store.commit('showBaseStatus');
+          },{
+            objSendData:sendData
           });
         }
       });
@@ -255,23 +214,13 @@ export default {
     fetchEVlist:function(){
       var vueThis=this;
       var sendData={
-        phone:''+window.localStorage.agentphone,
         pageNum:1,
         pageSize:96900000
       };
-      //请求地址
-      ajaxs.imPostForm(urls.evsList,sendData,function(objRps){
-        // console.log(objRps);
-        if(objRps.code===1000){
-          vueThis.optionsEVs=objRps.result.list;
-        }else{
-          vueThis.$notify.error({
-            title: '提示',
-            message:objRps.msg,
-            offset: 50,
-            duration: 5000  //0
-          });
-        }
+      vueThis.$rqs(vueThis.$yApi.scooterList,function(objRps){
+        vueThis.optionsEVs=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleGroupSelectChange:function(){
