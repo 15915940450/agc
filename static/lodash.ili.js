@@ -6971,6 +6971,18 @@
     function logErr(err){
       return console.error(err);
     }
+    //12.findIndexsFuzzy
+    function findIndexsFuzzy(arr,elesStrv){
+      var result=[];
+      var strRe=elesStrv.split('').join('(.)*');
+      var re=new RegExp(strRe,'i');
+      arr.forEach(function(v,i){
+        if(re.test(v)){
+          result.push(i);
+        }
+      });
+      return result;
+    }
     //====================================ili()
 
     /**
@@ -16622,6 +16634,7 @@
     lodash.findIndexVague = findIndexVague;
     
     lodash.logErr = logErr;
+    lodash.findIndexsFuzzy = findIndexsFuzzy;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
