@@ -4,13 +4,6 @@
   </div>
 </template>
 <script>
-var arr=['abz','aby','acz','zac','akkszss','uuzknda','uuzkndakasjdnzfdsf'];
-
-var elesStrv='az';
-
-var result=_.findIndexsFuzzy(arr,elesStrv);
-console.log(result);
-
 import {mapState} from 'vuex';
 
 export default {
