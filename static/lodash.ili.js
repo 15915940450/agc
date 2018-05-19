@@ -1,4 +1,5 @@
 /**
+http://localhost/agc/static/lodash.ili.js
  * @license
  * Lodash <https://lodash.com/>
  * Copyright JS Foundation and other contributors <https://js.foundation/>
@@ -6968,8 +6969,21 @@
       return indexVague;
     }
     //11.logErr
-    function logErr(err){
-      return console.error(err);
+    function logErr(err,varName){
+      varName=varName || '-log which variable?';
+      var strErr='lodash-69**';
+      if(typeof(err)==="object"){
+        try{
+          strErr='[object '+varName+']:'+JSON.stringify(err);
+        }catch(errInLodash){
+          console.error(errInLodash);
+        }
+      }else{
+        strErr='<'+typeof(err)+varName+'>:::'+err;
+      }
+
+
+      return console.log(strErr);
     }
     //12.findIndexsFuzzy
     function findIndexsFuzzy(arr,elesStrv){
