@@ -10,8 +10,7 @@
       <div class="modal_wrap-body">
         <el-form :model="formRefund">
           <el-form-item label="退还数量" :label-width="formLabelWidth">
-            <!-- <el-input size="small" v-model="formRefund.batteryNum" auto-complete="off"></el-input> -->
-            <el-input-number v-model="formRefund.batteryNum" :min="1" :max="max"></el-input-number>
+            <el-input-number v-model="formRefund.batteryNum" :min="1" :max="max" @input.native="handleIN"></el-input-number>
           </el-form-item>
           <el-form-item label="退还金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount.toFixed(2)}}</strong>元
@@ -87,6 +86,9 @@ export default {
       },{
         objSendData:sendRefund
       });
+    },
+    handleIN:function(ev){
+      this.formRefund.batteryNum=ev.target.value;
     }
   }
 };
