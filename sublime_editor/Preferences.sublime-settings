@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Theme - Phoenix/Color Scheme/Phoenix Dark Yellow.tmTheme",
+	"color_scheme": "Packages/ayu/ayu-dark.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
