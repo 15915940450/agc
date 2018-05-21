@@ -174,7 +174,7 @@ export default {
 
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1),
       statusZHType:['','充值','退款'], //押金类型 1充值，2退款
-      statusZH:['','充值待确认','充值成功','退款待审核','拒绝退款','待退款','已退款','充值失败','审核拒绝退款'] //1充值待确认,2充值成功,3退款待审核,4拒绝退款, 5待退款,6已退款,7充值失败,8审核拒绝退款
+      statusZH:['','待确认','成功','待审核','拒绝退款','待退款','已退款','失败','拒绝退款']
     };
   },
   computed:{
