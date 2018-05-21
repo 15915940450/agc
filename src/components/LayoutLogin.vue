@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="need_login">
-    <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false">
+    <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false" :top="top">
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
       <h2 class="project_name">代理商管理后台</h2>
       <!-- <input v-model.trim="formLogin.phone"> -->
@@ -26,8 +26,8 @@
           <el-checkbox v-model="formLogin.isRemember">下次自动登录</el-checkbox>
         </el-form-item>
         <!-- ajax响应后提示框 -->
-        <el-form-item class="need_login-hint_wrap">
-          <p class="need_login-hint" v-if="hintMsg">* {{hintMsg}}</p>
+        <el-form-item class="need_login-hint_wrap" v-if="hintMsg">
+          <p class="need_login-hint">* {{hintMsg}}</p>
         </el-form-item>
         <input type="submit" value="submit" class="hidden">
 
@@ -58,6 +58,7 @@ export default {
     return {
       width:'380px',
       customClass:'onelogin',
+      top:'10vh',
       sendLoginCount:sendLoginCount,
       hintMsg:'',
       loading:false,
@@ -185,6 +186,7 @@ export default {
 <style lang="css" scoped>
   .need_login .el-dialog__wrapper{
     background: #333 url(../assets/bg_login.png) no-repeat center center;
+    padding-bottom: 80px;
   }
   .login_logo{
     display: block;
@@ -219,17 +221,26 @@ export default {
     font-size: 12px;
   }
   .kefu{
-    position: fixed;
-    bottom: 20px;
-    left: 0;
     color:#FFF;
     font-size: 16px;
-    z-index: 10000;
-    width: 100%;
+    width: 600px;
+    /*border: 1px solid blue;*/
     text-align: center;
+    z-index: 5500;
+    position: absolute;
+    left:50%;
+    margin-left:-300px;
+    bottom:-90px;
+    padding-bottom: 30px;
   }
   .v_img{
     cursor: pointer;
     min-width: 50px;
+  }
+  @media screen and (min-height:800px){
+    .kefu{
+      position: fixed;
+      bottom: 0;
+    }
   }
 </style>
