@@ -12,7 +12,7 @@
 
           <el-form-item label="电池数量" :label-width="formLabelWidth">
             <!-- <el-input size="small" v-model="formTopUp.batteryNum" auto-complete="off"></el-input> -->
-            <el-input-number v-model="formTopUp.batteryNum" :min="1"></el-input-number>
+            <el-input-number v-model="formTopUp.batteryNum" :min="1" @input.native="handleIN"></el-input-number>
           </el-form-item>
           <el-form-item label="充值金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount.toFixed(2)}}</strong>元
@@ -114,6 +114,9 @@ export default {
       vueThis.$store.commit('showStatusTopUp');
       //set item payurl
       window.sessionStorage.setItem('payurl',vueThis.payurl);
+    },
+    handleIN:function(ev){
+      this.formTopUp.batteryNum=ev.target.value;
     }
   }
 };

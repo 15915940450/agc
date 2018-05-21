@@ -1,6 +1,14 @@
 <template lang="html">
   <div class="ajax_test">
     <div class="test">LL</div>
+    <div class="input_number_wrap">
+      <el-input-number
+        v-model="total"
+        @input.native="handleOninput"
+      >
+        
+      </el-input-number>
+    </div>
   </div>
 </template>
 <script>
@@ -44,6 +52,9 @@ export default {
     resetSearch:function(){
       this.search='';
       this.fetchData();
+    },
+    handleOninput:function(ev){
+      console.log(ev.target.value);
     }
   },
   created:function(){
