@@ -70,13 +70,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.im_breadcrumb{
-  background: #fff;
-  margin-left: -20px;
-  margin-right: -20px;
-  margin-top: -19px;
-  padding:20px 40px;
-}
 .a_map{
   background: #FFF;
   margin-top: 20px;

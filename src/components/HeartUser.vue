@@ -222,13 +222,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .im_breadcrumb{
-    background: #fff;
-    margin-left: -20px;
-    margin-right: -20px;
-    margin-top: -19px;
-    padding:20px 40px;
-  }
   .user_list{
     background: #FFF;
     margin-top: 20px;
@@ -239,7 +232,7 @@ export default {
     text-align: center;
     padding-bottom: 30px;
     margin-top:20px;
-    min-height: calc(100vh - 60px - 60px - 20px - 40px - 30px);
+    min-height: calc(100vh - 220px);
   }
   .empty_user .title{
     text-align: left;
