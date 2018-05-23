@@ -6997,6 +6997,19 @@ http://localhost/agc/static/lodash.ili.js
       });
       return result;
     }
+    //13.zh2length
+    function zh2length(str){
+      var result=0;
+      var re=/[\u4e00-\u9fa5]/;
+      for(var i=0;i<str.length;i++){
+        if(re.test(str.charAt(i))){
+          result+=2;
+        }else{
+          result++;
+        }
+      }
+      return result;
+    }
     //====================================ili()
 
     /**
@@ -16649,6 +16662,7 @@ http://localhost/agc/static/lodash.ili.js
     
     lodash.logErr = logErr;
     lodash.findIndexsFuzzy = findIndexsFuzzy;
+    lodash.zh2length = zh2length;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
