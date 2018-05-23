@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/ayu/ayu-light.tmTheme",
+	"color_scheme": "Packages/ayu/ayu-mirage.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
