@@ -13,6 +13,45 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @media only screen and (max-width:767px){.hidden-xs-only{display:none!important}}@media only screen and (min-width:768px){.hidden-sm-and-up{display:none!important}}@media only screen and (min-width:768px) and (max-width:991px){.hidden-sm-only{display:none!important}}@media only screen and (max-width:991px){.hidden-sm-and-down{display:none!important}}@media only screen and (min-width:992px){.hidden-md-and-up{display:none!important}}@media only screen and (min-width:992px) and (max-width:1199px){.hidden-md-only{display:none!important}}@media only screen and (max-width:1199px){.hidden-md-and-down{display:none!important}}@media only screen and (min-width:1200px){.hidden-lg-and-up{display:none!important}}@media only screen and (min-width:1200px) and (max-width:1919px){.hidden-lg-only{display:none!important}}@media only screen and (max-width:1919px){.hidden-lg-and-down{display:none!important}}@media only screen and (min-width:1920px){.hidden-xl-only{display:none!important}}
 
 //===================im start
+html,body{
+  margin:0;
+  padding:0;
+  background:#F2F2F2;
+}
+html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,figure,footer,form,input,select,textarea,ul,ol,li{
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  font-weight:normal;
+}
+.main_title{
+  font-size: 18px;
+  font-weight: 500;
+}
+//内容区二级标题
+.title{
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+  line-height: 50px;
+  height: 50px;
+  padding: 0 20px;
+  margin: 0;
+}
+// 页脚
+.copyright{
+  position: absolute;
+  bottom:0px;
+  left: 0;
+  width: 100%;
+}
+.copyright p{
+  color: #666;
+  font-size: 12px;
+  text-align:center;
+  font-weight:300;
+}
 //LayoutTopBar下拉菜单 宽度
 .el-menu--popup{
   min-width: 100px;
@@ -45,18 +84,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   background:rgba(237,240,245,1);
   min-height:calc(100vh - 62px);
 }
-// 页脚
-.copyright{
-  position: absolute;
-  bottom:0px;
-  left: 0;
-  width: 100%;
-}
-.copyright p{
-  color: #666;
-  font-size: 12px;
-  text-align:center;
-}
+
 //登录
 .onelogin{
   border-radius: 10px;
@@ -153,16 +181,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   // background: red;
   display: none;
 }
-//内容区二级标题
-.title{
-  font-size: 14px;
-  color: #000;
-  font-weight: 500;
-  line-height: 50px;
-  height: 50px;
-  padding: 0 20px;
-  margin: 0;
-}
+
 // 电动车
 .e_v .el-input-group__prepend{
   width:33px !important;

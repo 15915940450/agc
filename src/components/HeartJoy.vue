@@ -5,7 +5,7 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_joy-head" src="../assets/default_head.png" width="40" height="40" />
-          <span>{{agent.name}}， E换电祝您开心每一天！</span>
+          <span class="main_title">{{agent.name}}， E换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">
@@ -117,12 +117,12 @@ export default {
   data:function(){
     return ({
       availableDeposite:'--',
-      userNum:'加载中...',
-      freeDays:'加载中...',
-      scooterNum:'加载中...',
-      refundableDeposit:'加载中...',
-      availableBattery:'加载中...',
-      usedBattery:'加载中...'
+      userNum:'--',
+      freeDays:'--',
+      scooterNum:'--',
+      refundableDeposit:'--',
+      availableBattery:'--',
+      usedBattery:'--'
     });
   },
   computed:{
