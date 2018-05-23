@@ -242,7 +242,7 @@ export default {
     background: #FFF;
     text-align: center;
     padding-bottom: 30px;
-    min-height: calc(100vh - 60px - 60px - 30px);
+    min-height: calc(100vh - 170px);
   }
   .empty_evs .title{
     text-align: left;

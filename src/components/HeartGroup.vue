@@ -116,7 +116,7 @@ export default {
 <style lang="css" scoped>
   .component_group{
     background: #FFF;
-    min-height: calc(100vh - 60px - 20px - 50px);
+    min-height: calc(100vh - 140px);
   }
   .group-list{
     padding:10px 20px;

@@ -266,6 +266,6 @@ export default {
   background: #FFF;
   margin: 10px 0 0 0;
   padding: 20px;
-  min-height: calc(100vh - 60px - 90px - 40px - 30px - 50px);
+  min-height: calc(100vh - 280px);
 }
 </style>
