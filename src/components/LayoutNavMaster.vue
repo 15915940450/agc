@@ -90,7 +90,7 @@ export default {
   #im_nav{}
   #im_nav li{
     height: 50px;
-    /* border-bottom: 1px solid #90DEFF; */
+    list-style: none;
   }
 
   #im_nav li a{
