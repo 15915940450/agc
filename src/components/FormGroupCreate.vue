@@ -15,8 +15,8 @@
           <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.canRefund" placeholder="请选择">
               <!-- 0不可退，1可退 -->
-              <el-option v-if="grouptype!==0" label="可退押金" value="1"></el-option>
-              <el-option v-if="grouptype!==1" label="不可退押金" value="0"></el-option>
+              <el-option v-if="grouptype!==0" label="线上交押金" value="1"></el-option>
+              <el-option v-if="grouptype!==1" label="线下交押金" value="0"></el-option>
             </el-select>
           </el-form-item>
 
