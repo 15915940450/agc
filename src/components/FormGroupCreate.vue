@@ -53,6 +53,21 @@
               </el-option>
             </el-select>
           </el-form-item>
+
+
+          <el-form-item prop="freeDayEnable" label="自动免费" :label-width="formLabelWidth">
+            <el-switch v-model="formGroupCreate.freeDayEnable" active-text="自动" inactive-color="#999">
+              
+            </el-switch>
+          </el-form-item>
+          <el-form-item prop="freeDay" :label-width="formLabelWidth">
+            新用户自动免费
+            <el-input-number v-model="formGroupCreate.freeDay" :disabled="!formGroupCreate.freeDayEnable" size="mini" :min="0" :max="100">
+              
+            </el-input-number>
+            天
+          </el-form-item>
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -76,6 +91,8 @@ export default {
         cityCode:'',
         depositScheme:[],
         packageScheme:[],
+        freeDayEnable:false,
+        freeDay:0,
         agentId:window.localStorage.agentid
       },
       rules:{
@@ -107,7 +124,14 @@ export default {
     });
   },
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    computedFreeDay:function(){
+      var computedFreeDay=0;
+      if(this.formGroupCreate.freeDayEnable===true){
+        computedFreeDay=this.formGroupCreate.freeDay;
+      }
+      return computedFreeDay;
+    }
   },
   watch:{
     'modalStore.groupCreate':function(val){
@@ -159,6 +183,7 @@ export default {
             packageScheme:vueThis.formGroupCreate.packageScheme,
             agentId:window.localStorage.agentid,
             cityCode:vueThis.formGroupCreate.cityCode,
+            freeDay:vueThis.computedFreeDay,
             canRefund:window.Number(vueThis.formGroupCreate.canRefund)
           };
           vueThis.loading=true;
