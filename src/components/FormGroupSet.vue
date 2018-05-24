@@ -74,7 +74,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormGroupSet',
-  props:['code','name','deposits','packages','type'],
+  props:['code','name','deposits','packages','type','freeDay'],
   data:function(){
     return ({
       formGroupSet:{
@@ -127,6 +127,8 @@ export default {
         this.formGroupSet.depositScheme=this.deposits?this.deposits.map(function(v){return window.Number(v);}):[];
         this.formGroupSet.packageScheme=this.deposits?this.packages.map(function(v){return window.Number(v);}):[];
         this.formGroupSet.groupCode=this.code;
+        this.formGroupSet.freeDayEnable=Boolean(this.freeDay);
+        this.formGroupSet.freeDay=this.freeDay;
       }
     }
   },
