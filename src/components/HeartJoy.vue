@@ -161,7 +161,7 @@ export default {
 .component_joy{
 }
 .im_joy-wrap{
-  padding: 10px;
+  padding:15px 10px;
   background: #FFF;
 }
 .im_joy{
@@ -265,7 +265,7 @@ export default {
 .joy_cards{
   background: #FFF;
   margin: 10px 0 0 0;
-  padding: 10px;
-  min-height: calc(100vh - 240px);
+  padding:15px 10px;
+  min-height: calc(100vh - 260px);
 }
 </style>

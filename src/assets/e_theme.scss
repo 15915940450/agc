@@ -25,33 +25,40 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   font-size: 14px;
   font-weight:normal;
 }
+//font
+
 .main_title{
   font-size: 18px;
   font-weight: 500;
 }
-//内容区二级标题
 .title{
   font-size: 16px;
-  color: #000;
-  font-weight: 500;
-  line-height: 50px;
-  height: 50px;
-  padding: 0 20px;
-  margin: 0;
-}
-// 页脚
-.copyright{
-  position: absolute;
-  bottom:0px;
-  left: 0;
-  width: 100%;
 }
 .copyright p{
-  color: #666;
   font-size: 12px;
-  text-align:center;
   font-weight:300;
 }
+
+
+
+//页面主内容区
+#main_wrap{
+  position: relative;
+  /*width:calc( 100% - 180px );*/
+  width:1020px;
+  padding:25px 25px 50px 25px;
+  background:rgba(237,240,245,1);
+  min-height:calc(100vh - 62px);
+}
+//breadcrumb
+.im_breadcrumb{
+  background: #fff;
+  margin-left: -25px;
+  margin-right: -25px;
+  margin-top: -25px;
+  padding:0px;
+}
+
 //LayoutTopBar下拉菜单 宽度
 .el-menu--popup{
   min-width: 100px;
@@ -68,23 +75,25 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   max-width: 180px;
   min-height:calc(100vh - 62px);
 }
-.im_breadcrumb{
-  background: #fff;
-  margin-left: -25px;
-  margin-right: -25px;
-  margin-top: -25px;
-  padding:20px 40px;
+//内容区二级标题
+h3.title{
+  color: #000;
+  font-weight: 500;
+  line-height: 50px;
+  height: 50px;
+  margin:0;
 }
-//页面主内容区
-#main_wrap{
-  position: relative;
-  /*width:calc( 100% - 180px );*/
-  width:1020px;
-  padding:25px 25px 50px 25px;
-  background:rgba(237,240,245,1);
-  min-height:calc(100vh - 62px);
+// 页脚
+.copyright{
+  position: absolute;
+  bottom:0px;
+  left: 0;
+  width: 100%;
 }
-
+.copyright p{
+  color: #666;
+  text-align:center;
+}
 //登录
 .onelogin{
   border-radius: 10px;
@@ -172,7 +181,7 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   width: 50%;
 }
 .table_wrap-pagination{
-  padding:20px;
+  /*padding:20px;*/
 }
 
 
@@ -197,11 +206,6 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
 .im-table-expand label{
   width:150px;
 }
-// 系统设置 密码
-// .form_pw input{
-//   position: relative;
-// }
-//classes
 .overtext{
   width: 100%;
   overflow: hidden;
