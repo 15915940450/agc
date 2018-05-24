@@ -1,12 +1,14 @@
 <template lang="html">
-  <div class="modal_wrap modal_wrap-empty_body">
+  <div class="modal_wrap">
     <el-dialog
       :title="title"
       :visible.sync="modalStore.statusTopUp"
       width="300px"
-      :show-close="false"
+      :show-close="true"
       :close-on-click-modal="false"
-      center>
+      center
+      >
+      <span>请在新打开的第三方支付页面完成支付</span>
 
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleComfirm()">已完成支付</el-button>
@@ -24,7 +26,7 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     title:function(){
-      return ('请在新打开的第三方支付页面完成支付');
+      return ('充值提示');
     }
   },
   methods:{
