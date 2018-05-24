@@ -47,7 +47,6 @@ export default {
         batteryNum:1,
         payType:'1'
       },
-      tradeId:'',
       numTimerCheckTrade:969,
 
       formLabelWidth:'80px'
@@ -101,7 +100,7 @@ export default {
         this.formTopUp.payType='1';
         window.clearInterval(this.numTimerCheckTrade);
       }else{
-        this.generateTradeIdThenListenTradeCheck();
+        this.listenTradeCheck();
       }
     }
   },
@@ -123,33 +122,15 @@ export default {
     handleIN:function(ev){
       this.formTopUp.batteryNum=ev.target.value;
     },
-    generateTradeIdThenListenTradeCheck:function(){
+    listenTradeCheck:function(){
       var vueThis=this;
-      var sendData={
-        phone:''+window.localStorage.agentphone,
-        type:1,
-        payType:window.Number(vueThis.formTopUp.payType),  //支付类型 1支付宝，2微信
-        amount:window.Number(vueThis.amount),
-        batteryNum:window.Number(vueThis.formTopUp.batteryNum),
-        status:1
-      };
-      vueThis.$rqs(vueThis.$yApi.tradeRecharge,function(objRps){
-        // console.log(objRps);
-        vueThis.numTimerCheckTrade=window.setInterval(function(){
-          vueThis.$rqs(vueThis.$yApi.tradeCheck,function(objCheck){
-            if(objCheck.result===2){
-              vueThis.$store.commit('hideStatusTopUp');
-              window.clearInterval(vueThis.numTimerCheckTrade);
-            }
-          },{
-            objSendData:{
-              tradeId:objRps.result.tradeId
-            }
-          });
-        },900);
-      },{
-        objSendData:sendData
-      });
+      vueThis.numTimerCheckTrade=window.setInterval(function(){
+        if(window.sessionStorage && window.sessionStorage.tradeCheck==='1'){
+          window.sessionStorage.removeItem('tradeCheck');
+          vueThis.$store.commit('hideStatusTopUp');
+          window.clearInterval(vueThis.numTimerCheckTrade);
+        }
+      },900);
     }
   }
 };
