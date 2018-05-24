@@ -95,12 +95,13 @@ export default {
   },
   watch:{
     'modalStore.statusTopUp':function(val){
+      var vueThis=this;
       if(!val){
-        this.formTopUp.batteryNum=1;
-        this.formTopUp.payType='1';
-        window.clearInterval(this.numTimerCheckTrade);
+        vueThis.formTopUp.batteryNum=1;
+        vueThis.formTopUp.payType='1';
+        window.clearInterval(vueThis.numTimerCheckTrade);
       }else{
-        this.listenTradeCheck();
+        vueThis.listenTradeCheck();
       }
     }
   },
@@ -128,7 +129,6 @@ export default {
         if(window.sessionStorage && window.sessionStorage.tradeCheck==='1'){
           window.sessionStorage.removeItem('tradeCheck');
           vueThis.$store.commit('hideStatusTopUp');
-          window.clearInterval(vueThis.numTimerCheckTrade);
         }
       },900);
     }
