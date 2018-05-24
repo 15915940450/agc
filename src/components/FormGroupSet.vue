@@ -11,6 +11,7 @@
 
       <div class="modal_wrap-body">
         <el-form :model="formGroupSet" :rules="rules" ref="formGroupSet">
+
           <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
             <el-input v-model="formGroupSet.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
           </el-form-item>
@@ -42,6 +43,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item prop="freeDayEnable" label="自动免费" :label-width="formLabelWidth">
+            <el-switch v-model="formGroupSet.freeDayEnable" active-text="自动" inactive-color="#999">
+              
+            </el-switch>
+          </el-form-item>
+
+          <el-form-item prop="freeDay" :label-width="formLabelWidth">
+            新用户自动免费
+            <el-input-number v-model="formGroupSet.freeDay" :disabled="!formGroupSet.freeDayEnable" size="mini" :min="0" :max="100">
+              
+            </el-input-number>
+            天
+          </el-form-item>
+
         </el-form>
       </div>
 
@@ -68,6 +83,8 @@ export default {
         depositScheme:[],
         packageScheme:[],
         groupCode:-1,
+        freeDayEnable:false,
+        freeDay:0,
         agentId:window.localStorage.agentid
       },
       rules:{
@@ -93,7 +110,14 @@ export default {
     });
   },
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    computedFreeDay:function(){
+      var computedFreeDay=0;
+      if(this.formGroupSet.freeDayEnable===true){
+        computedFreeDay=this.formGroupSet.freeDay;
+      }
+      return computedFreeDay;
+    }
   },
   watch:{
     'modalStore.groupSet':function(val){
@@ -142,6 +166,7 @@ export default {
             packageScheme:vueThis.formGroupSet.packageScheme,
             agentId:window.localStorage.agentid,
             cityCode:0,
+            freeDay:vueThis.computedFreeDay,
             groupCode:vueThis.formGroupSet.groupCode
           };
           vueThis.loading=true;
