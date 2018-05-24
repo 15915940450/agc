@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="modal_wrap">
     <el-dialog
-      title="激活电动车"
+      title="激活中控"
       :visible.sync="modalStore.EVin"
       width="400px"
       :show-close="false"
@@ -10,7 +10,7 @@
       <div class="modal_wrap-body">
         <el-form :model="formEVin" :rules="rules" ref="formEVin">
 
-          <el-form-item prop="scooterSN" label="车牌号(SN)" :label-width="formLabelWidth">
+          <el-form-item prop="scooterSN" label="中控(SN)" :label-width="formLabelWidth">
             <el-select v-model="formEVin.scooterSN" filterable placeholder="请选择">
               <el-option
                 v-for="item in optionsEVs"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="车型" :label-width="formLabelWidth">
+          <el-form-item prop="scooterType" label="中控类型" :label-width="formLabelWidth">
             <el-radio v-model="formEVin.scooterType" label="0">新车</el-radio>
             <el-radio v-model="formEVin.scooterType" label="1">改装车</el-radio>
           </el-form-item>
@@ -59,8 +59,11 @@ export default {
         phone:[
           {type:'number',required:true,min:10000000000,max:99999999999,message:'手机号必须为11位数字',trigger:'change'}
         ],
+        scooterType:[
+          {required:true,message:'请选择',trigger:'blur'}
+        ],
         scooterSN:[
-          {required:true,message:'请输入车牌号',trigger:'blur'}
+          {required:true,message:'请选择',trigger:'blur'}
         ]
       },
       optionsEVs:[],

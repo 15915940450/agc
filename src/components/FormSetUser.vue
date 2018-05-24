@@ -44,7 +44,7 @@
             <el-input v-model.number="formSetUser.name" auto-complete="off" placeholder="剩余可分配电池 100 天"></el-input>
           </el-form-item> -->
 
-          <el-form-item prop="scooterSNs" label="车牌号(SN)" :label-width="formLabelWidth">
+          <el-form-item prop="scooterSNs" label="中控（SN)" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.scooterSNs" multiple filterable placeholder="请选择">
               <el-option
                 v-for="item in optionsEVs"
@@ -88,7 +88,7 @@ export default {
           {required:true,message:'免费天数不能为空',trigger:'change'}
         ],
         scooterSNs:[
-          {required:true,message:'请选择电动车',trigger:'change'}
+          {required:true,message:'请选择中控',trigger:'change'}
         ]
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)

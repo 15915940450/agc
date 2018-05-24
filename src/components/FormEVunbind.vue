@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        确定将电动车与用户解绑？
+        确定将中控与用户解绑？
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>

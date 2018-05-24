@@ -39,7 +39,7 @@ export default new Router({
       component: HeartDeposit
     },
     {
-      path: '/evs/:pn', //电动车
+      path: '/evs/:pn', //中控
       name: 'HeartEVs',
       component: HeartEVs
     },

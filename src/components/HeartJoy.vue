@@ -82,18 +82,18 @@
             </el-row>
           </div>
         </el-col>
-        <!-- 电动车数 -->
+        <!-- 中控数 -->
         <el-col :span="6">
           <div class="im_card im_card_4">
             <el-row>
               <el-col :span="10">
                 <div class="im_card-icon card_ev">
-                电动车数
+                中控数
                 </div>
               </el-col>
               <el-col :span="14">
                 <h3 class="im_card-title">
-                  电动车数
+                  中控数
                 </h3>
                 <p class="im_card-value">
                   {{scooterNum}}

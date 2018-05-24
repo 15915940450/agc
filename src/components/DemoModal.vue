@@ -9,16 +9,11 @@
       center>
       <div class="modal_wrap-body">
         <el-form :model="formGroupCreate">
-          <el-form-item label="电动车SN" :label-width="formLabelWidth">
+          
+          <el-form-item label="中控" :label-width="formLabelWidth">
             <el-input v-model="formGroupCreate.name" auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="车类型" :label-width="formLabelWidth">
-            <el-select v-model="formGroupCreate.region" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <!-- 用户手机号,城市,用户群组,返还金额 -->
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">

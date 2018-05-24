@@ -82,7 +82,7 @@ export default {
       if(data.result.points.length===0){
         pathSimplifierIns.setData(null);
       }else{
-        // 电动车轨迹
+        // 中控轨迹
         //console.log(data.result.points);
         var arrPath=[];
         // $.each(data.result.points,function(index,v){
@@ -91,7 +91,7 @@ export default {
         //console.log(arrPath);
 
         var dataSet=[{
-          name:'电动车轨迹',
+          name:'中控轨迹',
           path:arrPath
         }];
 

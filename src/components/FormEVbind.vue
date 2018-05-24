@@ -54,7 +54,7 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     title:function(){
-      return ('绑定电动车('+this.scooterSN+')');
+      return ('绑定中控('+this.scooterSN+')');
     }
   },
   methods:{

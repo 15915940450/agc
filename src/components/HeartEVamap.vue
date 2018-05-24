@@ -3,19 +3,19 @@
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/evs/1' }">车辆管理</el-breadcrumb-item>
-        <el-breadcrumb-item>电动车轨迹</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/evs/1' }">中控管理</el-breadcrumb-item>
+        <el-breadcrumb-item>中控轨迹</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <!-- 髙德地图 -->
     <div class="a_map">
-      <h3 class="title">电动车轨迹</h3>
+      <h3 class="title">中控轨迹</h3>
 
       <el-row>
         <el-col :span="6">
           <div class="condition">
             <el-form label-position="top" label-width="80px" :model="formLabelAlign" size="small">
-              <el-form-item label="电动车SN" class="ev_icon-wrap">
+              <el-form-item label="中控SN" class="ev_icon-wrap">
                 <el-input v-model="formLabelAlign.name">
                   <template slot="prepend"><img class="ev_icon" src="../assets/ev_icon.png" /></template>
                 </el-input>

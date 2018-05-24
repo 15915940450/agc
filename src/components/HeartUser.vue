@@ -57,7 +57,7 @@
             prop="batteries" :formatter="formatter">
           </el-table-column>
           <el-table-column
-            label="电动车SN"
+            label="中控SN"
             prop="scooters" :formatter="formatter">
           </el-table-column>
 
@@ -178,7 +178,7 @@ export default {
       this.$store.commit('showNewUser');
     },
     showEVin:function(){
-      this.msg='车辆已激活';
+      this.msg='中控已激活';
       this.$store.commit('showEVin');
     },
     formatter:function(row, column, cellValue){

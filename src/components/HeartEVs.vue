@@ -6,18 +6,18 @@
       <div class="table_wrap">
         <el-row>
           <el-col :span="6">
-            <h3 class="title">电动车列表</h3>
+            <h3 class="title">中控列表</h3>
           </el-col>
           <el-col :span="18">
             <div class="table_wrap-search">
               <div class="table_wrap-search_wrap">
-                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入车牌号（SN）" v-model="search" suffix-icon="el-icon-search"></el-input>
+                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入中控SN" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
               <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
             </div>
           </el-col>
         </el-row>
-        <!-- 电动车表格 -->
+        <!-- 中控表格 -->
         <el-table :data="evs" size="medium" stripe style="width: 100%" class="table_wrap-table">
           <!-- 展开行 -->
           <el-table-column type="expand">
@@ -38,7 +38,7 @@
             width="50">
           </el-table-column>
           <el-table-column
-            label="电动车SN"
+            label="中控SN"
             prop="sn">
           </el-table-column>
           <el-table-column
@@ -94,11 +94,11 @@
     </div>
     </transition>
 
-    <!-- 没有电动车 -->
+    <!-- 没有中控 -->
     <div class="empty_evs" v-if="(!evs.length && isNotSearch)">
-      <h3 class="title">电动车列表</h3>
-      <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有电动车切片" />
-      <p>您还没有电动车哦！</p>
+      <h3 class="title">中控列表</h3>
+      <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有中控切片" />
+      <p>您还没有中控哦！</p>
     </div>
 
     <!-- 操作响应 -->
@@ -124,7 +124,7 @@ export default {
       scooterSN:'',
       evs:[
       //   {
-      //   "id": "1",//车id
+      //   "id": "1",//id
       //   "sid": "111111111111",//编号，对应Mac地址
       //   "sn": "",//序列号
       //   "owner": "111",//拥有者
@@ -237,7 +237,7 @@ export default {
     background: #FFF;
     margin-top: 20px;
   }
-  /* 电动车为空 */
+  /* 中控为空 */
   .empty_evs{
     background: #FFF;
     text-align: center;

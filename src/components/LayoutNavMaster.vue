@@ -40,7 +40,7 @@ export default {
         },
         {
           id:4,
-          name:'车辆管理',
+          name:'中控管理',
           link:'/evs/1'
         },
         {
