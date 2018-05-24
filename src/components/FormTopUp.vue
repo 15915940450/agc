@@ -126,8 +126,8 @@ export default {
     listenTradeCheck:function(){
       var vueThis=this;
       vueThis.numTimerCheckTrade=window.setInterval(function(){
-        if(window.sessionStorage && window.sessionStorage.tradeCheck==='1'){
-          window.sessionStorage.removeItem('tradeCheck');
+        if(window.localStorage && window.localStorage.tradeCheck==='1'){
+          window.localStorage.removeItem('tradeCheck');
           vueThis.$store.commit('hideStatusTopUp');
         }
       },900);
