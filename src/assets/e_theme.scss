@@ -4,19 +4,20 @@ $--color-success:#33CC99;
 $--color-warning:#FFB000;
 $--color-danger:#F5222D;
 $--color-info:#FC8181;
-
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
-
 @import "~element-ui/packages/theme-chalk/src/index";
-/* display */
+/* display 基于断点的隐藏类 */
 @media only screen and (max-width:767px){.hidden-xs-only{display:none!important}}@media only screen and (min-width:768px){.hidden-sm-and-up{display:none!important}}@media only screen and (min-width:768px) and (max-width:991px){.hidden-sm-only{display:none!important}}@media only screen and (max-width:991px){.hidden-sm-and-down{display:none!important}}@media only screen and (min-width:992px){.hidden-md-and-up{display:none!important}}@media only screen and (min-width:992px) and (max-width:1199px){.hidden-md-only{display:none!important}}@media only screen and (max-width:1199px){.hidden-md-and-down{display:none!important}}@media only screen and (min-width:1200px){.hidden-lg-and-up{display:none!important}}@media only screen and (min-width:1200px) and (max-width:1919px){.hidden-lg-only{display:none!important}}@media only screen and (max-width:1919px){.hidden-lg-and-down{display:none!important}}@media only screen and (min-width:1920px){.hidden-xl-only{display:none!important}}
 
 //===================im start
 html,body{
+  background:#F2F2F2;
+}
+html,body,h1,h2,h3,h4,h5,h6{
   margin:0;
   padding:0;
-  background:#F2F2F2;
+  font-weight: 300;
 }
 html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,figure,footer,form,input,select,textarea,ul,ol,li{
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
@@ -25,8 +26,7 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   font-size: 14px;
   font-weight:normal;
 }
-//font
-
+//eui font
 .main_title{
   font-size: 18px;
   font-weight: 500;
@@ -38,9 +38,7 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   font-size: 12px;
   font-weight:300;
 }
-
-
-
+//eui layout
 //页面主内容区
 #main_wrap{
   position: relative;
@@ -161,8 +159,8 @@ h3.title{
   font-size: 0;
 }
 .im-table-expand label {
-  width: 90px;
   color: #99a9bf;
+  width:150px;
 }
 .im-table-expand .el-form-item {
   margin-right: 0;
@@ -172,14 +170,10 @@ h3.title{
 .table_wrap-pagination{
   /*padding:20px;*/
 }
-
-
-//充值成功模态
+/*充值成功模态(empty body)*/
 .modal_wrap-empty_body .el-dialog__body{
-  // background: red;
   display: none;
 }
-
 // 中控
 .e_v .el-input-group__prepend{
   width:33px !important;
@@ -192,9 +186,7 @@ h3.title{
   top:4px;
   left:6px;
 }
-.im-table-expand label{
-  width:150px;
-}
+//common overtext
 .overtext{
   width: 100%;
   overflow: hidden;
