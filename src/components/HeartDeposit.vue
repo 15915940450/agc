@@ -286,19 +286,6 @@ export default {
     text-align: right;
   }
 
-  /* table */
-  .im-table-expand {
-    font-size: 0;
-  }
-  .im-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .im-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
   .table_wrap{
     background: #FFF;
     margin-top: 10px;
