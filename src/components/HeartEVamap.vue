@@ -3,8 +3,12 @@
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/evs/1' }">中控管理</el-breadcrumb-item>
-        <el-breadcrumb-item>中控轨迹</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/evs/1' }">
+          <small>中控管理</small>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <small>中控轨迹</small>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <!-- 髙德地图 -->
