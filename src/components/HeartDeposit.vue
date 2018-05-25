@@ -7,23 +7,23 @@
         <el-col :span="6">
           <div class="im_card">
             <el-row>
-              <el-col :span="10">
-                <div class="im_card-icon im_card-icon _card1">
-                  <img src="../assets/deposit_card_1.png" />
+              <el-col :span="16">
+                <div class="left_part">
+                  <div>我的押金(元)</div>
+                  <p>{{eyeDeposit}}</p>
                 </div>
               </el-col>
-              <el-col :span="14">
-                <h3 class="im_card-title">
-                  我的押金(元)
-                  <a href="javascript:;" class="im_card-top_up" @click="handleTopUp()">充值</a>
-                </h3>
-                <p class="im_card-value overtext">
-                  <!-- eye-slash,eye -->
-                  <a href="javascript:;" @click="switchEye('eyenameDeposit')" class="eye_icon_wrap">
-                    <icon :name="eyenameDeposit" scale="1.3"></icon>
-                  </a>
-                  {{eyeDeposit}}
-                </p>
+              <el-col :span="8">
+                <div class="right_part">
+                  <div>
+                    <a href="javascript:;" class="im_card-top_up" @click="handleTopUp()">充值</a>
+                  </div>
+                  <p>
+                    <a href="javascript:;" @click="switchEye('eyenameDeposit')" class="eye_icon_wrap">
+                      <icon :name="eyenameDeposit" scale="1.3"></icon>
+                    </a>
+                  </p>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -32,22 +32,23 @@
         <el-col :span="6">
           <div class="im_card">
             <el-row>
-              <el-col :span="10">
-                <div class="im_card-icon im_card-icon_card2">
-                  <img src="../assets/deposit_card_2.png" />
+              <el-col :span="16">
+                <div class="left_part">
+                  <div>可退押金(元)</div>
+                  <p>{{eyeRefund}}</p>
                 </div>
               </el-col>
-              <el-col :span="14">
-                <h3 class="im_card-title">
-                  可退押金(元)
-                  <a href="javascript:;" class="im_card-refund" @click="handleRefund()">退款</a>
-                </h3>
-                <p class="im_card-value overtext">
-                  <a href="javascript:;" @click="switchEye('eyenameRefund')" class="eye_icon_wrap">
-                    <icon :name="eyenameRefund" scale="1.3"></icon>
-                  </a>
-                  {{eyeRefund}}
-                </p>
+              <el-col :span="8">
+                <div class="right_part">
+                  <div>
+                    <a href="javascript:;" class="im_card-refund" @click="handleRefund()">退款</a>
+                  </div>
+                  <p>
+                    <a href="javascript:;" @click="switchEye('eyenameRefund')" class="eye_icon_wrap">
+                      <icon :name="eyenameRefund" scale="1.3"></icon>
+                    </a>
+                  </p>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -56,18 +57,11 @@
         <el-col :span="6">
           <div class="im_card">
             <el-row>
-              <el-col :span="10">
-                <div class="im_card-icon im_card-icon_card3">
-                  <img src="../assets/deposit_battery_1.png" />
+              <el-col :span="24">
+                <div class="left_part">
+                  <div>可用电池数(个)</div>
+                  <p>{{card.availableBattery}}</p>
                 </div>
-              </el-col>
-              <el-col :span="14">
-                <h3 class="im_card-title">
-                  可用电池数(个)
-                </h3>
-                <p class="im_card-value overtext">
-                  {{card.availableBattery}}
-                </p>
               </el-col>
             </el-row>
           </div>
@@ -76,18 +70,11 @@
         <el-col :span="6">
           <div class="im_card">
             <el-row>
-              <el-col :span="10">
-                <div class="im_card-icon im_card-icon_card4">
-                  <img src="../assets/deposit_battery_2.png" />
+              <el-col :span="24">
+                <div class="left_part">
+                  <div>已用电池数(个)</div>
+                  <p>{{card.usedBattery}}</p>
                 </div>
-              </el-col>
-              <el-col :span="14">
-                <h3 class="im_card-title">
-                  已用电池数(个)
-                </h3>
-                <p class="im_card-value overtext">
-                  {{card.usedBattery}}
-                </p>
               </el-col>
             </el-row>
           </div>
@@ -98,39 +85,47 @@
       <div class="table_wrap">
         <h3 class="title">押金记录</h3>
         <!-- 押金记录表格 -->
-        <el-table
-          :data="deposit" stripe
-          style="width: 100%" class="table_wrap-table" size="medium">
-          <!-- medium / small / mini -->
-          <el-table-column
-            label="ID"
-            prop="tradeId">
-          </el-table-column>
-          <el-table-column
-            label="时间"
-            prop="createTime" :formatter="formatter">
-          </el-table-column>
-          <el-table-column
-            label="类型"
-            prop="type" :formatter="formatter">
-          </el-table-column>
-          <el-table-column
-            label="金额(元)"
-            prop="amount">
-          </el-table-column>
-          <el-table-column
-            label="数量(个)"
-            prop="batteryNum">
-          </el-table-column>
-          <el-table-column
-            label="状态"
-            prop="status" :formatter="formatter">
-          </el-table-column>
-        </el-table>
+        <div class="table_wrap_real">
+          <el-table
+            :data="deposit" stripe
+            style="width: 100%" class="table_wrap-table" size="medium">
+            <!-- medium / small / mini -->
+            <el-table-column
+              label="ID"
+              prop="tradeId"
+              width="190"
+              >
+            </el-table-column>
+            <el-table-column
+              label="时间"
+              prop="createTime" :formatter="formatter"
+              width="170"
+              >
+            </el-table-column>
+            <el-table-column
+              label="类型"
+              prop="type" :formatter="formatter">
+            </el-table-column>
+            <el-table-column
+              label="金额(元)"
+              prop="amount">
+            </el-table-column>
+            <el-table-column
+              label="数量(个)"
+              prop="batteryNum">
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              prop="status" :formatter="formatter">
+            </el-table-column>
+          </el-table>
+        </div>
         <!-- 分页 -->
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
-
-        </el-pagination>
+        <div class="table_wrap_pagination">
+          <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+          </el-pagination>
+        </div>
+        
       </div>
 
     </div>
@@ -276,62 +271,19 @@ export default {
 <style lang="css" scoped>
   .im_card{
     background: #FFF;
-    font-size: 12px;
     max-height: 100px;
     height: 100px;
-    padding: 20px;
+    padding: 15px;
     border-radius: 5px;
     box-sizing:border-box;
     box-shadow:2px 0px 8px rgba(204,204,204,1)
   }
-  .im_card-title{
-    margin: 0;
-    font-weight: normal;
+  .left_part p{
+    font-size: 22px;
+    margin: 14px 0 0 0;
+  }
+  .right_part{
     text-align: right;
-  }
-  .im_card-value{
-    text-align: right;
-    font-size: 30px;
-    color: #333;
-    margin: 0;
-    margin-top:10px;
-  }
-  .im_card-value .fa-icon{
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .im_card-top_up,.im_card-refund{
-    margin-left: 10px;
-  }
-  .im_card-icon{
-    width:60px;
-    height: 60px;
-    line-height: 60px;
-    text-align: center;
-    border-radius: 100px;
-    box-shadow:4px 8px 20px rgba(102,255,204,1);
-    background: #66FFCC;
-    background: linear-gradient(-10deg, #00CC66, #66FFCC);
-    color: #FFF;
-    position: relative;
-  }
-  .im_card-icon img{
-    position: absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-  }
-  .im_card-icon_card1{
-    background: linear-gradient(-10deg, #00CC66, #66FFCC);
-  }
-  .im_card-icon_card2{
-    background: linear-gradient(-10deg, #3399FF, #33CCFF);
-  }
-  .im_card-icon_card3{
-    background: linear-gradient(-10deg, #FF66CC, #FF99CC);
-  }
-  .im_card-icon_card4{
-    background: linear-gradient(-10deg, #FF6699, #FF9966);
   }
 
   /* table */
@@ -350,5 +302,6 @@ export default {
   .table_wrap{
     background: #FFF;
     margin-top: 10px;
+    min-height: calc(100vh - 252px);
   }
 </style>

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="e_vs">
     <transition name="el-fade-in">
-    <div class="evs_list" v-if="(evs.length || !isNotSearch)">
+    <div class="evs_list eqcalc" v-if="(evs.length || !isNotSearch)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -18,78 +18,84 @@
           </el-col>
         </el-row>
         <!-- 中控表格 -->
-        <el-table :data="evs" size="medium" stripe style="width: 100%" class="table_wrap-table">
-          <!-- 展开行 -->
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="left" inline class="im-table-expand">
-                <el-form-item label="坐标：">
-                  <span>{{ props.row.location }}</span>
-                </el-form-item>
-                <el-form-item label="坐标更新时间：" label-width="300">
-                  <span>{{ props.row.locationUpdateTime }}</span>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="#"
-            type="index"
-            width="50">
-          </el-table-column>
-          <el-table-column
-            label="中控SN"
-            prop="sn">
-          </el-table-column>
-          <el-table-column
-            label="用户名"
-            prop="userName">
-          </el-table-column>
-          <el-table-column
-            label="手机号"
-            prop="owner">
-          </el-table-column>
-          <el-table-column
-            label="电量"
-            prop="soc">
-          </el-table-column>
-          <el-table-column label="操作" width="190">
-            <template slot-scope="scope">
-              <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
-                唤醒
-              </el-button>
-              <el-button
-                @click="handleEVoperation(scope,'EVflameout')"
-                type="text"
-                size="small">
-                熄火
-              </el-button>
-              <el-button
-                v-if="false"
-                type="text"
-                size="small">
-                轨迹
-              </el-button>
-              <el-button
-                v-if="(scope.row.owner)"
-                @click="handleEVunbind(scope)"
-                type="text"
-                size="small">
-                解绑
-              </el-button>
-              <el-button
-                v-if="!(scope.row.owner)"
-                @click="handleEVbind(scope)"
-                type="text"
-                size="small">
-                绑定
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
-          <!-- 分页 -->
-        </el-pagination>
+        <div class="table_wrap_real">
+          <el-table :data="evs" size="medium" stripe style="width: 100%" class="table_wrap-table">
+            <!-- 展开行 -->
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="im-table-expand">
+                  <el-form-item label="坐标：">
+                    <span>{{ props.row.location }}</span>
+                  </el-form-item>
+                  <el-form-item label="坐标更新时间：" label-width="300">
+                    <span>{{ props.row.locationUpdateTime }}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="#"
+              type="index"
+              width="50">
+            </el-table-column>
+            <el-table-column
+              label="中控SN"
+              prop="sn">
+            </el-table-column>
+            <el-table-column
+              label="用户名"
+              prop="userName">
+            </el-table-column>
+            <el-table-column
+              label="手机号"
+              prop="owner">
+            </el-table-column>
+            <el-table-column
+              label="电量"
+              prop="soc">
+            </el-table-column>
+            <el-table-column label="操作" width="190">
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
+                  唤醒
+                </el-button>
+                <el-button
+                  @click="handleEVoperation(scope,'EVflameout')"
+                  type="text"
+                  size="small">
+                  熄火
+                </el-button>
+                <el-button
+                  v-if="false"
+                  type="text"
+                  size="small">
+                  轨迹
+                </el-button>
+                <el-button
+                  v-if="(scope.row.owner)"
+                  @click="handleEVunbind(scope)"
+                  type="text"
+                  size="small">
+                  解绑
+                </el-button>
+                <el-button
+                  v-if="!(scope.row.owner)"
+                  @click="handleEVbind(scope)"
+                  type="text"
+                  size="small">
+                  绑定
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        
+        <div class="table_wrap_pagination">
+          <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+            <!-- 分页 -->
+          </el-pagination>
+        </div>
+        
       </div>
     </div>
     </transition>
@@ -238,6 +244,5 @@ export default {
 <style lang="css" scoped>
   .evs_list{
     background: #FFF;
-    margin-top: 20px;
   }
 </style>
