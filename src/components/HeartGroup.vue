@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="component_group">
+  <div class="component_group eqcalc">
     <h3 class="title">群组列表</h3>
     <div class="group-list">
       <el-row :gutter="10">
@@ -116,7 +116,6 @@ export default {
 <style lang="css" scoped>
   .component_group{
     background: #FFF;
-    min-height: calc(100vh - 140px);
   }
   .group-list{
     padding:10px 20px;
@@ -126,7 +125,7 @@ export default {
     box-shadow:2px 0px 6px rgba(204,204,204,0.21);
     height:180px;
     max-height: 180px;
-    /* border: 1px solid black; */
+    border: 1px solid black; 
   }
   .group_card-title{
     color: #333;
@@ -150,6 +149,6 @@ export default {
     margin-top: 20px;
   }
   .group_card-footer .el-button{
-  margin:0 10px;
-}
+    margin:0 10px;
+  }
 </style>
