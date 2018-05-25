@@ -6,23 +6,23 @@
           <a href="javascript:;">代理商后台</a>
         </h1>
       </el-col>
-      <el-col :span="18">
-        <el-menu class="el-menu-wrap" mode="horizontal">
-
-          <el-submenu index="1">
-            <template slot="title">
-              <!-- <i class="top_bar-head"></i> -->
-              <img class="top_bar-head" src="../assets/default_head.png" width="20" />
-              {{agent.name}}
-            </template>
-            <el-menu-item index="1-1" class="sub_item" @click="toSys()">
-              设置
-            </el-menu-item>
-            <el-menu-item index="1-2" class="sub_item" @click="logout()">
-              退出
-            </el-menu-item>
-          </el-submenu>
-        </el-menu>
+      <el-col :span="18" class="topbar_right_wrap">
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <img class="top_bar-head" src="../assets/default_head.png" width="20" />
+            {{agent.name}}
+            <i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <a @click="toSys()" class="topbar_user">设置</a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <a @click="logout()" class="topbar_user">退出</a>
+            </el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </el-col>
     </el-row>
 
@@ -66,7 +66,6 @@ export default {
     padding-left:20px;
   }
   #agc_logo a{
-    /* text-indent: -969em; */
     display: inline-block;
     width: 95px;
     padding-left: 30px;
@@ -77,21 +76,24 @@ export default {
     font-size: 18px;
     color: #333333;
   }
-  /* .top_bar-head{
-    margin-right: 10px;
-    display: inline-block;
-    width:20px;
-    height: 60px;
-    background:url(../assets/default_head.png) no-repeat center center;
-  } */
+
   .top_bar-head{
     background: #6DCFF6;
     border-radius: 90px;
+    vertical-align: middle;
   }
-  .top_bar .el-menu--horizontal > .el-submenu{
+  .topbar_right_wrap{
+    height: 60px;
+    line-height: 60px;
+    padding-right: 20px;
+  }
+  .topbar_right_wrap .el-dropdown{
     float: right;
   }
-  .el-menu-wrap{
-    padding-right:10px;
+  .topbar_user{
+    min-width: 66px;
+    display: block;
+    font-size: 13px;
   }
+  
 </style>

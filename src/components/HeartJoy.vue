@@ -164,6 +164,13 @@ export default {
   padding:15px 10px;
   background: #FFF;
 }
+.joy_cards{
+  background: #FFF;
+  margin: 10px 0 0 0;
+  padding:15px 10px;
+  min-height: calc(100vh - 260px);
+}
+
 .im_joy{
   height: 48px;
   line-height: 48px;
@@ -261,11 +268,5 @@ export default {
 }
 .im_card-icon.card_ev{
   background-image: url(../assets/card_ev.png);
-}
-.joy_cards{
-  background: #FFF;
-  margin: 10px 0 0 0;
-  padding:15px 10px;
-  min-height: calc(100vh - 260px);
 }
 </style>
