@@ -8,7 +8,7 @@
             <div class="group_card-header">
               <el-row>
                 <el-col :span="8">
-                  <div class="group_online"></div>
+                  <div :class="{group_online:item.type===1,group_offline:item.type===2}"></div>
                 </el-col>
                 <el-col :span="16">
                   <h4 class="group_card-title overtext">{{item.name}}</h4>
@@ -165,11 +165,16 @@ export default {
   .group_card-header{
     margin-bottom: 25px;
   }
-  .group_online{
+  .group_online,.group_offline{
     width: 46px;
     height: 46px;
-    background: #fe7e73 url(../assets/online.png) no-repeat center center;
     border-radius: 96px;
+  }
+  .group_online{
+    background: #fe7e73 url(../assets/online.png) no-repeat center center;
+  }
+  .group_offline{
+    background: #fe7e73 url(../assets/offline.png) no-repeat center center;
   }
   .group_card-title{
     color: #333;
