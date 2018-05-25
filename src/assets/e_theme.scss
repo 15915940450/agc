@@ -54,7 +54,11 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   margin-left: -25px;
   margin-right: -25px;
   margin-top: -25px;
-  padding:0px;
+  padding:15px 40px;
+}
+.im_breadcrumb small{
+  font-weight:300;
+  font-size:13px;
 }
 //左侧导航
 #left_nav_wrap{
@@ -203,7 +207,7 @@ h3.title{
   width: 170px;
   height: 210px;
   margin-left: -85px;
-  margin-top: -105px;
+  margin-top: -135px;
 
   text-align: center;
 }

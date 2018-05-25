@@ -3,8 +3,12 @@
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/group' }">群组管理</el-breadcrumb-item>
-        <el-breadcrumb-item>查看用户</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/group' }">
+          <small>群组管理</small>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <small>查看用户</small>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
@@ -82,10 +86,12 @@
       </div>
 
     </div>
-    <div v-if="(!users.length && isNotSearch)" class="empty_user">
-      <img src="../assets/empty_user.png" />
-      <p>您还没有用户哦！</p>
-      <el-button type="primary" @click="showNewUser()">添加</el-button>
+    <div v-if="(!users.length && isNotSearch)" class="empty_user im_empty_wrap">
+      <div class="im_empty">
+        <img class="im_empty_img" src="../assets/empty_user.png" />
+        <p class="im_empty_p">您还没有用户哦！</p>
+        <el-button type="primary" @click="showNewUser()">添加</el-button>
+      </div>
     </div>
 
     <!-- 添加 -->
@@ -228,21 +234,7 @@ export default {
   }
   /* 没有用户 */
   .empty_user{
-    background: #FFF;
-    text-align: center;
-    padding-bottom: 30px;
-    margin-top:20px;
-    min-height: calc(100vh - 220px);
-  }
-  .empty_user .title{
-    text-align: left;
-  }
-  .empty_user img{
-    margin-top:100px;
-  }
-  .empty_user p{
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 30px;
+    margin-top: 25px;
+    min-height: calc(100vh - 187px);
   }
 </style>
