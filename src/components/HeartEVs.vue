@@ -95,10 +95,13 @@
     </transition>
 
     <!-- 没有中控 -->
-    <div class="empty_evs" v-if="(!evs.length && isNotSearch)">
+    <div class="empty_evs im_empty_wrap" v-if="(!evs.length && isNotSearch)">
       <h3 class="title">中控列表</h3>
-      <img class="empty_evs-img" src="../assets/no_ev.png" alt="还没有中控切片" />
-      <p>您还没有中控哦！</p>
+      <div class="im_empty">
+        <img class="im_empty_img" src="../assets/no_ev.png" alt="还没有中控" />
+        <p class="im_empty_p">您还没有中控哦！</p>
+      </div>
+      
     </div>
 
     <!-- 操作响应 -->
@@ -237,30 +240,4 @@ export default {
     background: #FFF;
     margin-top: 20px;
   }
-  /* 中控为空 */
-  .empty_evs{
-    background: #FFF;
-    text-align: center;
-    padding-bottom: 30px;
-    min-height: calc(100vh - 170px);
-  }
-  .empty_evs .title{
-    text-align: left;
-  }
-  /* .empty_evs img{
-    margin-top:100px;
-  } */
-  .empty_evs p{
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 30px;
-  }
-  .empty_evs-img{
-    width: 170px;
-    height: 130px;
-    display: block;
-    /*border:1px solid #AAA;*/
-    margin:180px auto 10px;
-  }
-
 </style>

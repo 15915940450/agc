@@ -161,13 +161,13 @@ export default {
 .component_joy{
 }
 .im_joy-wrap{
-  padding:15px 10px;
+  padding:15px;
   background: #FFF;
 }
 .joy_cards{
   background: #FFF;
   margin: 10px 0 0 0;
-  padding:15px 10px;
+  padding:15px;
   min-height: calc(100vh - 260px);
 }
 

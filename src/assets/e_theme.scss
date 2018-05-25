@@ -69,6 +69,8 @@ h3.title{
   line-height: 50px;
   height: 50px;
   margin:0;
+  text-align: left;
+  padding: 0 15px;
 }
 // 页脚
 .copyright{
@@ -185,6 +187,25 @@ h3.title{
   position: absolute;
   top:4px;
   left:6px;
+}
+//empty_wrap
+.im_empty_wrap{
+  position: relative;
+  background: #FFF;
+  min-height: calc(100vh - 142px);
+}
+.im_empty{
+  position: absolute;
+  left:50%;
+  top: 50%;
+  width: 170px;
+  height: 190px;
+  margin-left: -85px;
+  margin-top: -95px;
+}
+.im_empty_p{
+  color: #999;
+  text-align: center;
 }
 //common overtext
 .overtext{
