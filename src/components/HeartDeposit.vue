@@ -134,11 +134,13 @@
       </div>
 
     </div>
-    <div v-if="!deposit.length" class="empty_deposit">
+    <div v-if="!deposit.length" class="empty_deposit im_empty_wrap eqcalc">
       <h3 class="title">我的押金</h3>
-      <img src="../assets/deposit_empty.jpeg" />
-      <p>您还没有押金哦！</p>
-      <el-button type="primary" size="small" @click="handleTopUp()">充值</el-button>
+      <div class="im_empty">
+        <img class="im_empty_img" src="../assets/deposit_empty.jpeg" />
+        <p class="im_empty_p">您还没有押金哦！</p>
+        <el-button type="primary" @click="handleTopUp()">充值</el-button>
+      </div>
     </div>
 
     <!-- 充值模态 -->
@@ -352,26 +354,5 @@ export default {
   .table_wrap-pagination{
     padding-top:20px;
     padding-bottom:20px;
-  }
-  /* 押金为空 */
-  .empty_deposit{
-    background: #FFF;
-    text-align: center;
-    padding-bottom: 30px;
-    min-height: calc(100vh - 170px);
-  }
-  .empty_deposit .title{
-    text-align: left;
-  }
-  .empty_deposit img{
-    margin-top:100px;
-  }
-  .empty_deposit p{
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 30px;
-  }
-  .eye_icon_wrap{
-    color:#222 !important;
   }
 </style>
