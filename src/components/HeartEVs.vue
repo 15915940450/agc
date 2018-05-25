@@ -87,7 +87,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
+        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
           <!-- 分页 -->
         </el-pagination>
       </div>

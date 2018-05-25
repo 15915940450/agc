@@ -117,16 +117,12 @@ h3.title{
 // ele扩展：Base表格
 .table_wrap{
   background: #FFF;
-  margin-top: 10px;
 }
 .table_wrap-search{
   text-align: right;
   line-height: 50px;
   height: 50px;
-  padding-right: 20px;
-}
-.table_wrap-input_serach{
-  /* width: 220px; */
+  padding-right: 15px;
 }
 .table_wrap-search_wrap{
   position: relative;
@@ -138,11 +134,13 @@ h3.title{
   top:9px;
   right:0;
 }
-.table_wrap .el-pagination__jump{
-  margin-right:20px;
+
+//table
+.table_wrap_real{
+  padding:15px;
 }
-.table_wrap .el-table__body-wrapper{
-  min-height: 440px;
+.table_wrap_real .el-table__body-wrapper{
+  min-height:190px;
 }
 .el-table__row--striped{
   background:#F9F9F9;
@@ -173,8 +171,11 @@ h3.title{
   margin-bottom: 0;
   width: 50%;
 }
-.table_wrap-pagination{
-  /*padding:20px;*/
+.table_wrap_pagination{
+  padding:0 10px;
+}
+.table_wrap .el-pagination__jump{
+  margin-right:20px;
 }
 /*充值成功模态(empty body)*/
 .modal_wrap-empty_body .el-dialog__body{

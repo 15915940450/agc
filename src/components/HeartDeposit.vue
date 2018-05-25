@@ -128,7 +128,7 @@
           </el-table-column>
         </el-table>
         <!-- 分页 -->
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
+        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
 
         </el-pagination>
       </div>
@@ -350,9 +350,5 @@ export default {
   .table_wrap{
     background: #FFF;
     margin-top: 10px;
-  }
-  .table_wrap-pagination{
-    padding-top:20px;
-    padding-bottom:20px;
   }
 </style>
