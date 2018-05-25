@@ -34,6 +34,7 @@
         <el-table
           :data="users" size="medium" stripe
           style="width: 100%" class="table_wrap-table">
+
           <!-- 展开行 -->
           <el-table-column type="expand">
             <template slot-scope="props">
@@ -47,6 +48,7 @@
               </el-form>
             </template>
           </el-table-column>
+
           <el-table-column
             label="#"
             type="index"
@@ -80,12 +82,16 @@
             </template>
           </el-table-column>
         </el-table>
+
         <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" class="table_wrap-pagination" @current-change="handleCurrentChange">
           <!-- 分页 -->
         </el-pagination>
+
       </div>
 
     </div>
+
+    <!-- empty -->
     <div v-if="(!users.length && isNotSearch)" class="empty_user im_empty_wrap">
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_user.png" />
@@ -230,7 +236,8 @@ export default {
 <style lang="css" scoped>
   .user_list{
     background: #FFF;
-    margin-top: 20px;
+    margin-top: 25px;
+    min-height: calc(100vh - 187px);
   }
   /* 没有用户 */
   .empty_user{
