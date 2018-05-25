@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="e_vs">
-    <transition name="el-fade-in">
+    <!-- <transition name="el-zoom-in-top"> -->
     <div class="evs_list eqcalc" v-if="(evs.length || !isNotSearch)">
       <!-- table wrap -->
       <div class="table_wrap">
@@ -98,7 +98,7 @@
         
       </div>
     </div>
-    </transition>
+    <!-- </transition> -->
 
     <!-- 没有中控 -->
     <div class="empty_evs im_empty_wrap eqcalc" v-if="(!evs.length && isNotSearch)">
