@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="component_sys">
+  <div class="component_sys eqcalc">
     <h3 class="title">修改密码</h3>
     <div class="form_wrap">
       <el-form size="small" label-position="top" label-width="80px" :model="imPW" class="form_pw" :rules="rules" ref="formPW">

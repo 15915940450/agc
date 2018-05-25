@@ -95,7 +95,7 @@
     </transition>
 
     <!-- 没有中控 -->
-    <div class="empty_evs im_empty_wrap" v-if="(!evs.length && isNotSearch)">
+    <div class="empty_evs im_empty_wrap eqcalc" v-if="(!evs.length && isNotSearch)">
       <h3 class="title">中控列表</h3>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/no_ev.png" alt="还没有中控" />

@@ -189,10 +189,12 @@ h3.title{
   left:6px;
 }
 //empty_wrap
+.eqcalc{
+  min-height: calc(100vh - 142px);
+}
 .im_empty_wrap{
   position: relative;
   background: #FFF;
-  min-height: calc(100vh - 142px);
 }
 .im_empty{
   position: absolute;
