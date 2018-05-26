@@ -243,12 +243,5 @@ export default {
 <style lang="css" scoped>
   .user_list{
     background: #FFF;
-    margin-top: 25px;
-    min-height: calc(100vh - 187px);
-  }
-  /* 没有用户 */
-  .empty_user{
-    margin-top: 25px;
-    min-height: calc(100vh - 187px);
   }
 </style>

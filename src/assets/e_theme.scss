@@ -11,8 +11,14 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @media only screen and (max-width:767px){.hidden-xs-only{display:none!important}}@media only screen and (min-width:768px){.hidden-sm-and-up{display:none!important}}@media only screen and (min-width:768px) and (max-width:991px){.hidden-sm-only{display:none!important}}@media only screen and (max-width:991px){.hidden-sm-and-down{display:none!important}}@media only screen and (min-width:992px){.hidden-md-and-up{display:none!important}}@media only screen and (min-width:992px) and (max-width:1199px){.hidden-md-only{display:none!important}}@media only screen and (max-width:1199px){.hidden-md-and-down{display:none!important}}@media only screen and (min-width:1200px){.hidden-lg-and-up{display:none!important}}@media only screen and (min-width:1200px) and (max-width:1919px){.hidden-lg-only{display:none!important}}@media only screen and (max-width:1919px){.hidden-lg-and-down{display:none!important}}@media only screen and (min-width:1920px){.hidden-xl-only{display:none!important}}
 
 //===================im start
+$bg_body:#F2F2F2;
+$width_col:30px;
+$width_gutter:10px;
+$main_wrap_padding:20px;
+$FFF_padding:15px;
+
 html,body{
-  background:#F2F2F2;
+  background:$bg_body;
 }
 html,body,h1,h2,h3,h4,h5,h6{
   margin:0;
@@ -44,22 +50,27 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   position: relative;
   /*width:calc( 100% - 180px );*/
   width:1020px;
-  padding:20px 20px 50px 20px;
+  padding:$main_wrap_padding;
+  padding-bottom:50px;
   background:rgba(237,240,245,1);
   min-height:calc(100vh - 62px);
 }
 //breadcrumb
 .im_breadcrumb{
   background: #fff;
-  /*margin-left: -25px;
-  margin-right: -25px;
-  margin-top: -25px;*/
-  margin:-20px -20px 0 -20px;
-  padding:15px 35px;
+  margin:-$main_wrap_padding;
+  margin-bottom: $main_wrap_padding;
+  height:45px;
+  box-sizing:border-box;
+  padding:$FFF_padding ($FFF_padding + $main_wrap_padding);
 }
 .im_breadcrumb small{
   font-weight:300;
   font-size:13px;
+}
+//has breadcrumb(44.5px ==> 45px)
+.user_list,.empty_user{
+  min-height: calc(100vh - 142px - 45px);
 }
 //左侧导航
 #left_nav_wrap{
@@ -75,7 +86,7 @@ h3.title{
   height: 50px;
   margin:0;
   text-align: left;
-  padding: 0 15px;
+  padding: 0 $FFF_padding;
 }
 // 页脚
 .copyright{
@@ -123,7 +134,7 @@ h3.title{
   text-align: right;
   line-height: 50px;
   height: 50px;
-  padding-right: 15px;
+  padding-right:$FFF_padding;
 }
 .table_wrap-search_wrap{
   position: relative;
@@ -138,7 +149,7 @@ h3.title{
 
 //table
 .table_wrap_real{
-  padding:15px;
+  padding:$FFF_padding;
 }
 .table_wrap_real .el-table__body-wrapper{
   min-height:190px;
@@ -176,7 +187,7 @@ h3.title{
   background:#fff4e5;
 }
 .table_wrap_pagination{
-  padding:0 10px 15px;
+  padding:0 ($FFF_padding - 5px) $FFF_padding;
 }
 .table_wrap .el-pagination__jump{
   margin-right:20px;
