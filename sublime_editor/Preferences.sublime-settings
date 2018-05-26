@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Brackets Color Scheme/Brackets Dark.tmTheme",
+	"color_scheme": "Packages/Brackets Color Scheme/Brackets Light.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",

@@ -37,6 +37,8 @@
 * Emmet
 * ColorPicker
 * ESlint-Formatter
+* SCSS
+* SublimeLinter-contrib-sass-lint
 
 
 ## atom editor

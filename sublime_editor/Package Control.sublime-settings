@@ -16,7 +16,9 @@
 		"ESLint-Formatter",
 		"GitGutter",
 		"Package Control",
+		"SCSS",
 		"SublimeLinter",
+		"SublimeLinter-contrib-sass-lint",
 		"SublimeLinter-eslint",
 		"Theme - Phoenix",
 		"Vue Syntax Highlight"
