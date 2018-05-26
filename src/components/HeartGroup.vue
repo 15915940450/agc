@@ -45,8 +45,8 @@
             </el-row>
 
             <div class="group_card-footer">
-              <el-button type="default" @click="groupSet(item)">设置</el-button>
-              <el-button type="primary" @click="rrPush(item)">
+              <el-button size="mini" type="default" @click="groupSet(item)">设置</el-button>
+              <el-button size="mini" type="primary" @click="rrPush(item)">
                 查看用户
               </el-button>
             </div>
@@ -155,8 +155,8 @@ export default {
     padding:15px;
   }
   .group_card{
-    padding:15px;
-    box-shadow:2px 0px 6px rgba(0,0,0,0.1);
+    padding:24px;
+    box-shadow:0px 0px 1px 1px rgba(0,0,0,0.1);
     box-sizing: border-box;
     height: 250px;
     margin-bottom: 15px;
@@ -212,6 +212,6 @@ export default {
     margin-top: 20px;
   }
   .group_card-footer .el-button{
-    margin:0 10px;
+    margin:0 8px;
   }
 </style>

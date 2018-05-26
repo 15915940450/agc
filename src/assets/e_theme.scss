@@ -44,17 +44,18 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   position: relative;
   /*width:calc( 100% - 180px );*/
   width:1020px;
-  padding:25px 25px 50px 25px;
+  padding:20px 20px 50px 20px;
   background:rgba(237,240,245,1);
   min-height:calc(100vh - 62px);
 }
 //breadcrumb
 .im_breadcrumb{
   background: #fff;
-  margin-left: -25px;
+  /*margin-left: -25px;
   margin-right: -25px;
-  margin-top: -25px;
-  padding:15px 40px;
+  margin-top: -25px;*/
+  margin:-20px -20px 0 -20px;
+  padding:15px 35px;
 }
 .im_breadcrumb small{
   font-weight:300;

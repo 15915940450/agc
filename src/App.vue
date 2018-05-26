@@ -38,6 +38,7 @@ export default {
     width: 1200px;
     margin:0 auto;
     background: #FFF;
+    box-shadow: 0px 0px 2px 2px rgba(0,0,0,.1);
   }
   #app a{
     color:#fc8181;
