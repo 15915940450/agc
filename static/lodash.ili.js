@@ -7010,6 +7010,14 @@ http://localhost/agc/static/lodash.ili.js
       }
       return result;
     }
+    //toK
+    function toK(num){
+      if(typeof(num)==='number'){
+        return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');  
+      }else{
+        return '--';
+      }
+    }
     //====================================ili()
 
     /**
@@ -16663,6 +16671,7 @@ http://localhost/agc/static/lodash.ili.js
     lodash.logErr = logErr;
     lodash.findIndexsFuzzy = findIndexsFuzzy;
     lodash.zh2length = zh2length;
+    lodash.toK = toK;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
