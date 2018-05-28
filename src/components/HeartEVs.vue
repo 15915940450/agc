@@ -25,8 +25,8 @@
               <template slot-scope="props">
                 <el-form label-position="left" inline class="im-table-expand">
                   <el-form-item label="坐标：">
-                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row.sid,props.row.sn,'113.969660,22.840703',1512120003000)">
-                      {{ props.row.location }} 113.969660,22.840703
+                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row.sid,props.row.sn,props.row.location,props.row.locationUpdateTime)">
+                      {{props.row.location}}
                     </el-button>
                   </el-form-item>
                   <el-form-item label="坐标更新时间：" label-width="300">

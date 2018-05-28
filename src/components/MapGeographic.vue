@@ -14,7 +14,6 @@
 
 <script>
 var map;
-var pathSimplifierIns;
 var geocoder; //地址与经纬度
 
 export default {
@@ -31,6 +30,9 @@ export default {
   computed:{
     timeSlash:function(){
       return (_.toSlash(new Date(window.Number(this.time))));
+    },
+    arrLL:function(){
+      return (this.point.split(','));
     }
   },
   methods:{
@@ -38,89 +40,20 @@ export default {
       var vueThis=this;
       map = new AMap.Map('a-map',{
         mapStyle:'amap://styles/whitesmoke',
-        zoom: 17
+        center:vueThis.arrLL,
+        zoom: 17  //获取当前地图缩放级别,在PC上，默认取值范围为[3,18]；在移动设备上，默认取值范围为[3-19],3D地图会返回浮点数，2D视图为整数。（3D地图自V1.4.0开始支持）
       });
       AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],function(){
         map.addControl(new AMap.ToolBar());
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.OverView({isOpen:true}));
       });
-      AMapUI.load(['ui/misc/PathSimplifier'], function(PathSimplifier) {
-        // vueThis.callMethod('track',[PathSimplifier]);
-        vueThis.track(PathSimplifier);
-      });
-    },
-    track:function(PathSimplifier){
-      pathSimplifierIns=new PathSimplifier({
-        zIndex:100,
-        map:map,
-        getPath:function(pathData){ //pathIndex
-          return pathData.path;
-        },
-        getHoverTitle: function(pathData, pathIndex, pointIndex) {
-          // console.log(pathData);
-          if(pointIndex===0){
-            return '起点：'+pathData.startPlaceName;
-          }
-          if(pointIndex===pathData.path.length-1){
-            return '终点：'+pathData.endPlaceName;
-          }
-          if (pointIndex >= 0) {
-            return '点:' + (pointIndex+1) + '/' + pathData.path.length;
-          }
-          return pathData.name + '，点数量' + pathData.path.length;
-        },
-        renderOptions: {
-          startPointStyle:{
-            radius:5,
-            fillStyle:'rgba(255,255,255,1)',
-            strokeStyle:'rgba(8,161,144,1)',
-            lineWidth:3
-          },
-          endPointStyle:{
-            radius:3,
-            fillStyle:'#999',
-            strokeStyle:'#666',
-            lineWidth:2
-          },
-          pathLineStyle: {
-            strokeStyle: 'rgba(8,161,144,1)',
-            lineWidth: 5,
-            dirArrowStyle: true
-          }
-        }
-      });
-      //======================================这里构建两条简单的轨迹，仅作示例
-      pathSimplifierIns.setData(null);
-      // pathSimplifierIns.setData(null);
-    },
-    setData:function(data){
-      //console.log(data);
-      if(data.result.points.length===0){
-        pathSimplifierIns.setData(null);
-      }else{
-        // 中控轨迹
-        //console.log(data.result.points);
-        var arrPath=[];
-        // $.each(data.result.points,function(index,v){
-        //   arrPath[index]=v.split(',');
-        // });
-        //console.log(arrPath);
-
-        var dataSet=[{
-          name:'中控轨迹',
-          path:arrPath
-        }];
-
-        pathSimplifierIns.setData(dataSet);
-      }
     },
     getAddressThenSet:function(){
       var vueThis=this;
-      var arrLL=vueThis.point.split(',');
       AMap.service('AMap.Geocoder',function(){
         geocoder=new AMap.Geocoder();
-        geocoder.getAddress(arrLL,function(status,result){
+        geocoder.getAddress(vueThis.arrLL,function(status,result){
           // console.log(result);
           if(status==='complete' && result.info==='OK'){
             vueThis.address=result.regeocode.formattedAddress;
@@ -129,10 +62,14 @@ export default {
           }
         });
       });
+    },
+    setMarker:function(){
+      var vueThis=this;
+      new AMap.Marker({
+        map:map,
+        position:vueThis.arrLL
+      });
     }
-
-
-
   },
   created:function(){
     this.sid=this.$route.params.id;
@@ -143,31 +80,32 @@ export default {
   },
   mounted:function(){
     this.amap();
-    //"113.969660,22.840703"
+    this.setMarker();
   }
 };
 </script>
 
 <style lang="css" scoped>
-.map_track{
-  position: relative;
-}
-#a-map{
-  min-height: calc(100vh - 142px - 45px - 50px - 3px);
-}
-.no_data{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #FFF;
-  font-weight: 500;
-}
-.info span{
-  margin-left: 20px;
-  margin-right: 30px;
-  font-size: 13px;
-  font-weight: 300;
-  color: #555;
-}
+  .map_track{
+    position: relative;
+  }
+  #a-map{
+    min-height: calc(100vh - 142px - 45px - 50px - 3px);
+  }
+  .no_data{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFF;
+    font-weight: 500;
+    display: none;
+  }
+  .info span{
+    margin-left: 20px;
+    margin-right: 30px;
+    font-size: 13px;
+    font-weight: 300;
+    color: #555;
+  }
 </style>
