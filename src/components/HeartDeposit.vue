@@ -271,14 +271,15 @@ export default {
 <style lang="css" scoped>
   .im_card{
     background: #FFF;
-    max-height: 100px;
-    height: 100px;
+    max-height: 88px;
+    height: 88px;
     padding: 15px;
     border-radius: 5px;
     box-sizing:border-box;
-    box-shadow:2px 0px 8px rgba(204,204,204,1)
+    box-shadow:2px 0px 8px rgba(204,204,204,1);
   }
   .left_part p{
+    /*font-family:Arial;*/
     font-size: 22px;
     margin: 14px 0 0 0;
   }
