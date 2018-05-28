@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        确定要解绑用户吗？此操作不可撤销。
+        确定要解绑用户吗？解绑后用户的免费天数不归还，且解绑操作不可撤销。
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>

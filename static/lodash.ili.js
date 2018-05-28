@@ -7018,6 +7018,12 @@ http://localhost/agc/static/lodash.ili.js
         return '--';
       }
     }
+    //toSlash
+    function toSlash(dateObject){
+      let result='';
+      result=dateObject.getFullYear()+'/'+(dateObject.getMonth()+1)+'/'+(dateObject.getDate())+' '+(dateObject.getHours())+':'+(dateObject.getMinutes())+':'+(dateObject.getSeconds());
+      return result;
+    }
     //====================================ili()
 
     /**
@@ -16672,6 +16678,7 @@ http://localhost/agc/static/lodash.ili.js
     lodash.findIndexsFuzzy = findIndexsFuzzy;
     lodash.zh2length = zh2length;
     lodash.toK = toK;
+    lodash.toSlash = toSlash;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
