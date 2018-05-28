@@ -1,5 +1,20 @@
 <template lang="html">
   <div class="map_track">
+
+    <div class="table_wrap-search">
+      <el-date-picker
+        v-model="se"
+        type="daterange"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期">
+      </el-date-picker>
+      
+      <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
+      <el-button type="info" @click="track20()">最近20天</el-button>
+      <el-button type="danger" @click="full()">全屏</el-button>
+    </div>
+
     <div id="a-map"></div>
     <h5 class="no_data" v-if="point.length">无轨迹记录。</h5>
   </div>
@@ -13,6 +28,8 @@ export default {
   name:'MapTrack',
   data:function(){
     return ({
+      se:'',
+      scooterId:'',
       point:[]
     });
   },
@@ -97,9 +114,10 @@ export default {
 
         pathSimplifierIns.setData(dataSet);
       }
-    }
-
-
+    },
+    resetSearch:function(){},
+    track20:function(){},
+    full:function(){}
 
   },
   mounted:function(){
@@ -110,11 +128,6 @@ export default {
 
 <style lang="css" scoped>
 .map_track{
-  position: relative;
-  min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
-}
-#a-map{
-  min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
 }
 .no_data{
   position: absolute;

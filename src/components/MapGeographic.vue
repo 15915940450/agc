@@ -1,7 +1,5 @@
 <template lang="html">
   <div class="map_track">
-    <div id="a-map"></div>
-    <h5 class="no_data">无定位。</h5>
     <div class="info">
       <p>
         <span>中控SN: {{sn}}</span>
@@ -9,6 +7,10 @@
         <span>最后刷新坐标时间: {{timeSlash}}</span>
       </p>
     </div>
+    
+    <div id="a-map"></div>
+    <h5 class="no_data">无定位。</h5>
+    
   </div>
 </template>
 
@@ -86,12 +88,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .map_track{
-    position: relative;
-  }
-  #a-map{
-    min-height: calc(100vh - 142px - 45px - 50px - 3px);
-  }
   .no_data{
     position: absolute;
     top: 50%;

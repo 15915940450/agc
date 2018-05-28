@@ -3,7 +3,7 @@
 $--color-primary:#F93;
 $--color-success:#33CC99;
 $--color-warning:#FFB000;
-$--color-danger:#F5222D;
+$--color-danger:#15a3fa;
 $--color-info:#FC8181;
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
@@ -78,6 +78,13 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   width:180px;
   max-width: 180px;
   min-height:calc(100vh - 62px);
+}
+//amap
+.map_track{
+  position: relative;
+}
+#a-map{
+  min-height: calc(100vh - 142px - 45px - 50px - 3px);
 }
 //内容区二级标题
 h3.title{
