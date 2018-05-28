@@ -37,7 +37,10 @@
         <el-button :loading="loading" type="primary" @click="loginSend('formLogin')" id="btn_login">登录</el-button>
       </div>
 
-      <p class="kefu">客服：400-618-7238     2018 ◎深圳易马达科技有限公司版权所有</p>
+      <p class="kefu">
+        <span class="kefu_phone">客服：400-618-7238</span>
+        <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
+      </p>
     </el-dialog>
 
   </div>

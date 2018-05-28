@@ -9,7 +9,10 @@
       <el-col id="main_wrap">
         <router-view />
         <footer class="copyright">
-          <p>客服：400-618-7238 2018 ◎深圳易马达科技有限公司版权所有 </p>
+          <p class="kefu">
+            <span class="kefu_phone">客服：400-618-7238</span>
+            <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
+          </p>
         </footer>
       </el-col>
     </el-row>
