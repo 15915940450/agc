@@ -13,7 +13,11 @@ export default {
   name:'MapGeographic',
   data:function(){
     return ({
-      point:[]
+      sid:'',
+      address:'',
+      sn:'',
+      point:'',
+      time:0
     });
   },
   methods:{
@@ -102,8 +106,15 @@ export default {
 
 
   },
+  created:function(){
+    this.sid=this.$route.params.id;
+    this.sn=this.$route.query.sn;
+    this.point=this.$route.query.ll;
+    this.time=this.$route.query.time;
+  },
   mounted:function(){
-    // this.amap();
+    this.amap();
+    //"113.969660,22.840703"
   }
 };
 </script>

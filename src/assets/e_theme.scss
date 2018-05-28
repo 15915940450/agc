@@ -70,7 +70,7 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   font-size:13px;
 }
 //has breadcrumb(44.5px ==> 45px)
-.user_list,.empty_user{
+.user_list,.empty_user,.a_map{
   min-height: calc(100vh - 142px - 45px);
 }
 //左侧导航

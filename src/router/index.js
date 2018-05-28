@@ -44,16 +44,18 @@ export default new Router({
       component: HeartEVs
     },
     {
-      path: '/ev/:id', //轨迹与定位
+      path: '/ev/:id', //轨迹与定位(sid)
       name: 'HeartEVamap',
       component: HeartEVamap,
       children:[
         {
           path:'track',
+          name:'MapTrack',
           component:MapTrack
         },
         {
           path:'point',
+          name:'MapGeographic',
           component:MapGeographic
         }
       ]

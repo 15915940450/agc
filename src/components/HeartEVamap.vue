@@ -7,44 +7,18 @@
           <small>中控管理</small>
         </el-breadcrumb-item>
         <el-breadcrumb-item>
-          <small>中控轨迹</small>
+          <small v-if="(routeName==='MapTrack')">中控轨迹</small>
+          <small v-if="(routeName==='MapGeographic')">中控定位</small>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <!-- 髙德地图 -->
+    <!-- 髙德地图 574C545B0A13 -->
     <div class="a_map">
-      <h3 class="title">中控轨迹</h3>
-
-      <el-row>
-        <el-col :span="6">
-          <div class="condition">
-            <el-form label-position="top" label-width="80px" :model="formLabelAlign" size="small">
-              <el-form-item label="中控SN" class="ev_icon-wrap">
-                <el-input v-model="formLabelAlign.name">
-                  <template slot="prepend"><img class="ev_icon" src="../assets/ev_icon.png" /></template>
-                </el-input>
-
-              </el-form-item>
-              <el-form-item label="日期">
-                <el-input v-model="formLabelAlign.region">
-                  <template slot="prepend"><img class="ev_icon" src="../assets/datepicker_icon.png" /></template>
-                </el-input>
-              </el-form-item>
-              <el-form-item class="btn_wrap">
-                <el-button type="primary" @click="openFullScreen" v-loading.fullscreen.lock="fullscreenLoading">查询</el-button>
-                <el-button type="">最近20天</el-button>
-              </el-form-item>
-            </el-form>
-          </div>
-        </el-col>
-        <el-col :span="18">
-          <div class="map">
-            <!-- amap -->
-            <router-view></router-view>
-            <!-- <MapTrack /> -->
-          </div>
-        </el-col>
-      </el-row>
+      <div class="map">
+        <!-- amap -->
+        <router-view></router-view>
+        <!-- <MapTrack /> -->
+      </div>
     </div>
 
   </div>
@@ -59,6 +33,7 @@ export default {
         name: '',
         region: ''
       },
+      routeName:'',
       fullscreenLoading: false
     });
   },
@@ -69,34 +44,19 @@ export default {
         this.fullscreenLoading = false;
       }, 2000);
     }
+  },
+  created:function(){
+    this.routeName=this.$route.name;
   }
 };
 </script>
 
 <style lang="css" scoped>
-.a_map{
-  background: #FFF;
-  margin-top: 20px;
-}
-
-.condition{
-  padding:0 20px;
-}
-/* .btn_wrap{
-  margin-top:30px;
-} */
-.map{
-  background: #aaa;
-  min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
-  margin-right: 20px;
-  margin-bottom: 20px;
-}
-/* .ev_icon-wrap{
-  position: relative;
-}
-.ev_icon{
-  position: absolute;
-  left:0;
-  top:0;
-} */
+  .a_map{
+    background: #FFF;
+  }
+  .map{
+    background: #aaa;
+    min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
+  }
 </style>

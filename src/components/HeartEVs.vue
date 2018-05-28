@@ -25,7 +25,9 @@
               <template slot-scope="props">
                 <el-form label-position="left" inline class="im-table-expand">
                   <el-form-item label="坐标：">
-                    <span>{{ props.row.location }}</span>
+                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row.sid,props.row.sn,'113.969660,22.840703',props.row.locationUpdateTime)">
+                      {{ props.row.location }} 113.969660,22.840703
+                    </el-button>
                   </el-form-item>
                   <el-form-item label="坐标更新时间：" label-width="300">
                     <span>{{ props.row.locationUpdateTime }}</span>
@@ -232,6 +234,16 @@ export default {
     resetSearch:function(){
       this.search='';
       this.fetchData();
+    },
+    rrPush:function(sid,sn,ll,time){
+      this.$router.push({
+        path:'/ev/'+sid+'/point',
+        query:{
+          sn:sn,
+          ll:ll,
+          time:time
+        }
+      });
     }
   },
   created:function(){
