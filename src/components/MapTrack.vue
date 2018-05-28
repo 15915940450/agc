@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="map_track">
+  <div :class="{map_track:true, full:isFull}">
 
     <div class="table_wrap-search">
       <el-date-picker
@@ -12,7 +12,10 @@
       
       <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
       <el-button type="info" @click="track20()">最近20天</el-button>
-      <el-button type="danger" @click="full()">全屏</el-button>
+      <el-button type="danger" @click="full()">
+        <span v-show="!isFull">全屏</span>
+        <span v-show="isFull">退出全屏</span>
+      </el-button>
     </div>
 
     <div id="a-map"></div>
@@ -30,6 +33,7 @@ export default {
     return ({
       se:'',
       scooterId:'',
+      isFull:false,
       point:[]
     });
   },
@@ -117,7 +121,9 @@ export default {
     },
     resetSearch:function(){},
     track20:function(){},
-    full:function(){}
+    full:function(){
+      this.isFull=!this.isFull;
+    }
 
   },
   mounted:function(){
@@ -127,7 +133,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.map_track{
+.map_track.full{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: ;
+}
+.map_track.full #a-map{
+  min-height: calc(100vh - 50px);
 }
 .no_data{
   position: absolute;
