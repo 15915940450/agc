@@ -56,7 +56,6 @@ export default {
     background: #FFF;
   }
   .map{
-    background: #aaa;
-    min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
+    padding: 1px;
   }
 </style>

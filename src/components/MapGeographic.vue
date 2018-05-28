@@ -2,12 +2,20 @@
   <div class="map_track">
     <div id="a-map"></div>
     <h5 class="no_data">无定位。</h5>
+    <div class="info">
+      <p>
+        <span>中控SN: {{sn}}</span>
+        <span>位置: {{address}}</span>
+        <span>最后刷新坐标时间: {{timeSlash}}</span>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
 var map;
 var pathSimplifierIns;
+var geocoder; //地址与经纬度
 
 export default {
   name:'MapGeographic',
@@ -19,6 +27,11 @@ export default {
       point:'',
       time:0
     });
+  },
+  computed:{
+    timeSlash:function(){
+      return (_.toSlash(new Date(window.Number(this.time))));
+    }
   },
   methods:{
     amap:function(){
@@ -101,6 +114,21 @@ export default {
 
         pathSimplifierIns.setData(dataSet);
       }
+    },
+    getAddressThenSet:function(){
+      var vueThis=this;
+      var arrLL=vueThis.point.split(',');
+      AMap.service('AMap.Geocoder',function(){
+        geocoder=new AMap.Geocoder();
+        geocoder.getAddress(arrLL,function(status,result){
+          // console.log(result);
+          if(status==='complete' && result.info==='OK'){
+            vueThis.address=result.regeocode.formattedAddress;
+          }else{
+            vueThis.address='获取地址失败';
+          }
+        });
+      });
     }
 
 
@@ -111,6 +139,7 @@ export default {
     this.sn=this.$route.query.sn;
     this.point=this.$route.query.ll;
     this.time=this.$route.query.time;
+    this.getAddressThenSet();
   },
   mounted:function(){
     this.amap();
@@ -122,10 +151,9 @@ export default {
 <style lang="css" scoped>
 .map_track{
   position: relative;
-  min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
 }
 #a-map{
-  min-height: calc(100vh - 60px - 60px - 20px - 50px - 20px - 50px);
+  min-height: calc(100vh - 142px - 45px - 50px - 3px);
 }
 .no_data{
   position: absolute;
@@ -134,5 +162,12 @@ export default {
   transform: translate(-50%, -50%);
   color: #FFF;
   font-weight: 500;
+}
+.info span{
+  margin-left: 20px;
+  margin-right: 30px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #555;
 }
 </style>
