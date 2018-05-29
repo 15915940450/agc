@@ -50,11 +50,11 @@ export default {
         map.addControl(new AMap.OverView({isOpen:true}));
       });
       AMapUI.load(['ui/misc/PathSimplifier'], function(PathSimplifier) {
-        // vueThis.callMethod('track',[PathSimplifier]);
         vueThis.track(PathSimplifier);
       });
     },
     track:function(PathSimplifier){
+      var vueThis=this;
       pathSimplifierIns=new PathSimplifier({
         zIndex:100,
         map:map,
@@ -96,35 +96,45 @@ export default {
       });
       //======================================这里构建两条简单的轨迹，仅作示例
       pathSimplifierIns.setData(null);
-      // pathSimplifierIns.setData(null);
-    },
-    setData:function(data){
-      //console.log(data);
-      if(data.result.points.length===0){
-        pathSimplifierIns.setData(null);
-      }else{
-        // 中控轨迹
-        //console.log(data.result.points);
-        var arrPath=[];
-        // $.each(data.result.points,function(index,v){
-        //   arrPath[index]=v.split(',');
-        // });
-        //console.log(arrPath);
-
-        var dataSet=[{
-          name:'中控轨迹',
-          path:arrPath
-        }];
-
-        pathSimplifierIns.setData(dataSet);
-      }
+      vueThis.fetchPoints();
     },
     resetSearch:function(){},
     track20:function(){},
     full:function(){
       this.isFull=!this.isFull;
+    },
+    fetchPoints:function(){
+      var vueThis=this;
+      var sendData={
+        scooterId:'574C545B0A13',
+        // scooterId:vueThis.scooterId,
+        startTime:1511193600000,
+        endTime:1511280000000
+      };
+      vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
+        //相鄰去重
+        vueThis.point=_.sortedUniq(objRps.result.points);
+        vueThis.setData(vueThis.point);
+      },{
+        objSendData:sendData
+      });
+    },
+    setData:function(point){
+      if(point.length===0){
+        pathSimplifierIns.setData(null);
+      }else{
+        // 中控轨迹
+        var arrPath=[];
+        point.forEach(function(v,index){
+          arrPath[index]=v.split(',');
+        });
+        var dataSet=[{
+          name:'中控轨迹',
+          path:arrPath
+        }];
+        pathSimplifierIns.setData(dataSet);
+      }
     }
-
   },
   mounted:function(){
     this.amap();
