@@ -11,7 +11,7 @@
         end-placeholder="结束日期">
       </el-date-picker>
       
-      <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
+      <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置(今天)</el-button>
       <el-button type="info" @click="track20()">最近20天</el-button>
       <el-button type="danger" @click="full()">
         <span v-show="!isFull">全屏</span>
@@ -20,7 +20,10 @@
     </div>
 
     <div id="a-map"></div>
-    <h5 class="no_data" v-if="!point.length">无轨迹记录。</h5>
+    <h5 class="no_data" v-if="!point.length">
+      <icon name="info"></icon>
+      无轨迹记录。
+    </h5>
   </div>
 </template>
 
@@ -168,5 +171,9 @@ export default {
   .sn{
     float: left;
     margin-left: 15px;
+  }
+  .no_data{
+    background: red;
+    padding:2px 5px;
   }
 </style>
