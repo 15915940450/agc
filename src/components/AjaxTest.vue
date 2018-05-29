@@ -1,13 +1,8 @@
 <template lang="html">
   <div class="ajax_test">
-    <div class="test">LL</div>
-    <div class="input_number_wrap">
-      <el-input-number
-        v-model="total"
-        @input.native="handleOninput"
-      >
-        
-      </el-input-number>
+    <div class="test">{{ll.leon.lai}}</div>
+    <div>
+      <el-button @click="changeLL()">w</el-button>
     </div>
   </div>
 </template>
@@ -18,48 +13,37 @@ export default {
   name:'AjaxTest',
   data:function(){
     return ({
-      total:0,
-      search:'',
-      isNotSearch:true,
-      THILINA:[
-      ],
-      msg:'',
-      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
+      ll:{
+        leon:{
+          lai:'i love you okay'
+        }
+      }
     });
   },
   computed:{
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    pageNum:function(){
-      this.fetchData();
-    },
-    'modalStore.needLogin':function(val){
-      if(!val){
-        this.fetchData();
-      }
+    // deep watcher
+    ll:{
+      handler:function(val){
+        _.logErr(val);
+      },
+      deep:true
     }
   },
   components:{
   },
   methods: {
-    fetchData:function(){
-    },
-    imSearch:_.debounce(function(){
-      this.isNotSearch=false;
-      this.fetchData();
-    },690),
-    resetSearch:function(){
-      this.search='';
-      this.fetchData();
-    },
-    handleOninput:function(ev){
-      console.log(ev.target.value);
+    changeLL:function(){
+      if(this.ll.leon.lai==='Leon'){
+        this.ll.leon.lai='i love you okay';
+      }else{
+        this.ll.leon.lai='Leon';
+      }
     }
   },
   created:function(){
-    this.fetchData();
-    // _.logErr(JSON.stringify(this.$store.state.modalStore));
   }
 };
 </script>
@@ -75,8 +59,8 @@ export default {
 }
   .test{
     border: 2px solid violet;
-    width: 90px;
+    width: 190px;
     height: 60px;
-    animation: thilina 1.2s ease-out infinite alternate;
+    animation: thilina 10.2s ease-out infinite alternate;
   }
 </style>

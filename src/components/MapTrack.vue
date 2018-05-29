@@ -9,7 +9,6 @@
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-        @change="fetchPoints()"
         >
       </el-date-picker>
       
@@ -43,6 +42,15 @@ export default {
       isFull:false,
       point:[]
     });
+  },
+  watch:{
+    se:{
+      // deep:true,
+      handler:function(){
+        // _.logErr(val);
+        this.fetchPoints();
+      }
+    }
   },
   methods:{
     //mounted^^^amap==>track==>fetchPoints==>setData
@@ -108,11 +116,11 @@ export default {
     },
     resetSearch:function(){
       this.se=[_.dateAgo(0),_.dateAgo(0)];
-      this.fetchPoints();
+      // this.fetchPoints();
     },
     track20:function(){
       this.se=[_.dateAgo(20),_.dateAgo(0)];
-      this.fetchPoints();
+      // this.fetchPoints();
     },
     full:function(){
       this.isFull=!this.isFull;
