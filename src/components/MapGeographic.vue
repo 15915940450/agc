@@ -88,15 +88,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  .no_data{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #FFF;
-    font-weight: 500;
-    display: none;
-  }
   .info span{
     margin-left: 20px;
     margin-right: 30px;

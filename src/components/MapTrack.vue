@@ -19,7 +19,7 @@
     </div>
 
     <div id="a-map"></div>
-    <h5 class="no_data" v-if="point.length">无轨迹记录。</h5>
+    <h5 class="no_data" v-if="!point.length">无轨迹记录。</h5>
   </div>
 </template>
 
@@ -31,13 +31,14 @@ export default {
   name:'MapTrack',
   data:function(){
     return ({
-      se:'',
+      se:'',  //dateragne(start and end)
       scooterId:'',
       isFull:false,
       point:[]
     });
   },
   methods:{
+    //mounted^^^amap==>track==>fetchPoints==>setData
     amap:function(){
       var vueThis=this;
       map = new AMap.Map('a-map',{
@@ -143,23 +144,15 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.map_track.full{
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: ;
-}
-.map_track.full #a-map{
-  min-height: calc(100vh - 50px);
-}
-.no_data{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #FFF;
-  font-weight: 500;
-}
+  .map_track.full{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: ;
+  }
+  .map_track.full #a-map{
+    min-height: calc(100vh - 50px);
+  }
 </style>
