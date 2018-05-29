@@ -8,7 +8,9 @@
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
-        end-placeholder="结束日期">
+        end-placeholder="结束日期"
+        @change="fetchPoints()"
+        >
       </el-date-picker>
       
       <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置(今天)</el-button>
@@ -41,11 +43,6 @@ export default {
       isFull:false,
       point:[]
     });
-  },
-  watch:{
-    se:function(val){
-      console.log(val);
-    }
   },
   methods:{
     //mounted^^^amap==>track==>fetchPoints==>setData
@@ -109,8 +106,14 @@ export default {
       pathSimplifierIns.setData(null);
       vueThis.fetchPoints();
     },
-    resetSearch:function(){},
-    track20:function(){},
+    resetSearch:function(){
+      this.se=[_.dateAgo(0),_.dateAgo(0)];
+      this.fetchPoints();
+    },
+    track20:function(){
+      this.se=[_.dateAgo(20),_.dateAgo(0)];
+      this.fetchPoints();
+    },
     full:function(){
       this.isFull=!this.isFull;
     },
