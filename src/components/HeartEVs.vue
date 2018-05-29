@@ -71,6 +71,7 @@
                   type="text"
                   size="small"
                   @click="rrPush(scope.row,'track')"
+                  v-if="false"
                   >
                   轨迹
                 </el-button>

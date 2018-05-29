@@ -85,7 +85,16 @@ export default function(urlMethod,success,paramSettings){
             success(objRps);
           }else{
             //normal rqs
-            //code...
+            //hasLogin=>code...
+            var arrExtraNeedLoginCode=[
+              1004, //登錄驗證碼錯誤
+              1005, //登錄驗證碼不能爲空
+              1006, //登錄密碼錯誤
+              1007  //用戶不存在
+            ];
+            if(arrExtraNeedLoginCode.indexOf(objRps.code)!==-1){
+              objRps.code=1050;
+            }
             switch(objRps.code){
 
             case 1050:  //need login
