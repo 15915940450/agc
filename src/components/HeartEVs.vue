@@ -25,7 +25,7 @@
               <template slot-scope="props">
                 <el-form label-position="left" inline class="im-table-expand">
                   <el-form-item label="坐标：">
-                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row.sid,props.row.sn,props.row.location,props.row.locationUpdateTime)">
+                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row,'point')">
                       {{props.row.location}}
                     </el-button>
                   </el-form-item>
@@ -68,9 +68,10 @@
                   熄火
                 </el-button>
                 <el-button
-                  v-if="false"
                   type="text"
-                  size="small">
+                  size="small"
+                  @click="rrPush(scope.row,'track')"
+                  >
                   轨迹
                 </el-button>
                 <el-button
@@ -235,14 +236,19 @@ export default {
       this.search='';
       this.fetchData();
     },
-    rrPush:function(sid,sn,ll,time){
+    rrPush:function(ev,childrenPath){
+      // _.logErr(ev);
+      var query=null;
+      if(childrenPath==='point'){
+        query={
+          sn:ev.sn,
+          ll:ev.location,
+          time:ev.locationUpdateTime
+        };
+      }
       this.$router.push({
-        path:'/ev/'+sid+'/point',
-        query:{
-          sn:sn,
-          ll:ll,
-          time:time
-        }
+        path:'/ev/'+ev.sid+'/'+childrenPath,
+        query:query
       });
     }
   },
