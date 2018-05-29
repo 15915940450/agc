@@ -2,6 +2,7 @@
   <div :class="{map_track:true, full:isFull}">
 
     <div class="table_wrap-search">
+      <span class="sn">中控SN: {{sn}}</span>
       <el-date-picker
         v-model="se"
         type="daterange"
@@ -31,11 +32,17 @@ export default {
   name:'MapTrack',
   data:function(){
     return ({
-      se:'',  //dateragne(start and end)
+      se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)
       scooterId:'',
+      sn:'',
       isFull:false,
       point:[]
     });
+  },
+  watch:{
+    se:function(val){
+      console.log(val);
+    }
   },
   methods:{
     //mounted^^^amap==>track==>fetchPoints==>setData
@@ -107,10 +114,9 @@ export default {
     fetchPoints:function(){
       var vueThis=this;
       var sendData={
-        scooterId:'574C545B0A13',
-        // scooterId:vueThis.scooterId,
-        startTime:1511193600000,
-        endTime:1511280000000
+        scooterId:vueThis.scooterId, //'574C545B0A13'
+        startTime:vueThis.se[0].getTime(),  //1511193600000
+        endTime:vueThis.se[1].getTime()+86400000
       };
       vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
         //相鄰去重
@@ -137,6 +143,10 @@ export default {
       }
     }
   },
+  created:function(){
+    this.scooterId=this.$route.params.id;
+    this.sn=this.$route.query.sn;
+  },
   mounted:function(){
     this.amap();
   }
@@ -154,5 +164,9 @@ export default {
   }
   .map_track.full #a-map{
     min-height: calc(100vh - 50px);
+  }
+  .sn{
+    float: left;
+    margin-left: 15px;
   }
 </style>

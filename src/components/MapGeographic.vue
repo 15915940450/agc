@@ -89,7 +89,7 @@ export default {
 
 <style lang="css" scoped>
   .info span{
-    margin-left: 20px;
+    margin-left: 15px;
     margin-right: 30px;
     font-size: 13px;
     font-weight: 300;

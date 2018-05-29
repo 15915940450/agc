@@ -238,13 +238,12 @@ export default {
     },
     rrPush:function(ev,childrenPath){
       // _.logErr(ev);
-      var query=null;
+      var query={
+        sn:ev.sn
+      };
       if(childrenPath==='point'){
-        query={
-          sn:ev.sn,
-          ll:ev.location,
-          time:ev.locationUpdateTime
-        };
+        query.ll=ev.location;
+        query.time=ev.locationUpdateTime;
       }
       this.$router.push({
         path:'/ev/'+ev.sid+'/'+childrenPath,
