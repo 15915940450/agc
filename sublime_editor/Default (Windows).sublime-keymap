@@ -1,0 +1,5 @@
+[
+  { "keys": ["alt+up"], "command": "scroll_lines", "args": {"amount": 1.0 } },
+  { "keys": ["alt+down"], "command": "scroll_lines", "args": {"amount": -1.0 } },
+  { "keys": ["ctrl+k", "ctrl+n"], "command": "title_case" }
+]
