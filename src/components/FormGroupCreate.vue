@@ -10,7 +10,7 @@
       <div class="modal_wrap-body">
         <el-form :model="formGroupCreate" :rules="rules" ref="formGroupCreate">
           <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
-            <el-input v-model="formGroupCreate.name" auto-complete="off" placeholder="限字母、数字、汉字，不超过10个字"></el-input>
+            <el-input v-model="formGroupCreate.name" auto-complete="off" placeholder="限字母、数字、汉字、符号，不超过10个字"></el-input>
           </el-form-item>
           <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.canRefund" placeholder="请选择">
@@ -98,7 +98,7 @@ export default {
       rules:{
         name:[
           {required:true,message:'群组名称不能为空',trigger:'blur'},
-          {pattern:/^[A-Za-z0-9\u4e00-\u9fa5]{1,10}$/,message:'必须是1到10个汉字，字母，数字组合 ',trigger:'blur'}
+          {pattern:/^.{1,10}$/,message:'必须是1到10个汉字，字母，数字或符号组合',trigger:'blur'}
         ],
         cityCode:[
           {required:true,message:'请选择城市',trigger:'change'}
