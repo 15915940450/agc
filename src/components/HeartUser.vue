@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="user_list" v-if="(users.length || !isNotSearch)">
+    <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList)" v-loading="loadingUserList">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -99,7 +99,7 @@
     </div>
 
     <!-- empty -->
-    <div v-if="(!users.length && isNotSearch)" class="empty_user im_empty_wrap">
+    <div v-if="(!users.length && isNotSearch && !loadingUserList)" class="empty_user im_empty_wrap">
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_user.png" />
         <p class="im_empty_p">您还没有用户哦！</p>
@@ -140,6 +140,7 @@ export default {
       users:[
 
       ],
+      loadingUserList:true,
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -171,6 +172,7 @@ export default {
   methods: {
     fetchData:function(){
       var vueThis=this;
+      vueThis.loadingUserList=true;
       var advancedParam=JSON.stringify({
         groupCode:window.Number(vueThis.$route.params.groupcode),
         userPhone:vueThis.search
@@ -181,6 +183,7 @@ export default {
         pageSize:vueThis.$yApi.defaultPS
       };
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+        vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
       },{
