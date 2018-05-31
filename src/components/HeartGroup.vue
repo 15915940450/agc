@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="component_group eqcalc">
     <h3 class="title">群组列表</h3>
-    <div class="group-list">
+    <div class="group-list" v-loading="loadingGroupList">
       <el-row :gutter="10">
         <el-col v-for="(item) in group" :span="6" :key="item.id">
           <div class="group_card">
@@ -83,7 +83,8 @@ export default {
     return ({
       group:[],
       msg:'群组设置成功',
-      groupSetItem:null
+      groupSetItem:null,
+      loadingGroupList:true
     });
   },
   computed:{
@@ -115,11 +116,13 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
+      vueThis.loadingGroupList=true;
       var sendData={
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
       vueThis.$rqs(vueThis.$yApi.groupList,function(objRps){
+        vueThis.loadingGroupList=false;
         vueThis.total=objRps.result.total;
         vueThis.group=objRps.result.list;
       },{
