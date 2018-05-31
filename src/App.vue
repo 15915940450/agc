@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{_port1590_:port1590}">
     <LayoutTopBar />
 
     <el-row>
@@ -28,6 +28,11 @@ import LayoutLogin from './components/LayoutLogin.vue';
 
 export default {
   name: 'App',
+  data:function(){
+    return ({
+      port1590:(window.location.port==='1590')
+    });
+  },
   components:{
     LayoutTopBar,
     LayoutNavMaster,
@@ -42,6 +47,9 @@ export default {
     margin:0 auto;
     background: #FFF;
     box-shadow: 0px 0px 2px 2px rgba(0,0,0,.1);
+  }
+  #app._port1590_{
+    width: 1070px;
   }
   #app a{
     color:#fc8181;

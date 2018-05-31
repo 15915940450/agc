@@ -92,7 +92,12 @@ export default {
     height: 50px;
     list-style: none;
   }
-
+  ._port1590_ #im_nav li{
+    overflow: hidden;
+  }
+  ._port1590_ #im_nav li a{
+    background-position: 10px 15px !important;
+  }
   #im_nav li a{
     display: block;
     font-size: 14px;

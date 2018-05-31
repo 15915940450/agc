@@ -79,6 +79,11 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   max-width: 180px;
   min-height:calc(100vh - 62px);
 }
+//my ubuntu innerWidth is 1031px
+._port1590_ #left_nav_wrap{
+  width: 50px;
+  max-width: 50px;
+}
 //amap
 .map_track{
   position: relative;
