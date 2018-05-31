@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Color Scheme - Default/Sixteen.sublime-color-scheme",
+	"color_scheme": "Packages/ayu/ayu-light.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
@@ -40,6 +40,7 @@
 	"font_size": 11,
 	"ignored_packages":
 	[
+		"SublimeLinter-contrib-sass-lint"
 	],
 	"tab_size": 2,
 	"theme": "Default.sublime-theme",

@@ -27,15 +27,12 @@ gulp.task('backupYApijs',function(){
 //backupEditorConfig
 gulp.task('backupEditorConfig',function(){
   //:Sublime Text 3
-  //delete(sublime_editor)
-  del(['./sublime_editor/**/*']).then(function(){
-    //copy from /home/thilina/.config/sublime-text-3/Packages/User
-    gulp.src([
-      '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-keymap',
-      '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-snippet',
-      '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-settings'
-    ]).pipe(gulp.dest('./sublime_editor/'));
-  });
+  //copy from /home/thilina/.config/sublime-text-3/Packages/User
+  gulp.src([
+    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-keymap',
+    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-snippet',
+    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-settings'
+  ]).pipe(gulp.dest('./sublime_editor/'));
   //:vim
   //delete(vim_editor)
   del(['./vim_editor/**/*']).then(function(){
