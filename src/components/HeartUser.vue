@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList)" v-loading="loadingUserList">
+    <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -30,68 +30,70 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 用户列表表格 -->
-        <div class="table_wrap_real">
-          <el-table
-            :data="users" size="medium" stripe
-            class="table_wrap-table"
-            width="100%"
-            >
+        <div v-loading="loadingUserList">
+          <!-- 用户列表表格 -->
+          <div class="table_wrap_real">
+            <el-table
+              :data="users" size="medium" stripe
+              class="table_wrap-table"
+              width="100%"
+              >
 
-            <!-- 展开行 -->
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <el-form label-position="left" inline class="im-table-expand">
-                  <el-form-item label="用户ID">
-                    <span>{{ props.row.id }}</span>
-                  </el-form-item>
-                  <el-form-item label="注册时间">
-                    <span>{{ new Date(props.row.time) }}</span>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column>
+              <!-- 展开行 -->
+              <el-table-column type="expand">
+                <template slot-scope="props">
+                  <el-form label-position="left" inline class="im-table-expand">
+                    <el-form-item label="用户ID">
+                      <span>{{ props.row.id }}</span>
+                    </el-form-item>
+                    <el-form-item label="注册时间">
+                      <span>{{ new Date(props.row.time) }}</span>
+                    </el-form-item>
+                  </el-form>
+                </template>
+              </el-table-column>
 
-            <el-table-column
-              label="#"
-              type="index"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              label="手机号码"
-              prop="phone">
-            </el-table-column>
-            <el-table-column
-              label="电池SN"
-              prop="batteries" :formatter="formatter">
-            </el-table-column>
-            <el-table-column
-              label="中控SN"
-              prop="scooters" :formatter="formatter">
-            </el-table-column>
+              <el-table-column
+                label="#"
+                type="index"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                label="手机号码"
+                prop="phone">
+              </el-table-column>
+              <el-table-column
+                label="电池SN"
+                prop="batteries" :formatter="formatter">
+              </el-table-column>
+              <el-table-column
+                label="中控SN"
+                prop="scooters" :formatter="formatter">
+              </el-table-column>
 
-            <el-table-column label="操作" width="90">
-              <template slot-scope="scope">
-                <el-button
-                  type="text"
-                  size="small" @click="unbindUser(scope)">
-                  解绑
-                </el-button>
-                <el-button
-                  type="text"
-                  size="small" @click="setUser(scope)">
-                  设置
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        
+              <el-table-column label="操作" width="90">
+                <template slot-scope="scope">
+                  <el-button
+                    type="text"
+                    size="small" @click="unbindUser(scope)">
+                    解绑
+                  </el-button>
+                  <el-button
+                    type="text"
+                    size="small" @click="setUser(scope)">
+                    设置
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          
 
-        <div class="table_wrap_pagination">
-          <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
-            <!-- 分页 -->
-          </el-pagination>
+          <div class="table_wrap_pagination">
+            <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+              <!-- 分页 -->
+            </el-pagination>
+          </div>
         </div>
 
       </div>
@@ -130,7 +132,7 @@ export default {
   name:'HeartUser',
   data:function(){
     return ({
-      total:100,
+      total:0,
       msg:'',
       search:'',
       isNotSearch:true,
