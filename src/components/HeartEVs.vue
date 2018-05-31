@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="e_vs">
     <!-- <transition name="el-zoom-in-top"> -->
-    <div class="evs_list eqcalc" v-if="(evs.length || !isNotSearch)">
+    <div class="evs_list eqcalc" v-if="(evs.length || !isNotSearch || loadingEVs)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -17,95 +17,95 @@
             </div>
           </el-col>
         </el-row>
-        <!-- 中控表格 -->
-        <div class="table_wrap_real">
-          <el-table :data="evs" size="medium" stripe style="width: 100%" class="table_wrap-table">
-            <!-- 展开行 -->
-            <el-table-column type="expand">
-              <template slot-scope="props">
-                <el-form label-position="left" inline class="im-table-expand">
-                  <el-form-item label="坐标：">
-                    <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row,'point')">
-                      {{props.row.location}}
-                    </el-button>
-                  </el-form-item>
-                  <el-form-item label="坐标更新时间：" label-width="300">
-                    <span>{{ props.row.locationUpdateTime }}</span>
-                  </el-form-item>
-                </el-form>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="#"
-              type="index"
-              width="50">
-            </el-table-column>
-            <el-table-column
-              label="中控SN"
-              prop="sn">
-            </el-table-column>
-            <el-table-column
-              label="用户名"
-              prop="userName">
-            </el-table-column>
-            <el-table-column
-              label="手机号"
-              prop="owner">
-            </el-table-column>
-            <el-table-column
-              label="电量"
-              prop="soc">
-            </el-table-column>
-            <el-table-column label="操作" width="190">
-              <template slot-scope="scope">
-                <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
-                  唤醒
-                </el-button>
-                <el-button
-                  @click="handleEVoperation(scope,'EVflameout')"
-                  type="text"
-                  size="small">
-                  熄火
-                </el-button>
-                <el-button
-                  type="text"
-                  size="small"
-                  @click="rrPush(scope.row,'track')"
-                  v-if="false"
-                  >
-                  轨迹
-                </el-button>
-                <el-button
-                  v-if="(scope.row.owner)"
-                  @click="handleEVunbind(scope)"
-                  type="text"
-                  size="small">
-                  解绑
-                </el-button>
-                <el-button
-                  v-if="!(scope.row.owner)"
-                  @click="handleEVbind(scope)"
-                  type="text"
-                  size="small">
-                  绑定
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        
-        <div class="table_wrap_pagination">
-          <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
-            <!-- 分页 -->
-          </el-pagination>
-        </div>
-        
+        <div v-loading="loadingEVs">
+          <!-- 中控表格 -->
+          <div class="table_wrap_real">
+            <el-table :data="evs" size="medium" stripe style="width: 100%" class="table_wrap-table">
+              <!-- 展开行 -->
+              <el-table-column type="expand">
+                <template slot-scope="props">
+                  <el-form label-position="left" inline class="im-table-expand">
+                    <el-form-item label="坐标：">
+                      <el-button title="前往地圖查看定位" type="text" @click="rrPush(props.row,'point')">
+                        {{props.row.location}}
+                      </el-button>
+                    </el-form-item>
+                    <el-form-item label="坐标更新时间：" label-width="300">
+                      <span>{{ props.row.locationUpdateTime }}</span>
+                    </el-form-item>
+                  </el-form>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="#"
+                type="index"
+                width="50">
+              </el-table-column>
+              <el-table-column
+                label="中控SN"
+                prop="sn">
+              </el-table-column>
+              <el-table-column
+                label="用户名"
+                prop="userName">
+              </el-table-column>
+              <el-table-column
+                label="手机号"
+                prop="owner">
+              </el-table-column>
+              <el-table-column
+                label="电量"
+                prop="soc">
+              </el-table-column>
+              <el-table-column label="操作" width="190">
+                <template slot-scope="scope">
+                  <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
+                    唤醒
+                  </el-button>
+                  <el-button
+                    @click="handleEVoperation(scope,'EVflameout')"
+                    type="text"
+                    size="small">
+                    熄火
+                  </el-button>
+                  <el-button
+                    type="text"
+                    size="small"
+                    @click="rrPush(scope.row,'track')"
+                    >
+                    轨迹
+                  </el-button>
+                  <el-button
+                    v-if="(scope.row.owner)"
+                    @click="handleEVunbind(scope)"
+                    type="text"
+                    size="small">
+                    解绑
+                  </el-button>
+                  <el-button
+                    v-if="!(scope.row.owner)"
+                    @click="handleEVbind(scope)"
+                    type="text"
+                    size="small">
+                    绑定
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          
+          <div class="table_wrap_pagination">
+            <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+              <!-- 分页 -->
+            </el-pagination>
+          </div>
+        </div>        
       </div>
     </div>
     <!-- </transition> -->
 
     <!-- 没有中控 -->
-    <div class="empty_evs im_empty_wrap eqcalc" v-if="(!evs.length && isNotSearch)">
+    <div class="empty_evs im_empty_wrap eqcalc" v-if="(!evs.length && isNotSearch && !loadingEVs)">
       <h3 class="title">中控列表</h3>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/no_ev.png" alt="还没有中控" />
@@ -153,6 +153,7 @@ export default {
       //   "locationUpdateTime": "1515118511269"//坐标更新时间
       // }
       ],
+      loadingEVs:true,
       msg:'',
       scooterSid:'',
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
@@ -184,6 +185,7 @@ export default {
   methods: {
     fetchData:function(){
       var vueThis=this;
+      vueThis.loadingEVs=true;
       var advancedParam=JSON.stringify({
         scooterSN:vueThis.search
       });
@@ -193,6 +195,7 @@ export default {
         pageSize:vueThis.$yApi.defaultPS
       };
       vueThis.$rqs(vueThis.$yApi.scooterList,function(objRps){
+        vueThis.loadingEVs=false;
         vueThis.total=objRps.result.total;
         vueThis.evs=objRps.result.list;
       },{
