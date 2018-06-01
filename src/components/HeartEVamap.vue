@@ -29,25 +29,11 @@ export default {
   name:'HeartEVamap',
   data:function(){
     return ({
-      formLabelAlign: {
-        name: '',
-        region: ''
-      },
-      routeName:'',
-      fullscreenLoading: false
+      routeName:''
     });
-  },
-  methods:{
-    openFullScreen() {
-      this.fullscreenLoading = true;
-      setTimeout(() => {
-        this.fullscreenLoading = false;
-      }, 2000);
-    }
   },
   created:function(){
     this.routeName=this.$route.name;
-    // console.log(this.$route.name);
   }
 };
 </script>
