@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+// console.log(hoverColor);//test hoverColor
 import {mapState} from 'vuex';
 
 export default {

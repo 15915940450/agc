@@ -21,7 +21,7 @@
     </div>
 
     <div id="a-map" v-loading="loadingTrack"></div>
-    <h5 class="no_data" v-if="!point.length && !loadingTrack">
+    <h5 class="no_data" v-if="noData && !loadingTrack">
       <icon name="info"></icon>
       无轨迹记录。
     </h5>
@@ -30,8 +30,7 @@
 
 <script>
 var map;
-var pathSimplifierIns;
-var mapMarker=[];
+var objPathSimplifier;
 var arrPathColors=[
   '#dc3912',
   '#ff9900',
@@ -63,47 +62,72 @@ export default {
       scooterId:'',
       sn:'',
       isFull:false,
-      point:[],
       thePaths:[
+        // {
+        //   name:'testPath',
+        //   startPlaceName:'beijing',
+        //   endPlaceName:'guangzhou',
+        //   path:[
+        //     [113.144388,22.923772],
+        //     [113.045312,22.613739],
+        //     [113.846596,22.663501],
+        //     [113.845935,22.610040],
+        //     [113.847583,22.598354]
+        //   ]
+        // },
         {
-          name:'testPath',
-          startPlaceName:'beijing',
-          endPlaceName:'guangzhou',
-          path:[
-            [113.144388,22.923772],
-            [113.045312,22.613739],
-            [113.846596,22.663501],
-            [113.845935,22.610040],
-            [113.847583,22.598354]
-          ]
-        },
-        {
-          name:'path2',
-          startPlaceName:'foshan',
-          endPlaceName:'guangzhou',
-          path:[
-            [113.644398,22.923772],
-            [113.645392,22.613739],
-            [113.346596,22.663501],
-            [113.245995,22.610040],
-            [113.647593,22.598354]
-          ]
+          name:'',
+          startPlaceName:'',
+          endPlaceName:'',
+          path:[]
         }
       ],
       loadingTrack:true
     });
+  },
+  computed:{
+    noData:function(){
+      return(!this.thePaths[0].path.length);
+    }
   },
   watch:{
     se:{
       // deep:true,
       handler:function(){
         // _.logErr(val);
-        this.fetchPoints();
+        this.fetchThePaths();
       }
     }
   },
   methods:{
-    //mounted^^^amap==>track==>fetchPoints==>setData
+    fetchThePaths:function(){
+      var vueThis=this;
+      vueThis.loadingTrack=true;
+      var sendData={
+        // scooterId:'574C545B0A13',
+        scooterId:vueThis.scooterId,
+        // startTime:1511193600000,
+        startTime:vueThis.se[0].getTime(),
+        // endTime:1511193600000+86400000
+        endTime:vueThis.se[1].getTime()+86400000
+      };
+      vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
+        vueThis.loadingTrack=false;
+        //clear the map
+        map.clearMap();
+        //相鄰去重( here we supose only one path << thilina)
+        vueThis.thePaths[0].path=(_.sortedUniq(objRps.result.points)).map(function(v){
+          return v.split(',');
+        });
+        // _.logErr(vueThis.thePaths[0].path);
+        //
+        objPathSimplifier.setData(vueThis.thePaths);
+        vueThis.addSimpleMarker();
+      },{
+        objSendData:sendData
+      });
+    },
+    //mounted^^^amap==>track==>fetchThePaths==>objPathSimplifier.setData==>addSimpleMarker
     amap:function(){
       var vueThis=this;
       map = new AMap.Map('a-map',{
@@ -121,17 +145,18 @@ export default {
     },
     track:function(PathSimplifier){
       var vueThis=this;
-      pathSimplifierIns=new PathSimplifier({
+      objPathSimplifier=new PathSimplifier({
         zIndex:99,
         map:map,
         getPath:function(pathData){ //pathIndex
           return pathData.path;
         },
-        getHoverTitle: function(pathData, pathIndex, pointIndex) {
-          if(pointIndex===0){
+        getHoverTitle: function(pathData, pathIndex, pointIndex){
+          // _.logErr(pathData);
+          if(pointIndex===0 && pathData.startPlaceName){
             return '起点：'+pathData.startPlaceName;
           }
-          if(pointIndex===pathData.path.length-1){
+          if(pointIndex===pathData.path.length-1 && pathData.endPlaceName){
             return '终点：'+pathData.endPlaceName;
           }
         },
@@ -165,61 +190,19 @@ export default {
         }
       });
       //======================================这里构建两条简单的轨迹，仅作示例
-      pathSimplifierIns.setData(null);
-      vueThis.fetchPoints();
+      objPathSimplifier.setData(null);
+      vueThis.fetchThePaths();
     },
     resetSearch:function(){
       this.se=[_.dateAgo(0),_.dateAgo(0)];
-      // this.fetchPoints();
     },
     track20:function(){
       this.se=[_.dateAgo(20),_.dateAgo(0)];
-      // this.fetchPoints();
     },
     full:function(){
       this.isFull=!this.isFull;
     },
-    fetchPoints:function(){
-      var vueThis=this;
-      vueThis.loadingTrack=true;
-      var sendData={
-        scooterId:'574C545B0A13',
-        // scooterId:vueThis.scooterId,
-        startTime:1511193600000,
-        // startTime:vueThis.se[0].getTime(),
-        endTime:1511193600000+86400000
-        // endTime:vueThis.se[1].getTime()+86400000
-      };
-      vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
-        vueThis.loadingTrack=false;
-        map.clearMap();
-        mapMarker.length=0;
-        //相鄰去重
-        vueThis.point=_.sortedUniq(objRps.result.points);
-        vueThis.setData(vueThis.point);
-      },{
-        objSendData:sendData
-      });
-    },
-    setData:function(point){
-      var vueThis=this;
-      if(point.length===0){
-        pathSimplifierIns.setData(null);
-      }else{
-        // 中控轨迹
-        var arrPath=[];
-        point.forEach(function(v,index){
-          arrPath[index]=v.split(',');
-        });
-        var dataSet=[{
-          name:'中控轨迹',
-          path:arrPath
-        }];
-        // pathSimplifierIns.setData(dataSet);
-        vueThis.addSimpleMarker();
-        pathSimplifierIns.setData(vueThis.thePaths);
-      }
-    },
+
     addSimpleMarker:function(){
       var vueThis=this;
       AMapUI.loadUI(['overlay/SimpleMarker'],function(SimpleMarker){
