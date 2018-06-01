@@ -120,9 +120,11 @@ export default {
           return v.split(',');
         });
         // _.logErr(vueThis.thePaths[0].path);
-        //
-        objPathSimplifier.setData(vueThis.thePaths);
-        vueThis.addSimpleMarker();
+        //hasData then pathandmarker
+        if(!vueThis.noData){
+          objPathSimplifier.setData(vueThis.thePaths);
+          vueThis.addSimpleMarker();
+        }
       },{
         objSendData:sendData
       });
