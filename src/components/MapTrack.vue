@@ -31,6 +31,29 @@
 <script>
 var map;
 var pathSimplifierIns;
+var mapMarker=[];
+var arrPathColors=[
+  '#3366cc',
+  '#dc3912',
+  '#ff9900',
+  '#109618',
+  '#990099',
+  '#0099c6',
+  '#dd4477',
+  '#66aa00',
+  '#b82e2e',
+  '#316395',
+  '#994499',
+  '#22aa99',
+  '#aaaa11',
+  '#6633cc',
+  '#e67300',
+  '#8b0707',
+  '#651067',
+  '#329262',
+  '#5574a6',
+  '#3b3eac'
+];
 
 export default {
   name:'MapTrack',
@@ -41,6 +64,32 @@ export default {
       sn:'',
       isFull:false,
       point:[],
+      thePaths:[
+        {
+          name:'testPath',
+          startPlaceName:'beijing',
+          endPlaceName:'guangzhou',
+          path:[
+            [113.144388,22.923772],
+            [113.045312,22.613739],
+            [113.846596,22.663501],
+            [113.845935,22.610040],
+            [113.847583,22.598354]
+          ]
+        },
+        {
+          name:'path2',
+          startPlaceName:'foshan',
+          endPlaceName:'guangzhou',
+          path:[
+            [113.644398,22.923772],
+            [113.645392,22.613739],
+            [113.346596,22.663501],
+            [113.245995,22.610040],
+            [113.647593,22.598354]
+          ]
+        }
+      ],
       loadingTrack:true
     });
   },
@@ -79,7 +128,6 @@ export default {
           return pathData.path;
         },
         getHoverTitle: function(pathData, pathIndex, pointIndex) {
-          // console.log(pathData);
           if(pointIndex===0){
             return '起点：'+pathData.startPlaceName;
           }
@@ -130,12 +178,17 @@ export default {
       var vueThis=this;
       vueThis.loadingTrack=true;
       var sendData={
-        scooterId:vueThis.scooterId, //'574C545B0A13'
-        startTime:vueThis.se[0].getTime(),  //1511193600000
-        endTime:vueThis.se[1].getTime()+86400000
+        scooterId:'574C545B0A13',
+        // scooterId:vueThis.scooterId,
+        startTime:1511193600000,
+        // startTime:vueThis.se[0].getTime(),
+        endTime:1511193600000+86400000
+        // endTime:vueThis.se[1].getTime()+86400000
       };
       vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
         vueThis.loadingTrack=false;
+        map.clearMap();
+        mapMarker.length=0;
         //相鄰去重
         vueThis.point=_.sortedUniq(objRps.result.points);
         vueThis.setData(vueThis.point);
@@ -144,6 +197,7 @@ export default {
       });
     },
     setData:function(point){
+      var vueThis=this;
       if(point.length===0){
         pathSimplifierIns.setData(null);
       }else{
@@ -156,10 +210,12 @@ export default {
           name:'中控轨迹',
           path:arrPath
         }];
-        pathSimplifierIns.setData(dataSet);
+        // pathSimplifierIns.setData(dataSet);
+        pathSimplifierIns.setData(vueThis.thePaths);
       }
-    }
-  },
+    },
+    
+  },  //methods
   created:function(){
     this.scooterId=this.$route.params.id;
     this.sn=this.$route.query.sn;
