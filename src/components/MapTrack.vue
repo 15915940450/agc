@@ -20,8 +20,8 @@
       </el-button>
     </div>
 
-    <div id="a-map"></div>
-    <h5 class="no_data" v-if="!point.length">
+    <div id="a-map" v-loading="loadingTrack"></div>
+    <h5 class="no_data" v-if="!point.length && !loadingTrack">
       <icon name="info"></icon>
       无轨迹记录。
     </h5>
@@ -40,7 +40,8 @@ export default {
       scooterId:'',
       sn:'',
       isFull:false,
-      point:[]
+      point:[],
+      loadingTrack:true
     });
   },
   watch:{
@@ -127,12 +128,14 @@ export default {
     },
     fetchPoints:function(){
       var vueThis=this;
+      vueThis.loadingTrack=true;
       var sendData={
         scooterId:vueThis.scooterId, //'574C545B0A13'
         startTime:vueThis.se[0].getTime(),  //1511193600000
         endTime:vueThis.se[1].getTime()+86400000
       };
       vueThis.$rqs(vueThis.$yApi.scooterTrack,function(objRps){
+        vueThis.loadingTrack=false;
         //相鄰去重
         vueThis.point=_.sortedUniq(objRps.result.points);
         vueThis.setData(vueThis.point);
