@@ -2,9 +2,13 @@
   <div class="left_nav">
     <ul id="im_nav">
       <li v-for="(item) in imNav" :class="{active:(isActive+'')===(item.id+'')}" :key="item.id">
-        <a href="javascript:;" @click="rrPush(item)">{{item.name}}</a>
+        <a :class="item.theClass" href="javascript:;" @click="rrPush(item)">
+          <i class="icon_menu">icon_menu</i>
+          <span>{{item.name}}</span>
+        </a>
       </li>
     </ul>
+    <div class="indicator"></div>
   </div>
 </template>
 
@@ -26,26 +30,31 @@ export default {
         {
           id:1,
           name:'首页概览',
+          theClass:'heartjoy',
           link:'/'
         },
         {
           id:2,
           name:'群组管理',
+          theClass:'heartgroup',
           link:'/group'
         },
         {
           id:3,
           name:'押金管理',
+          theClass:'heartdeposit',
           link:'/deposit/1'
         },
         {
           id:4,
           name:'中控管理',
+          theClass:'heartevs',
           link:'/evs/1'
         },
         {
           id:5,
           name:'系统管理',
+          theClass:'heartsyssetting',
           link:'/sys'
         }
       ]
@@ -83,16 +92,16 @@ export default {
 </script>
 
 <style lang="css" scoped>
+  .left_nav{
+    position: relative;
+  }
   #im_nav,#im_nav *{
     margin: 0;
     padding: 0;
   }
-  #im_nav{}
   #im_nav li{
     height: 50px;
     list-style: none;
-  }
-  ._port1590_ #im_nav li{
     overflow: hidden;
   }
   ._port1590_ #im_nav li a{
@@ -101,63 +110,65 @@ export default {
   #im_nav li a{
     display: block;
     font-size: 14px;
+    font-weight: 500;
     color:#333333;
     line-height: 50px;
-    padding-left: 50px;
-    border-left:3px solid #FFF;
+    height: 50px;
   }
-  #im_nav li:hover a{
-    border-left:3px solid #FFF;
+  #im_nav li:hover a,#im_nav li.active a{
     color:#FF6600;
   }
-  #im_nav li.active a{
+  #im_nav li a .icon_menu{
+    display: inline-block;
+    background:url(../assets/icon_menu.png) no-repeat 0 0;
+    width: 50px;
+    height: 20px;
+    text-indent: -96900px;
+    position: relative;
+    top:15px;
+    border-left:3px solid #FFF;
+    color:#FF6600;
+    transition: all 0.2s ease-out;
+  }
+  #im_nav li.active a .icon_menu{
     border-left:3px solid #FF6600;
-    color:#FF6600;
   }
-  #im_nav li:nth-child(1) a{
-    background: url(../assets/nav_home.jpg) no-repeat 20px center;
+  .indicator{
+    display: none;
   }
-  #im_nav li:nth-child(2) a{
-    background: url(../assets/nav_group.jpg) no-repeat 20px center;
+  /*joy*/
+  #im_nav li a.heartjoy .icon_menu{
+    background-position: -40px -15px;
   }
-  #im_nav li:nth-child(3) a{
-    background: url(../assets/nav_money.png) no-repeat 20px center;
+  #im_nav li.active a.heartjoy .icon_menu{
+    background-position: 10px -15px;
   }
-  #im_nav li:nth-child(4) a{
-    background: url(../assets/nav_bike.jpg) no-repeat 20px center;
+  /*group*/
+  #im_nav li a.heartgroup .icon_menu{
+    background-position: -40px -65px;
   }
-  #im_nav li:nth-child(5) a{
-    background: url(../assets/nav_system.jpg) no-repeat 20px center;
+  #im_nav li.active a.heartgroup .icon_menu{
+    background-position: 10px -65px;
   }
-
-  #im_nav li:nth-child(1):hover a{
-    background: url(../assets/nav_home_active.jpg) no-repeat 20px center;
+  /*deposit*/
+  #im_nav li a.heartdeposit .icon_menu{
+    background-position: -40px -115px;
   }
-  #im_nav li:nth-child(2):hover a{
-    background: url(../assets/nav_group_active.jpg) no-repeat 20px center;
+  #im_nav li.active a.heartdeposit .icon_menu{
+    background-position: 10px -115px;
   }
-  #im_nav li:nth-child(3):hover a{
-    background: url(../assets/nav_money_active.jpg) no-repeat 20px center;
+  /*evs*/
+  #im_nav li a.heartevs .icon_menu{
+    background-position: -40px -165px;
   }
-  #im_nav li:nth-child(4):hover a{
-    background: url(../assets/nav_bike_active.jpg) no-repeat 20px center;
+  #im_nav li.active a.heartevs .icon_menu{
+    background-position: 10px -165px;
   }
-  #im_nav li:nth-child(5):hover a{
-    background: url(../assets/nav_system_active.png) no-repeat 20px center;
+  /*syssetting*/
+  #im_nav li a.heartsyssetting .icon_menu{
+    background-position: -40px -215px;
   }
-  #im_nav li:nth-child(1).active a{
-    background: url(../assets/nav_home_active.jpg) no-repeat 20px center;
-  }
-  #im_nav li:nth-child(2).active a{
-    background: url(../assets/nav_group_active.jpg) no-repeat 20px center;
-  }
-  #im_nav li:nth-child(3).active a{
-    background: url(../assets/nav_money_active.jpg) no-repeat 20px center;
-  }
-  #im_nav li:nth-child(4).active a{
-    background: url(../assets/nav_bike_active.jpg) no-repeat 20px center;
-  }
-  #im_nav li:nth-child(5).active a{
-    background: url(../assets/nav_system_active.png) no-repeat 20px center;
+  #im_nav li.active a.heartsyssetting .icon_menu{
+    background-position: 10px -215px;
   }
 </style>
