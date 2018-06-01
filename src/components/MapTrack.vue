@@ -33,7 +33,6 @@ var map;
 var pathSimplifierIns;
 var mapMarker=[];
 var arrPathColors=[
-  '#3366cc',
   '#dc3912',
   '#ff9900',
   '#109618',
@@ -54,6 +53,7 @@ var arrPathColors=[
   '#5574a6',
   '#3b3eac'
 ];
+var hoverColor='#796eff';
 
 export default {
   name:'MapTrack',
@@ -122,7 +122,7 @@ export default {
     track:function(PathSimplifier){
       var vueThis=this;
       pathSimplifierIns=new PathSimplifier({
-        zIndex:100,
+        zIndex:99,
         map:map,
         getPath:function(pathData){ //pathIndex
           return pathData.path;
@@ -134,10 +134,6 @@ export default {
           if(pointIndex===pathData.path.length-1){
             return '终点：'+pathData.endPlaceName;
           }
-          if (pointIndex >= 0) {
-            return '点:' + (pointIndex+1) + '/' + pathData.path.length;
-          }
-          return pathData.name + '，点数量' + pathData.path.length;
         },
         renderOptions: {
           startPointStyle:{
@@ -153,9 +149,18 @@ export default {
             lineWidth:2
           },
           pathLineStyle: {
-            strokeStyle: 'rgba(8,161,144,1)',
             lineWidth: 5,
             dirArrowStyle: true
+          },
+          getPathStyle:function(pathItem){
+            return {
+              pathLineStyle:{
+                strokeStyle:arrPathColors[pathItem.pathIndex]
+              }
+            };
+          },
+          pathLineHoverStyle:{
+            strokeStyle:hoverColor
           }
         }
       });
@@ -211,9 +216,47 @@ export default {
           path:arrPath
         }];
         // pathSimplifierIns.setData(dataSet);
+        vueThis.addSimpleMarker();
         pathSimplifierIns.setData(vueThis.thePaths);
       }
     },
+    addSimpleMarker:function(){
+      var vueThis=this;
+      AMapUI.loadUI(['overlay/SimpleMarker'],function(SimpleMarker){
+        var iconTheme='fresh';
+        var iconStyles=SimpleMarker.getBuiltInIconStyles(iconTheme);
+        vueThis.thePaths.forEach(function(v){
+          // _.logErr(v);
+
+          new SimpleMarker({
+            iconTheme:iconTheme,
+            iconStyle:iconStyles[9],
+            iconLabel:{
+              innerHTML:'起',
+              style:{
+                color:'#FFF'
+              }
+            },
+            map:map,
+            position:v.path[0]
+          });
+
+          new SimpleMarker({
+            iconTheme:iconTheme,
+            iconStyle:iconStyles[6],
+            iconLabel:{
+              innerHTML:'終',
+              style:{
+                color:'#FFF'
+              }
+            },
+            map:map,
+            position:_.last(v.path)
+          });
+
+        });
+      }); //loadUI
+    }
     
   },  //methods
   created:function(){
