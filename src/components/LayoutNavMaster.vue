@@ -104,9 +104,7 @@ export default {
     list-style: none;
     overflow: hidden;
   }
-  ._port1590_ #im_nav li a{
-    background-position: 10px 15px !important;
-  }
+
   #im_nav li a{
     display: block;
     font-size: 14px;
@@ -170,5 +168,8 @@ export default {
   }
   #im_nav li.active a.heartsyssetting .icon_menu{
     background-position: 10px -215px;
+  }
+   ._port1590_ #im_nav li a .icon_menu{
+    margin-left: -15px;
   }
 </style>
