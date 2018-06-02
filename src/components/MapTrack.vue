@@ -119,7 +119,7 @@ export default {
         vueThis.thePaths[0].path=(_.sortedUniq(objRps.result.points)).map(function(v){
           return v.split(',');
         });
-        // _.logErr(vueThis.thePaths[0].path);
+        _.logErr(vueThis.noData);
         //hasData then pathandmarker
         if(!vueThis.noData){
           objPathSimplifier.setData(vueThis.thePaths);
