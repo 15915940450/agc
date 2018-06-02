@@ -8,13 +8,14 @@ method: GET,POSTform,POSTjson
 success: if code is 1000
 
 ==the progress
-1.you must assign an url width __method(1,2,3).
+1.you must assign an url with __method(1,2,3).
 2.if cannot get agentid, do NOT send, except making a login request
 3.create,open
 4.setRequestHeader,withCredentials
 5.send
 6.handle success:success
 7.handle all out of success:fail,fnHandleNOTjsonResult
+8.reviver may be useful
 */
 export default function(urlMethod,success,paramSettings){
   // this is vm object
@@ -58,13 +59,15 @@ export default function(urlMethod,success,paramSettings){
   }
   success=success || function(objRps){_.logErr(objRps);};
 
+  //=================settings is the target, will be overcover by param
   Object.assign(settings,paramSettings);
 
   if(!window.localStorage.agentid && !settings.isLoginRqs){
     store.commit('showLogin');
     return false;
   }
-  
+   
+  //================xmlhttp start
   var xmlhttp;
   if(window.XMLHttpRequest){
     xmlhttp=new XMLHttpRequest();
@@ -81,11 +84,16 @@ export default function(urlMethod,success,paramSettings){
       if(xmlhttp.status===200){
         try{
           var objRps;
-          if(typeof(settings.reviver)==='function'){
-            objRps=JSON.parse(xmlhttp.responseText,settings.reviver);
-          }else{
-            objRps=JSON.parse(xmlhttp.responseText);
-          }
+
+          objRps=JSON.parse(xmlhttp.responseText,function(k,v){
+            if(v===''){
+              return '─';
+            }
+            if(typeof(settings.reviver)==='function'){
+              settings.reviver(k,v);
+            }
+            return v;
+          });
 
           if(settings.isLoginRqs){
             //make login rqs

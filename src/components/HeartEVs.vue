@@ -31,7 +31,8 @@
                       </el-button>
                     </el-form-item>
                     <el-form-item label="坐标更新时间：" label-width="300">
-                      <span>{{ props.row.locationUpdateTime }}</span>
+                      <i class="el-icon-time"></i>
+                      <span v-html="props.row.locationUpdateTime"></span>
                     </el-form-item>
                   </el-form>
                 </template>
@@ -199,7 +200,12 @@ export default {
         vueThis.total=objRps.result.total;
         vueThis.evs=objRps.result.list;
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='locationUpdateTime'){
+            return (_.toSlash(new Date(v)));
+          }
+        }
       });
     },
     handleCurrentChange:function(val){
