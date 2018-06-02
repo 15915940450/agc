@@ -20,7 +20,7 @@ export default function(urlMethod,success,paramSettings){
   // this is vm object
   var vueThis=this;
 
-  var defaultSettings={
+  var settings={
     objSendData:{},
     isLoginRqs:false,
     fnHandleNOTjsonResult:function(error){_.logErr(error);},
@@ -38,7 +38,8 @@ export default function(urlMethod,success,paramSettings){
         offset:55,
         duration:5000
       });
-    }
+    },
+    reviver:false
   };
 
   if(typeof(urlMethod)!=='string'){
@@ -56,13 +57,14 @@ export default function(urlMethod,success,paramSettings){
     method='POSTform';
   }
   success=success || function(objRps){_.logErr(objRps);};
-  var settings=_.assign(defaultSettings,paramSettings);
+
+  Object.assign(settings,paramSettings);
 
   if(!window.localStorage.agentid && !settings.isLoginRqs){
     store.commit('showLogin');
     return false;
   }
-
+  
   var xmlhttp;
   if(window.XMLHttpRequest){
     xmlhttp=new XMLHttpRequest();
@@ -78,7 +80,12 @@ export default function(urlMethod,success,paramSettings){
       }
       if(xmlhttp.status===200){
         try{
-          var objRps=JSON.parse(xmlhttp.responseText);
+          var objRps;
+          if(typeof(settings.reviver)==='function'){
+            objRps=JSON.parse(xmlhttp.responseText,settings.reviver);
+          }else{
+            objRps=JSON.parse(xmlhttp.responseText);
+          }
 
           if(settings.isLoginRqs){
             //make login rqs

@@ -42,9 +42,23 @@ export default {
       }else{
         this.ll.leon.lai='Leon';
       }
+    },
+    fetchData:function(){
+      // var vueThis=this;
+      // // vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
+      //   console.log(objRps);
+      // },{
+      //   reviver:function(k,v){
+      //     if(k==='msg'){
+      //       return '__success__';
+      //     }
+      //     return (v);
+      //   }
+      // });
     }
   },
   created:function(){
+    this.fetchData();
   }
 };
 </script>
