@@ -31,7 +31,6 @@
                       </el-button>
                     </el-form-item>
                     <el-form-item label="坐标更新时间：" label-width="300">
-                      <i class="el-icon-time"></i>
                       <span v-html="props.row.locationUpdateTime"></span>
                     </el-form-item>
                   </el-form>

@@ -102,7 +102,6 @@
                 width="170"
                 >
                 <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
                   <span v-html="scope.row.createTime"></span>
                 </template>
               </el-table-column>
@@ -235,7 +234,6 @@ export default {
           if(k==='createTime'){
             return (_.toSlash(new Date(v+'+08:00')));
           }
-          return v;
         }
       });
     },

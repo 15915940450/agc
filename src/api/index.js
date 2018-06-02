@@ -86,11 +86,12 @@ export default function(urlMethod,success,paramSettings){
           var objRps;
 
           objRps=JSON.parse(xmlhttp.responseText,function(k,v){
+            //real default reviver
             if(v===''){
               return '─';
             }
-            if(typeof(settings.reviver)==='function'){
-              settings.reviver(k,v);
+            if(typeof(settings.reviver)==='function' && settings.reviver(k,v)!==undefined){
+              return (settings.reviver(k,v));
             }
             return v;
           });
