@@ -7021,7 +7021,7 @@ http://localhost/agc/static/lodash.ili.js
     //toSlash
     function toSlash(dateObject){
       let result='';
-      result=dateObject.getFullYear()+'/'+(dateObject.getMonth()+1)+'/'+(dateObject.getDate())+' '+(dateObject.getHours())+':'+(dateObject.getMinutes())+':'+(dateObject.getSeconds());
+      result=dateObject.getFullYear()+'/'+(dateObject.getMonth()+1)+'/'+(dateObject.getDate())+' <small class="slash_time">'+(dateObject.getHours())+':'+(dateObject.getMinutes())+':'+(dateObject.getSeconds())+'</small>';
       return result;
     }
     //====================================ili()

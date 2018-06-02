@@ -44,10 +44,10 @@
                 <template slot-scope="props">
                   <el-form label-position="left" inline class="im-table-expand">
                     <el-form-item label="用户ID">
-                      <span>{{ props.row.id }}</span>
+                      <span>{{props.row.id}}</span>
                     </el-form-item>
                     <el-form-item label="注册时间">
-                      <span>{{ new Date(props.row.time) }}</span>
+                      <span v-html="props.row.time"></span>
                     </el-form-item>
                   </el-form>
                 </template>
@@ -185,11 +185,18 @@ export default {
         pageSize:vueThis.$yApi.defaultPS
       };
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+        // _.logErr(objRps);
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='time'){
+            return (_.toSlash(new Date(v)));
+          }
+          return v;
+        }
       });
     },
     handleCurrentChange:function(val){
