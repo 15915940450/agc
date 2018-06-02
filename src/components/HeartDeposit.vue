@@ -99,9 +99,12 @@
               </el-table-column>
               <el-table-column
                 label="时间"
-                prop="createTime" :formatter="formatter"
                 width="170"
                 >
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span v-html="scope.row.createTime"></span>
+                </template>
               </el-table-column>
               <el-table-column
                 label="类型"
@@ -227,7 +230,13 @@ export default {
         vueThis.total=objRps.result.total;
         vueThis.deposit=objRps.result.list;
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='createTime'){
+            return (_.toSlash(new Date(v+'+08:00')));
+          }
+          return v;
+        }
       });
     },
     fetchDataCard:function(){
@@ -240,10 +249,6 @@ export default {
       });
     },
     formatter:function(row, column, cellValue){
-      // console.log(JSON.stringify(column));
-      if(column.property==='createTime'){
-        return (cellValue.slice(0,-2));
-      }
       if(column.property==='type'){
         return (this.statusZHType[cellValue]);
       }

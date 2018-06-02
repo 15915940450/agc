@@ -47,6 +47,7 @@
                       <span>{{props.row.id}}</span>
                     </el-form-item>
                     <el-form-item label="注册时间">
+                      <i class="el-icon-time"></i>
                       <span v-html="props.row.time"></span>
                     </el-form-item>
                   </el-form>
