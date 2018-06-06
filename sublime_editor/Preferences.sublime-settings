@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/ayu/ayu-light.tmTheme",
+	"color_scheme": "Packages/Entheogen Color Scheme/entheogen.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",

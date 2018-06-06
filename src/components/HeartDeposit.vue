@@ -232,7 +232,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(new Date(v+'+08:00')));
+            return (v.slice(0,-2));
           }
         }
       });
