@@ -13,7 +13,7 @@
             <el-input-number v-model="formRefund.batteryNum" :min="1" :max="max" @input.native="handleIN"></el-input-number>
           </el-form-item>
           <el-form-item label="退还金额" :label-width="formLabelWidth">
-            <strong class="amount">{{amount.toFixed(2)}}</strong>元
+            <strong class="amount">{{amount}}</strong>元
           </el-form-item>
         </el-form>
       </div>
@@ -49,7 +49,7 @@ export default {
       if(num===undefined){
         num=0;
       }
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(num));
+      return (window.Number(this.modalStore.batteryAmount) * window.Number(num)).toFixed(2);
     },
     max:function(){
       return Math.floor(this.refundableDeposit/this.modalStore.batteryAmount);
@@ -77,7 +77,7 @@ export default {
       var sendRefund={
         type:2,
         batteryNum:window.Number(vueThis.formRefund.batteryNum), //pay
-        amount:window.Number(vueThis.amount), //pay
+        amount:vueThis.amount, //pay
         status:3
       };
       vueThis.$rqs(vueThis.$yApi.tradeRefund,function(){

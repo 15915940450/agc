@@ -86,9 +86,6 @@ export default {
         ],
         freeDay:[
           {required:true,message:'免费天数不能为空',trigger:'change'}
-        ],
-        scooterSNs:[
-          {required:true,message:'请选择中控',trigger:'change'}
         ]
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)

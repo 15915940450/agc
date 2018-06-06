@@ -12,7 +12,7 @@
 
           <el-form-item label="电池数量" :label-width="formLabelWidth">
             <!-- <el-input size="small" v-model="formTopUp.batteryNum" auto-complete="off"></el-input> -->
-            <el-input-number v-model="formTopUp.batteryNum" :min="1" @input.native="handleIN"></el-input-number>
+            <el-input-number v-model="formTopUp.batteryNum" :min="1" :max="9999" @input.native="handleIN"></el-input-number>
           </el-form-item>
           <el-form-item label="充值金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount.toFixed(2)}}</strong>元
@@ -70,7 +70,7 @@ export default {
         phone:''+window.localStorage.agentphone,
         type:1,
         payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
-        amount:window.Number(this.amount),
+        amount:(window.Number(this.amount)).toFixed(2),
         batteryNum:window.Number(this.formTopUp.batteryNum),
         status:1
       };
