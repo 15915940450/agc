@@ -66,6 +66,7 @@ export default {
           vueThis.$rqs(vueThis.$yApi.userCreate,function(){
             vueThis.$store.commit('hideNewUser');
             vueThis.$store.commit('showBaseStatus');
+            vueThis.$refs[refName].resetFields();
           },{
             objSendData:sendData
           });
