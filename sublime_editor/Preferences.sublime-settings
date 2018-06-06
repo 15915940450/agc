@@ -34,7 +34,8 @@
 		"batterystation",
 		"ccbike",
 		"node_modules",
-		"agent"
+		"agent",
+		"bootstrap"
 	],
 	"font_face": "DejaVu Sans Mono",
 	"font_size": 11,
