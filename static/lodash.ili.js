@@ -7024,6 +7024,14 @@ http://localhost/agc/static/lodash.ili.js
       result=dateObject.getFullYear()+'/'+(dateObject.getMonth()+1)+'/'+(dateObject.getDate())+' <small class="slash_time">'+(dateObject.getHours())+':'+(dateObject.getMinutes())+':'+(dateObject.getSeconds())+'</small>';
       return result;
     }
+    //createArrDataSource
+    function createArrDataSource(total){
+      var result=[];
+      for(var i=1;i<=(+total);i++){
+        result.push(i);
+      }
+      return result;
+    }
     //====================================ili()
 
     /**
@@ -16679,6 +16687,7 @@ http://localhost/agc/static/lodash.ili.js
     lodash.zh2length = zh2length;
     lodash.toK = toK;
     lodash.toSlash = toSlash;
+    lodash.createArrDataSource = createArrDataSource;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
