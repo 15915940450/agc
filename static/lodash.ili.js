@@ -6874,6 +6874,7 @@ http://localhost/agc/static/lodash.ili.js
       return result;
     }
     //====================================ili(follow chunk)
+    
     //1.ele
     function ele(){
       return '#vue_root';
@@ -6882,7 +6883,7 @@ http://localhost/agc/static/lodash.ili.js
     function toHKstring(dateObject) {
       let result='';
       function pad(number){
-        if(number<10){
+        if(+number<10){
           return '0'+number;
         }
         return number;
@@ -7019,9 +7020,62 @@ http://localhost/agc/static/lodash.ili.js
       }
     }
     //toSlash
-    function toSlash(dateObject){
+    function toSlash(dateObject,format){
+      var format=format || {};
+      var defaultFormat={
+        zero:true,
+        slash:'-',
+        T:true
+      };
+      Object.assign(defaultFormat,format);
+
       let result='';
-      result=dateObject.getFullYear()+'/'+(dateObject.getMonth()+1)+'/'+(dateObject.getDate())+' <small class="slash_time">'+(dateObject.getHours())+':'+(dateObject.getMinutes())+':'+(dateObject.getSeconds())+'</small>';
+      function pad(number){
+        if(+number<10){
+          return '0'+number;
+        }
+        return number;
+      }
+
+      var yyyy=dateObject.getFullYear();
+      var m=dateObject.getMonth()+1;
+      var d=dateObject.getDate();
+      var h=dateObject.getHours();
+      var i=dateObject.getMinutes();
+      var s=dateObject.getSeconds();
+
+      var mm=pad(dateObject.getMonth()+1);
+      var dd=pad(dateObject.getDate());
+      var hh=pad(dateObject.getHours());
+      var ii=pad(dateObject.getMinutes());
+      var ss=pad(dateObject.getSeconds());
+
+      var year,month,date,hour,minutes,seconds,strT;
+
+      if(defaultFormat.zero){
+        year=yyyy;
+        month=mm;
+        date=dd;
+        hour=hh;
+        minutes=ii;
+        seconds=ss;
+      }else{
+        year=yyyy;
+        month=m;
+        date=d;
+        hour=h;
+        minutes=i;
+        seconds=s;
+      }
+
+      if(defaultFormat.T){
+        strT='T';
+      }else{
+        strT=' ';
+      }
+
+
+      result=year+defaultFormat.slash+month+defaultFormat.slash+date+strT+hour+':'+minutes+':'+seconds+'.000+08:00';
       return result;
     }
     //createArrDataSource
