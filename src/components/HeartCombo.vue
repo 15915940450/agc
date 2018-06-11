@@ -9,20 +9,20 @@
     </h3>
     <div class="combo_list">
       <el-row :gutter="10">
-        <el-col :span="8">
+        <el-col :span="8" v-for="combo in comboList" :key="combo.id">
           <div class="combo_card">
-            <h4>欢电套餐</h4>
+            <h4>{{combo.discountName}}</h4>
             <p class="combo_card_info">
-              <span>有效期30天</span>
+              <span>有效期{{combo.duration}}天</span>
               <span>
-                <strong>199</strong>
+                <strong>{{combo.agentPrice}}</strong>
                 元/份
               </span>
             </p>
             <p class="combo_card_buy">
               <span>
                 剩余
-                <strong>69</strong>
+                <strong>{{combo.number}}</strong>
                 份
               </span>
               <span>
@@ -32,7 +32,8 @@
             <span class="mark_triangle">
               <!-- 亦可以用矩形傾斜實現 -->
             </span>
-            <mark>无限次</mark>
+            <!-- 无限 -->
+            <mark>{{combo.count}}次</mark>
           </div>
         </el-col>
 
@@ -48,11 +49,35 @@ export default {
   name:'HeartGroup',
   data:function(){
     return ({
-
+      comboList:[
+      // {
+      //     "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
+      //     "discountName": "租一颗电池",//套餐名称
+      //     "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
+      //     "price": "1200",//金额
+      //     "duration": "30",//可用时长（天）
+      //     "count": 100,//换电次数
+      //     "remark":"打折7.5", //套餐备注
+      //     "agentPrice":23.00, //代理商购买价格
+      //     "number":3  //购买数量
+      // }
+      ]
     });
   },
   computed:{
     ...mapState(['agent','modalStore'])
+  },
+  methods:{
+    fetchComboList:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.comboList,function(objRps){
+        // console.log(objRps);
+        vueThis.comboList=objRps.result.list;
+      });
+    }
+  },
+  created:function(){
+    this.fetchComboList();
   }
 };
 </script>
@@ -92,6 +117,7 @@ export default {
     padding:16px 24px;
     border-radius: 5px;
     overflow: hidden;
+    margin-bottom: 15px;
   }
   mark{
     position: absolute;
