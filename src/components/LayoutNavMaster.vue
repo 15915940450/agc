@@ -17,7 +17,7 @@ var arrRouteName=[
   'HeartJoy',
   'HeartGroup-HeartUser',
   'HeartDeposit',
-  'HeartCombo',
+  'HeartCombo-HeartComboHistory',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting'
 ];

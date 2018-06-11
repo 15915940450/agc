@@ -4,7 +4,9 @@
       套餐管理
       <p>
         在此页面查看拥有的套餐，分配套餐给用户时会消耗套餐的数量，数量可购买。
-        <a href="javascript:;">购买记录</a>
+        <a href="javascript:;"></a>
+        
+        <router-link to="/combo/history">购买记录</router-link>
       </p>
     </h3>
     <div class="combo_list" v-loading="loadingComboList">
@@ -51,17 +53,17 @@ export default {
     return ({
       loadingComboList:true,
       comboList:[
-      // {
-      //     "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
-      //     "discountName": "租一颗电池",//套餐名称
-      //     "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
-      //     "price": "1200",//金额
-      //     "duration": "30",//可用时长（天）
-      //     "count": 100,//换电次数
-      //     "remark":"打折7.5", //套餐备注
-      //     "agentPrice":23.00, //代理商购买价格
-      //     "number":3  //购买数量
-      // }
+      {
+          "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
+          "discountName": "租一颗电池",//套餐名称
+          "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
+          "price": "1200",//金额
+          "duration": "30",//可用时长（天）
+          "count": 100,//换电次数
+          "remark":"打折7.5", //套餐备注
+          "agentPrice":23.00, //代理商购买价格
+          "number":3  //购买数量
+      }
       ]
     });
   },
@@ -75,7 +77,7 @@ export default {
       vueThis.$rqs(vueThis.$yApi.comboList,function(objRps){
         // console.log(objRps);
         vueThis.loadingComboList=false;
-        vueThis.comboList=objRps.result;
+        // vueThis.comboList=objRps.result.list;
       });
     }
   },

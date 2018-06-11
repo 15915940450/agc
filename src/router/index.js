@@ -6,6 +6,7 @@ import HeartGroup from '@/components/HeartGroup';
 import HeartUser from '@/components/HeartUser';
 import HeartDeposit from '@/components/HeartDeposit';
 import HeartCombo from '@/components/HeartCombo';
+import HeartComboHistory from '@/components/HeartComboHistory';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
 import HeartSysSetting from '@/components/HeartSysSetting';
@@ -43,6 +44,11 @@ export default new Router({
       path: '/combo',
       name: 'HeartCombo',
       component: HeartCombo
+    },
+    {
+      path: '/combo/history',
+      name: 'HeartComboHistory',
+      component: HeartComboHistory
     },
     {
       path: '/evs/:pn', //中控
