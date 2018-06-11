@@ -30,6 +30,11 @@
             <el-input v-model.number="formEVin.phone" auto-complete="off" placeholder="请输入手机号码"></el-input>
           </el-form-item>
 
+          <el-form-item prop="voltage" label="电压" :label-width="formLabelWidth">
+            <el-radio v-model="formEVin.voltage" label="0">60V</el-radio>
+            <el-radio v-model="formEVin.voltage" label="1">48V</el-radio>
+          </el-form-item>
+
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -50,6 +55,7 @@ export default {
     return ({
       formEVin:{
         phone:'',
+        voltage:'0',
         scooterSN:'',
         scooterType:'0',
         groupCode:this.$route.params.groupcode,
@@ -60,6 +66,9 @@ export default {
           {type:'number',required:true,min:10000000000,max:99999999999,message:'手机号必须为11位数字',trigger:'change'}
         ],
         scooterType:[
+          {required:true,message:'请选择',trigger:'blur'}
+        ],
+        voltage:[
           {required:true,message:'请选择',trigger:'blur'}
         ],
         scooterSN:[
@@ -98,8 +107,9 @@ export default {
         if(valid){
           var sendData={
             phone:vueThis.formEVin.phone,
+            voltage:+vueThis.formEVin.voltage,
             scooterSN:vueThis.formEVin.scooterSN,
-            scooterType:vueThis.formEVin.scooterType,
+            scooterType:+vueThis.formEVin.scooterType,
             agentId:window.localStorage.agentid,
             groupCode:vueThis.formEVin.groupCode
           };
