@@ -30,9 +30,10 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormComboBuy',
+  props:['agentPrice'],
   data:function(){
     return ({
-      title:'请输入数量，每份价格元',
+      title:'',
       formComboBuy:{
         name:'',
         region:''
@@ -42,6 +43,13 @@ export default {
   },
   computed:{
     ...mapState(['modalStore'])
+  },
+  watch:{
+    'modalStore.comboBuy':function(val){
+      if(val){
+        this.title='请输入数量，每份价格 '+this.agentPrice+' 元';
+      }
+    }
   }
 };
 </script>

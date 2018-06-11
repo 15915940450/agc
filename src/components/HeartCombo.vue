@@ -28,7 +28,7 @@
                 份
               </span>
               <span>
-                <el-button type="primary" size="mini" @click="handleComboBuy()">购买</el-button>
+                <el-button type="primary" size="mini" @click="handleComboBuy(combo)">购买</el-button>
               </span>
             </p>
             <span class="mark_triangle">
@@ -43,7 +43,7 @@
     </div>
 
     <!-- buy combo modal -->
-    <FormComboBuy />
+    <FormComboBuy v-bind="comboBuyItem" />
   </div>
 </template>
 
@@ -56,6 +56,7 @@ export default {
   data:function(){
     return ({
       loadingComboList:true,
+      comboBuyItem:null,
       comboList:[
       {
           "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
@@ -68,6 +69,7 @@ export default {
           "agentPrice":23.00, //代理商购买价格
           "number":3  //购买数量
       }
+
       ]
     });
   },
@@ -87,7 +89,8 @@ export default {
         // vueThis.comboList=objRps.result.list;
       });
     },
-    handleComboBuy:function(){
+    handleComboBuy:function(combo){
+      this.comboBuyItem=combo;
       this.$store.commit('showComboBuy');
     }
   },
