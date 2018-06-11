@@ -5,6 +5,7 @@ import HeartJoy from '@/components/HeartJoy';
 import HeartGroup from '@/components/HeartGroup';
 import HeartUser from '@/components/HeartUser';
 import HeartDeposit from '@/components/HeartDeposit';
+import HeartCombo from '@/components/HeartCombo';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
 import HeartSysSetting from '@/components/HeartSysSetting';
@@ -37,6 +38,11 @@ export default new Router({
       path: '/deposit/:pn', //pn=>pageNum 	页码
       name: 'HeartDeposit',
       component: HeartDeposit
+    },
+    {
+      path: '/combo',
+      name: 'HeartCombo',
+      component: HeartCombo
     },
     {
       path: '/evs/:pn', //中控

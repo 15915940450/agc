@@ -17,6 +17,7 @@ var arrRouteName=[
   'HeartJoy',
   'HeartGroup-HeartUser',
   'HeartDeposit',
+  'HeartCombo',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting'
 ];
@@ -47,12 +48,18 @@ export default {
         },
         {
           id:4,
+          name:'套餐管理',
+          theClass:'heartcombo',
+          link:'/combo'
+        },
+        {
+          id:5,
           name:'中控管理',
           theClass:'heartevs',
           link:'/evs/1'
         },
         {
-          id:5,
+          id:6,
           name:'系统管理',
           theClass:'heartsyssetting',
           link:'/sys'
@@ -155,19 +162,26 @@ export default {
   #im_nav li.active a.heartdeposit .icon_menu{
     background-position: 10px -115px;
   }
-  /*evs*/
-  #im_nav li a.heartevs .icon_menu{
+  /*combo*/
+  #im_nav li a.heartcombo .icon_menu{
     background-position: -40px -165px;
   }
-  #im_nav li.active a.heartevs .icon_menu{
+  #im_nav li.active a.heartcombo .icon_menu{
     background-position: 10px -165px;
+  }
+  /*evs*/
+  #im_nav li a.heartevs .icon_menu{
+    background-position: -40px -215px;
+  }
+  #im_nav li.active a.heartevs .icon_menu{
+    background-position: 10px -215px;
   }
   /*syssetting*/
   #im_nav li a.heartsyssetting .icon_menu{
-    background-position: -40px -215px;
+    background-position: -40px -265px;
   }
   #im_nav li.active a.heartsyssetting .icon_menu{
-    background-position: 10px -215px;
+    background-position: 10px -265px;
   }
    ._port1590_ #im_nav li a .icon_menu{
     margin-left: -15px;
