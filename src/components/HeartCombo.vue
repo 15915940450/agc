@@ -28,7 +28,7 @@
                 份
               </span>
               <span>
-                <el-button type="primary" size="mini">购买</el-button>
+                <el-button type="primary" size="mini" @click="handleComboBuy()">购买</el-button>
               </span>
             </p>
             <span class="mark_triangle">
@@ -41,11 +41,15 @@
 
       </el-row>
     </div>
+
+    <!-- buy combo modal -->
+    <FormComboBuy />
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
+import FormComboBuy from './FormComboBuy.vue';
 
 export default {
   name:'HeartGroup',
@@ -70,6 +74,9 @@ export default {
   computed:{
     ...mapState(['agent','modalStore'])
   },
+  components:{
+    FormComboBuy
+  },
   methods:{
     fetchComboList:function(){
       var vueThis=this;
@@ -79,6 +86,9 @@ export default {
         vueThis.loadingComboList=false;
         // vueThis.comboList=objRps.result.list;
       });
+    },
+    handleComboBuy:function(){
+      this.$store.commit('showComboBuy');
     }
   },
   created:function(){

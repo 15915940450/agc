@@ -3,6 +3,7 @@ var state={
   baseStatus:false,
 
   topUp:false,
+  comboBuy:false,
   refund:false,
   statusTopUp:false,
   statusRefund:false,
@@ -33,6 +34,7 @@ var mutations={
     state.needLogin=true;
     state.baseStatus=false;
     state.topUp=false;
+    state.comboBuy=false;
     state.refund=false;
     state.statusTopUp=false;
     state.statusRefund=false;
@@ -64,6 +66,12 @@ var mutations={
   },
   hideTopUp:function(state){
     state.topUp=false;
+  },
+  showComboBuy:function(state){
+    state.comboBuy=true;
+  },
+  hideComboBuy:function(state){
+    state.comboBuy=false;
   },
   showRefund:function(state){
     state.refund=true;
