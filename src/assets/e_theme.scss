@@ -222,6 +222,10 @@ h3.title{
 .modal_wrap-empty_body .el-dialog__body{
   display: none;
 }
+//combo
+.combo_list .el-loading-mask{
+  background: transparent;
+}
 // 中控
 .e_v .el-input-group__prepend{
   width:33px !important;

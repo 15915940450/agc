@@ -7,7 +7,7 @@
         <a href="javascript:;">购买记录</a>
       </p>
     </h3>
-    <div class="combo_list">
+    <div class="combo_list" v-loading="loadingComboList">
       <el-row :gutter="10">
         <el-col :span="8" v-for="combo in comboList" :key="combo.id">
           <div class="combo_card">
@@ -49,6 +49,7 @@ export default {
   name:'HeartGroup',
   data:function(){
     return ({
+      loadingComboList:true,
       comboList:[
       // {
       //     "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
@@ -70,9 +71,11 @@ export default {
   methods:{
     fetchComboList:function(){
       var vueThis=this;
+      vueThis.loadingComboList=true;
       vueThis.$rqs(vueThis.$yApi.comboList,function(objRps){
         // console.log(objRps);
-        vueThis.comboList=objRps.result.list;
+        vueThis.loadingComboList=false;
+        vueThis.comboList=objRps.result;
       });
     }
   },
@@ -109,6 +112,7 @@ export default {
     background: #fafbfc;
     /*background:lime;*/
     padding: 15px;
+    min-height: 100px;
   }
   .combo_card{
     background: white;
