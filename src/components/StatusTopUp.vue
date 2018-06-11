@@ -26,7 +26,7 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     title:function(){
-      return ('充值提示');
+      return ('支付提示');
     }
   },
   methods:{

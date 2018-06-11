@@ -34,7 +34,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="modalStore.comboBuy = false">取 消</el-button>
-        <el-button type="primary" @click="modalStore.comboBuy = false">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -79,6 +79,14 @@ export default {
   methods:{
     handleIN:function(ev){
       this.formComboBuy.number=ev.target.value;
+    },
+    handleComfirm:function(){
+      var vueThis=this;
+      //跳往支付页面(监听充值状态)，显示是否成功
+      vueThis.$store.commit('hideComboBuy');
+      vueThis.$store.commit('showStatusTopUp');
+      //set item payurl
+      window.sessionStorage.setItem('payurl',vueThis.payurl);
     }
   }
 };

@@ -44,12 +44,14 @@
 
     <!-- buy combo modal -->
     <FormComboBuy v-bind="comboBuyItem" />
+    <StatusTopUp />
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 import FormComboBuy from './FormComboBuy.vue';
+import StatusTopUp from './StatusTopUp.vue';
 
 export default {
   name:'HeartGroup',
@@ -76,8 +78,21 @@ export default {
   computed:{
     ...mapState(['agent','modalStore'])
   },
+  watch:{
+    'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchComboList();
+      }
+    },
+    'modalStore.statusTopUp':function(val){
+      if(!val){
+        this.fetchComboList();
+      }
+    }
+  },
   components:{
-    FormComboBuy
+    FormComboBuy,
+    StatusTopUp
   },
   methods:{
     fetchComboList:function(){
