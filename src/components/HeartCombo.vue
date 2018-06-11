@@ -6,7 +6,7 @@
         在此页面查看拥有的套餐，分配套餐给用户时会消耗套餐的数量，数量可购买。
         <a href="javascript:;"></a>
         
-        <router-link to="/combo/history">购买记录</router-link>
+        <router-link to="/combo/history/1">购买记录</router-link>
       </p>
     </h3>
     <div class="combo_list" v-loading="loadingComboList">

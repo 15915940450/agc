@@ -1,13 +1,14 @@
 <template lang="html">
+  <!-- this page is copy from heartuser -->
   <div class="component_user">
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/group' }">
-          <small>群组管理</small>
+        <el-breadcrumb-item :to="{ path: '/combo' }">
+          <small>套餐管理</small>
         </el-breadcrumb-item>
         <el-breadcrumb-item>
-          <small>查看用户</small>
+          <small>购买记录</small>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -17,20 +18,18 @@
       <div class="table_wrap">
         <el-row>
           <el-col :span="6">
-            <h3 class="title">用户列表</h3>
+            <h3 class="title">购买记录</h3>
           </el-col>
           <el-col :span="18">
             <div class="table_wrap-search">
               <div class="table_wrap-search_wrap">
-                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入手机号" v-model="search" suffix-icon="el-icon-search"></el-input>
+                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入套餐名称" v-model="search" suffix-icon="el-icon-search"></el-input>
               </div>
-              <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
-              <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">添加</el-button>
-              <el-button type="info" @click="showEVin()">激活</el-button>
             </div>
           </el-col>
         </el-row>
         <div v-loading="loadingUserList">
+          <!-- v-loading="loadingUserList" -->
           <!-- 用户列表表格 -->
           <div class="table_wrap_real">
             <el-table
@@ -39,19 +38,6 @@
               width="100%"
               >
 
-              <!-- 展开行 -->
-              <el-table-column type="expand">
-                <template slot-scope="props">
-                  <el-form label-position="left" inline class="im-table-expand">
-                    <el-form-item label="用户ID">
-                      <span>{{props.row.id}}</span>
-                    </el-form-item>
-                    <el-form-item label="注册时间">
-                      <span v-html="props.row.time"></span>
-                    </el-form-item>
-                  </el-form>
-                </template>
-              </el-table-column>
 
               <el-table-column
                 label="#"
@@ -59,32 +45,26 @@
                 width="50">
               </el-table-column>
               <el-table-column
-                label="手机号码"
-                prop="phone">
+                label="时间"
+                prop="createTime">
               </el-table-column>
               <el-table-column
-                label="电池SN"
-                prop="batteries" :formatter="formatter">
+                label="套餐名称"
+                prop="discountName">
               </el-table-column>
               <el-table-column
-                label="中控SN"
-                prop="scooters" :formatter="formatter">
+                label="数量(个)"
+                prop="number">
+              </el-table-column>
+              <el-table-column
+                label="单价(元)"
+                prop="price">
+              </el-table-column>
+              <el-table-column
+                label="金额(元)"
+                prop="amout">
               </el-table-column>
 
-              <el-table-column label="操作" width="90">
-                <template slot-scope="scope">
-                  <el-button
-                    type="text"
-                    size="small" @click="unbindUser(scope)">
-                    解绑
-                  </el-button>
-                  <el-button
-                    type="text"
-                    size="small" @click="setUser(scope)">
-                    设置
-                  </el-button>
-                </template>
-              </el-table-column>
             </el-table>
           </div>
           
@@ -109,38 +89,32 @@
       </div>
     </div>
 
-    <!-- 添加 -->
-    <FormNewUser />
-    <FormEVin />
-    <BaseStatus :msg="msg" />
-    <FormUnbindUser :phone="unbindPhone" />
-    <FormSetUser v-bind="userSet" />
-
 
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
-import FormNewUser from './FormNewUser.vue';
-import BaseStatus from './BaseStatus.vue';
-import FormUnbindUser from './FormUnbindUser.vue';
-import FormEVin from './FormEVin.vue';
-import FormSetUser from './FormSetUser.vue';
 
 export default {
   name:'HeartUser',
   data:function(){
     return ({
       total:0,
-      msg:'',
-      search:'',
+      search:null,
       isNotSearch:true,
-      unbindPhone:'',
-      userSet:null,
 
       users:[
-
+          // {
+          //     "discountName":"欢电套餐", //套餐名
+          //     "price":"6", // 单价
+          //     "amout":"12", // 付款价格
+          //     "number":"2", // 数量
+          //     "createTime":"2018-06-06 09:53:57", // 时间
+          //     "phone":"15820480937", // 电话
+          //     "status":"1" // 状态  1待确认 2 成功 ，3失败
+              
+          // } 
       ],
       loadingUserList:true,
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
@@ -157,92 +131,37 @@ export default {
       if(!val){
         this.fetchData();
       }
-    },
-    'modalStore.baseStatus':function(val){
-      if(!val){
-        this.fetchData();
-      }
     }
-  },
-  components:{
-    FormNewUser,
-    FormEVin,
-    BaseStatus,
-    FormUnbindUser,
-    FormSetUser
   },
   methods: {
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingUserList=true;
       var advancedParam=JSON.stringify({
-        groupCode:window.Number(vueThis.$route.params.groupcode),
-        userPhone:vueThis.search
+        discountName:vueThis.search
       });
       var sendData={
         advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
-      vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+      vueThis.$rqs(vueThis.$yApi.comboHistory,function(objRps){
         // _.logErr(objRps);
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
       },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(k==='time'){
-            return (_.toSlash(new Date(v)));
-          }
-        }
+        objSendData:sendData
       });
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
-      // console.log(this.$route.params.groupcode);
-      this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+val);
-    },
-    showNewUser:function(){
-      this.msg='已成功添加用户';
-      this.$store.commit('showNewUser');
-    },
-    showEVin:function(){
-      this.msg='中控已激活';
-      this.$store.commit('showEVin');
-    },
-    formatter:function(row, column, cellValue){
-      if(column.property==='batteries' && cellValue.length){
-        return (cellValue.map(function(v){
-          return v.sn;
-        }).join(' , '));
-      }
-      if(column.property==='scooters' && cellValue.length){
-        return (cellValue.map(function(v){
-          return v.sn;
-        }).join(' , '));
-      }
-    },
-    unbindUser:function(scope){
-      this.msg='用户已解绑';
-      // console.log(scope.row.phone);
-      this.unbindPhone=scope.row.phone;
-      this.$store.commit('showUserUnbind');
-    },
-    setUser:function(scope){
-      // console.log(JSON.stringify(scope.row));
-      this.msg='设置成功';
-      this.userSet=scope.row;
-      this.$store.commit('showSetUser');
+      this.$router.push('/combo/history/'+val);
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
       this.fetchData();
-    },690),
-    resetSearch:function(){
-      this.search='';
-      this.fetchData();
-    }
+    },690)
   },
   created:function(){
     this.fetchData();

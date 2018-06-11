@@ -46,7 +46,7 @@ export default new Router({
       component: HeartCombo
     },
     {
-      path: '/combo/history',
+      path: '/combo/history/:pn',
       name: 'HeartComboHistory',
       component: HeartComboHistory
     },
