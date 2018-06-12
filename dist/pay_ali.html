@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+  <head>
+    <title>易马达--我的收银台</title>
+    <meta charset="utf-8" />
+    <style media="screen">
+      *{
+        margin:0;
+        padding: 0;
+      }
+      html,body{
+        background: #EDF0F5;
+        font-family: 'PingFang SC', Helvetica, Arial, sans-serif;
+        color:#333;
+        font-size:12px;
+      }
+      .top_bar{
+        background: #FFF;
+        height: 60px;
+      }
+      .top_bar-content{
+        width: 980px;
+        margin:0 auto;
+      }
+      .top_bar-h1{
+        font-size: 16px;
+        color: #555;
+        height: 60px;
+        line-height: 60px;
+        font-weight: 500;
+      }
+      .top_bar-img{
+        height: 37px;
+        /* border:1px solid #333; */
+        display: inline-block;
+        /* margin-top:9px; */
+        vertical-align: middle;
+        /* width: 110px; */
+        border-right: 1px solid #000;
+        /* background: #AAA; */
+        margin-right: 10px;
+        padding-right: 15px;
+      }
+      .top_bar-titie{
+        vertical-align: middle;
+      }
+      /* 概要 */
+      .about{
+        width: 980px;
+        margin: 0 auto;
+        padding: 20px 0;
+      }
+      .about-p{}
+      .about-h3{
+        font-size: 16px;
+        margin-top:10px;
+        font-weight: 500;
+      }
+      .about-num{
+        display: inline-block;
+        width: 60px;
+        padding-right: 10px;
+        text-align: right;
+      }
+      .about-money{
+        color:#FF6600;
+        margin:0 2px;
+      }
+      .about-company{
+        font-size: 14px;
+        color:#000;
+        margin-left: 50px;
+      }
+      .code_wrap{
+        width: 980px;
+        background: #FFF;
+        margin:0 auto;
+        text-align: center;
+        padding: 90px 0 70px;
+        position: relative;
+      }
+      .code_wrap-h6{
+        font-size: 12px;
+        font-weight: normal;
+        margin-bottom: 12px;
+        color: #000;
+      }
+      .code_wrap-h2{
+        font-size: 30px;
+        color: #FF6600;
+        margin-bottom: 20px;
+      }
+      #qrcode img{
+        width: 180px;
+        margin: 0 auto;
+      }
+      .code_wrap-open{
+        text-align: center;
+      }
+      .code_wrap-open img{
+        /* height: 60px; */
+        /* width: 150px; */
+        /* border: 1px solid #333; */
+        display: inline-block;
+      }
+      .code_wrap-link_wrap{
+        text-align: center;
+        margin-top: 10px;
+      }
+      .code_wrap-link_wrap a{
+        font-size: 12px;
+        color: #888;
+        text-decoration: underline;
+      }
+      .code_wrap-tip{
+        width: 205px;
+        height: 185px;
+        /* border:1px solid #aaa; */
+        display: block;
+        position: absolute;
+        left: 600px;
+        top:100px;
+      }
+      /* 页脚 */
+      .footer{
+        color: #666;
+        text-align: center;
+        font-size: 12px;
+        position: absolute;
+        left:0;
+        bottom: 0;
+        width: 100%;
+        padding: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <!-- 顶条 -->
+      <div class="top_bar">
+        <div class="top_bar-content">
+
+          <h1 class="top_bar-h1">
+            <img src="./static/immotor_logo.png" alt="logo" class="top_bar-img" />
+            <span class="top_bar-titie">我的收银台</span>
+          </h1>
+        </div>
+      </div>
+      <!-- about -->
+      <div class="about">
+        <p class="about-p">正在使用即时到账交易</p>
+        <h3 class="about-h3">虚拟电池押金充值<strong class="about-num" id="battery_num">--</strong>个 共<strong class="about-money" id="amount">--</strong>元， <span class="about-company">收款方：深圳易马达科技有限公司</span></h3>
+      </div>
+      <!-- 扫码 -->
+      <div class="code_wrap">
+        <h6 class="code_wrap-h6">扫一扫付款(元）</h6>
+        <h2 class="code_wrap-h2" id="amount_again">--</h2>
+        <div id="qrcode"></div>
+        <p class="code_wrap-open"><img src="./static/ali_scan_tip.png" width="180" /></p>
+        <p class="code_wrap-link_wrap">
+          首次使用请下载手机支付宝
+        </p>
+
+        <img class="code_wrap-tip" src="./static/ali_tip.png" alt="扫一扫提示" />
+      </div>
+      <!-- 页脚 -->
+      <div class="footer">
+        客服：400-618-7238 2018 ◎深圳易马达科技有限公司版权所有
+      </div>
+
+
+    </div>
+
+
+
+    <script src="./static/lodash.ili.js"></script>
+    <script src="./static/qrcode.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var rqs=function(urlMethod,success,paramSettings){
+        var defaultSettings={
+          objSendData:{},
+          isLoginRqs:false,
+          fnHandleNOTjsonResult:function(error){_.logErr(error);},
+          fail:function(rps){
+            _.logErr(rps);
+            window.alert('二维码生成失败');
+          }
+        };
+
+        if(typeof(urlMethod)!=='string'){
+          return false;
+        }
+        var url=urlMethod.split('__')[0];
+        var method=window.parseInt(urlMethod.split('__')[1]); //1,2,3
+        if(method===1){
+          method='GET';
+        }
+        if(method===2){
+          method='POSTjson';
+        }
+        if(method===3){
+          method='POSTform';
+        }
+        success=success || function(objRps){_.logErr(objRps);};
+        var settings=_.assign(defaultSettings,paramSettings);
+
+   
+
+        var xmlhttp;
+        if(window.XMLHttpRequest){
+          xmlhttp=new XMLHttpRequest();
+        }else{
+          xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+        }
+
+        xmlhttp.onreadystatechange=function(){
+          if(xmlhttp.readyState===4){
+            if(xmlhttp.status===200){
+              try{
+                var objRps=JSON.parse(xmlhttp.responseText);
+
+                if(settings.isLoginRqs){
+                  //make login rqs
+                  success(objRps);
+                }else{
+                  //normal rqs
+                  //code...
+                  switch(objRps.code){
+
+                  case 1000:
+                    success(objRps);
+                    break;
+                  default:  //fail
+                    settings.fail(objRps);
+                  //end switch
+                  }
+                }
+              //end try
+              }catch(error){
+                //when JSON.parse throw error
+                settings.fnHandleNOTjsonResult(error);
+              }
+            //end if 200  
+            }else{
+              //status is not 200
+              settings.fail(xmlhttp.status);
+            }
+          }
+        };
+
+        var ContentType,data2send='';
+        if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone){
+          settings.objSendData.phone=window.localStorage.agentphone;
+        }
+        if(method==='GET'){
+          url=url+'?now='+(new Date().getTime())+'&'+_.serialize2querystring(settings.objSendData);
+          ContentType='application/x-www-form-urlencoded';
+        }
+        if(method==='POSTform'){
+          method='POST';
+          data2send=_.serialize2querystring(settings.objSendData);
+          ContentType='application/x-www-form-urlencoded';
+        }
+        if(method==='POSTjson'){
+          method='POST';
+          data2send=JSON.stringify(settings.objSendData);
+          ContentType='application/json';
+        }
+
+
+        xmlhttp.open(method,url,true);
+        xmlhttp.setRequestHeader('Content-type',ContentType);
+        xmlhttp.withCredentials=true;
+        xmlhttp.send(data2send);
+      }
+      /*
+      ====================
+      */
+      var HOST='http://agent.ehuandian.net/agent';
+      if(window.location.host.indexOf('agent.ehuandian.net')===-1){
+        HOST='http://119.23.133.72:8764/agent';
+      }
+
+      var pay = JSON.parse(window.decodeURIComponent(_.querystringParse().yap));
+      //get qrCode and tradeId
+      rqs(HOST+'/trade/recharge__2',function(objRps){
+        done(objRps);
+      },{
+        objSendData:pay
+      });
+      //handle trade
+      function done(objRps){
+        new QRCode(document.getElementById("qrcode"),objRps.result.qrCode);
+        // 监听充值状态 /trade/check
+        var timer_topup=window.setInterval(function(){
+          rqs(HOST+'/trade/check__3',function(objCheck){
+            if(objCheck.result===2){
+              window.localStorage.setItem('tradeCheck','1');
+              alert('充值成功');
+              window.clearInterval(timer_topup);
+              window.close();
+            }
+          },{
+            objSendData:{
+              tradeId:objRps.result.tradeId
+            }
+          });
+        },1500);
+      }
+
+      //padding pay
+      document.getElementById('battery_num').innerHTML=pay.batteryNum;
+      document.getElementById('amount').innerHTML=pay.amount;
+      document.getElementById('amount_again').innerHTML=pay.amount;
+    </script>
+  </body>
+</html>
