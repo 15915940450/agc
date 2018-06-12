@@ -33,7 +33,7 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="modalStore.comboBuy = false">取 消</el-button>
+        <el-button @click="handleCancel()">取 消</el-button>
         <a :href="payurl" target="_blank" @click="handleComfirm()">
           <el-button type="primary">确 定</el-button>
         </a>
@@ -58,6 +58,7 @@ export default {
         payType:'1'
       },
       discountCode:0,
+      numTimerCheckTrade:969,
       formLabelWidth:'80px'
     });
   },
@@ -107,9 +108,25 @@ export default {
         this.discount_name=this.discountName;
         this.discountCode=this.code;
       }
+    },
+    'modalStore.statusTopUp':function(val){
+      var vueThis=this;
+      if(!val){
+        vueThis.formComboBuy.number=1;
+        vueThis.formComboBuy.payType='1';
+        window.clearInterval(vueThis.numTimerCheckTrade);
+      }else{
+        vueThis.listenTradeCheck();
+      }
     }
   },
   methods:{
+    handleCancel:function(){
+      var vueThis=this;
+      vueThis.formComboBuy.number=1;
+      vueThis.formComboBuy.payType='1';
+      vueThis.$store.commit('hideComboBuy');
+    },
     handleIN:function(ev){
       this.formComboBuy.number=ev.target.value;
     },
@@ -120,6 +137,15 @@ export default {
       vueThis.$store.commit('showStatusTopUp');
       //set item payurl
       window.sessionStorage.setItem('payurl',vueThis.payurl);
+    },
+    listenTradeCheck:function(){
+      var vueThis=this;
+      vueThis.numTimerCheckTrade=window.setInterval(function(){
+        if(window.localStorage && window.localStorage.tradeCheck==='1'){
+          window.localStorage.removeItem('tradeCheck');
+          vueThis.$store.commit('hideStatusTopUp');
+        }
+      },900);
     }
   }
 };
