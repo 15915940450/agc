@@ -78,16 +78,16 @@ export default {
         payType:window.Number(this.formComboBuy.payType),  //支付类型 1支付宝，2微信
         number:window.Number(this.formComboBuy.number),
         amount:(window.Number(this.amount)).toFixed(2),
-        discountName:this.discount_name
+        discountName:this.discount_name,
+        from:'comboBuy'
       };
       //stringify, then encodeURIComponent
       var yap=window.encodeURIComponent(JSON.stringify(objSendData));
-      var morf='comboBuy';
 
       if(this.formComboBuy.payType==='1'){
-        payurl=window.encodeURI('/pay_ali.html?yap='+yap+'&morf='+morf);
+        payurl=window.encodeURI('/pay_ali.html?yap='+yap);
       }else{
-        payurl=window.encodeURI('/pay_wx.html?yap='+yap+'&morf='+morf);
+        payurl=window.encodeURI('/pay_wx.html?yap='+yap);
       }
       /*==payurl
       /pay_ali.html?yap=%257B%2522phone%2522%253A%252215915900000%2522%252C%2522type%2522%253A1%252C%2522payType%2522%253A1%252C%2522amount%2522%253A0.5%252C%2522batteryNum%2522%253A1%252C%2522status%2522%253A1%257D
