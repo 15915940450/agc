@@ -69,6 +69,7 @@ export default {
           "count": 100,//换电次数
           "remark":"打折7.5", //套餐备注
           "agentPrice":23.00, //代理商购买价格
+          "code":66,
           "number":3  //购买数量
       }
 

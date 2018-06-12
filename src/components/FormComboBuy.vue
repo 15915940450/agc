@@ -34,7 +34,9 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="modalStore.comboBuy = false">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm()">确 定</el-button>
+        <a :href="payurl" target="_blank" @click="handleComfirm()">
+          <el-button type="primary">确 定</el-button>
+        </a>
       </span>
     </el-dialog>
   </div>
@@ -46,7 +48,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormComboBuy',
-  props:['agentPrice','discountName'],
+  props:['agentPrice','discountName','code'],
   data:function(){
     return ({
       title:'',
@@ -55,6 +57,7 @@ export default {
         number:1,
         payType:'1'
       },
+      discountCode:0,
       formLabelWidth:'80px'
     });
   },
@@ -66,6 +69,35 @@ export default {
         num=0;
       }
       return (window.Number(this.agentPrice) * window.Number(num));
+    },
+    payurl:function(){
+      var payurl='';
+      var objSendData={
+        phone:''+window.localStorage.agentphone,
+        discountCode:this.discountCode,
+        payType:window.Number(this.formComboBuy.payType),  //支付类型 1支付宝，2微信
+        number:window.Number(this.formComboBuy.number),
+        amount:(window.Number(this.amount)).toFixed(2),
+        discountName:this.discount_name
+      };
+      //stringify, then encodeURIComponent
+      var yap=window.encodeURIComponent(JSON.stringify(objSendData));
+      var morf='comboBuy';
+
+      if(this.formComboBuy.payType==='1'){
+        payurl=window.encodeURI('/pay_ali.html?yap='+yap+'&morf='+morf);
+      }else{
+        payurl=window.encodeURI('/pay_wx.html?yap='+yap+'&morf='+morf);
+      }
+      /*==payurl
+      /pay_ali.html?yap=%257B%2522phone%2522%253A%252215915900000%2522%252C%2522type%2522%253A1%252C%2522payType%2522%253A1%252C%2522amount%2522%253A0.5%252C%2522batteryNum%2522%253A1%252C%2522status%2522%253A1%257D
+      */
+      if(window.location.hostname==='localhost'){
+        // http://localhost/agc/dist/pay_ali.html
+        payurl='http://localhost/agc/dist'+payurl;
+      }
+
+      return (payurl);
     }
   },
   watch:{
@@ -73,6 +105,7 @@ export default {
       if(val){
         this.title='请输入数量，每份价格 '+this.agentPrice+' 元';
         this.discount_name=this.discountName;
+        this.discountCode=this.code;
       }
     }
   },
