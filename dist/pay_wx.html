@@ -149,7 +149,14 @@
       <!-- about -->
       <div class="about">
         <p class="about-p">正在使用即时到账交易</p>
-        <h3 class="about-h3">虚拟电池押金充值<strong class="about-num" id="battery_num">--</strong>个 共<strong class="about-money" id="amount">--</strong>元， <span class="about-company">收款方：深圳易马达科技有限公司</span></h3>
+        <h3 class="about-h3">
+          <span id="about_name">--</span>
+          <strong class="about-num" id="battery_num">--</strong>
+          个 共
+          <strong class="about-money" id="amount">--</strong>
+          元， 
+          <span class="about-company">收款方：深圳易马达科技有限公司</span>
+        </h3>
       </div>
       <!-- 扫码 -->
       <div class="code_wrap">
@@ -282,13 +289,30 @@
 
       var pay = JSON.parse(window.decodeURIComponent(_.querystringParse().yap));
       // console.log(pay);
+      var rqsurl;
+      if(pay.from==='comboBuy'){
+        rqsurl=HOST+'/agent/payPackage/recharge__2';
+        document.getElementById('battery_num').innerHTML=pay.number;
+        document.getElementById('amount').innerHTML=pay.amount;
+        document.getElementById('amount_again').innerHTML=pay.amount;
+        document.getElementById('about_name').innerHTML=pay.discountName;
+      }else{
+        rqsurl=HOST+'/trade/recharge__2';
+        //padding pay
+        document.getElementById('battery_num').innerHTML=pay.batteryNum;
+        document.getElementById('amount').innerHTML=pay.amount;
+        document.getElementById('amount_again').innerHTML=pay.amount;
+        document.getElementById('about_name').innerHTML='虚拟电池押金充值';
+      }
+
       //get qrCode and tradeId
-      rqs(HOST+'/trade/recharge__2',function(objRps){
+      rqs(rqsurl,function(objRps){
         done(objRps);
       },{
         objSendData:pay
       });
-      //handle trade
+
+      //handle trade, done...
       function done(objRps){
         new QRCode(document.getElementById("qrcode"),objRps.result.qrCode);
         // 监听充值状态 /trade/check
@@ -296,7 +320,7 @@
           rqs(HOST+'/trade/check__3',function(objCheck){
             if(objCheck.result===2){
               window.localStorage.setItem('tradeCheck','1');
-              alert('充值成功');
+              alert('支付成功');
               window.clearInterval(timer_topup);
               window.close();
             }
@@ -308,10 +332,6 @@
         },1500);
       }
 
-      //padding pay
-      document.getElementById('battery_num').innerHTML=pay.batteryNum;
-      document.getElementById('amount').innerHTML=pay.amount;
-      document.getElementById('amount_again').innerHTML=pay.amount;
     </script>
   </body>
 </html>

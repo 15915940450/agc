@@ -321,7 +321,7 @@
           rqs(HOST+'/trade/check__3',function(objCheck){
             if(objCheck.result===2){
               window.localStorage.setItem('tradeCheck','1');
-              alert('充值成功');
+              alert('支付成功');
               window.clearInterval(timer_topup);
               window.close();
             }
