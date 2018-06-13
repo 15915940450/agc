@@ -30,7 +30,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="modalStore.setCombo = false">取 消</el-button>
-        <el-button type="primary" @click="modalStore.setCombo = false">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm('form')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -47,7 +47,7 @@ export default {
       formSetCombo:{
         userIDs:[],
         packageID:'',
-        groupCode:''
+        groupCode:this.$route.params.groupcode
       },
       rules:{
         packageID:[
@@ -62,11 +62,18 @@ export default {
   computed:{
     ...mapState(['modalStore'])
   },
+  watch:{
+    'modalStore.setCombo':function(val){
+      if(val){
+        this.fetchOptionsScheme('packageListScheme');
+      }
+    }
+  },
   methods:{
     fetchOptionsScheme:function(type){
       var vueThis=this;
       var advancedParam=JSON.stringify({
-        groupCode:vueThis.$route.params.groupcode,
+        groupCode:vueThis.formSetCombo.groupCode,
         canAssign:1
       });
       var sendData={
@@ -84,10 +91,28 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    handleComfirm:function(refName){
+      var vueThis=this;
+      vueThis.$refs[refName].validate((valid) => {
+        if(valid){
+          var sendData={
+            userIDs:vueThis.formSetCombo.userIDs.toString(),
+            packageID:vueThis.formSetCombo.packageID,
+            groupCode:vueThis.formSetCombo.groupCode
+          };
+          vueThis.$rqs(vueThis.$yApi.setCombo,function(objRps){
+            _.logErr(objRps);
+          },{
+            objSendData:sendData
+          });
+        }
+      });
+      
     }
   },
   created:function(){
-    this.fetchOptionsScheme('packageListScheme');
+    
   }
 };
 </script>

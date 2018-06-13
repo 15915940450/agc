@@ -45,7 +45,7 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="showSetCombo">分配套餐</el-dropdown-item>
+                <el-dropdown-item command="showSetCombo" :disabled="disabled_set_combo">分配套餐</el-dropdown-item>
                 <el-dropdown-item>设置金额</el-dropdown-item>
                 <el-dropdown-item>设置免费天数</el-dropdown-item>
               </el-dropdown-menu>
@@ -245,7 +245,10 @@ export default {
     });
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    disabled_set_combo:function(){
+      return (false);
+    }
   },
   watch:{
     pageNum:function(){
