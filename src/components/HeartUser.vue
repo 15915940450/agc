@@ -111,11 +111,19 @@
           <!-- 用户列表表格 -->
           <div class="table_wrap_real">
             <el-table
-              :data="users" size="medium" stripe
+              :data="users" 
+              size="medium" 
+              stripe
               class="table_wrap-table"
               width="100%"
               >
 
+              <!-- selection -->
+              <el-table-column
+                type="selection"
+                width="50"
+                >
+              </el-table-column>
               <!-- 展开行 -->
               <el-table-column type="expand">
                 <template slot-scope="props">
@@ -225,6 +233,7 @@ export default {
         bPackageDays:false,
         bFreeDay:false
       },
+      selection:[],
       users:[
 
       ],
