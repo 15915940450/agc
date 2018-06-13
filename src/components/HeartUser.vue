@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList)">
+    <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList || isFilter)">
       <!-- table wrap -->
       <div class="table_wrap">
         <el-row>
@@ -96,7 +96,7 @@
                         v-model="filter_form.packageDays"
                         :disabled="!filter_form.bPackageDays"
                         >
-                        <el-radio :label="1">无套餐</el-radio>
+                        <el-radio :label="-1">无套餐</el-radio>
                       </el-radio-group>
                     </el-form-item>
                   </div>
@@ -110,13 +110,13 @@
                         v-model="filter_form.freeDay"
                         :disabled="!filter_form.bFreeDay"
                         >
-                        <el-radio :label="1">无天数</el-radio>
+                        <el-radio :label="-1">无天数</el-radio>
                       </el-radio-group>
                     </el-form-item>
                   </div>
                   <div class="res_sub">
-                    <el-button>清空</el-button>
-                    <el-button type="primary">筛选</el-button>
+                    <el-button @click="handleResetFilter()">清空</el-button>
+                    <el-button type="primary" @click="handleFilter()">筛选</el-button>
                   </div>
 
                 </el-form>
@@ -211,7 +211,7 @@
     </div>
 
     <!-- empty -->
-    <div v-if="(!users.length && isNotSearch && !loadingUserList)" class="empty_user im_empty_wrap">
+    <div v-if="(!users.length && isNotSearch && !loadingUserList && !isFilter)" class="empty_user im_empty_wrap">
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_user.png" />
         <p class="im_empty_p">您还没有用户哦！</p>
@@ -255,10 +255,11 @@ export default {
       unbindPhone:'',
       userSet:null,
       filter_enabled:false,
+      isFilter:false,
       filter_form:{
         depositType:0,
-        packageDays:1,
-        freeDay:1,
+        packageDays:-1,
+        freeDay:-1,
 
         bDepositType:true,
         bPackageDays:false,
@@ -318,6 +319,9 @@ export default {
       vueThis.loadingUserList=true;
       var advancedParam=JSON.stringify({
         groupCode:window.Number(vueThis.$route.params.groupcode),
+        depositType:vueThis.filter_form.bDepositType?vueThis.filter_form.depositType:null,
+        packageDays:vueThis.filter_form.bPackageDays?vueThis.filter_form.packageDays:null,
+        freeDay:vueThis.filter_form.bFreeDay?vueThis.filter_form.freeDay:null,
         userPhone:vueThis.search
       });
       var sendData={
@@ -346,6 +350,24 @@ export default {
           }
         }
       });
+    },
+    resetFilterFormData:function(){
+      this.filter_form.depositType=0;
+      this.filter_form.packageDays=-1;
+      this.filter_form.freeDay=-1;
+      this.filter_form.bDepositType=true;
+      this.filter_form.bPackageDays=false;
+      this.filter_form.bFreeDay=false;
+    },
+    handleResetFilter:function(){
+      this.isFilter=true;
+
+      this.resetFilterFormData();
+      this.fetchData();
+    },
+    handleFilter:function(){
+      this.isFilter=true;
+      this.fetchData();
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
