@@ -132,9 +132,7 @@ export default {
 
         this.formSetUser.freeDay=window.Number(this.freeDays);
         // this.formSetUser.scooterSNs=['G5A1A100702'];
-        this.formSetUser.scooterSNs=this.scooters.map(function(v){
-          return (v.sn);
-        });
+        this.formSetUser.scooterSNs=this.scooters;
         this.formSetUser.phone=this.phone;
       }
     }

@@ -336,7 +336,7 @@ export default {
           if(k==='batteries' || k==='scooters'){
             return (v.map(function(vMap){
               return (vMap.sn);
-            }).toString);
+            }));
           }
         }
       });
@@ -364,7 +364,6 @@ export default {
       this.$store.commit('showUserUnbind');
     },
     setUser:function(scope){
-      // console.log(JSON.stringify(scope.row));
       this.msg='设置成功';
       this.userSet=scope.row;
       this.$store.commit('showSetUser');
