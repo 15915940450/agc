@@ -12,20 +12,20 @@
           
           <el-form-item label="分配人数" :label-width="formLabelWidth">
             <span class="total_select">
-              {{formSetFreeDay.userIDs.length}}
+              {{total_select}}
             </span>
           </el-form-item>
           <el-form-item label="剩余天数" :label-width="formLabelWidth">
             <span class="total_select">
-              200天
+              {{freeDayAfter}} 天
             </span>
           </el-form-item>
 
           <el-form-item label="分配天数" :label-width="formLabelWidth" prop="freeDay">
             <el-input-number 
               v-model="formSetFreeDay.freeDay" 
-              :min="1" 
-              :max="9999" 
+              :min="0" 
+              :max="max" 
               @input.native="handleIN"
               >
             </el-input-number>
@@ -56,23 +56,43 @@ export default {
         userIDs:[],
         freeDay:1
       },
+      freeDayAvailable:0,
       rules:{
+        freeDay:[
+          {required:true,message:'请输入',trigger:'blur'}
+        ]
       },
       formLabelWidth:'80px'
     });
   },
   computed:{
-    ...mapState(['modalStore'])
+    ...mapState(['modalStore']),
+    total_select:function(){
+      return (this.formSetFreeDay.userIDs.length);
+    },
+    max:function(){
+      return (Math.floor(this.freeDayAvailable/this.total_select));
+    },
+    freeDayAfter:function(){
+      return (this.freeDayAvailable-this.formSetFreeDay.freeDay*this.total_select);
+    }
   },
   watch:{
     'modalStore.setFreeDay':function(val){
       if(val){
+        this.fetchFreeDay();
         this.formSetFreeDay.userIDs=this.arrIDs;
         this.formSetFreeDay.freeDay=1;
       }
     }
   },
   methods:{
+    fetchFreeDay:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.freeDayAvailable=objRps.result.freeDays;
+      });
+    },
     handleIN:function(ev){
       this.formSetFreeDay.freeDay=ev.target.value;
     },
