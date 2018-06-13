@@ -117,6 +117,7 @@
               stripe
               class="table_wrap-table"
               width="100%"
+              @selection-change="handleSelectionChange"
               >
 
               <!-- selection -->
@@ -150,11 +151,11 @@
               </el-table-column>
               <el-table-column
                 label="电池SN"
-                prop="batteries" :formatter="formatter">
+                prop="batteries">
               </el-table-column>
               <el-table-column
                 label="中控SN"
-                prop="scooters" :formatter="formatter">
+                prop="scooters">
               </el-table-column>
 
               <el-table-column label="操作" width="110">
@@ -201,7 +202,7 @@
     <BaseStatus :msg="msg" />
     <FormUnbindUser :phone="unbindPhone" />
     <FormSetUser v-bind="userSet" />
-    <FormSetCombo />
+    <FormSetCombo :arrIDs="arrIDs" />
 
 
   </div>
@@ -247,7 +248,12 @@ export default {
   computed:{
     ...mapState(['agent','modalStore']),
     disabled_set_combo:function(){
-      return (false);
+      return (!this.selection.length);
+    },
+    arrIDs:function(){
+      return (this.selection.map(function(v){
+        return (v.id);
+      }));
     }
   },
   watch:{
@@ -295,7 +301,15 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='time'){
-            return (_.toSlash(new Date(v)));
+            return (_.toSlash(new Date(v),{
+              slash:'/',
+              T:false
+            })).slice(0,19);
+          }
+          if(k==='batteries' || k==='scooters'){
+            return (v.map(function(vMap){
+              return (vMap.sn);
+            }).toString);
           }
         }
       });
@@ -313,18 +327,6 @@ export default {
       this.msg='中控已激活';
       this.$store.commit('showEVin');
     },
-    formatter:function(row, column, cellValue){
-      if(column.property==='batteries' && cellValue.length){
-        return (cellValue.map(function(v){
-          return v.sn;
-        }).join(' , '));
-      }
-      if(column.property==='scooters' && cellValue.length){
-        return (cellValue.map(function(v){
-          return v.sn;
-        }).join(' , '));
-      }
-    },
     unbindUser:function(scope){
       this.msg='用户已解绑';
       // console.log(scope.row.phone);
@@ -339,6 +341,9 @@ export default {
     },
     handleCommand:function(command){
       this.$store.commit(command);
+    },
+    handleSelectionChange:function(val){
+      this.selection=val;
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;

@@ -30,7 +30,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="modalStore.setCombo = false">取 消</el-button>
-        <el-button type="primary" @click="handleComfirm('form')">确 定</el-button>
+        <el-button type="primary" @click="handleComfirm('form')" :loading="loading">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -42,8 +42,10 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormSetCombo',
+  props:['arrIDs'],
   data:function(){
     return ({
+      loading:false,
       formSetCombo:{
         userIDs:[],
         packageID:'',
@@ -66,6 +68,9 @@ export default {
     'modalStore.setCombo':function(val){
       if(val){
         this.fetchOptionsScheme('packageListScheme');
+        this.formSetCombo.userIDs=this.arrIDs;
+        this.formSetCombo.packageID='';
+        // _.logErr(this.arrIDs.toString());
       }
     }
   },
@@ -94,6 +99,7 @@ export default {
     },
     handleComfirm:function(refName){
       var vueThis=this;
+      vueThis.loading=true;
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
           var sendData={
@@ -102,7 +108,11 @@ export default {
             groupCode:vueThis.formSetCombo.groupCode
           };
           vueThis.$rqs(vueThis.$yApi.setCombo,function(objRps){
-            _.logErr(objRps);
+            vueThis.$store.commit('hideSetCombo');
+            vueThis.$message({
+              message: objRps.msg,
+              type: 'success'
+            });
           },{
             objSendData:sendData
           });
