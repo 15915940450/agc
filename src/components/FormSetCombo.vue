@@ -3,7 +3,7 @@
     <el-dialog
       title="分配套餐"
       :visible.sync="modalStore.setCombo"
-      width="300px"
+      width="440px"
       :show-close="false"
       :close-on-click-modal="false"
       center>
@@ -17,8 +17,12 @@
           </el-form-item>
           <el-form-item label="套餐方案" :label-width="formLabelWidth" prop="packageID">
             <el-select v-model="formSetCombo.packageID" placeholder="请选择">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+              <el-option
+                v-for="item in options_packageListScheme"
+                :key="item.id"
+                :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
+                :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
 
@@ -50,11 +54,40 @@ export default {
           {required:true,message:'请选择套餐方案',trigger:'blur'}
         ]
       },
+      typePackage:['月套卡','次套卡','免费套餐'],
+      options_packageListScheme: [],
       formLabelWidth:'80px'
     });
   },
   computed:{
     ...mapState(['modalStore'])
+  },
+  methods:{
+    fetchOptionsScheme:function(type){
+      var vueThis=this;
+      var advancedParam=JSON.stringify({
+        groupCode:vueThis.$route.params.groupcode,
+        canAssign:1
+      });
+      var sendData={
+        advancedParam:advancedParam,
+        pageNum:1,
+        pageSize:969
+      };
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        if(type==='depositListScheme'){
+          vueThis.options_depositListScheme=objRps.result.list;
+        }
+        if(type==='packageListScheme'){
+          vueThis.options_packageListScheme=objRps.result.list;
+        }
+      },{
+        objSendData:sendData
+      });
+    }
+  },
+  created:function(){
+    this.fetchOptionsScheme('packageListScheme');
   }
 };
 </script>
