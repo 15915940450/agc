@@ -27,18 +27,19 @@ gulp.task('backupYApijs',function(){
 //backupEditorConfig
 gulp.task('backupEditorConfig',function(){
   //:Sublime Text 3
-  //copy from /home/thilina/.config/sublime-text-3/Packages/User
+  //copy from /home/ili/.config/sublime-text-3/Packages/User
+  //          /home/ili/.config/sublime-text-3/Packages/User
   gulp.src([
-    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-keymap',
-    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-snippet',
-    '/home/thilina/.config/sublime-text-3/Packages/User/*.sublime-settings'
+    '/home/ili/.config/sublime-text-3/Packages/User/*.sublime-keymap',
+    '/home/ili/.config/sublime-text-3/Packages/User/*.sublime-snippet',
+    '/home/ili/.config/sublime-text-3/Packages/User/*.sublime-settings'
   ]).pipe(gulp.dest('./sublime_editor/'));
   //:vim
   //delete(vim_editor)
   del(['./vim_editor/**/*']).then(function(){
-    //copy from /home/thilina
+    //copy from /home/ili
     gulp.src([
-      '/home/thilina/.vimrc'
+      '/home/ili/.vimrc'
     ]).pipe(gulp.dest('./vim_editor/'));
   });
 });

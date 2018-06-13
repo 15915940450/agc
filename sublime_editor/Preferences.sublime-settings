@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Theme - Phoenix/Color Scheme/Phoenix Dark Yellow.tmTheme",
+	"color_scheme": "Packages/Color Scheme - Default/Celeste.sublime-color-scheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
@@ -30,11 +30,9 @@
 		".hg",
 		"CVS",
 		"TEST",
-		"dist",
 		"batterystation",
 		"ccbike",
 		"node_modules",
-		"agent",
 		"bootstrap"
 	],
 	"font_face": "DejaVu Sans Mono",
