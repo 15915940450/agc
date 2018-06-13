@@ -226,6 +226,7 @@
     <FormUnbindUser :phone="unbindPhone" />
     <FormSetUser v-bind="userSet" />
     <FormSetCombo :arrIDs="arrIDs" />
+    <FormSetDeposit :arrIDs="arrIDs" />
 
 
   </div>
@@ -239,6 +240,7 @@ import FormUnbindUser from './FormUnbindUser.vue';
 import FormEVin from './FormEVin.vue';
 import FormSetUser from './FormSetUser.vue';
 import FormSetCombo from './FormSetCombo.vue';
+import FormSetDeposit from './FormSetDeposit.vue';
 
 export default {
   name:'HeartUser',
@@ -304,6 +306,7 @@ export default {
     BaseStatus,
     FormUnbindUser,
     FormSetCombo,
+    FormSetDeposit,
     FormSetUser
   },
   methods: {
