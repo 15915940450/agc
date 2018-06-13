@@ -227,6 +227,7 @@
     <FormSetUser v-bind="userSet" />
     <FormSetCombo :arrIDs="arrIDs" />
     <FormSetDeposit :arrIDs="arrIDs" />
+    <FormSetFreeDay :arrIDs="arrIDs" />
 
 
   </div>
@@ -241,6 +242,7 @@ import FormEVin from './FormEVin.vue';
 import FormSetUser from './FormSetUser.vue';
 import FormSetCombo from './FormSetCombo.vue';
 import FormSetDeposit from './FormSetDeposit.vue';
+import FormSetFreeDay from './FormSetFreeDay.vue';
 
 export default {
   name:'HeartUser',
@@ -307,6 +309,7 @@ export default {
     FormUnbindUser,
     FormSetCombo,
     FormSetDeposit,
+    FormSetFreeDay,
     FormSetUser
   },
   methods: {
