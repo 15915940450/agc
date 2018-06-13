@@ -30,7 +30,28 @@
             </div>
           </el-col>
         </el-row>
-        <div v-loading="loadingUserList">
+
+        <div v-loading="loadingUserList" class="loading_parent">
+          <div class="filter_wrap">
+            <!-- dropdown -->
+            <el-dropdown 
+              size="mini" 
+              placement="bottom-start"
+              trigger="click"
+            >
+              <el-button type="primary" size="mini">
+                操作
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>分配套餐</el-dropdown-item>
+                <el-dropdown-item>设置金额</el-dropdown-item>
+                <el-dropdown-item>设置免费天数</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-button type="primary" size="mini">筛选</el-button>
+          </div>
+
           <!-- 用户列表表格 -->
           <div class="table_wrap_real">
             <el-table
@@ -71,16 +92,16 @@
                 prop="scooters" :formatter="formatter">
               </el-table-column>
 
-              <el-table-column label="操作" width="90">
+              <el-table-column label="操作" width="110">
                 <template slot-scope="scope">
                   <el-button
                     type="text"
-                    size="small" @click="unbindUser(scope)">
+                    @click="unbindUser(scope)">
                     解绑
                   </el-button>
                   <el-button
                     type="text"
-                    size="small" @click="setUser(scope)">
+                    @click="setUser(scope)">
                     设置
                   </el-button>
                 </template>
@@ -254,5 +275,12 @@ export default {
 <style lang="css" scoped>
   .user_list{
     background: #FFF;
+  }
+  .filter_wrap{
+    padding-left: 15px;
+  }
+  .loading_parent{
+    padding-top: 15px;
+    border-top: 1px solid ghostwhite;
   }
 </style>
