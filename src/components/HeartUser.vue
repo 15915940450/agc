@@ -50,6 +50,51 @@
               </el-dropdown-menu>
             </el-dropdown>
             <el-button type="primary" size="mini">筛选</el-button>
+            <!-- card -->
+            <el-card class="filter_card">
+              <el-form>
+
+                <div class="form_item_underline">
+                  <el-form-item>
+                    <span class="advanced_param_key">
+                      <el-checkbox label="分配套餐"></el-checkbox>
+                    </span>
+                    <el-radio-group>
+                      <el-radio label="全部"></el-radio>
+                      <el-radio label="无押金"></el-radio>
+                      <el-radio label="线下交押金"></el-radio>
+                      <el-radio label="线上交押金"></el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </div>
+                <div class="form_item_underline">
+                  <el-form-item>
+                    <span class="advanced_param_key">
+                      <el-checkbox label="套餐天数"></el-checkbox>
+                    </span>
+                    <el-radio-group>
+                      <el-radio label="无套餐"></el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </div>
+
+                <div class="form_item_underline">
+                  <el-form-item>
+                    <span class="advanced_param_key">
+                      <el-checkbox label="免费天数"></el-checkbox>
+                    </span>
+                    <el-radio-group>
+                      <el-radio label="无天数"></el-radio>
+                    </el-radio-group>
+                  </el-form-item>
+                </div>
+                <div class="res_sub">
+                  <el-button>清空</el-button>
+                  <el-button type="primary">筛选</el-button>
+                </div>
+
+              </el-form>
+            </el-card>
           </div>
 
           <!-- 用户列表表格 -->
@@ -278,9 +323,26 @@ export default {
   }
   .filter_wrap{
     padding-left: 15px;
+    padding-right: 15px;
   }
   .loading_parent{
     padding-top: 15px;
     border-top: 1px solid ghostwhite;
+  }
+  .form_item_underline{
+    border-bottom: 1px solid whitesmoke;
+    max-height: 40px;
+    margin-bottom: 10px;
+  }
+  .res_sub{
+    text-align: right;
+    margin-top: 20px;
+  }
+  .filter_card{
+    width: 100%;
+    margin-top: 8px;
+  }
+  .advanced_param_key{
+    margin-right: 30px;
   }
 </style>
