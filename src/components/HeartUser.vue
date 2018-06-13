@@ -52,14 +52,14 @@
             <el-button type="primary" size="mini">筛选</el-button>
             <!-- card -->
             <el-card class="filter_card">
-              <el-form>
+              <el-form ref="fiter_from" :model="filter_form">
 
                 <div class="form_item_underline">
                   <el-form-item>
                     <span class="advanced_param_key">
-                      <el-checkbox label="分配套餐"></el-checkbox>
+                      <el-checkbox v-model="filter_form.bDepositType" label="押金类型"></el-checkbox>
                     </span>
-                    <el-radio-group>
+                    <el-radio-group v-model="filter_form.depositType">
                       <el-radio label="全部"></el-radio>
                       <el-radio label="无押金"></el-radio>
                       <el-radio label="线下交押金"></el-radio>
@@ -70,9 +70,9 @@
                 <div class="form_item_underline">
                   <el-form-item>
                     <span class="advanced_param_key">
-                      <el-checkbox label="套餐天数"></el-checkbox>
+                      <el-checkbox v-model="filter_form.bPackageDays" label="套餐天数"></el-checkbox>
                     </span>
-                    <el-radio-group>
+                    <el-radio-group v-model="filter_form.packageDays">
                       <el-radio label="无套餐"></el-radio>
                     </el-radio-group>
                   </el-form-item>
@@ -81,9 +81,9 @@
                 <div class="form_item_underline">
                   <el-form-item>
                     <span class="advanced_param_key">
-                      <el-checkbox label="免费天数"></el-checkbox>
+                      <el-checkbox v-model="filter_form.bFreeDay" label="免费天数"></el-checkbox>
                     </span>
-                    <el-radio-group>
+                    <el-radio-group v-model="filter_form.freeDay">
                       <el-radio label="无天数"></el-radio>
                     </el-radio-group>
                   </el-form-item>
@@ -204,7 +204,15 @@ export default {
       isNotSearch:true,
       unbindPhone:'',
       userSet:null,
+      filter_form:{
+        depositType:0,
+        packageDays:null,
+        freeDay:null,
 
+        bDepositType:true,
+        bPackageDays:false,
+        bFreeDay:false
+      },
       users:[
 
       ],
