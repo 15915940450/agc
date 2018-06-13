@@ -14,6 +14,8 @@ var state={
   userUnbind:false,
   setUser:false,
   setCombo:false,
+  setDeposit:false,
+  setFreeDay:false,
   groupSet:false,
   statusGroupCreate:false,
   statusEVoperation:false,
@@ -45,6 +47,8 @@ var mutations={
     state.userUnbind=false;
     state.setUser=false;
     state.setCombo=false;
+    state.setDeposit=false;
+    state.setFreeDay=false;
     state.groupSet=false;
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
@@ -133,6 +137,18 @@ var mutations={
   },
   hideSetCombo:function(state){
     state.setCombo=false;
+  },
+  showSetDeposit:function(state){
+    state.setDeposit=true;
+  },
+  hideSetDeposit:function(state){
+    state.setDeposit=false;
+  },
+  showSetFreeDay:function(state){
+    state.setFreeDay=true;
+  },
+  hideSetFreeDay:function(state){
+    state.setFreeDay=false;
   },
   showGroupSet:function(state){
     state.groupSet=true;

@@ -240,6 +240,7 @@ export default {
     this.fetchEVlist();
     this.fetchGroupList();
     // console.log(this.$route.params);
+
   }
 };
 </script>

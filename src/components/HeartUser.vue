@@ -45,9 +45,24 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="showSetCombo" :disabled="disabled_set_combo">分配套餐</el-dropdown-item>
-                <el-dropdown-item>设置金额</el-dropdown-item>
-                <el-dropdown-item>设置免费天数</el-dropdown-item>
+                <el-dropdown-item 
+                  command="showSetCombo" 
+                  :disabled="disabled_set"
+                  >
+                  分配套餐
+                </el-dropdown-item>
+                <el-dropdown-item
+                  command="showSetDeposit" 
+                  :disabled="disabled_set"
+                  >
+                  设置押金
+                </el-dropdown-item>
+                <el-dropdown-item
+                  command="showSetFreeDay" 
+                  :disabled="disabled_set"
+                  >
+                  设置免费天数
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <el-button type="primary" size="mini" @click="filter_enabled=!filter_enabled">筛选</el-button>
@@ -256,7 +271,7 @@ export default {
   },
   computed:{
     ...mapState(['agent','modalStore']),
-    disabled_set_combo:function(){
+    disabled_set:function(){
       return (!this.selection.length);
     },
     arrIDs:function(){
