@@ -99,9 +99,9 @@ export default {
     },
     handleComfirm:function(refName){
       var vueThis=this;
-      vueThis.loading=true;
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
+          vueThis.loading=true;
           var sendData={
             userIDs:vueThis.formSetCombo.userIDs.toString(),
             packageID:vueThis.formSetCombo.packageID,
