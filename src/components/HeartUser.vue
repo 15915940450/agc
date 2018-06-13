@@ -49,61 +49,63 @@
                 <el-dropdown-item>设置免费天数</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <el-button type="primary" size="mini">筛选</el-button>
+            <el-button type="primary" size="mini" @click="filter_enabled=!filter_enabled">筛选</el-button>
             <!-- card -->
-            <el-card class="filter_card">
-              <el-form ref="fiter_from" :model="filter_form">
+            <transition name="el-zoom-in-center">
+              <el-card class="filter_card" v-show="filter_enabled">
+                <el-form ref="fiter_from" :model="filter_form">
 
-                <div class="form_item_underline">
-                  <el-form-item>
-                    <span class="advanced_param_key">
-                      <el-checkbox v-model="filter_form.bDepositType" label="押金类型"></el-checkbox>
-                    </span>
-                    <el-radio-group 
-                      v-model="filter_form.depositType"
-                      :disabled="!filter_form.bDepositType"
-                      >
-                      <el-radio :label="0">全部</el-radio>
-                      <el-radio :label="1">无押金</el-radio>
-                      <el-radio :label="2">线下交押金</el-radio>
-                      <el-radio :label="3">线上交押金</el-radio>
-                    </el-radio-group>
-                  </el-form-item>
-                </div>
-                <div class="form_item_underline">
-                  <el-form-item>
-                    <span class="advanced_param_key">
-                      <el-checkbox v-model="filter_form.bPackageDays" label="套餐天数"></el-checkbox>
-                    </span>
-                    <el-radio-group 
-                      v-model="filter_form.packageDays"
-                      :disabled="!filter_form.bPackageDays"
-                      >
-                      <el-radio :label="1">无套餐</el-radio>
-                    </el-radio-group>
-                  </el-form-item>
-                </div>
+                  <div class="form_item_underline">
+                    <el-form-item>
+                      <span class="advanced_param_key">
+                        <el-checkbox v-model="filter_form.bDepositType" label="押金类型"></el-checkbox>
+                      </span>
+                      <el-radio-group 
+                        v-model="filter_form.depositType"
+                        :disabled="!filter_form.bDepositType"
+                        >
+                        <el-radio :label="0">全部</el-radio>
+                        <el-radio :label="1">无押金</el-radio>
+                        <el-radio :label="2">线下交押金</el-radio>
+                        <el-radio :label="3">线上交押金</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </div>
+                  <div class="form_item_underline">
+                    <el-form-item>
+                      <span class="advanced_param_key">
+                        <el-checkbox v-model="filter_form.bPackageDays" label="套餐天数"></el-checkbox>
+                      </span>
+                      <el-radio-group 
+                        v-model="filter_form.packageDays"
+                        :disabled="!filter_form.bPackageDays"
+                        >
+                        <el-radio :label="1">无套餐</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </div>
 
-                <div class="form_item_underline">
-                  <el-form-item>
-                    <span class="advanced_param_key">
-                      <el-checkbox v-model="filter_form.bFreeDay" label="免费天数"></el-checkbox>
-                    </span>
-                    <el-radio-group 
-                      v-model="filter_form.freeDay"
-                      :disabled="!filter_form.bFreeDay"
-                      >
-                      <el-radio :label="1">无天数</el-radio>
-                    </el-radio-group>
-                  </el-form-item>
-                </div>
-                <div class="res_sub">
-                  <el-button>清空</el-button>
-                  <el-button type="primary">筛选</el-button>
-                </div>
+                  <div class="form_item_underline">
+                    <el-form-item>
+                      <span class="advanced_param_key">
+                        <el-checkbox v-model="filter_form.bFreeDay" label="免费天数"></el-checkbox>
+                      </span>
+                      <el-radio-group 
+                        v-model="filter_form.freeDay"
+                        :disabled="!filter_form.bFreeDay"
+                        >
+                        <el-radio :label="1">无天数</el-radio>
+                      </el-radio-group>
+                    </el-form-item>
+                  </div>
+                  <div class="res_sub">
+                    <el-button>清空</el-button>
+                    <el-button type="primary">筛选</el-button>
+                  </div>
 
-              </el-form>
-            </el-card>
+                </el-form>
+              </el-card>
+            </transition>
           </div>
 
           <!-- 用户列表表格 -->
@@ -213,6 +215,7 @@ export default {
       isNotSearch:true,
       unbindPhone:'',
       userSet:null,
+      filter_enabled:false,
       filter_form:{
         depositType:0,
         packageDays:1,
