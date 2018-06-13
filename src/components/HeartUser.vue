@@ -59,11 +59,14 @@
                     <span class="advanced_param_key">
                       <el-checkbox v-model="filter_form.bDepositType" label="押金类型"></el-checkbox>
                     </span>
-                    <el-radio-group v-model="filter_form.depositType">
-                      <el-radio label="全部"></el-radio>
-                      <el-radio label="无押金"></el-radio>
-                      <el-radio label="线下交押金"></el-radio>
-                      <el-radio label="线上交押金"></el-radio>
+                    <el-radio-group 
+                      v-model="filter_form.depositType"
+                      :disabled="!filter_form.bDepositType"
+                      >
+                      <el-radio :label="0">全部</el-radio>
+                      <el-radio :label="1">无押金</el-radio>
+                      <el-radio :label="2">线下交押金</el-radio>
+                      <el-radio :label="3">线上交押金</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
@@ -72,8 +75,11 @@
                     <span class="advanced_param_key">
                       <el-checkbox v-model="filter_form.bPackageDays" label="套餐天数"></el-checkbox>
                     </span>
-                    <el-radio-group v-model="filter_form.packageDays">
-                      <el-radio label="无套餐"></el-radio>
+                    <el-radio-group 
+                      v-model="filter_form.packageDays"
+                      :disabled="!filter_form.bPackageDays"
+                      >
+                      <el-radio :label="1">无套餐</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
@@ -83,8 +89,11 @@
                     <span class="advanced_param_key">
                       <el-checkbox v-model="filter_form.bFreeDay" label="免费天数"></el-checkbox>
                     </span>
-                    <el-radio-group v-model="filter_form.freeDay">
-                      <el-radio label="无天数"></el-radio>
+                    <el-radio-group 
+                      v-model="filter_form.freeDay"
+                      :disabled="!filter_form.bFreeDay"
+                      >
+                      <el-radio :label="1">无天数</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
@@ -206,8 +215,8 @@ export default {
       userSet:null,
       filter_form:{
         depositType:0,
-        packageDays:null,
-        freeDay:null,
+        packageDays:1,
+        freeDay:1,
 
         bDepositType:true,
         bPackageDays:false,
