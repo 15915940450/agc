@@ -177,7 +177,15 @@
           
 
           <div class="table_wrap_pagination">
-            <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+            <el-pagination 
+              :background="true" 
+              layout="total,->,jumper,sizes,prev,pager,next" 
+              :page-sizes="[10, 20, 50]"
+              :total="total" 
+              :current-page="pageNum" 
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+              >
               <!-- 分页 -->
             </el-pagination>
           </div>
@@ -242,6 +250,7 @@ export default {
 
       ],
       loadingUserList:true,
+      pageSize:this.$yApi.defaultPS,
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
@@ -258,6 +267,9 @@ export default {
   },
   watch:{
     pageNum:function(){
+      this.fetchData();
+    },
+    pageSize:function(){
       this.fetchData();
     },
     'modalStore.needLogin':function(val){
@@ -290,7 +302,7 @@ export default {
       var sendData={
         advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
-        pageSize:vueThis.$yApi.defaultPS
+        pageSize:vueThis.pageSize
       };
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
         // _.logErr(objRps);
@@ -318,6 +330,9 @@ export default {
       this.pageNum=val;
       // console.log(this.$route.params.groupcode);
       this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+val);
+    },
+    handleSizeChange:function(val){
+      this.pageSize=val;
     },
     showNewUser:function(){
       this.msg='已成功添加用户';
