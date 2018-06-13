@@ -13,7 +13,7 @@ var state={
   EVunbind:false,
   userUnbind:false,
   setUser:false,
-  setCombo:true,
+  setCombo:false,
   groupSet:false,
   statusGroupCreate:false,
   statusEVoperation:false,

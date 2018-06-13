@@ -38,13 +38,14 @@
               size="mini" 
               placement="bottom-start"
               trigger="click"
+              @command="handleCommand"
             >
               <el-button type="primary" size="mini">
                 操作
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>分配套餐</el-dropdown-item>
+                <el-dropdown-item command="showSetCombo">分配套餐</el-dropdown-item>
                 <el-dropdown-item>设置金额</el-dropdown-item>
                 <el-dropdown-item>设置免费天数</el-dropdown-item>
               </el-dropdown-menu>
@@ -332,6 +333,9 @@ export default {
       this.msg='设置成功';
       this.userSet=scope.row;
       this.$store.commit('showSetUser');
+    },
+    handleCommand:function(command){
+      this.$store.commit(command);
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
