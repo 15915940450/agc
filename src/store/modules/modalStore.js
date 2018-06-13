@@ -13,6 +13,7 @@ var state={
   EVunbind:false,
   userUnbind:false,
   setUser:false,
+  setCombo:true,
   groupSet:false,
   statusGroupCreate:false,
   statusEVoperation:false,
@@ -43,6 +44,7 @@ var mutations={
     state.EVunbind=false;
     state.userUnbind=false;
     state.setUser=false;
+    state.setCombo=false;
     state.groupSet=false;
     state.statusGroupCreate=false;
     state.statusEVoperation=false;
@@ -125,6 +127,12 @@ var mutations={
   },
   hideSetUser:function(state){
     state.setUser=false;
+  },
+  showSetCombo:function(state){
+    state.setCombo=true;
+  },
+  hideSetCombo:function(state){
+    state.setCombo=false;
   },
   showGroupSet:function(state){
     state.groupSet=true;

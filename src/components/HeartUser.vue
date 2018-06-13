@@ -200,6 +200,7 @@
     <BaseStatus :msg="msg" />
     <FormUnbindUser :phone="unbindPhone" />
     <FormSetUser v-bind="userSet" />
+    <FormSetCombo />
 
 
   </div>
@@ -212,6 +213,7 @@ import BaseStatus from './BaseStatus.vue';
 import FormUnbindUser from './FormUnbindUser.vue';
 import FormEVin from './FormEVin.vue';
 import FormSetUser from './FormSetUser.vue';
+import FormSetCombo from './FormSetCombo.vue';
 
 export default {
   name:'HeartUser',
@@ -264,6 +266,7 @@ export default {
     FormEVin,
     BaseStatus,
     FormUnbindUser,
+    FormSetCombo,
     FormSetUser
   },
   methods: {
