@@ -83,9 +83,8 @@
     <!-- empty -->
     <div v-if="(!users.length && isNotSearch && !loadingUserList)" class="empty_user im_empty_wrap">
       <div class="im_empty">
-        <img class="im_empty_img" src="../assets/empty_user.png" />
-        <p class="im_empty_p">您还没有用户哦！</p>
-        <el-button type="primary" @click="showNewUser()">添加</el-button>
+        <img class="im_empty_img" src="../assets/empty_combo_his.png" />
+        <p class="im_empty_p">暂无购买记录.</p>
       </div>
     </div>
 
@@ -97,7 +96,7 @@
 import {mapState} from 'vuex';
 
 export default {
-  name:'HeartUser',
+  name:'HeartComboHistory', /* HeartComboHistory is copy from HeartUser */
   data:function(){
     return ({
       total:0,
@@ -105,16 +104,16 @@ export default {
       isNotSearch:true,
 
       users:[
-          // {
-          //     "discountName":"欢电套餐", //套餐名
-          //     "price":"6", // 单价
-          //     "amout":"12", // 付款价格
-          //     "number":"2", // 数量
-          //     "createTime":"2018-06-06 09:53:57", // 时间
-          //     "phone":"15820480937", // 电话
-          //     "status":"1" // 状态  1待确认 2 成功 ，3失败
+        // {
+        //     "discountName":"欢电套餐", //套餐名
+        //     "price":"6", // 单价
+        //     "amout":"12", // 付款价格
+        //     "number":"2", // 数量
+        //     "createTime":"2018-06-06 09:53:57", // 时间
+        //     "phone":"15820480937", // 电话
+        //     "status":"1" // 状态  1待确认 2 成功 ，3失败
               
-          // } 
+        // } 
       ],
       loadingUserList:true,
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
