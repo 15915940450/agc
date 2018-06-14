@@ -36,6 +36,7 @@
                   </el-form>
                 </template>
               </el-table-column>
+
               <el-table-column
                 label="#"
                 type="index"
@@ -57,6 +58,11 @@
                 label="电量"
                 prop="soc">
               </el-table-column>
+              <el-table-column
+                label="状态"
+                prop="status">
+              </el-table-column>
+
               <el-table-column label="操作" width="190">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
@@ -204,6 +210,9 @@ export default {
           if(k==='locationUpdateTime'){
             return (_.toSlash(new Date(v)));
           }
+          if(k==='status'){
+            return (['未激活','已激活'][v]);
+          }
         }
       });
     },
@@ -246,6 +255,9 @@ export default {
       this.fetchData();
     },
     rrPush:function(ev,childrenPath){
+      if(ev.location==='─'){
+        return false;
+      }
       // _.logErr(ev);
       var query={
         sn:ev.sn
