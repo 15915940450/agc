@@ -9,7 +9,7 @@
         </p>
       </el-col>
       <el-col :span="8">
-        <a class="to_deposit" href="javascript:;" @click="rrPush()">
+        <a class="to_deposit" href="javascript:;" @click="rrPush('/deposit/1')">
           <p class="im_key">我的押金</p>
           <p class="im_value">
             <span>{{availableDeposite}}</span>
@@ -36,9 +36,7 @@
                   用户数
                 </h3>
                 <p class="im_card-value">
-                  <router-link to="/group">
-                    {{userNum}}
-                  </router-link>
+                  <span class="is_link" @click="rrPush('/group')">{{userNum}}</span>
                 </p>
               </el-col>
             </el-row>
@@ -146,9 +144,9 @@ export default {
         });
       });
     },
-    rrPush:function(){
+    rrPush:function(path){
       this.$router.push({
-        path:'/deposit/1'
+        path:path
       });
     }
   },
