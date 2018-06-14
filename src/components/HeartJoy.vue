@@ -36,7 +36,9 @@
                   用户数
                 </h3>
                 <p class="im_card-value">
-                  {{userNum}}
+                  <router-link to="/group">
+                    {{userNum}}
+                  </router-link>
                 </p>
               </el-col>
             </el-row>
