@@ -5,7 +5,7 @@
 * spa: index.html
 * main: src/main.js (import Vue,router,store,EUI,vue-awesome,App)
 * App: App.vue (contain router-view... LayoutTopBar.vue,LayoutNavMaster.vue,LayoutLogin.vue)
-* router-view: (contain HeartJoy,HeartGroup,HeartUser,HeartDeposit,HeartEVs,HeartEVamap,HeartSysSetting...extra HelloWorld and AjaxTest just for test)
+* router-view: (contain HeartJoy,HeartGroup,HeartUser,HeartDeposit,HeartEVs,HeartEVamap,HeartSysSetting,HeartCombo,HeartComboHistory..THIS is the data where arrRouteName come from..extra HelloWorld and AjaxTest just for test)
 * api: some private setting(rqs,y_api接口列表)
 * LayoutLogin: make $rqs to $yApi.userLogin, while success set some item in localStorage(see all in y_api.js)
 * HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo(always add param phone).
@@ -32,17 +32,19 @@ import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe0
 ```
 
 * (ayu) Color Scheme
-* Package Control
-* SublimeLinter
-* SublimeLinter-eslint
-* Vue Syntax Hightlight
-* GitGutter
-* Emmet
-* ColorPicker
-* ESlint-Formatter
-* SCSS
-* SublimeLinter-contrib-sass-lint
-* BracketHighlighter
+* 1.Package Control
+* 2.SublimeLinter
+* 3.SublimeLinter-eslint
+* 4.Vue Syntax Hightlight
+* 5.GitGutter
+* 6.Emmet
+* 7.ColorPicker
+* 8.ESlint-Formatter
+* 9.SCSS
+* 10.SublimeLinter-contrib-sass-lint
+* 11.BracketHighlighter
+* 12.ChineseOpenConvert
+* 13.FcitxInput
 
 
 ## atom editor
