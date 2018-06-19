@@ -137,7 +137,7 @@ export default {
       var vueThis=this;
       vueThis.loadingUserList=true;
       var advancedParam=JSON.stringify({
-        discountName:vueThis.search
+        discountName:vueThis.search || null
       });
       var sendData={
         advancedParam:advancedParam,
