@@ -139,7 +139,12 @@ export default function(urlMethod,success,paramSettings){
   };
 
   var ContentType,data2send='';
-  if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone){
+  //批量设置那里 能不能把phone那个入参给去掉
+  var isUserBatchSet=false;
+  if(urlMethod.indexOf('/user/batchSet')!==-1){
+    isUserBatchSet=true;
+  }
+  if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone && !isUserBatchSet){
     settings.objSendData.phone=window.localStorage.agentphone;
   }
   if(method==='GET'){
