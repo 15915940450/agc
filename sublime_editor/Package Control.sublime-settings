@@ -6,10 +6,9 @@
 	"installed_packages":
 	[
 		"A File Icon",
-		"ayu",
 		"BracketHighlighter",
 		"ChineseOpenConvert",
-		"Color Scheme - Creamy",
+		"Color Schemes - Wicked Schemes by b0xw00d",
 		"ColorPicker",
 		"Emmet",
 		"ESLint-Formatter",
@@ -18,6 +17,7 @@
 		"Package Control",
 		"SCSS",
 		"SublimeLinter",
+		"SublimeLinter-contrib-htmlhint",
 		"SublimeLinter-contrib-sass-lint",
 		"SublimeLinter-eslint",
 		"Vue Syntax Highlight"
