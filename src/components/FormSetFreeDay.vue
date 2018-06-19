@@ -102,7 +102,7 @@ export default {
         if(valid){
           vueThis.loading=true;
           var sendData={
-            userIDs:vueThis.formSetFreeDay.userIDs.toString(),
+            userIDs:vueThis.formSetFreeDay.userIDs,
             freeDay:vueThis.formSetFreeDay.freeDay
           };
           vueThis.$rqs(vueThis.$yApi.setFreeDay,function(objRps){

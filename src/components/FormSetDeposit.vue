@@ -100,7 +100,7 @@ export default {
         if(valid){
           vueThis.loading=true;
           var sendData={
-            userIDs:vueThis.formSetDeposit.userIDs.toString(),
+            userIDs:vueThis.formSetDeposit.userIDs,
             depositID:vueThis.formSetDeposit.depositID,
             groupCode:vueThis.formSetDeposit.groupCode
           };

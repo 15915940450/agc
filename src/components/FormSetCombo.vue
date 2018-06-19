@@ -103,7 +103,7 @@ export default {
         if(valid){
           vueThis.loading=true;
           var sendData={
-            userIDs:vueThis.formSetCombo.userIDs.toString(),
+            userIDs:vueThis.formSetCombo.userIDs,
             packageID:vueThis.formSetCombo.packageID,
             groupCode:vueThis.formSetCombo.groupCode
           };
