@@ -59,7 +59,8 @@ export default {
       freeDayAvailable:0,
       rules:{
         freeDay:[
-          {required:true,message:'请输入',trigger:'blur'}
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
         ]
       },
       formLabelWidth:'80px'
