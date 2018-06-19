@@ -338,7 +338,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='time'){
-            return (_.toSlash(new Date(v),{
+            return (_.toSlash(new Date(window.Number(v)),{
               slash:'/',
               T:false
             })).slice(0,19);

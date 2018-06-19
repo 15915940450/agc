@@ -4,7 +4,7 @@
       <p>
         <span>中控SN: {{sn}}</span>
         <span>位置: {{address}}</span>
-        <span>最后刷新坐标时间: {{timeSlash}}</span>
+        <span>最后刷新坐标时间: {{time}}</span>
       </p>
     </div>
     
@@ -30,9 +30,6 @@ export default {
     });
   },
   computed:{
-    timeSlash:function(){
-      return (_.toSlash(new Date(window.Number(this.time))));
-    },
     arrLL:function(){
       return (this.point.split(','));
     }
