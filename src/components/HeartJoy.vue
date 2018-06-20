@@ -24,7 +24,7 @@
 
         <!-- 用户 -->
         <el-col :span="6">
-          <div class="im_card im_card_1">
+          <div class="im_card im_card_1 is_link" @click="rrPush('/group')">
             <el-row>
               <el-col :span="10">
                 <div class="im_card-icon card_user">
@@ -36,7 +36,7 @@
                   用户数
                 </h3>
                 <p class="im_card-value">
-                  <span class="is_link" @click="rrPush('/group')">{{userNum}}</span>
+                  <span>{{userNum}}</span>
                 </p>
               </el-col>
             </el-row>
