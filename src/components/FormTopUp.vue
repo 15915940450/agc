@@ -8,11 +8,16 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formTopUp" ref="formTopUp">
+        <el-form :model="formTopUp" ref="formTopUp" :rules="rules">
 
-          <el-form-item label="电池数量" :label-width="formLabelWidth">
-            <!-- <el-input size="small" v-model="formTopUp.batteryNum" auto-complete="off"></el-input> -->
-            <el-input-number v-model="formTopUp.batteryNum" :min="1" :max="9999" @input.native="handleIN"></el-input-number>
+          <el-form-item label="电池数量" :label-width="formLabelWidth" prop="batteryNum">
+            <el-input-number 
+              v-model="formTopUp.batteryNum" 
+              :min="1" 
+              :max="9999" 
+              @input.native="handleIN"
+              >
+            </el-input-number>
           </el-form-item>
           <el-form-item label="充值金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount.toFixed(2)}}</strong>元
@@ -28,7 +33,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <a :href="payurl" target="_blank" @click="handleComfirm()">
+        <a :href="payurl" target="_blank" @click="handleComfirm('formTopUp')">
           <el-button type="primary">确 定</el-button>
         </a>
       </span>
@@ -43,6 +48,12 @@ export default {
   name:'FormTopUp',
   data:function(){
     return ({
+      rules:{
+        batteryNum:[
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
+        ]
+      },
       formTopUp:{
         batteryNum:1,
         payType:'1'
@@ -112,13 +123,20 @@ export default {
       vueThis.formTopUp.payType='1';
       vueThis.$store.commit('hideTopUp');
     },
-    handleComfirm:function(){
+    handleComfirm:function(refName){
       var vueThis=this;
-      //跳往支付页面(监听充值状态)，显示是否成功
-      vueThis.$store.commit('hideTopUp');
-      vueThis.$store.commit('showStatusTopUp');
-      //set item payurl
-      window.sessionStorage.setItem('payurl',vueThis.payurl);
+      vueThis.$refs[refName].validate((valid) => {
+        if(valid){
+          //跳往支付页面(监听充值状态)，显示是否成功
+          vueThis.$store.commit('hideTopUp');
+          vueThis.$store.commit('showStatusTopUp');
+          //set item payurl
+          window.sessionStorage.setItem('payurl',vueThis.payurl);
+        }else{
+          console.log(false);
+          return false;
+        }
+      });
     },
     handleIN:function(ev){
       this.formTopUp.batteryNum=ev.target.value;
