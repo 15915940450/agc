@@ -35,7 +35,11 @@
           </el-form-item>
 
           <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
-            <el-input-number v-model="formSetUser.freeDay" :min="0" :max="maxFD">
+            <el-input-number 
+              v-model="formSetUser.freeDay" 
+              :min="0" 
+              :max="maxFD"
+              >
             </el-input-number>
             <small>(剩余 <strong :class="{red:(computedFreeDays<=0)}">{{computedFreeDays}}</strong> 天)</small>
           </el-form-item>
@@ -73,17 +77,21 @@ export default {
   props:['name','groupCode','depositID','freeDays','scooters','phone'],
   data:function(){
     return ({
+      rules:{
+        groupCode:[
+          {required:true,message:'请选择一个群组',trigger:'change'}
+        ],
+        freeDay:[
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
+        ]
+      },
       formSetUser:{
         scooterSNs:[],
         freeDay:-1,
         groupCode:'',
         depositId:'',
         phone:''
-      },
-      rules:{
-        groupCode:[
-          {required:true,message:'请选择一个群组',trigger:'change'}
-        ]
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)
       agentFreeDays:0,
