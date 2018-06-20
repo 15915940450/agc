@@ -33,7 +33,7 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="handleCancel()">取 消</el-button>
-        <a :href="payurl" target="_blank" @click="handleComfirm('formTopUp')">
+        <a :href="payurl" :target="target" @click="handleComfirm('formTopUp')">
           <el-button type="primary">确 定</el-button>
         </a>
       </span>
@@ -76,32 +76,43 @@ export default {
       return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
     },
     payurl:function(){
-      var payurl='';
-      var objSendData={
-        phone:''+window.localStorage.agentphone,
-        type:1,
-        payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
-        amount:(window.Number(this.amount)).toFixed(2),
-        batteryNum:window.Number(this.formTopUp.batteryNum),
-        status:1
-      };
-      //stringify, then encodeURIComponent
-      var yap=window.encodeURIComponent(JSON.stringify(objSendData));
+      var payurl='javascript:;';
+      //validate 是整数
+      if(window.Number.isInteger(window.Number(this.formTopUp.batteryNum))){
+        var objSendData={
+          phone:''+window.localStorage.agentphone,
+          type:1,
+          payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
+          amount:(window.Number(this.amount)).toFixed(2),
+          batteryNum:window.Number(this.formTopUp.batteryNum),
+          status:1
+        };
+        //stringify, then encodeURIComponent
+        var yap=window.encodeURIComponent(JSON.stringify(objSendData));
 
-      if(this.formTopUp.payType==='1'){
-        payurl=window.encodeURI('/pay_ali.html?yap='+yap);
-      }else{
-        payurl=window.encodeURI('/pay_wx.html?yap='+yap);
-      }
-      /*==payurl
-      /pay_ali.html?yap=%257B%2522phone%2522%253A%252215915900000%2522%252C%2522type%2522%253A1%252C%2522payType%2522%253A1%252C%2522amount%2522%253A0.5%252C%2522batteryNum%2522%253A1%252C%2522status%2522%253A1%257D
-      */
-      if(window.location.hostname==='localhost'){
-        // http://localhost/agc/dist/pay_ali.html
-        payurl='http://localhost/agc/dist'+payurl;
-      }
+        if(this.formTopUp.payType==='1'){
+          payurl=window.encodeURI('/pay_ali.html?yap='+yap);
+        }else{
+          payurl=window.encodeURI('/pay_wx.html?yap='+yap);
+        }
+        /*==payurl
+        /pay_ali.html?yap=%257B%2522phone%2522%253A%252215915900000%2522%252C%2522type%2522%253A1%252C%2522payType%2522%253A1%252C%2522amount%2522%253A0.5%252C%2522batteryNum%2522%253A1%252C%2522status%2522%253A1%257D
+        */
+        if(window.location.hostname==='localhost'){
+          // http://localhost/agc/dist/pay_ali.html
+          payurl='http://localhost/agc/dist'+payurl;
+        }
+      } //end if
+      
 
       return (payurl);
+    },
+    target:function(){
+      var target='';
+      if(window.Number.isInteger(window.Number(this.formTopUp.batteryNum))){
+        target='_blank';
+      }
+      return target;
     }
   },
   watch:{
@@ -115,26 +126,28 @@ export default {
         vueThis.listenTradeCheck();
       }
     }
+
   },
   methods:{
-    handleCancel:function(){
+    rFs:function(){
       var vueThis=this;
       vueThis.formTopUp.batteryNum=1;
       vueThis.formTopUp.payType='1';
+      vueThis.$refs.formTopUp.resetFields();
       vueThis.$store.commit('hideTopUp');
+    },
+    handleCancel:function(){
+      this.rFs();
     },
     handleComfirm:function(refName){
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
+          vueThis.rFs();
           //跳往支付页面(监听充值状态)，显示是否成功
-          vueThis.$store.commit('hideTopUp');
           vueThis.$store.commit('showStatusTopUp');
           //set item payurl
           window.sessionStorage.setItem('payurl',vueThis.payurl);
-        }else{
-          console.log(false);
-          return false;
         }
       });
     },
@@ -150,6 +163,9 @@ export default {
         }
       },900);
     }
+  },
+  created:function(){
+    // console.log(this.payurl);
   }
 };
 </script>
