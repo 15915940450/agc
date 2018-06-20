@@ -261,14 +261,15 @@ export default {
       this.fetchData();
     },
     rrPush:function(ev,childrenPath){
-      if(ev.location==='─'){
-        return false;
-      }
       // _.logErr(ev);
       var query={
         sn:ev.sn
       };
+      //point,track
       if(childrenPath==='point'){
+        if(ev.location==='─'){
+          return false;
+        }
         query.ll=ev.location;
         query.time=ev.locationUpdateTime;
       }

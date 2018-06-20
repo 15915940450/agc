@@ -9,6 +9,7 @@
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
+        :picker-options="pickerOptions"
         >
       </el-date-picker>
       
@@ -58,6 +59,11 @@ export default {
   name:'MapTrack',
   data:function(){
     return ({
+      pickerOptions:{
+        disabledDate:function(dateObj){
+          return (dateObj.getTime()>_.dateAgo(0));
+        }
+      },
       se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)
       scooterId:'',
       sn:'',
@@ -115,11 +121,12 @@ export default {
         vueThis.loadingTrack=false;
         //clear the map
         map.clearMap();
+        objPathSimplifier.setData(null);
         //相鄰去重( here we supose only one path << thilina)
         vueThis.thePaths[0].path=(_.sortedUniq(objRps.result.points)).map(function(v){
           return v.split(',');
         });
-        _.logErr(vueThis.noData);
+        _.logErr(vueThis.noData,'noData');
         //hasData then pathandmarker
         if(!vueThis.noData){
           objPathSimplifier.setData(vueThis.thePaths);
