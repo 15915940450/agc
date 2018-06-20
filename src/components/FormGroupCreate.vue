@@ -62,8 +62,13 @@
           </el-form-item>
           <el-form-item prop="freeDay" :label-width="formLabelWidth">
             新用户自动免费
-            <el-input-number v-model="formGroupCreate.freeDay" :disabled="!formGroupCreate.freeDayEnable" size="mini" :min="0" :max="100">
-              
+            <el-input-number 
+              v-model="formGroupCreate.freeDay" 
+              :disabled="!formGroupCreate.freeDayEnable" 
+              size="mini" 
+              :min="0" 
+              :max="100"
+              >
             </el-input-number>
             天
           </el-form-item>
@@ -85,16 +90,6 @@ export default {
   name:'FormGroupCreate',
   data:function(){
     return ({
-      formGroupCreate:{
-        name:'',
-        canRefund:'',
-        cityCode:'',
-        depositScheme:[],
-        packageScheme:[],
-        freeDayEnable:false,
-        freeDay:0,
-        agentId:window.localStorage.agentid
-      },
       rules:{
         name:[
           {required:true,message:'群组名称不能为空',trigger:'blur'},
@@ -106,6 +101,10 @@ export default {
         canRefund:[
           {required:true,message:'请选择群组类型',trigger:'change'}
         ],
+        freeDay:[
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
+        ],
         depositScheme:[
           {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
         ],
@@ -113,6 +112,17 @@ export default {
           {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
         ]
       },
+      formGroupCreate:{
+        name:'',
+        canRefund:'',
+        cityCode:'',
+        depositScheme:[],
+        packageScheme:[],
+        freeDayEnable:false,
+        freeDay:0,
+        agentId:window.localStorage.agentid
+      },
+      
       grouptype:0,
       typePackage:['月套卡','次套卡','免费套餐'],
       options_cityListScheme: [],
