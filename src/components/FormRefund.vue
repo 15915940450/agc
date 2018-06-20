@@ -8,9 +8,15 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formRefund">
-          <el-form-item label="退还数量" :label-width="formLabelWidth">
-            <el-input-number v-model="formRefund.batteryNum" :min="1" :max="max" @input.native="handleIN"></el-input-number>
+        <el-form :model="formRefund" ref="vueform" :rules="rules">
+          <el-form-item label="退还数量" :label-width="formLabelWidth" prop="batteryNum">
+            <el-input-number 
+              v-model="formRefund.batteryNum" 
+              :min="1" 
+              :max="max" 
+              @input.native="handleIN"
+              >
+            </el-input-number>
           </el-form-item>
           <el-form-item label="退还金额" :label-width="formLabelWidth">
             <strong class="amount">{{amount}}</strong>元
@@ -33,6 +39,12 @@ export default {
   data:function(){
     // console.log(JSON.stringify((this.$store.state.modalStore)));
     return ({
+      rules:{
+        batteryNum:[
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
+        ]
+      },
       formRefund:{
         batteryNum:1
       },
@@ -73,19 +85,24 @@ export default {
     },
     handleComfirm:function(){
       var vueThis=this;
-      vueThis.loading=true;
-      var sendRefund={
-        type:2,
-        batteryNum:window.Number(vueThis.formRefund.batteryNum), //pay
-        amount:vueThis.amount, //pay
-        status:3
-      };
-      vueThis.$rqs(vueThis.$yApi.tradeRefund,function(){
-        vueThis.$store.commit('hideRefund');
-        vueThis.$store.commit('showStatusRefund');
-      },{
-        objSendData:sendRefund
+      vueThis.$refs.vueform.validate((valid) => {
+        if(valid){
+          vueThis.loading=true;
+          var sendRefund={
+            type:2,
+            batteryNum:window.Number(vueThis.formRefund.batteryNum), //pay
+            amount:vueThis.amount, //pay
+            status:3
+          };
+          vueThis.$rqs(vueThis.$yApi.tradeRefund,function(){
+            vueThis.$store.commit('hideRefund');
+            vueThis.$store.commit('showStatusRefund');
+          },{
+            objSendData:sendRefund
+          });
+        }
       });
+
     },
     handleIN:function(ev){
       this.formRefund.batteryNum=ev.target.value;

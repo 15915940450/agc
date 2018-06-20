@@ -51,8 +51,13 @@
 
           <el-form-item prop="freeDay" :label-width="formLabelWidth">
             新用户自动免费
-            <el-input-number v-model="formGroupSet.freeDay" :disabled="!formGroupSet.freeDayEnable" size="mini" :min="0" :max="100">
-              
+            <el-input-number
+              v-model="formGroupSet.freeDay" 
+              :disabled="!formGroupSet.freeDayEnable" 
+              size="mini" 
+              :min="0" 
+              :max="100"
+              >
             </el-input-number>
             天
           </el-form-item>
@@ -77,6 +82,22 @@ export default {
   props:['code','name','deposits','packages','type','freeDay'],
   data:function(){
     return ({
+      rules:{
+        name:[
+          {required:true,message:'群组名称不能为空',trigger:'blur'},
+          {pattern:/^.{1,10}$/,message:'必须是1到10个汉字，字母，数字或符号组合',trigger:'blur'}
+        ],
+        freeDay:[
+          {required:true,message:'请输入',trigger:'blur'},
+          {type:'integer',message:'请输入一个整数',trigger:'blur'}
+        ],
+        depositScheme:[
+          {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
+        ],
+        packageScheme:[
+          {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
+        ]
+      },
       formGroupSet:{
         name:'',
         canRefund:'',
@@ -86,18 +107,6 @@ export default {
         freeDayEnable:false,
         freeDay:0,
         agentId:window.localStorage.agentid
-      },
-      rules:{
-        name:[
-          {required:true,message:'群组名称不能为空',trigger:'blur'},
-          {pattern:/^.{1,10}$/,message:'必须是1到10个汉字，字母，数字或符号组合',trigger:'blur'}
-        ],
-        depositScheme:[
-          {required:true,message:'请选择一个或多个押金方案',trigger:'change'}
-        ],
-        packageScheme:[
-          {required:true,message:'请选择一个或多个套餐方案',trigger:'change'}
-        ]
       },
       typePackage:['月套卡','次套卡','免费套餐'],
       options_depositListScheme: [],

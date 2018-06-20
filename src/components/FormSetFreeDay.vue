@@ -51,18 +51,18 @@ export default {
   props:['arrIDs'],
   data:function(){
     return ({
-      loading:false,
-      formSetFreeDay:{
-        userIDs:[],
-        freeDay:1
-      },
-      freeDayAvailable:0,
       rules:{
         freeDay:[
           {required:true,message:'请输入',trigger:'blur'},
           {type:'integer',message:'请输入一个整数',trigger:'blur'}
         ]
       },
+      loading:false,
+      formSetFreeDay:{
+        userIDs:[],
+        freeDay:1
+      },
+      freeDayAvailable:0,
       formLabelWidth:'80px'
     });
   },
