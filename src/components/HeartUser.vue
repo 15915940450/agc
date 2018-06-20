@@ -52,6 +52,7 @@
                   分配套餐
                 </el-dropdown-item>
                 <el-dropdown-item
+                  v-if="isType2"
                   command="showSetDeposit" 
                   :disabled="disabled_set"
                   >
@@ -256,6 +257,7 @@ export default {
       userSet:null,
       filter_enabled:false,
       isFilter:false,
+      isType2:true,
       filter_form:{
         depositType:0,
         packageDays:-1,
@@ -414,6 +416,8 @@ export default {
   created:function(){
     this.fetchData();
     // console.log(this.$route.params);
+    //不是线上交押金（1）
+    this.isType2=!(this.$route.params.type==='1');
   }
 };
 </script>

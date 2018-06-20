@@ -31,7 +31,7 @@ export default new Router({
       component: HeartGroup
     },
     {
-      path: '/user/:groupcode/:type/:pn',  //用户
+      path: '/user/:groupcode/:type/:pn',  //用户,type:1(线上交押金),2(线下交押金)
       name: 'HeartUser',
       component: HeartUser
     },
