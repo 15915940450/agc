@@ -93,7 +93,7 @@ export default {
           payType:window.Number(this.formComboBuy.payType),  //支付类型 1支付宝，2微信
           number:window.Number(this.formComboBuy.number),
           amount:(window.Number(this.amount)).toFixed(2),
-          // name:this.discount_name,
+          discountName:this.discount_name,
           from:'comboBuy'
         };
         //stringify, then encodeURIComponent
