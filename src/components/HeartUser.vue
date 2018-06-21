@@ -91,7 +91,7 @@
                   <div class="form_item_underline">
                     <el-form-item>
                       <span class="advanced_param_key">
-                        <el-checkbox v-model="filter_form.bPackageDays" label="套餐天数"></el-checkbox>
+                        <el-checkbox v-model="filter_form.bPackageDays" label="套餐类型"></el-checkbox>
                       </span>
                       <el-radio-group 
                         v-model="filter_form.packageDays"
