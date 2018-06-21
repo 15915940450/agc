@@ -54,7 +54,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormComboBuy',
-  props:['agentPrice','discountName','code'],
+  props:['agentPrice','name','code'],
   data:function(){
     return ({
       rules:{
@@ -93,7 +93,7 @@ export default {
           payType:window.Number(this.formComboBuy.payType),  //支付类型 1支付宝，2微信
           number:window.Number(this.formComboBuy.number),
           amount:(window.Number(this.amount)).toFixed(2),
-          discountName:this.discount_name,
+          // name:this.discount_name,
           from:'comboBuy'
         };
         //stringify, then encodeURIComponent
@@ -127,7 +127,7 @@ export default {
     'modalStore.comboBuy':function(val){
       if(val){
         this.title='请输入数量，每份价格 '+this.agentPrice+' 元';
-        this.discount_name=this.discountName;
+        this.discount_name=this.name;
         this.discountCode=this.code;
       }
     },

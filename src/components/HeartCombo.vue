@@ -13,7 +13,7 @@
       <el-row :gutter="10">
         <el-col :span="8" v-for="combo in comboList" :key="combo.id">
           <div class="combo_card">
-            <h4>{{combo.discountName}}</h4>
+            <h4>{{combo.name}}</h4>
             <p class="combo_card_info">
               <span>有效期{{combo.duration}}天</span>
               <span>
@@ -66,7 +66,7 @@ export default {
       comboList:[
       // {
         // "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
-        // "discountName": "租一颗电池",//套餐名称
+        // "name": "租一颗电池",//套餐名称
         // "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
         // "price": "1200",//金额
         // "duration": "30",//可用时长（天）

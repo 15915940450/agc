@@ -62,7 +62,7 @@
               </el-table-column>
               <el-table-column
                 label="金额(元)"
-                prop="amout">
+                prop="amount">
               </el-table-column>
 
             </el-table>
@@ -107,7 +107,7 @@ export default {
         // {
         //     "discountName":"欢电套餐", //套餐名
         //     "price":"6", // 单价
-        //     "amout":"12", // 付款价格
+        //     "amount":"12", // 付款价格
         //     "number":"2", // 数量
         //     "createTime":"2018-06-06 09:53:57", // 时间
         //     "phone":"15820480937", // 电话
@@ -150,7 +150,12 @@ export default {
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='createTime'){
+            return (v.slice(0,-2));
+          }
+        }
       });
     },
     handleCurrentChange:function(val){
