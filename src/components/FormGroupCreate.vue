@@ -33,7 +33,6 @@
 
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
-              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_depositListScheme"
                 :key="item.id"
@@ -44,11 +43,10 @@
           </el-form-item>
           <el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.packageScheme" multiple placeholder="请选择">
-              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_packageListScheme"
                 :key="item.id"
-                :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
+                :label="(item.name+' / '+typePackage[item.type]+' / ¥'+item.price+' / '+item.count+'次 / '+item.duration+' 天')"
                 :value="item.id">
               </el-option>
             </el-select>

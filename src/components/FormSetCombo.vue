@@ -20,7 +20,7 @@
               <el-option
                 v-for="item in options_packageListScheme"
                 :key="item.id"
-                :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
+                :label="(item.name+' / '+typePackage[item.type]+' / ¥'+item.price+' / '+item.count+'次 / '+item.duration+' 天')"
                 :value="item.id">
               </el-option>
             </el-select>

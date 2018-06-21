@@ -34,11 +34,11 @@
           </el-form-item>
           <el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.packageScheme" multiple placeholder="请选择">
-              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
+              <!-- 名称/类型/价格/次数/天数 -->
               <el-option
                 v-for="item in options_packageListScheme"
                 :key="item.id"
-                :label="(item.name+' / ¥'+item.price+' / '+typePackage[item.type]+' / '+item.duration+'天 / '+item.count+' 次')"
+                :label="(item.name+' / '+typePackage[item.type]+' / ¥'+item.price+' / '+item.count+'次 / '+item.duration+' 天')"
                 :value="item.id">
               </el-option>
             </el-select>

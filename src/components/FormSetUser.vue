@@ -24,7 +24,6 @@
           <el-form-item prop="depositId" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.depositId" placeholder="请选择" :disabled="disabledDeposit">
               <el-option key="-1" label="空" value=""></el-option>
-              <!-- 199不限次/¥199/月卡套餐/30天/2000次 -->
               <el-option
                 v-for="item in options_depositListScheme"
                 :key="item.id"
