@@ -8,7 +8,7 @@
       :close-on-click-modal="false"
       center>
       <div class="modal_wrap-body">
-        <el-form :model="formComboBuy" ref="vuefoem" :rules="rules">
+        <el-form :model="formComboBuy" ref="vueform" :rules="rules">
           
           <el-form-item label="套餐名称" :label-width="formLabelWidth">
             <strong>{{discount_name}}</strong>
