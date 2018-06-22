@@ -82,14 +82,14 @@
                     轨迹
                   </el-button>
                   <el-button
-                    v-if="(scope.row.owner)"
+                    v-if="(scope.row.owner && scope.row.owner!=='─')"
                     @click="handleEVunbind(scope)"
                     type="text"
                     size="small">
                     解绑
                   </el-button>
                   <el-button
-                    v-if="!(scope.row.owner)"
+                    v-else
                     @click="handleEVbind(scope)"
                     type="text"
                     size="small">
