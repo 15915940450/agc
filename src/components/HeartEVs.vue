@@ -66,13 +66,13 @@
               <el-table-column label="操作" width="190">
                 <template slot-scope="scope">
                   <el-button type="text" size="small" @click="handleEVoperation(scope,'EVwake')">
-                    唤醒
+                    通电
                   </el-button>
                   <el-button
                     @click="handleEVoperation(scope,'EVflameout')"
                     type="text"
                     size="small">
-                    熄火
+                    断电
                   </el-button>
                   <el-button
                     type="text"
