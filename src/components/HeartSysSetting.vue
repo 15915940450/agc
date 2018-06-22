@@ -6,7 +6,13 @@
 
         <!-- oldPassword -->
         <el-form-item label="旧密码" prop="oldPassword">
-          <el-input :type="typeOld" placeholder="请输入您的旧密码" v-model="imPW.oldPassword">
+          <el-input 
+            :type="typeOld" 
+            placeholder="请输入您的旧密码" 
+            v-model="imPW.oldPassword" 
+            auto-complete="off"
+            autofocus="true"
+            >
             <i
               class="el-icon-view el-input__icon"
               slot="suffix"

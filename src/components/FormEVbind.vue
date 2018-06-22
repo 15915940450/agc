@@ -15,7 +15,7 @@
               <el-option
                 v-for="item in optionsUsers"
                 :key="item.phone"
-                :label="(item.phone+item.name)"
+                :label="item.phone"
                 :value="item.phone">
               </el-option>
             </el-select>
