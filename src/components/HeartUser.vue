@@ -165,13 +165,24 @@
                 label="手机号码"
                 prop="phone">
               </el-table-column>
+
+              <!-- 电池SN -->
               <el-table-column
                 label="电池SN"
-                prop="batteries">
+                width="250"
+                >
+                <template slot-scope="scope">
+                  <span class="sns" v-for="(sn) in scope.row.batteries" :key="sn">{{sn}}</span>
+                </template>
               </el-table-column>
+
+              <!-- 中控SN -->
               <el-table-column
                 label="中控SN"
-                prop="scooters">
+                >
+                <template slot-scope="scope">
+                  <span class="sns" v-for="(sn) in scope.row.scooters" :key="sn">{{sn}}</span>
+                </template>
               </el-table-column>
 
               <el-table-column label="操作" width="110">
@@ -346,9 +357,11 @@ export default {
             })).slice(0,19);
           }
           if(k==='batteries' || k==='scooters'){
-            return (v.map(function(vMap){
+            var tmp=v.map(function(vMap){
               return (vMap.sn);
-            }));
+            });
+            // console.log(tmp);
+            return (tmp);
           }
         }
       });
@@ -389,7 +402,7 @@ export default {
     },
     unbindUser:function(scope){
       this.msg='用户已解绑';
-      // console.log(scope.row.phone);
+      // _.logErr((scope.row));
       this.unbindPhone=scope.row.phone;
       this.$store.commit('showUserUnbind');
     },
@@ -449,5 +462,11 @@ export default {
   }
   .advanced_param_key{
     margin-right: 30px;
+  }
+  .sns{
+    margin-right: 10px;
+  }
+  .sns:last-child{
+    margin-right: 0px;
   }
 </style>
