@@ -1,5 +1,5 @@
 {
-	"color_scheme": "Packages/Color Schemes - Wicked Schemes by b0xw00d/light/lightvice.tmTheme",
+	"color_scheme": "Packages/Color Schemes - Wicked Schemes by b0xw00d/dark/Gilded Tiger.tmTheme",
 	"file_exclude_patterns":
 	[
 		"*.pyc",
@@ -32,6 +32,8 @@
 		"TEST",
 		"batterystation",
 		"ccbike",
+		"eb_src",
+		"es",
 		"node_modules",
 		"bootstrap"
 	],
