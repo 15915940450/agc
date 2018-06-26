@@ -70,7 +70,7 @@ export default {
         // "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
         // "price": "1200",//金额
         // "duration": "30",//可用时长（天）
-        // "count": 100,//换电次数,20000:无限次
+        // "count": 100,//换电次数,20000:无限次>9999
         // "remark":"打折7.5", //套餐备注
         // "agentPrice":23.00, //代理商购买价格
         // "code":66,
@@ -108,7 +108,7 @@ export default {
         vueThis.loadingComboList=false;
         vueThis.comboList=objRps.result.list;
       },{reviver:function(k,v){
-        if(k==='count' && v===20000){
+        if(k==='count' && v>9999){
           return ('无限');
         }
       }});
