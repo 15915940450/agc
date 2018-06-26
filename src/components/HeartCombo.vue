@@ -175,7 +175,8 @@ export default {
     height: 0;
     border-width: 44px;
     border-style: solid;
-    border-color: transparent transparent transparent #fea94a; 
+    border-color: #fea94a; 
+    /*border-color: transparent transparent transparent #fea94a; */
     display: block;
     position: absolute;
     top: -44px;
