@@ -88,10 +88,16 @@ export default function(urlMethod,success,paramSettings){
           objRps=JSON.parse(xmlhttp.responseText,function(k,v){
             //real default reviver
             if(v===''){
-              return '─';
+              //empty string
+              v='─';
+            }
+            if(typeof v==='string' && !window.isNaN(v) && v){
+              //string to number
+              v=window.Number(v);
             }
             if(typeof(settings.reviver)==='function' && settings.reviver(k,v)!==undefined){
-              return (settings.reviver(k,v));
+              //deal with '─' and number
+              v=settings.reviver(k,v);
             }
             return v;
           });

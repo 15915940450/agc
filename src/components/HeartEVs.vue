@@ -209,9 +209,9 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='locationUpdateTime' && v){
-            // _.logErr(v);
+            _.logErr(v);
             //make sure the timestamp is a number
-            return (_.toSlash(new Date(window.Number(v)),{
+            return (_.toSlash(new Date(v),{
               slash:'/',
               T:false
             })).slice(0,19);
