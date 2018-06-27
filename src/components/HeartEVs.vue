@@ -209,7 +209,9 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='locationUpdateTime' && v){
-            _.logErr(v);
+            // _.logErr(v);
+            // console.log(k);
+            // console.log(typeof v);
             //make sure the timestamp is a number
             return (_.toSlash(new Date(v),{
               slash:'/',
