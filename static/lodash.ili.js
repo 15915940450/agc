@@ -6899,10 +6899,13 @@ http://localhost/agc/static/lodash.ili.js
     }
 
     //4.dateAgo 计算num天以前的日期对象 2017-10-24T00:00:00.000+08:00
-    function dateAgo(num){
+    function dateAgo(num,PHPtime){
       var today=new Date();
       if(window.dobjServerTime){
         today=dobjServerTime;
+      }
+      if(PHPtime){
+        today=new Date(window.Number(PHPtime+'000'));
       }
       var strTodayChina=toHKstring(today).substring(0,10)+'T00:00:00.000+08:00';
       var dateTodayChina0=new Date(strTodayChina);
