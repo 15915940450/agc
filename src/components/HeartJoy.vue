@@ -5,7 +5,7 @@
       <el-col :span="16">
         <p class="im_joy">
           <img class="im_joy-head" src="../assets/default_head.png" width="40" height="40" />
-          <span class="main_title">{{agent.name}}， e换电祝您开心每一天！</span>
+          <span class="main_title">{{agent.name}}，e换电祝您开心每一天！</span>
         </p>
       </el-col>
       <el-col :span="8">
