@@ -152,11 +152,14 @@
                         {{props.row.currentTaocan}}
                       </span>
                       <div v-else class="current_taocan">
+                        <!--【套餐名称/套餐类型/次数/有效天数】，例【限量套餐月卡/月套餐/90次/30天】，次数20000次显示为无限次-->
                         <el-tag size="mini"
                           v-for="item in props.row.currentTaocan"
                           v-if="item.name!=='代理商群组免费'"
                           :key="item"
-                          >{{item.name}}</el-tag>
+                          >
+                          {{item.name}}/{{['月卡','次卡','两月卡'][item.type]}}/{{item.times}}次/{{item.deration}}天
+                        </el-tag>
                       </div>
                     </el-form-item>
                     <el-form-item label="注册时间：">
