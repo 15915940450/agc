@@ -20,6 +20,10 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item prop="userName" label="用户昵称" :label-width="formLabelWidth">
+            <el-input placeholder="请输入用户的昵称" v-model="formSetUser.userName"></el-input>
+          </el-form-item>
+
 
           <el-form-item prop="depositId" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.depositId" placeholder="请选择" :disabled="disabledDeposit">
@@ -34,18 +38,14 @@
           </el-form-item>
 
           <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
-            <el-input-number 
-              v-model="formSetUser.freeDay" 
-              :min="0" 
+            <el-input-number
+              v-model="formSetUser.freeDay"
+              :min="0"
               :max="maxFD"
               >
             </el-input-number>
             <small>(剩余 <strong :class="{red:(computedFreeDays<=0)}">{{computedFreeDays}}</strong> 天)</small>
           </el-form-item>
-
-          <!-- <el-form-item label="可用电池数" :label-width="formLabelWidth">
-            <el-input v-model.number="formSetUser.name" auto-complete="off" placeholder="剩余可分配电池 100 天"></el-input>
-          </el-form-item> -->
 
           <el-form-item prop="scooterSNs" label="中控（SN)" :label-width="formLabelWidth">
             <el-select v-model="formSetUser.scooterSNs" multiple filterable placeholder="请选择">
@@ -75,10 +75,21 @@ export default {
   name:'FormSetUser',
   props:['name','groupCode','depositID','freeDays','scooters','phone'],
   data:function(){
+    //自定义校验规则
+    var zh2length10=function(rule,value,callback){
+      if(_.zh2length(value)>20){
+        callback(new Error('10个汉字或20个字符以内'));
+      }else{
+        callback();
+      }
+    };
     return ({
       rules:{
         groupCode:[
           {required:true,message:'请选择一个群组',trigger:'change'}
+        ],
+        userName:[
+          {validator:zh2length10,trigger:'blur'}
         ],
         freeDay:[
           {required:true,message:'请输入',trigger:'blur'},
@@ -121,7 +132,7 @@ export default {
     'modalStore.setUser':function(val){
       var vueThis=this;
       if(val){
-        this.formSetUser.name=this.name;
+        this.formSetUser.userName=this.name==='─'?'':this.name;
         this.formSetUser.groupCode=this.groupCode;
 
 
@@ -203,7 +214,8 @@ export default {
             depositId:vueThis.formSetUser.depositId,
             freeDay:vueThis.formSetUser.freeDay?vueThis.formSetUser.freeDay:0,
             scooterSNs:vueThis.formSetUser.scooterSNs,
-            phone:vueThis.formSetUser.phone
+            phone:vueThis.formSetUser.phone,
+            userName:vueThis.formSetUser.userName
           };
           vueThis.loading=true;
           vueThis.$rqs(vueThis.$yApi.userSet,function(){
@@ -241,7 +253,7 @@ export default {
   },  //methods
   created:function(){
     this.fetchBaseInfo();
-    
+
     this.fetchEVlist();
     this.fetchGroupList();
     // console.log(this.$route.params);
