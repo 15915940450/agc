@@ -34,8 +34,8 @@
         <div v-loading="loadingUserList" class="loading_parent">
           <div class="filter_wrap">
             <!-- dropdown -->
-            <el-dropdown 
-              size="mini" 
+            <el-dropdown
+              size="mini"
               placement="bottom-start"
               trigger="click"
               @command="handleCommand"
@@ -45,21 +45,21 @@
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item 
-                  command="showSetCombo" 
+                <el-dropdown-item
+                  command="showSetCombo"
                   :disabled="disabled_set"
                   >
                   分配套餐
                 </el-dropdown-item>
                 <el-dropdown-item
                   v-if="isType2"
-                  command="showSetDeposit" 
+                  command="showSetDeposit"
                   :disabled="disabled_set"
                   >
                   设置押金
                 </el-dropdown-item>
                 <el-dropdown-item
-                  command="showSetFreeDay" 
+                  command="showSetFreeDay"
                   :disabled="disabled_set"
                   >
                   设置免费天数
@@ -77,7 +77,7 @@
                       <span class="advanced_param_key">
                         <el-checkbox v-model="filter_form.bDepositType" label="押金类型"></el-checkbox>
                       </span>
-                      <el-radio-group 
+                      <el-radio-group
                         v-model="filter_form.depositType"
                         :disabled="!filter_form.bDepositType"
                         >
@@ -93,7 +93,7 @@
                       <span class="advanced_param_key">
                         <el-checkbox v-model="filter_form.bPackageDays" label="套餐类型"></el-checkbox>
                       </span>
-                      <el-radio-group 
+                      <el-radio-group
                         v-model="filter_form.packageDays"
                         :disabled="!filter_form.bPackageDays"
                         >
@@ -107,7 +107,7 @@
                       <span class="advanced_param_key">
                         <el-checkbox v-model="filter_form.bFreeDay" label="免费天数"></el-checkbox>
                       </span>
-                      <el-radio-group 
+                      <el-radio-group
                         v-model="filter_form.freeDay"
                         :disabled="!filter_form.bFreeDay"
                         >
@@ -128,8 +128,8 @@
           <!-- 用户列表表格 -->
           <div class="table_wrap_real">
             <el-table
-              :data="users" 
-              size="medium" 
+              :data="users"
+              size="medium"
               stripe
               class="table_wrap-table"
               width="100%"
@@ -145,11 +145,11 @@
               <!-- 展开行 -->
               <el-table-column type="expand">
                 <template slot-scope="props">
-                  <el-form label-position="left" inline class="im-table-expand">
-                    <el-form-item label="用户ID">
-                      <span>{{props.row.id}}</span>
+                  <el-form label-position="right" inline class="im-table-expand">
+                    <el-form-item label="当前套餐：">
+                      <span>当前套餐000</span>
                     </el-form-item>
-                    <el-form-item label="注册时间">
+                    <el-form-item label="注册时间：">
                       <span v-html="props.row.time"></span>
                     </el-form-item>
                   </el-form>
@@ -160,6 +160,10 @@
                 label="#"
                 type="index"
                 width="50">
+              </el-table-column>
+              <el-table-column
+                label="用户昵称"
+                prop="name">
               </el-table-column>
               <el-table-column
                 label="手机号码"
@@ -201,15 +205,15 @@
               </el-table-column>
             </el-table>
           </div>
-          
+
 
           <div class="table_wrap_pagination">
-            <el-pagination 
-              :background="true" 
-              layout="total,->,jumper,sizes,prev,pager,next" 
+            <el-pagination
+              :background="true"
+              layout="total,->,jumper,sizes,prev,pager,next"
               :page-sizes="[10, 20, 50]"
-              :total="total" 
-              :current-page="pageNum" 
+              :total="total"
+              :current-page="pageNum"
               @current-change="handleCurrentChange"
               @size-change="handleSizeChange"
               >
