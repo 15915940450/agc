@@ -24,6 +24,10 @@ gulp.task('backupYApijs',function(){
   }); //end of del
 });
 
+//backup_vimrc
+gulp.task('backup_vimrc',function(){
+  gulp.src(['../../../_vimrc']).pipe(gulp.dest('./vim_editor/'));
+});
 //backupEditorConfig
 gulp.task('backupEditorConfig',function(){
   //:Sublime Text 3
@@ -44,6 +48,6 @@ gulp.task('backupEditorConfig',function(){
   });
 });
 
-gulp.task('default',['backupDist','backupYApijs'],function(){
+gulp.task('default',['backupDist','backupYApijs','backup_vimrc'],function(){
   console.log('version:1.9'+version+'. make sure you have check out the agc branch(CMS-FrontEnd).');
 });
