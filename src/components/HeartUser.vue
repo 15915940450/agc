@@ -134,6 +134,7 @@
               class="table_wrap-table"
               width="100%"
               @selection-change="handleSelectionChange"
+              @expand-change="handleExpandChange"
               >
 
               <!-- selection -->
@@ -147,7 +148,16 @@
                 <template slot-scope="props">
                   <el-form label-position="right" inline class="im-table-expand">
                     <el-form-item label="当前套餐：">
-                      <span>当前套餐000</span>
+                      <span v-if="props.row.currentTaocan==='加载中...'">
+                        {{props.row.currentTaocan}}
+                      </span>
+                      <div v-else class="current_taocan">
+                        <el-tag size="mini"
+                          v-for="item in props.row.currentTaocan"
+                          v-if="item.name!=='代理商群组免费'"
+                          :key="item"
+                          >{{item.name}}</el-tag>
+                      </div>
                     </el-form-item>
                     <el-form-item label="注册时间：">
                       <span v-html="props.row.time"></span>
@@ -367,6 +377,10 @@ export default {
             // console.log(tmp);
             return (tmp);
           }
+          if(v.phone){
+            v.currentTaocan='加载中...';
+            return v;
+          }
         }
       });
     },
@@ -421,6 +435,25 @@ export default {
     handleSelectionChange:function(val){
       this.selection=val;
     },
+    handleExpandChange:function(row){
+      var vueThis=this;
+      var index=vueThis.users.findIndex(function(v){
+        return (v.phone===row.phone);
+      });
+      //_.logErr(row);
+
+      var sendData={
+        userPhone:row.phone
+      };
+      if(row.currentTaocan==='加载中...'){
+        //加載中--)[]--)[xxx]
+        vueThis.$rqs(vueThis.$yApi.currentTaocan,function(objRps){
+          vueThis.users[index].currentTaocan=objRps.result;
+        },{
+          objSendData:sendData
+        });
+      }
+    },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
       this.fetchData();
@@ -472,5 +505,8 @@ export default {
   }
   .sns:last-child{
     margin-right: 0px;
+  }
+  .current_taocan{
+    width:250px;
   }
 </style>
