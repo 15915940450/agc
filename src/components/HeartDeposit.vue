@@ -236,6 +236,12 @@ export default {
         this.fetchDataCard();
       }
     },
+    se:{
+      // deep:true,
+      handler:function(){
+        this.fetchData();
+      }
+    },
     pageNum:function(){
       this.fetchData();
     }
@@ -304,8 +310,8 @@ export default {
       this.$router.push('/deposit/'+val);
     },
     handleTabClick:function(tab,event){
-      console.log(tab);
-      console.log(event);
+      //console.log(tab);
+      console.log(this.activeTabName);
     },
     switchEye:function(iconName){
       this[iconName]=this[iconName]==='eye'?'eye-slash':'eye';
