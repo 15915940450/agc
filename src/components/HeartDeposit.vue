@@ -53,26 +53,26 @@
             </el-row>
           </div>
         </el-col>
-        <!-- 可用电池数(个) -->
+        <!-- 可用虚拟电池数(个) -->
         <el-col :span="6">
           <div class="im_card">
             <el-row>
               <el-col :span="24">
                 <div class="left_part">
-                  <div>可用电池数(个)</div>
+                  <div>可用虚拟电池数(个)</div>
                   <p>{{card.availableBattery}}</p>
                 </div>
               </el-col>
             </el-row>
           </div>
         </el-col>
-        <!-- 已用电池数(个) -->
+        <!-- 已用虚拟电池数(个) -->
         <el-col :span="6">
           <div class="im_card">
             <el-row>
               <el-col :span="24">
                 <div class="left_part">
-                  <div>已用电池数(个)</div>
+                  <div>已用虚拟电池数(个)</div>
                   <p>{{card.usedBattery}}</p>
                 </div>
               </el-col>

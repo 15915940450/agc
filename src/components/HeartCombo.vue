@@ -1,14 +1,19 @@
 <template lang="html">
   <div class="component_combo eqcalc">
-    <h3 class="title with_sub">
-      套餐管理
-      <p>
-        在此页面查看拥有的套餐，分配套餐给用户时会消耗套餐的数量，数量可购买。
-        <a href="javascript:;"></a>
-        
-        <router-link to="/combo/history/1">购买记录</router-link>
-      </p>
-    </h3>
+    <div class="combo_head">
+      <h3 class="title with_sub">
+        <span class="real_title">套餐说明</span>
+        <router-link class="combo_history_entrance" to="/combo/history/1">套餐记录</router-link>
+      </h3>
+      <div class="step_wrap">
+        <el-steps :active="3">
+          <el-step description="在此页面购买一定数量的套餐，每分配给1个用户需要消耗1份套餐"></el-step>
+          <el-step description="在【群组管理】将套餐设置给指定群组"></el-step>
+          <el-step description="进入指定群组的用户列表选择用户，通过【操作】-【分配套餐】分配给用户"></el-step>
+        </el-steps>
+      </div>
+    </div>
+
     <div class="combo_list" v-loading="loadingComboList">
       <el-row :gutter="10">
         <el-col :span="8" v-for="combo in comboList" :key="combo.id">
@@ -128,8 +133,15 @@ export default {
   .component_combo{
     background:#fafbfc;
   }
+  .combo_head{
+    background:white;
+    margin:0;
+  }
+  .step_wrap{
+    padding:20px 150px 15px 15px
+  }
   h3.title.with_sub{
-    height: 80px;
+    height:50px;
     position: relative;
     background: white;
   }
@@ -175,7 +187,7 @@ export default {
     height: 0;
     border-width: 44px;
     border-style: solid;
-    border-color: #fea94a; 
+    border-color: #fea94a;
     /*border-color: transparent transparent transparent #fea94a; */
     display: block;
     position: absolute;
@@ -211,5 +223,8 @@ export default {
   .combo_card_buy strong{
     font-weight: 500;
     color: #F60;
+  }
+  .combo_history_entrance{
+    float:right;
   }
 </style>

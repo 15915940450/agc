@@ -290,3 +290,8 @@ input::-ms-clear, input::-ms-reveal {
 .is_link{
   cursor: pointer;
 }
+//step_wrap
+.step_wrap .el-step__description{
+  color:#333;
+  margin-top:15px;
+}
