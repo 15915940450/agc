@@ -83,7 +83,29 @@
       </el-row>
 
       <div class="table_wrap">
-        <h3 class="title">押金记录</h3>
+        <h3 class="title">
+          <div class="tab_wrap">
+            <template>
+              <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
+                <el-tab-pane label="押金记录" name="deposit">
+                </el-tab-pane>
+                <el-tab-pane label="分配记录" name="depositlog">
+                </el-tab-pane>
+              </el-tabs>
+            </template>
+          </div>
+          <div class="time_range">
+            <el-date-picker
+              v-model="se"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions"
+              >
+            </el-date-picker>
+          </div>
+        </h3>
         <div v-loading="loadingDepositList">
           <!-- 押金记录表格 -->
           <div class="table_wrap_real">
@@ -160,7 +182,15 @@ export default {
   name:'HeartDeposit',
   data() {
     return {
+      activeTabName:'deposit',
       center:'center',
+      pickerOptions:{
+        disabledDate:function(dateObj){
+          return (dateObj.getTime()>_.dateAgo(0));
+        }
+      },
+      se:[],  //dateragne(start and end)
+      //se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)
       total:0,
       deposit:[],
       loadingDepositList:true,
@@ -220,7 +250,16 @@ export default {
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingDepositList=true;
+
+      var startTime=null;
+      var endTime=null;
+      if(vueThis.se.length){
+        startTime=vueThis.se[0].getTime();
+        endTime=vueThis.se[1].getTime();
+      }
       var sendData={
+        startTime:startTime,
+        endTime:endTime,
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
@@ -264,6 +303,10 @@ export default {
       this.pageNum=val;
       this.$router.push('/deposit/'+val);
     },
+    handleTabClick:function(tab,event){
+      console.log(tab);
+      console.log(event);
+    },
     switchEye:function(iconName){
       this[iconName]=this[iconName]==='eye'?'eye-slash':'eye';
     }
@@ -298,5 +341,12 @@ export default {
     background: #FFF;
     margin-top: 10px;
     min-height: calc(100vh - 252px);
+  }
+
+  .tab_wrap{
+    float:left;
+  }
+  .time_range{
+    float:right;
   }
 </style>
