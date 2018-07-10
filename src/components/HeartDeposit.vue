@@ -84,6 +84,7 @@
 
       <!--記錄表格-->
       <TableDeposit />
+      <TableDepositLog />
     </div>
 
     <!--押金為0-->
@@ -111,6 +112,7 @@ import StatusTopUp from './StatusTopUp.vue';
 import FormRefund from './FormRefund.vue';
 import StatusRefund from './StatusRefund.vue';
 import TableDeposit from './TableDeposit.vue';
+import TableDepositLog from './TableDepositLog.vue';
 
 export default {
   name:'HeartDeposit',
@@ -162,7 +164,8 @@ export default {
     StatusTopUp,
     FormRefund,
     StatusRefund,
-    TableDeposit
+    TableDeposit,
+    TableDepositLog
   },
   methods: {
     fetchDataCard:function(){
