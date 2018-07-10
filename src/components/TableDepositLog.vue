@@ -137,7 +137,9 @@ export default {
       this.fetchData();
     },
     currentTab:function(val){
-      console.log(val);
+      this.$store.commit('setDepositCurrentTab',{
+        currentTab:val
+      });
     }
   },
   methods:{

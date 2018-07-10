@@ -83,8 +83,12 @@
       </el-row>
 
       <!--記錄表格-->
-      <TableDeposit />
-      <TableDepositLog />
+      <component
+        v-bind:is="tableCurrentTab"
+        >
+      </component>
+      <!--<TableDeposit />-->
+      <!--<TableDepositlog />-->
     </div>
 
     <!--押金為0-->
@@ -112,7 +116,7 @@ import StatusTopUp from './StatusTopUp.vue';
 import FormRefund from './FormRefund.vue';
 import StatusRefund from './StatusRefund.vue';
 import TableDeposit from './TableDeposit.vue';
-import TableDepositLog from './TableDepositLog.vue';
+import TableDepositlog from './TableDepositlog.vue';
 
 export default {
   name:'HeartDeposit',
@@ -137,6 +141,9 @@ export default {
     },
     eyeRefund:function(){
       return (this.eyenameRefund==='eye-slash'?this.card.refundableDeposit:'*****');
+    },
+    tableCurrentTab:function(){
+      return ('table-'+this.modalStore.depositCurrentTab);
     }
   },
   watch:{
@@ -162,7 +169,7 @@ export default {
     FormRefund,
     StatusRefund,
     TableDeposit,
-    TableDepositLog
+    TableDepositlog
   },
   methods: {
     fetchDataCard:function(){
