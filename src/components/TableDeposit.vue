@@ -21,6 +21,7 @@
           :picker-options="pickerOptions"
           >
         </el-date-picker>
+        <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
       </div>
     </h3>
     <div v-loading="loadingDepositList">
@@ -145,6 +146,9 @@ export default {
           }
         }
       });
+    },
+    resetSearch:function(){
+      this.se=[];
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
