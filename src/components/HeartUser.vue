@@ -327,6 +327,11 @@ export default {
         this.fetchData();
       }
     },
+    'modalStore.needFetchData':function(val){
+      if(val){
+        this.fetchData();
+      }
+    },
     'modalStore.baseStatus':function(val){
       if(!val){
         this.fetchData();
@@ -364,6 +369,7 @@ export default {
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
+        vueThis.$store.commit('setNoNeedFetchData');
       },{
         objSendData:sendData,
         reviver:function(k,v){

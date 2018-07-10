@@ -1,6 +1,7 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
   baseStatus:false,
+  needFetchData:false,
 
   topUp:false,
   comboBuy:false,
@@ -38,6 +39,7 @@ var mutations={
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
     state.baseStatus=false;
+    state.needFetchData=false;
     state.topUp=false;
     state.comboBuy=false;
     state.refund=false;
@@ -68,6 +70,12 @@ var mutations={
   },
   hideBaseStatus:function(state){
     state.baseStatus=false;
+  },
+  setNeedFetchData:function(state){
+    state.needFetchData=true;
+  },
+  setNoNeedFetchData:function(state){
+    state.needFetchData=false;
   },
 
   showTopUp:function(state){
@@ -190,10 +198,10 @@ var mutations={
     state.newUser=false;
   },
 
-  setEmptyDeposit:function(){
+  setEmptyDeposit:function(state){
     state.depositEmpty=true;
   },
-  setDeposit:function(){
+  setDeposit:function(state){
     state.depositEmpty=false;
   }
 };

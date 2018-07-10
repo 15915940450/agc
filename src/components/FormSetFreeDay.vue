@@ -9,7 +9,7 @@
       center>
       <div class="modal_wrap-body">
         <el-form :model="formSetFreeDay" :rules="rules" ref="form">
-          
+
           <el-form-item label="分配人数" :label-width="formLabelWidth">
             <span class="total_select">
               {{total_select}}
@@ -22,10 +22,10 @@
           </el-form-item>
 
           <el-form-item label="分配天数" :label-width="formLabelWidth" prop="freeDay">
-            <el-input-number 
-              v-model="formSetFreeDay.freeDay" 
-              :min="0" 
-              :max="max" 
+            <el-input-number
+              v-model="formSetFreeDay.freeDay"
+              :min="0"
+              :max="max"
               @input.native="handleIN"
               >
             </el-input-number>
@@ -108,6 +108,7 @@ export default {
           };
           vueThis.$rqs(vueThis.$yApi.setFreeDay,function(objRps){
             vueThis.$store.commit('hideSetFreeDay');
+            vueThis.$store.commit('setNeedFetchData');
             vueThis.$message({
               message: objRps.msg,
               type: 'success'
@@ -117,11 +118,11 @@ export default {
           });
         }
       });
-      
+
     }
   },
   created:function(){
-    
+
   }
 };
 </script>
