@@ -28,8 +28,13 @@
       <!-- 押金记录表格 -->
       <div class="table_wrap_real">
         <el-table
-          :data="deposit" stripe
-          style="width: 100%" class="table_wrap-table" size="medium">
+          :data="deposit"
+          stripe
+          style="width: 100%"
+          class="table_wrap-table"
+          size="medium"
+          @filter-change="handleFilterType"
+          >
           <!-- medium / small / mini -->
           <el-table-column
             label="ID"
@@ -46,6 +51,7 @@
             <el-table-column
               label="类型"
               prop="type"
+              :filters="arrFilterType"
               >
             </el-table-column>
             <el-table-column
@@ -86,6 +92,11 @@ export default {
       currentTab:'depositlog',
       deposit:[],
       se:[],  //dateragne(start and end)
+      arrFilterType:[
+        {text:'分配',value:1},
+        {text:'回收',value:2}
+      ],
+      type:null,
       total:0,
       pickerOptions:{
         disabledDate:function(dateObj){
@@ -124,13 +135,12 @@ export default {
         advancedParam:JSON.stringify({
           startTime:startTime,
           endTime:endTime,
-          type:'1'  //:1-分配押金 2-回收押金
+          type:vueThis.type  //:1-分配押金 2-回收押金
         }),
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
       vueThis.$rqs(vueThis.$yApi.depositLog,function(objRps){
-        console.log(9);
         vueThis.loadingDepositLog=false;
         vueThis.total=objRps.result.total;
         vueThis.deposit=objRps.result.list;
@@ -148,6 +158,16 @@ export default {
     },
     resetSearch:function(){
       this.se=[];
+    },
+    handleFilterType:function(obj){
+      var vueThis=this;
+      var sumType=(_.sum(Object.values(obj)[0]));
+      if(sumType===1 || sumType===2){
+        vueThis.type=sumType;
+      }else{
+        vueThis.type=null;
+      }
+      vueThis.fetchData();
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
