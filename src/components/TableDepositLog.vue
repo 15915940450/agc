@@ -24,7 +24,7 @@
         <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
       </div>
     </h3>
-    <div v-loading="loadingDepositList">
+    <div v-loading="loadingDepositLog">
       <!-- 押金记录表格 -->
       <div class="table_wrap_real">
         <el-table
@@ -33,17 +33,15 @@
           <!-- medium / small / mini -->
           <el-table-column
             label="ID"
-            prop="tradeId"
-            width="190"
+            prop="id"
+            width="50"
             >
           </el-table-column>
             <el-table-column
               label="时间"
               width="170"
+              prop="createTime"
               >
-              <template slot-scope="scope">
-                <span v-html="scope.row.createTime"></span>
-              </template>
             </el-table-column>
             <el-table-column
               label="类型"
@@ -51,16 +49,16 @@
               >
             </el-table-column>
             <el-table-column
-              label="金额(元)"
-              prop="amount">
+              label="手机号码"
+              prop="phone">
             </el-table-column>
             <el-table-column
-              label="数量(个)"
-              prop="batteryNum">
+              label="押金方案"
+              prop="discountName">
             </el-table-column>
             <el-table-column
-              label="状态"
-              prop="status"
+              label="剩余可分配电池"
+              prop="remainNumber"
               >
             </el-table-column>
         </el-table>
@@ -85,7 +83,7 @@ export default {
   name:'TableDeposit',
   data(){
     return ({
-      currentTab:'deposit',
+      currentTab:'depositlog',
       deposit:[],
       se:[],  //dateragne(start and end)
       total:0,
@@ -94,7 +92,7 @@ export default {
           return (dateObj.getTime()>_.dateAgo(0));
         }
       },
-      loadingDepositList:true,
+      loadingDepositLog:true,
       pageNum:1
     });
   },
@@ -114,7 +112,7 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      vueThis.loadingDepositList=true;
+      vueThis.loadingDepositLog=true;
 
       var startTime=null;
       var endTime=null;
@@ -123,26 +121,27 @@ export default {
         endTime=vueThis.se[1].getTime();
       }
       var sendData={
-        startTime:startTime,
-        endTime:endTime,
+        advancedParam:JSON.stringify({
+          startTime:startTime,
+          endTime:endTime,
+          type:'1'  //:1-分配押金 2-回收押金
+        }),
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
-      vueThis.$rqs(vueThis.$yApi.depositList,function(objRps){
-        vueThis.loadingDepositList=false;
+      vueThis.$rqs(vueThis.$yApi.depositLog,function(objRps){
+        console.log(9);
+        vueThis.loadingDepositLog=false;
         vueThis.total=objRps.result.total;
         vueThis.deposit=objRps.result.list;
       },{
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (v.slice(0,-2));
+            return (_.toSlash(new Date(window.Number(v)),{T:false}).slice(0,19));
           }
           if(k==='type'){
-            return (['','充值','退款'][v]);
-          }
-          if(k==='status'){
-            return (['','待确认','成功','待审核','已拒绝','待退款','已退款','失败','已拒绝'][v]);
+            return (['','分配','回收'][v]);
           }
         }
       });
