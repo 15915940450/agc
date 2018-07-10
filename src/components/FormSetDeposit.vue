@@ -9,7 +9,7 @@
       center>
       <div class="modal_wrap-body">
         <el-form :model="formSetDeposit" :rules="rules" ref="form">
-          
+
           <el-form-item label="人数" :label-width="formLabelWidth">
             <span class="total_select">
               {{formSetDeposit.userIDs.length}}
@@ -106,6 +106,7 @@ export default {
           };
           vueThis.$rqs(vueThis.$yApi.setDeposit,function(objRps){
             vueThis.$store.commit('hideSetDeposit');
+            vueThis.$store.commit('setNeedFetchData');
             vueThis.$message({
               message: objRps.msg,
               type: 'success'
@@ -115,11 +116,10 @@ export default {
           });
         }
       });
-      
     }
   },
   created:function(){
-    
+
   }
 };
 </script>

@@ -9,7 +9,7 @@
       center>
       <div class="modal_wrap-body">
         <el-form :model="formSetCombo" :rules="rules" ref="form">
-          
+
           <el-form-item label="人数" :label-width="formLabelWidth">
             <span class="total_select">
               {{formSetCombo.userIDs.length}}
@@ -109,6 +109,7 @@ export default {
           };
           vueThis.$rqs(vueThis.$yApi.setCombo,function(objRps){
             vueThis.$store.commit('hideSetCombo');
+            vueThis.$store.commit('setNeedFetchData');
             vueThis.$message({
               message: objRps.msg,
               type: 'success'
@@ -118,11 +119,11 @@ export default {
           });
         }
       });
-      
+
     }
   },
   created:function(){
-    
+
   }
 };
 </script>
