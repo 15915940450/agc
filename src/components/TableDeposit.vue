@@ -142,7 +142,6 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
-      this.$router.push('/deposit/'+val);
     }
   },
   created:function(){
@@ -150,3 +149,17 @@ export default {
   }
 };
 </script>
+
+<style lang="css" scoped>
+  .table_wrap{
+    background: #FFF;
+    margin-top: 10px;
+    min-height: calc(100vh - 252px);
+  }
+  .tab_wrap{
+    float:left;
+  }
+  .time_range{
+    float:right;
+  }
+</style>

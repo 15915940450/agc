@@ -9,7 +9,7 @@
         </p>
       </el-col>
       <el-col :span="8">
-        <a class="to_deposit" href="javascript:;" @click="rrPush('/deposit/1')">
+        <a class="to_deposit" href="javascript:;" @click="rrPush('/deposit')">
           <p class="im_key">我的押金</p>
           <p class="im_value">
             <span>{{availableDeposite}}</span>

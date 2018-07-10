@@ -177,14 +177,6 @@ export default {
         vueThis.card.usedBattery=objRps.result.usedBattery;
       });
     },
-    formatter:function(row, column, cellValue){
-      if(column.property==='type'){
-        return (this.statusZHType[cellValue]);
-      }
-      if(column.property==='status'){
-        return (this.statusZH[cellValue]);
-      }
-    },
     handleTopUp:function(){
       this.$store.commit('showTopUp');
     },
@@ -220,16 +212,4 @@ export default {
     text-align: right;
   }
 
-  .table_wrap{
-    background: #FFF;
-    margin-top: 10px;
-    min-height: calc(100vh - 252px);
-  }
-
-  .tab_wrap{
-    float:left;
-  }
-  .time_range{
-    float:right;
-  }
 </style>

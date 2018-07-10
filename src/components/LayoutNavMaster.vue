@@ -44,7 +44,7 @@ export default {
           id:3,
           name:'押金管理',
           theClass:'heartdeposit',
-          link:'/deposit/1'
+          link:'/deposit'
         },
         {
           id:4,

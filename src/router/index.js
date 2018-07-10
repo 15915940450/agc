@@ -36,7 +36,7 @@ export default new Router({
       component: HeartUser
     },
     {
-      path: '/deposit/:pn', //pn=>pageNum 	页码
+      path: '/deposit',
       name: 'HeartDeposit',
       component: HeartDeposit
     },
