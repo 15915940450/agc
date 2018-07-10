@@ -142,22 +142,19 @@ export default {
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
-        this.fetchData();
         this.fetchDataCard();
       }
     },
     'modalStore.statusTopUp':function(val){
       if(!val){
-        this.fetchData();
         this.fetchDataCard();
       }
     },
     'modalStore.statusRefund':function(val){
       if(!val){
-        this.fetchData();
         this.fetchDataCard();
       }
-    },
+    }
   },
   components:{
     FormTopUp,

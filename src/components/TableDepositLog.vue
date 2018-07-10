@@ -85,6 +85,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
+
 export default {
   name:'TableDeposit',
   data(){
@@ -107,7 +109,25 @@ export default {
       pageNum:1
     });
   },
+  computed:{
+    ...mapState(['agent','modalStore'])
+  },
   watch:{
+    'modalStore.needLogin':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.statusTopUp':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
+    'modalStore.statusRefund':function(val){
+      if(!val){
+        this.fetchData();
+      }
+    },
     se:{
       handler:function(){
         this.fetchData();
@@ -135,7 +155,7 @@ export default {
         advancedParam:JSON.stringify({
           startTime:startTime,
           endTime:endTime,
-          type:vueThis.type  //:1-分配押金 2-回收押金
+          type:vueThis.type  //1-分配押金 2-回收押金
         }),
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
