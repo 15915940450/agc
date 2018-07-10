@@ -132,6 +132,13 @@ export default {
         vueThis.loadingDepositList=false;
         vueThis.total=objRps.result.total;
         vueThis.deposit=objRps.result.list;
+
+        if(!startTime && !endTime && !vueThis.total){
+          //empty:total(0),startTime(null),endTime(null)
+          vueThis.$store.commit('setEmptyDeposit');
+        }else{
+          vueThis.$store.commit('setDeposit');
+        }
       },{
         objSendData:sendData,
         reviver:function(k,v){

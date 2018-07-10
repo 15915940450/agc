@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="component_deposit">
-    <div>
+    <div v-if="!modalStore.depositEmpty">
       <el-row :gutter="10">
 
         <!-- 押金 -->
@@ -88,7 +88,7 @@
     </div>
 
     <!--押金為0-->
-    <div class="empty_deposit im_empty_wrap eqcalc">
+    <div v-else class="empty_deposit im_empty_wrap eqcalc">
       <h3 class="title">我的押金</h3>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/deposit_empty.jpeg" />
