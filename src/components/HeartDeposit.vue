@@ -125,10 +125,7 @@ export default {
         usedBattery:'*****'
       },
       eyenameDeposit:'eye',
-      eyenameRefund:'eye',
-
-      statusZHType:['','充值','退款'], //押金类型 1充值，2退款
-      statusZH:['','待确认','成功','待审核','已拒绝','待退款','已退款','失败','已拒绝']
+      eyenameRefund:'eye'
     };
   },
   computed:{

@@ -137,6 +137,12 @@ export default {
           if(k==='createTime'){
             return (v.slice(0,-2));
           }
+          if(k==='type'){
+            return (['','充值','退款'][v]);
+          }
+          if(k==='status'){
+            return (['','待确认','成功','待审核','已拒绝','待退款','已退款','失败','已拒绝'][v]);
+          }
         }
       });
     },
