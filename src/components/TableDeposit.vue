@@ -3,7 +3,7 @@
     <h3 class="title">
       <div class="tab_wrap">
         <template>
-          <el-tabs v-model="activeTabName" @tab-click="handleTabClick">
+          <el-tabs v-model="currentTab">
             <el-tab-pane label="押金记录" name="deposit">
             </el-tab-pane>
             <el-tab-pane label="分配记录" name="depositlog">
@@ -46,7 +46,8 @@
             </el-table-column>
             <el-table-column
               label="类型"
-              prop="type" :formatter="formatter">
+              prop="type"
+              >
             </el-table-column>
             <el-table-column
               label="金额(元)"
@@ -58,13 +59,20 @@
             </el-table-column>
             <el-table-column
               label="状态"
-              prop="status" :formatter="formatter">
+              prop="status"
+              >
             </el-table-column>
         </el-table>
       </div>
       <!-- 分页 -->
       <div class="table_wrap_pagination">
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+        <el-pagination
+           :background="true"
+           layout="total,->,jumper,prev,pager,next"
+           :total="total"
+           :current-page="pageNum"
+           @current-change="handleCurrentChange"
+           >
         </el-pagination>
       </div>
     </div>
@@ -75,7 +83,70 @@
 export default {
   name:'TableDeposit',
   data(){
-    return ({});
+    return ({
+      currentTab:'deposit',
+      deposit:[],
+      se:[],  //dateragne(start and end)
+      total:0,
+      pickerOptions:{
+        disabledDate:function(dateObj){
+          return (dateObj.getTime()>_.dateAgo(0));
+        }
+      },
+      loadingDepositList:true,
+      pageNum:1
+    });
+  },
+  watch:{
+    se:{
+      handler:function(){
+        this.fetchData();
+      }
+    },
+    pageNum:function(){
+      this.fetchData();
+    },
+    currentTab:function(val){
+      console.log(val);
+    }
+  },
+  methods:{
+    fetchData:function(){
+      var vueThis=this;
+      vueThis.loadingDepositList=true;
+
+      var startTime=null;
+      var endTime=null;
+      if(vueThis.se.length){
+        startTime=vueThis.se[0].getTime();
+        endTime=vueThis.se[1].getTime();
+      }
+      var sendData={
+        startTime:startTime,
+        endTime:endTime,
+        pageNum:vueThis.pageNum,
+        pageSize:vueThis.$yApi.defaultPS
+      };
+      vueThis.$rqs(vueThis.$yApi.depositList,function(objRps){
+        vueThis.loadingDepositList=false;
+        vueThis.total=objRps.result.total;
+        vueThis.deposit=objRps.result.list;
+      },{
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='createTime'){
+            return (v.slice(0,-2));
+          }
+        }
+      });
+    },
+    handleCurrentChange:function(val){
+      this.pageNum=val;
+      this.$router.push('/deposit/'+val);
+    }
+  },
+  created:function(){
+    this.fetchData();
   }
 };
 </script>

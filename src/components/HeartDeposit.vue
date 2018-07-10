@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="component_deposit">
-    <div v-if="(deposit.length || loadingDepositList)">
+    <div>
       <el-row :gutter="10">
 
         <!-- 押金 -->
@@ -87,7 +87,7 @@
     </div>
 
     <!--押金為0-->
-    <div v-if="(!deposit.length && !loadingDepositList)" class="empty_deposit im_empty_wrap eqcalc">
+    <div class="empty_deposit im_empty_wrap eqcalc">
       <h3 class="title">我的押金</h3>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/deposit_empty.jpeg" />
@@ -116,18 +116,8 @@ export default {
   name:'HeartDeposit',
   data() {
     return {
-      activeTabName:'deposit',
       center:'center',
-      pickerOptions:{
-        disabledDate:function(dateObj){
-          return (dateObj.getTime()>_.dateAgo(0));
-        }
-      },
-      se:[],  //dateragne(start and end)
       //se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)
-      total:0,
-      deposit:[],
-      loadingDepositList:true,
       card:{
         availableDeposite:'*****',
         refundableDeposit:'*****',
@@ -137,7 +127,6 @@ export default {
       eyenameDeposit:'eye',
       eyenameRefund:'eye',
 
-      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1),
       statusZHType:['','充值','退款'], //押金类型 1充值，2退款
       statusZH:['','待确认','成功','待审核','已拒绝','待退款','已退款','失败','已拒绝']
     };
@@ -170,15 +159,6 @@ export default {
         this.fetchDataCard();
       }
     },
-    se:{
-      // deep:true,
-      handler:function(){
-        this.fetchData();
-      }
-    },
-    pageNum:function(){
-      this.fetchData();
-    }
   },
   components:{
     FormTopUp,
@@ -188,35 +168,6 @@ export default {
     TableDeposit
   },
   methods: {
-    fetchData:function(){
-      var vueThis=this;
-      vueThis.loadingDepositList=true;
-
-      var startTime=null;
-      var endTime=null;
-      if(vueThis.se.length){
-        startTime=vueThis.se[0].getTime();
-        endTime=vueThis.se[1].getTime();
-      }
-      var sendData={
-        startTime:startTime,
-        endTime:endTime,
-        pageNum:vueThis.pageNum,
-        pageSize:vueThis.$yApi.defaultPS
-      };
-      vueThis.$rqs(vueThis.$yApi.depositList,function(objRps){
-        vueThis.loadingDepositList=false;
-        vueThis.total=objRps.result.total;
-        vueThis.deposit=objRps.result.list;
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(k==='createTime'){
-            return (v.slice(0,-2));
-          }
-        }
-      });
-    },
     fetchDataCard:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
@@ -240,20 +191,11 @@ export default {
     handleRefund:function(){
       this.$store.commit('showRefund');
     },
-    handleCurrentChange:function(val){
-      this.pageNum=val;
-      this.$router.push('/deposit/'+val);
-    },
-    handleTabClick:function(tab,event){
-      //console.log(tab);
-      console.log(this.activeTabName);
-    },
     switchEye:function(iconName){
       this[iconName]=this[iconName]==='eye'?'eye-slash':'eye';
     }
   },
   created:function(){
-    this.fetchData();
     this.fetchDataCard();
   }
 };
