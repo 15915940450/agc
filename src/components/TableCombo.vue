@@ -24,7 +24,7 @@
       </div>
     </h3>
     <div v-loading="loadingUserList">
-      <!-- 用户列表表格 -->
+      <!-- 表格 -->
       <div class="table_wrap_real">
         <el-table
           :data="users" size="medium" stripe
@@ -34,9 +34,9 @@
 
 
           <el-table-column
-            label="#"
-            type="index"
-            width="50">
+            label="序号/ID"
+            prop="id"
+            >
           </el-table-column>
           <el-table-column
             label="时间"

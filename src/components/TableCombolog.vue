@@ -34,9 +34,9 @@
 
 
           <el-table-column
-            label="#"
-            type="index"
-            width="50">
+            label="序号/ID"
+            prop="id"
+            >
           </el-table-column>
           <el-table-column
             label="时间"
@@ -51,12 +51,12 @@
             prop="number">
           </el-table-column>
           <el-table-column
-            label="单价(元)"
-            prop="price">
+            label="手机号码"
+            prop="phone">
           </el-table-column>
           <el-table-column
-            label="金额(元)"
-            prop="amount">
+            label="套餐剩余(份)"
+            prop="remainNumber">
           </el-table-column>
 
         </el-table>
@@ -76,21 +76,22 @@
 import {mapState} from 'vuex';
 
 export default {
-  name:'TableDeposit',
+  name:'TableCombolog',
   data(){
     return ({
       se:[],  //dateragne(start and end)
       search:null,
       users:[
-        // {
-        //     "discountName":"欢电套餐", //套餐名
-        //     "price":"6", // 单价
-        //     "amount":"12", // 付款价格
-        //     "number":"2", // 数量
-        //     "createTime":"2018-06-06 09:53:57", // 时间
-        //     "phone":"15820480937", // 电话
-        //     "status":"1" // 状态  1待确认 2 成功 ，3失败
-        // }
+        /*
+        {
+    			"id": 1, //ID
+    			"createTime": 1512104184000, //操作时间
+    			"phone": "13823791641", //被操作人手机号码
+    			"discountName": "租一颗电池 ￥999一颗", //套餐名称
+    			"remainNumber": 123, //剩余份数
+    			"number":1//分配数量
+	    	}
+        */
       ],
       total:0,
       pickerOptions:{
@@ -124,7 +125,16 @@ export default {
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingUserList=true;
+
+      var startTime=null;
+      var endTime=null;
+      if(vueThis.se.length){
+        startTime=vueThis.se[0].getTime();
+        endTime=vueThis.se[1].getTime();
+      }
       var advancedParam=JSON.stringify({
+        startTime:startTime,
+        endTime:endTime,
         discountName:vueThis.search || null
       });
       var sendData={
@@ -132,7 +142,7 @@ export default {
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
-      vueThis.$rqs(vueThis.$yApi.comboHistory,function(objRps){
+      vueThis.$rqs(vueThis.$yApi.comboLog,function(objRps){
         // _.logErr(objRps);
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
@@ -141,7 +151,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (v.slice(0,-2));
+            return (_.toSlash(new Date(window.Number(v)),{T:false}).slice(0,19));
           }
         }
       });
