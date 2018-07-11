@@ -20,7 +20,6 @@
       </div>
     </h3>
     <div v-loading="loadingUserList">
-      <!-- v-loading="loadingUserList" -->
       <!-- 用户列表表格 -->
       <div class="table_wrap_real">
         <el-table
@@ -78,6 +77,19 @@ export default {
     return ({
       deposit:[],
       se:[],  //dateragne(start and end)
+      search:null,
+      users:[
+        // {
+        //     "discountName":"欢电套餐", //套餐名
+        //     "price":"6", // 单价
+        //     "amount":"12", // 付款价格
+        //     "number":"2", // 数量
+        //     "createTime":"2018-06-06 09:53:57", // 时间
+        //     "phone":"15820480937", // 电话
+        //     "status":"1" // 状态  1待确认 2 成功 ，3失败
+
+        // }
+      ],
       arrFilterType:[
         {text:'分配',value:1},
         {text:'回收',value:2}
@@ -89,7 +101,7 @@ export default {
           return (dateObj.getTime()>_.dateAgo(0));
         }
       },
-      loadingDepositLog:true,
+      loadingUserList:true,
       pageNum:1
     });
   },
@@ -124,35 +136,25 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      vueThis.loadingDepositLog=true;
-
-      var startTime=null;
-      var endTime=null;
-      if(vueThis.se.length){
-        startTime=vueThis.se[0].getTime();
-        endTime=vueThis.se[1].getTime();
-      }
+      vueThis.loadingUserList=true;
+      var advancedParam=JSON.stringify({
+        discountName:vueThis.search || null
+      });
       var sendData={
-        advancedParam:JSON.stringify({
-          startTime:startTime,
-          endTime:endTime,
-          type:vueThis.type  //1-分配押金 2-回收押金
-        }),
+        advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
-      vueThis.$rqs(vueThis.$yApi.depositLog,function(objRps){
-        vueThis.loadingDepositLog=false;
+      vueThis.$rqs(vueThis.$yApi.comboHistory,function(objRps){
+        // _.logErr(objRps);
+        vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
-        vueThis.deposit=objRps.result.list;
+        vueThis.users=objRps.result.list;
       },{
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(new Date(window.Number(v)),{T:false}).slice(0,19));
-          }
-          if(k==='type'){
-            return (['','分配','回收'][v]);
+            return (v.slice(0,-2));
           }
         }
       });
@@ -172,7 +174,11 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
-    }
+    },
+    imSearch:_.debounce(function(){
+      this.isNotSearch=false;
+      this.fetchData();
+    },690)
   },
   created:function(){
     this.fetchData();
