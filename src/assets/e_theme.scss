@@ -129,7 +129,8 @@ h3.title{
 .onelogin{
   border-radius: 10px;
   margin-top:calc((100vh - 550px) / 2) !important;
-
+  position:relative;
+  z-index:10;
 }
 .need_login-phone input{
   background: url(./user.png) no-repeat 5px center !important;
@@ -149,6 +150,12 @@ h3.title{
 }
 .need_login .el-form-item--small.el-form-item{
   margin-bottom: 25px;
+}
+.need_login .el-dialog__wrapper svg{
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:9;
 }
 // 模态扩展
 .modal_wrap .el-select--small{

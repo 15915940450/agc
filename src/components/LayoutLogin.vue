@@ -48,6 +48,8 @@
 
 <script>
 import {mapState} from 'vuex';
+import Trianglify from 'trianglify';
+
 
 //5次则需要验证码
 /* localStorage的值是字符串类型，而this.sendLoginCount则需保证是数字类型 */
@@ -182,13 +184,21 @@ export default {
     if(this.need_vcode){
       this.updateVimg();
     }
+  },
+  mounted:function(){
+    var trianglify=new Trianglify({
+      width:window.innerWidth,
+      height:window.innerHeight
+    });
+    document.querySelector('.el-dialog__wrapper').appendChild(trianglify.svg());
   }
 };
 </script>
 
 <style lang="css" scoped>
   .need_login .el-dialog__wrapper{
-    background: #333 url(../assets/bg_login.png) no-repeat center center;
+    /*background: #333 url(../assets/bg_login.png) no-repeat center center;*/
+    background:#333;
     padding-bottom: 80px;
   }
   .login_logo{
