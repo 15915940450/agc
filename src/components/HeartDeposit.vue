@@ -83,10 +83,22 @@
       </el-row>
 
       <!--記錄表格-->
-      <component
-        v-bind:is="tableCurrentTab"
-        >
-      </component>
+      <div class="table_with_tab_wrap">
+        <div class="tab_wrap">
+          <template>
+            <el-tabs v-model="currentTab">
+              <el-tab-pane label="押金记录" name="deposit">
+              </el-tab-pane>
+              <el-tab-pane label="分配记录" name="depositlog">
+              </el-tab-pane>
+            </el-tabs>
+          </template>
+        </div>
+        <component
+          v-bind:is="('table-'+currentTab)"
+          >
+        </component>
+      </div>
       <!--<TableDeposit />-->
       <!--<TableDepositlog />-->
     </div>
@@ -123,6 +135,7 @@ export default {
   data() {
     return {
       center:'center',
+      currentTab:'deposit',  //deposit,depositlog
       //se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)
       card:{
         availableDeposite:'*****',
@@ -141,9 +154,6 @@ export default {
     },
     eyeRefund:function(){
       return (this.eyenameRefund==='eye-slash'?this.card.refundableDeposit:'*****');
-    },
-    tableCurrentTab:function(){
-      return ('table-'+this.modalStore.depositCurrentTab);
     }
   },
   watch:{
@@ -161,6 +171,9 @@ export default {
       if(!val){
         this.fetchDataCard();
       }
+    },
+    currentTab:function(val){
+      console.log(val);
     }
   },
   components:{

@@ -1,16 +1,6 @@
 <template>
   <div class="table_wrap">
     <h3 class="title">
-      <div class="tab_wrap">
-        <template>
-          <el-tabs v-model="currentTab">
-            <el-tab-pane label="押金记录" name="deposit">
-            </el-tab-pane>
-            <el-tab-pane label="分配记录" name="depositlog">
-            </el-tab-pane>
-          </el-tabs>
-        </template>
-      </div>
       <div class="time_range">
         <el-date-picker
           v-model="se"
@@ -92,7 +82,6 @@ export default {
   name:'TableDeposit',
   data(){
     return ({
-      currentTab:'depositlog',
       deposit:[],
       se:[],  //dateragne(start and end)
       arrFilterType:[
@@ -136,11 +125,6 @@ export default {
     },
     pageNum:function(){
       this.fetchData();
-    },
-    currentTab:function(val){
-      this.$store.commit('setDepositCurrentTab',{
-        currentTab:val
-      });
     }
   },
   methods:{
