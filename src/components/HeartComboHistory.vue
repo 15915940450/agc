@@ -14,70 +14,25 @@
     </div>
 
     <div class="user_list" v-if="(users.length || !isNotSearch || loadingUserList)">
-      <!-- table wrap -->
-      <div class="table_wrap">
-        <el-row>
-          <el-col :span="6">
-            <h3 class="title">购买记录</h3>
-          </el-col>
-          <el-col :span="18">
-            <div class="table_wrap-search">
-              <div class="table_wrap-search_wrap">
-                <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入套餐名称" v-model="search" suffix-icon="el-icon-search"></el-input>
-              </div>
-            </div>
-          </el-col>
-        </el-row>
-        <div v-loading="loadingUserList">
-          <!-- v-loading="loadingUserList" -->
-          <!-- 用户列表表格 -->
-          <div class="table_wrap_real">
-            <el-table
-              :data="users" size="medium" stripe
-              class="table_wrap-table"
-              width="100%"
-              >
-
-
-              <el-table-column
-                label="#"
-                type="index"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                label="时间"
-                prop="createTime">
-              </el-table-column>
-              <el-table-column
-                label="套餐名称"
-                prop="discountName">
-              </el-table-column>
-              <el-table-column
-                label="数量(个)"
-                prop="number">
-              </el-table-column>
-              <el-table-column
-                label="单价(元)"
-                prop="price">
-              </el-table-column>
-              <el-table-column
-                label="金额(元)"
-                prop="amount">
-              </el-table-column>
-
-            </el-table>
-          </div>
-
-
-          <div class="table_wrap_pagination" v-show="total">
-            <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
-              <!-- 分页 -->
-            </el-pagination>
-          </div>
+      <!--記錄表格-->
+      <div class="table_with_tab_wrap">
+        <div class="tab_wrap">
+          <template>
+            <el-tabs v-model="currentTab">
+              <el-tab-pane label="套餐记录" name="combo">
+              </el-tab-pane>
+              <el-tab-pane label="分配记录" name="combolog">
+              </el-tab-pane>
+            </el-tabs>
+          </template>
         </div>
-
+        <keep-alive>
+          <component
+            v-bind:is="('table-'+currentTab)"
+            >
+          </component>
+        </keep-alive>
       </div>
-
     </div>
 
     <!-- empty -->
@@ -94,11 +49,14 @@
 
 <script>
 import {mapState} from 'vuex';
+import TableCombo from './TableCombo.vue';
+import TableCombolog from './TableCombolog.vue';
 
 export default {
   name:'HeartComboHistory', /* HeartComboHistory is copy from HeartUser */
   data:function(){
     return ({
+      currentTab:'combo',
       total:0,
       search:null,
       isNotSearch:true,
