@@ -79,7 +79,6 @@ export default {
   name:'TableDeposit',
   data(){
     return ({
-      deposit:[],
       se:[],  //dateragne(start and end)
       search:null,
       users:[
@@ -91,14 +90,8 @@ export default {
         //     "createTime":"2018-06-06 09:53:57", // 时间
         //     "phone":"15820480937", // 电话
         //     "status":"1" // 状态  1待确认 2 成功 ，3失败
-
         // }
       ],
-      arrFilterType:[
-        {text:'分配',value:1},
-        {text:'回收',value:2}
-      ],
-      type:null,
       total:0,
       pickerOptions:{
         disabledDate:function(dateObj){
@@ -114,16 +107,6 @@ export default {
   },
   watch:{
     'modalStore.needLogin':function(val){
-      if(!val){
-        this.fetchData();
-      }
-    },
-    'modalStore.statusTopUp':function(val){
-      if(!val){
-        this.fetchData();
-      }
-    },
-    'modalStore.statusRefund':function(val){
       if(!val){
         this.fetchData();
       }
@@ -165,16 +148,6 @@ export default {
     },
     resetSearch:function(){
       this.se=[];
-    },
-    handleFilterType:function(obj){
-      var vueThis=this;
-      var sumType=(_.sum(Object.values(obj)[0])); //0,1,2
-      if(sumType===1 || sumType===2){
-        vueThis.type=sumType;
-      }else{
-        vueThis.type=null;
-      }
-      vueThis.fetchData();
     },
     handleCurrentChange:function(val){
       this.pageNum=val;

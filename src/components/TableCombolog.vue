@@ -1,13 +1,17 @@
 <template>
   <div class="table_wrap">
     <h3 class="title">
-      <div class="table_wrap-search">
-        <div class="table_wrap-search_wrap">
-          <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入套餐名称" v-model="search" suffix-icon="el-icon-search"></el-input>
-        </div>
-      </div>
-      <div class="time_range">
+      <div class="adv">
+        <el-input
+          class="table_wrap-input_serach"
+          @input="imSearch()"
+          placeholder="请输入套餐名称"
+          v-model="search"
+          suffix-icon="el-icon-search"
+          >
+        </el-input>
         <el-date-picker
+          class="table_wrap-input_daterange"
           v-model="se"
           type="daterange"
           range-separator="至"
@@ -20,7 +24,6 @@
       </div>
     </h3>
     <div v-loading="loadingUserList">
-      <!-- v-loading="loadingUserList" -->
       <!-- 用户列表表格 -->
       <div class="table_wrap_real">
         <el-table
@@ -76,20 +79,26 @@ export default {
   name:'TableDeposit',
   data(){
     return ({
-      deposit:[],
       se:[],  //dateragne(start and end)
-      arrFilterType:[
-        {text:'分配',value:1},
-        {text:'回收',value:2}
+      search:null,
+      users:[
+        // {
+        //     "discountName":"欢电套餐", //套餐名
+        //     "price":"6", // 单价
+        //     "amount":"12", // 付款价格
+        //     "number":"2", // 数量
+        //     "createTime":"2018-06-06 09:53:57", // 时间
+        //     "phone":"15820480937", // 电话
+        //     "status":"1" // 状态  1待确认 2 成功 ，3失败
+        // }
       ],
-      type:null,
       total:0,
       pickerOptions:{
         disabledDate:function(dateObj){
           return (dateObj.getTime()>_.dateAgo(0));
         }
       },
-      loadingDepositLog:true,
+      loadingUserList:true,
       pageNum:1
     });
   },
@@ -98,16 +107,6 @@ export default {
   },
   watch:{
     'modalStore.needLogin':function(val){
-      if(!val){
-        this.fetchData();
-      }
-    },
-    'modalStore.statusTopUp':function(val){
-      if(!val){
-        this.fetchData();
-      }
-    },
-    'modalStore.statusRefund':function(val){
       if(!val){
         this.fetchData();
       }
@@ -124,35 +123,25 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      vueThis.loadingDepositLog=true;
-
-      var startTime=null;
-      var endTime=null;
-      if(vueThis.se.length){
-        startTime=vueThis.se[0].getTime();
-        endTime=vueThis.se[1].getTime();
-      }
+      vueThis.loadingUserList=true;
+      var advancedParam=JSON.stringify({
+        discountName:vueThis.search || null
+      });
       var sendData={
-        advancedParam:JSON.stringify({
-          startTime:startTime,
-          endTime:endTime,
-          type:vueThis.type  //1-分配押金 2-回收押金
-        }),
+        advancedParam:advancedParam,
         pageNum:vueThis.pageNum,
         pageSize:vueThis.$yApi.defaultPS
       };
-      vueThis.$rqs(vueThis.$yApi.depositLog,function(objRps){
-        vueThis.loadingDepositLog=false;
+      vueThis.$rqs(vueThis.$yApi.comboHistory,function(objRps){
+        // _.logErr(objRps);
+        vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
-        vueThis.deposit=objRps.result.list;
+        vueThis.users=objRps.result.list;
       },{
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(new Date(window.Number(v)),{T:false}).slice(0,19));
-          }
-          if(k==='type'){
-            return (['','分配','回收'][v]);
+            return (v.slice(0,-2));
           }
         }
       });
@@ -160,19 +149,13 @@ export default {
     resetSearch:function(){
       this.se=[];
     },
-    handleFilterType:function(obj){
-      var vueThis=this;
-      var sumType=(_.sum(Object.values(obj)[0])); //0,1,2
-      if(sumType===1 || sumType===2){
-        vueThis.type=sumType;
-      }else{
-        vueThis.type=null;
-      }
-      vueThis.fetchData();
-    },
     handleCurrentChange:function(val){
       this.pageNum=val;
-    }
+    },
+    imSearch:_.debounce(function(){
+      this.isNotSearch=false;
+      this.fetchData();
+    },690)
   },
   created:function(){
     this.fetchData();
@@ -186,7 +169,14 @@ export default {
     margin-top: 10px;
     min-height: calc(100vh - 252px);
   }
-  .time_range{
+  .adv{
     float:right;
+  }
+  .table_wrap-input_serach{
+    width:190px;
+  }
+  .table_wrap-input_daterange{
+    position:relative;
+    top:1px;
   }
 </style>
