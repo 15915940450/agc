@@ -95,12 +95,10 @@
           </template>
         </div>
         <keep-alive>
-          <transition name="el-zoom-in-center">
           <component
             v-bind:is="('table-'+currentTab)"
             >
           </component>
-          </transition>
         </keep-alive>
       </div>
       <!--<TableDeposit />-->
@@ -175,9 +173,6 @@ export default {
       if(!val){
         this.fetchDataCard();
       }
-    },
-    currentTab:function(val){
-      console.log(val);
     }
   },
   components:{
@@ -232,5 +227,12 @@ export default {
   .right_part{
     text-align: right;
   }
-
+  .table_with_tab_wrap{
+    position:relative;
+  }
+  .tab_wrap{
+    position:absolute;
+    left:15px;
+    top:0;
+  }
 </style>

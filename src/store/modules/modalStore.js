@@ -24,8 +24,7 @@ var state={
   EVin:false,
   newUser:false,
 
-  depositEmpty:false,
-  depositCurrentTab:'deposit'
+  depositEmpty:false
 };
 
 var mutations={
@@ -61,7 +60,6 @@ var mutations={
     state.EVin=false;
     state.newUser=false;
     state.depositEmpty=false;
-    state.depositCurrentTab='deposit';
   },
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
@@ -200,9 +198,6 @@ var mutations={
     state.newUser=false;
   },
 
-  setDepositCurrentTab:function(state,obj){
-    state.depositCurrentTab=obj.currentTab;
-  },
   setEmptyDeposit:function(state){
     state.depositEmpty=true;
   },

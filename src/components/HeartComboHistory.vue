@@ -67,9 +67,9 @@
 
             </el-table>
           </div>
-          
 
-          <div class="table_wrap_pagination">
+
+          <div class="table_wrap_pagination" v-show="total">
             <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
               <!-- 分页 -->
             </el-pagination>
@@ -112,8 +112,8 @@ export default {
         //     "createTime":"2018-06-06 09:53:57", // 时间
         //     "phone":"15820480937", // 电话
         //     "status":"1" // 状态  1待确认 2 成功 ，3失败
-              
-        // } 
+
+        // }
       ],
       loadingUserList:true,
       pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)

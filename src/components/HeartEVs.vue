@@ -99,13 +99,13 @@
               </el-table-column>
             </el-table>
           </div>
-          
-          <div class="table_wrap_pagination">
+
+          <div class="table_wrap_pagination" v-show="total">
             <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
               <!-- 分页 -->
             </el-pagination>
           </div>
-        </div>        
+        </div>
       </div>
     </div>
     <!-- </transition> -->
@@ -117,7 +117,7 @@
         <img class="im_empty_img" src="../assets/no_ev.png" alt="还没有中控" />
         <p class="im_empty_p">您还没有中控哦！</p>
       </div>
-      
+
     </div>
 
     <!-- 操作响应 -->

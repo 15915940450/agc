@@ -220,7 +220,7 @@
           </div>
 
 
-          <div class="table_wrap_pagination">
+          <div class="table_wrap_pagination" v-show="total">
             <el-pagination
               :background="true"
               layout="total,->,jumper,sizes,prev,pager,next"
