@@ -3,7 +3,7 @@
     <div class="combo_head">
       <h3 class="title with_sub">
         <span class="real_title">套餐说明</span>
-        <router-link class="combo_history_entrance" to="/combo/history/1">套餐记录</router-link>
+        <router-link class="combo_history_entrance" to="/combo/history">套餐记录</router-link>
       </h3>
       <div class="step_wrap">
         <el-steps :active="3">
