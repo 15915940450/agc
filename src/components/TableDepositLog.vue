@@ -52,6 +52,7 @@
               label="类型"
               prop="type"
               :filters="arrFilterType"
+              :filter-multiple="false"
               >
             </el-table-column>
             <el-table-column
@@ -183,7 +184,7 @@ export default {
     },
     handleFilterType:function(obj){
       var vueThis=this;
-      var sumType=(_.sum(Object.values(obj)[0]));
+      var sumType=(_.sum(Object.values(obj)[0])); //0,1,2
       if(sumType===1 || sumType===2){
         vueThis.type=sumType;
       }else{
