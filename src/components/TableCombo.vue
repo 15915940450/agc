@@ -1,13 +1,17 @@
 <template>
   <div class="table_wrap">
     <h3 class="title">
-      <div class="table_wrap-search">
-        <div class="table_wrap-search_wrap">
-          <el-input @input="imSearch()" class="table_wrap-input_serach" placeholder="请输入套餐名称" v-model="search" suffix-icon="el-icon-search"></el-input>
-        </div>
-      </div>
-      <div class="time_range">
+      <div class="adv">
+        <el-input
+          class="table_wrap-input_serach"
+          @input="imSearch()"
+          placeholder="请输入套餐名称"
+          v-model="search"
+          suffix-icon="el-icon-search"
+          >
+        </el-input>
         <el-date-picker
+          class="table_wrap-input_daterange"
           v-model="se"
           type="daterange"
           range-separator="至"
@@ -192,7 +196,14 @@ export default {
     margin-top: 10px;
     min-height: calc(100vh - 252px);
   }
-  .time_range{
+  .adv{
     float:right;
+  }
+  .table_wrap-input_serach{
+    width:190px;
+  }
+  .table_wrap-input_daterange{
+    position:relative;
+    top:1px;
   }
 </style>

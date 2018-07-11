@@ -73,4 +73,12 @@ export default {
   .user_list{
     background: #FFF;
   }
+  .table_with_tab_wrap{
+    position:relative;
+  }
+  .tab_wrap{
+    position:absolute;
+    left:15px;
+    top:0;
+  }
 </style>
