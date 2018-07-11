@@ -200,6 +200,7 @@ export default {
   .need_login .el-dialog__wrapper{
     background:#333;
     padding-bottom: 80px;
+    overflow:hidden;
   }
   .login_logo{
     display: block;
