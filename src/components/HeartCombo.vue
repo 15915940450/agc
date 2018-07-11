@@ -63,7 +63,7 @@ import FormComboBuy from './FormComboBuy.vue';
 import StatusTopUp from './StatusTopUp.vue';
 
 export default {
-  name:'HeartGroup',
+  name:'HeartCombo',
   data:function(){
     return ({
       loadingComboList:true,

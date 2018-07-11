@@ -79,7 +79,7 @@
 import {mapState} from 'vuex';
 
 export default {
-  name:'TableDeposit',
+  name:'TableDepositlog',
   data(){
     return ({
       deposit:[],
