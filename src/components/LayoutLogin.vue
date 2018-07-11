@@ -187,6 +187,7 @@ export default {
   },
   mounted:function(){
     var trianglify=new Trianglify({
+      cell_size:155,
       width:window.innerWidth,
       height:window.innerHeight
     });
@@ -197,7 +198,6 @@ export default {
 
 <style lang="css" scoped>
   .need_login .el-dialog__wrapper{
-    /*background: #333 url(../assets/bg_login.png) no-repeat center center;*/
     background:#333;
     padding-bottom: 80px;
   }
