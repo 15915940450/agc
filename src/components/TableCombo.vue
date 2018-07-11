@@ -76,7 +76,7 @@
 import {mapState} from 'vuex';
 
 export default {
-  name:'TableDeposit',
+  name:'TableCombo',
   data(){
     return ({
       se:[],  //dateragne(start and end)
@@ -124,7 +124,16 @@ export default {
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingUserList=true;
+
+      var startTime=null;
+      var endTime=null;
+      if(vueThis.se.length){
+        startTime=vueThis.se[0].getTime();
+        endTime=vueThis.se[1].getTime();
+      }
       var advancedParam=JSON.stringify({
+        startTime:startTime,
+        endTime:endTime,
         discountName:vueThis.search || null
       });
       var sendData={
@@ -137,6 +146,12 @@ export default {
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
+
+        if(!vueThis.search && !startTime && !endTime && !vueThis.total){
+          vueThis.$store.commit('setEmptyCombo');
+        }else{
+          vueThis.$store.commit('setCombo');
+        }
       },{
         objSendData:sendData,
         reviver:function(k,v){
@@ -153,7 +168,6 @@ export default {
       this.pageNum=val;
     },
     imSearch:_.debounce(function(){
-      this.isNotSearch=false;
       this.fetchData();
     },690)
   },

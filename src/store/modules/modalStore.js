@@ -24,7 +24,8 @@ var state={
   EVin:false,
   newUser:false,
 
-  depositEmpty:false
+  depositEmpty:false,
+  comboEmpty:false
 };
 
 var mutations={
@@ -60,6 +61,7 @@ var mutations={
     state.EVin=false;
     state.newUser=false;
     state.depositEmpty=false;
+    state.comboEmpty=false;
   },
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
@@ -198,6 +200,12 @@ var mutations={
     state.newUser=false;
   },
 
+  setEmptyCombo:function(state){
+    state.comboEmpty=true;
+  },
+  setCombo:function(state){
+    state.comboEmpty=false;
+  },
   setEmptyDeposit:function(state){
     state.depositEmpty=true;
   },

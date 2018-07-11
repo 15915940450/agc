@@ -13,7 +13,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="user_list">
+    <div class="user_list" v-if="!modalStore.comboEmpty">
       <!--記錄表格-->
       <div class="table_with_tab_wrap">
         <div class="tab_wrap">
@@ -36,7 +36,7 @@
     </div>
 
     <!-- empty -->
-    <div>
+    <div v-else>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_combo_his.png" />
         <p class="im_empty_p">暂无购买记录.</p>
