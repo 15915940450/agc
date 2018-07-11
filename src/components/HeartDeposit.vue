@@ -94,10 +94,14 @@
             </el-tabs>
           </template>
         </div>
-        <component
-          v-bind:is="('table-'+currentTab)"
-          >
-        </component>
+        <keep-alive>
+          <transition name="el-zoom-in-center">
+          <component
+            v-bind:is="('table-'+currentTab)"
+            >
+          </component>
+          </transition>
+        </keep-alive>
       </div>
       <!--<TableDeposit />-->
       <!--<TableDepositlog />-->
