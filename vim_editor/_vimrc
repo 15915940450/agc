@@ -96,7 +96,7 @@ let mapleader=","
   " }}}
   " ----- nerdtree ----- {{{
   Plugin 'scrooloose/nerdtree'
-   let NERDTreeIgnore=['.idea', '.vscode', 'node_modules', '*.pyc','bootstrap','footable_individual','node_modules']
+   let NERDTreeIgnore=['node_modules','NTUSER*','.git']
    let NERDTreeBookmarksFile = $VIM . '/NERDTreeBookmarks'
    let NERDTreeMinimalUI = 1
    let NERDTreeBookmarksSort = 1
@@ -114,7 +114,7 @@ let mapleader=","
   " ----- ctrlp ----- {{{
   Plugin 'kien/ctrlp.vim'
    let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:10,results:10'
-   set wildignore+=*\\.git\\*,*\\tmp\\*,*.swp,*.zip,*.exe,*.pyc,*\\batterystation\\*,*\\ccbike\\*,*\\eb_src\\*,*\\es\\*,*\\TEST\\*,*\\bootstrap\\*,*\\ec_src\\css\\*,*\\ec_src\\ecadmin_js\\*,*\\footable_individual\\*,*\\ec_src\\ili_css\\*,*\\ec_src\\images\\*,*\\ec_src\\js\\*,*\\ec_src\\less\\*,*\\ec_src\\old\\*,*\\ec_src\\red-packet\\*,*\\ec_src\\require\\*,*\\ec_src\\white_box\\*,*\\node_modules\\*
+   set wildignore+=*\\node_modules\\*,*\\.git\\*
   " }}}
   " ----- nerdcommenter ----- {{{
   Plugin 'scrooloose/nerdcommenter'
@@ -216,5 +216,8 @@ let mapleader=","
   vnoremap <silent><F6> :MaximizerToggle<CR>gv
   inoremap <silent><F6> <C-o>:MaximizerToggle<CR>
 " }}}
+
+"1.startup directory(https://stackoverflow.com/questions/1180955/vim-change-start-up-directory)
+:cd C:\Users\ili\AppServ\www\fifteen
 
 " $
