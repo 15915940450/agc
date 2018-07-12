@@ -66,7 +66,7 @@ export default function(urlMethod,success,paramSettings){
     store.commit('showLogin');
     return false;
   }
-   
+
   //================xmlhttp start
   var xmlhttp;
   if(window.XMLHttpRequest){
@@ -91,7 +91,7 @@ export default function(urlMethod,success,paramSettings){
               //empty string
               v='─';
             }
-            if(typeof v==='string' && !window.isNaN(v) && v){
+            if(typeof v==='string' && !window.isNaN(v) && v.length<15 && v){
               //string to number
               v=window.Number(v);
             }
@@ -136,7 +136,7 @@ export default function(urlMethod,success,paramSettings){
           //when JSON.parse throw error
           settings.fnHandleNOTjsonResult(error);
         }
-      //end if 200  
+      //end if 200
       }else{
         //status is not 200
         settings.fail(xmlhttp.status);
