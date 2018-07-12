@@ -32,6 +32,7 @@
         </el-row>
 
         <div v-loading="loadingUserList" class="loading_parent">
+          <!--操作，篩選-->
           <div class="filter_wrap">
             <!-- dropdown -->
             <el-dropdown
@@ -158,7 +159,7 @@
                           v-if="item.name!=='代理商群组免费'"
                           :key="item"
                           >
-                          {{item.name}}/{{['月卡','次卡','两月卡'][item.type]}}/{{item.times}}次/{{item.deration}}天
+                          {{item.name}}/{{['月卡','次卡','两月卡'][item.type]}}/{{item.times}}次/{{item.duration}}天
                         </el-tag>
                       </div>
                     </el-form-item>
@@ -459,7 +460,12 @@ export default {
         vueThis.$rqs(vueThis.$yApi.currentTaocan,function(objRps){
           vueThis.users[index].currentTaocan=objRps.result;
         },{
-          objSendData:sendData
+          objSendData:sendData,
+          reviver:function(k,v){
+            if(k==='times' && v>=20000){
+              return '无限';
+            }
+          }
         });
       }
     },
