@@ -1,7 +1,7 @@
 var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
-var version='V14.0.1';
+var version='V14.0.2';
 
 //1.backupDist
 gulp.task('backupDist',function(){

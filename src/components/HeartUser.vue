@@ -149,18 +149,28 @@
                 <template slot-scope="props">
                   <el-form label-position="right" inline class="im-table-expand">
                     <el-form-item label="当前套餐：">
-                      <span v-if="props.row.currentTaocan==='加载中...'">
-                        {{props.row.currentTaocan}}
+                      <span v-if="typeof(props.row.currentTaocan)==='string'">
+                        加载中...
                       </span>
+                      <!--空數組-->
+                      <div v-else-if="props.row.currentTaocan.length===0">
+                        暂无可用套餐
+                      </div>
                       <div v-else class="current_taocan">
                         <!--【套餐名称/套餐类型/次数/有效天数】，例【限量套餐月卡/月套餐/90次/30天】，次数20000次显示为无限次-->
-                        <el-tag size="mini"
+                        <div
                           v-for="item in props.row.currentTaocan"
                           v-if="item.name!=='代理商群组免费'"
-                          :key="item"
+                          :key="item.id"
                           >
-                          {{item.name}}/{{['月卡','次卡','两月卡'][item.type]}}/{{item.times}}次/{{item.duration}}天
-                        </el-tag>
+                          {{item.name}}
+                          /
+                          {{['月卡','次卡','两月卡'][item.type]}}
+                          /
+                          {{item.times}}次
+                          /
+                          {{item.duration}}天
+                        </div>
                       </div>
                     </el-form-item>
                     <el-form-item label="注册时间：">
@@ -366,7 +376,6 @@ export default {
         pageSize:vueThis.pageSize
       };
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
-        // _.logErr(objRps);
         vueThis.loadingUserList=false;
         vueThis.total=objRps.result.total;
         vueThis.users=objRps.result.list;
@@ -430,7 +439,6 @@ export default {
     },
     unbindUser:function(scope){
       this.msg='用户已解绑';
-      // _.logErr((scope.row));
       this.unbindPhone=scope.row.phone;
       this.$store.commit('showUserUnbind');
     },
@@ -445,12 +453,12 @@ export default {
     handleSelectionChange:function(val){
       this.selection=val;
     },
+    //當前套餐列表
     handleExpandChange:function(row){
       var vueThis=this;
       var index=vueThis.users.findIndex(function(v){
         return (v.phone===row.phone);
       });
-      //_.logErr(row);
 
       var sendData={
         userPhone:row.phone
@@ -458,7 +466,10 @@ export default {
       if(row.currentTaocan==='加载中...'){
         //加載中--)[]--)[xxx]
         vueThis.$rqs(vueThis.$yApi.currentTaocan,function(objRps){
-          vueThis.users[index].currentTaocan=objRps.result;
+          var arrTmp=objRps.result.filter(function(v){
+            return (v.name!=='代理商群组免费')
+          });
+          vueThis.users[index].currentTaocan=arrTmp
         },{
           objSendData:sendData,
           reviver:function(k,v){
