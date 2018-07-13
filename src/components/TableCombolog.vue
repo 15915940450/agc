@@ -151,7 +151,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(new Date(window.Number(v)),{T:false}).slice(0,19));
+            return (_.toSlash(v).slice(0,19));
           }
         }
       });
