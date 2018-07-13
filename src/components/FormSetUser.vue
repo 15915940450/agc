@@ -79,7 +79,7 @@ export default {
     var zh2length10=function(rule,value,callback){
       if(_.zh2length(value)>20){
         callback(new Error('10个汉字或20个字母数字以内'));
-      }else if(!/^[A-Za-z0-9\u4e00-\u9fa5]+$/.test(value)){
+      }else if(value!=='' && !/^[A-Za-z0-9\u4e00-\u9fa5]+$/.test(value)){
         callback(new Error('只能输入字母、数字、汉字'));
       }else{
         callback();
