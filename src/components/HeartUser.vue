@@ -384,10 +384,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='time'){
-            return (_.toSlash(new Date(window.Number(v)),{
-              slash:'/',
-              T:false
-            })).slice(0,19);
+            return (_.toSlash(v).slice(0,19));
           }
           if(k==='batteries' || k==='scooters'){
             var tmp=v.map(function(vMap){

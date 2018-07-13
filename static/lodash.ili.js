@@ -6874,7 +6874,7 @@ http://localhost/agc/static/lodash.ili.js
       return result;
     }
     //====================================ili(follow chunk)
-    
+
     //1.ele
     function ele(){
       return '#vue_root';
@@ -7017,7 +7017,7 @@ http://localhost/agc/static/lodash.ili.js
     //toK
     function toK(num){
       if(typeof(num)==='number'){
-        return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');  
+        return num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
       }else{
         return '--';
       }
@@ -7027,8 +7027,8 @@ http://localhost/agc/static/lodash.ili.js
       var format=format || {};
       var defaultFormat={
         zero:true,
-        slash:'-',
-        T:true
+        slash:'/',
+        T:false
       };
       Object.assign(defaultFormat,format);
 
@@ -7038,6 +7038,16 @@ http://localhost/agc/static/lodash.ili.js
           return '0'+number;
         }
         return number;
+      }
+
+      //判斷是否傳入了空或者─
+      if(!dateObject || dateObject==='─'){
+        return ('─');
+      }
+
+      //判斷是否傳入的是時間戳
+      if(typeof(dateObject)!=='object'){
+        dateObject=new Date(window.Number(dateObject));
       }
 
       var yyyy=dateObject.getFullYear();
@@ -16738,7 +16748,7 @@ http://localhost/agc/static/lodash.ili.js
     lodash.createArray = createArray;
     lodash.isPhone = isPhone;
     lodash.findIndexVague = findIndexVague;
-    
+
     lodash.logErr = logErr;
     lodash.findIndexsFuzzy = findIndexsFuzzy;
     lodash.zh2length = zh2length;

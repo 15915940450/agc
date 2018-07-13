@@ -208,15 +208,8 @@ export default {
       },{
         objSendData:sendData,
         reviver:function(k,v){
-          if(k==='locationUpdateTime' && v){
-            // _.logErr(v);
-            // console.log(k);
-            // console.log(typeof v);
-            //make sure the timestamp is a number
-            return (_.toSlash(new Date(v),{
-              slash:'/',
-              T:false
-            })).slice(0,19);
+          if(k==='locationUpdateTime'){
+            return (_.toSlash(v)).slice(0,19);
           }
           if(k==='status'){
             return (['未激活','已激活'][v]);
