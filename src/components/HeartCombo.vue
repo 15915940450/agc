@@ -6,11 +6,48 @@
         <router-link class="combo_history_entrance" to="/combo/history">套餐记录</router-link>
       </h3>
       <div class="step_wrap">
-        <el-steps :active="3">
-          <el-step description="在此页面购买一定数量的套餐，每分配给1个用户需要消耗1份套餐"></el-step>
-          <el-step description="在【群组管理】将套餐设置给指定群组"></el-step>
-          <el-step description="进入指定群组的用户列表选择用户，通过【操作】-【分配套餐】分配给用户"></el-step>
-        </el-steps>
+        <el-row :gutter="16">
+          <!--1-->
+          <el-col :span="8">
+            <el-row>
+              <el-col :span="4">
+                <span class="step_number">1</span>
+              </el-col>
+              <el-col :span="20">
+                <span class="step_line"></span>
+                <p class="step_text">在此页面购买一定数量的套餐，每分配给1个用户需要消耗1份套餐</p>
+              </el-col>
+            </el-row>
+          </el-col>
+          <el-col :span="8">
+            <el-row>
+              <el-col :span="4">
+                <span class="step_number">2</span>
+              </el-col>
+              <el-col :span="20">
+                <span class="step_line"></span>
+                <p class="step_text">在【群组管理】将套餐设置给指定群组</p>
+              </el-col>
+            </el-row>
+          </el-col>
+          <!--3-->
+          <el-col :span="8">
+            <el-row>
+              <el-col :span="4">
+                <span class="step_number">3</span>
+              </el-col>
+              <el-col :span="20">
+                <span class="step_line"></span>
+                <p class="step_text">进入指定群组的用户列表选择用户，通过【操作】-【分配套餐】分配给用户</p>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+        <!--<el-steps :active="3">-->
+          <!--<el-step description="在此页面购买一定数量的套餐，每分配给1个用户需要消耗1份套餐"></el-step>-->
+          <!--<el-step description="在【群组管理】将套餐设置给指定群组"></el-step>-->
+          <!--<el-step description="进入指定群组的用户列表选择用户，通过【操作】-【分配套餐】分配给用户"></el-step>-->
+        <!--</el-steps>-->
       </div>
     </div>
 
@@ -138,7 +175,32 @@ export default {
     margin:0;
   }
   .step_wrap{
-    padding:20px 150px 15px 15px
+    padding:24px 32px 0 32px;
+  }
+  .step_number{
+    display:block;
+    width:26px;
+    height:26px;
+    text-align:center;
+    line-height:26px;
+    font-size:15px;
+    color:#2490F2;
+    border:2px solid #2490F2;
+    border-radius:69px;
+  }
+  .step_line{
+    display:block;
+    height:4px;
+    background:#2491F2;
+    background:linear-gradient(90deg,#78b7f6,#8cd7fb);
+    border-radius:9px;
+    margin-top:13px;
+  }
+  .step_text{
+    color:#696969;
+    font-size:13px;
+    margin-top:32px;
+    line-height:2.3em;
   }
   h3.title.with_sub{
     height:50px;
