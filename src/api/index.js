@@ -87,8 +87,8 @@ export default function(urlMethod,success,paramSettings){
 
           objRps=JSON.parse(xmlhttp.responseText,function(k,v){
             //real default reviver
-            if(typeof v==='string' && !window.isNaN(v) && v.length<15 && v){
-              //string to number
+            if(typeof v==='string' && !window.isNaN(v) && v.length<15 && v && v.trim().charAt(0)!=='0'){
+              //string to number, is not big number, is not 0, is not start with _ and 0
               v=window.Number(v);
             }
             if(typeof(settings.reviver)==='function' && settings.reviver(k,v)!==undefined){
