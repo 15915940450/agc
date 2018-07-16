@@ -15,7 +15,7 @@ success: if code is 1000
 5.send
 6.handle success:success
 7.handle all out of success:fail,fnHandleNOTjsonResult
-8.reviver may be useful
+8.reviver may be useful(string2number,mine,─)
 */
 export default function(urlMethod,success,paramSettings){
   // this is vm object
@@ -87,17 +87,17 @@ export default function(urlMethod,success,paramSettings){
 
           objRps=JSON.parse(xmlhttp.responseText,function(k,v){
             //real default reviver
-            if(v===''){
-              //empty string
-              v='─';
-            }
             if(typeof v==='string' && !window.isNaN(v) && v.length<15 && v){
               //string to number
               v=window.Number(v);
             }
             if(typeof(settings.reviver)==='function' && settings.reviver(k,v)!==undefined){
-              //deal with '─' and number
+              //deal with number only
               v=settings.reviver(k,v);
+            }
+            if(v===''){
+              //last change empty string to ─
+              v='─';
             }
             return v;
           });
