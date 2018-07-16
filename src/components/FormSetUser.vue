@@ -100,13 +100,13 @@ export default {
       },
       formSetUser:{
         scooterSNs:[],
-        freeDay:-1,
+        freeDay:0, //輸入框的免費天數值
         groupCode:'',
         depositId:'',
         phone:''
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)
-      agentFreeDays:0,
+      agentFreeDays:0,  //rqs返回的值
       optionsEVs:[],
       optionsGroups:[],
       options_depositListScheme: [],
@@ -120,7 +120,7 @@ export default {
       return (this.freeDays+this.agentFreeDays);
     },
     computedFreeDays:function(){
-      // console.log(this.formSetUser.freeDay);
+      //hint提示的值
       if(this.formSetUser.freeDay===undefined){
         return this.maxFD;
       }else{
@@ -134,11 +134,12 @@ export default {
     'modalStore.setUser':function(val){
       var vueThis=this;
       if(val){
-        this.formSetUser.userName=this.name==='─'?'':this.name;
-        this.formSetUser.groupCode=this.groupCode;
-
-
-        this.fetchOptionsScheme('depositListScheme',function(){
+        //群组
+        vueThis.formSetUser.groupCode=vueThis.groupCode;
+        //用户昵称
+        vueThis.formSetUser.userName=vueThis.name==='─'?'':vueThis.name;
+        //押金方案
+        vueThis.fetchOptionsScheme('depositListScheme',function(){
           var isFind=vueThis.options_depositListScheme.find(function(v){
             return (window.Number(v.id)===window.Number(vueThis.depositID));
           });
@@ -148,17 +149,18 @@ export default {
             vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
           }
         });
-
-
-        this.formSetUser.freeDay=window.Number(this.freeDays);
-        // this.formSetUser.scooterSNs=['G5A1A100702'];
-        this.formSetUser.scooterSNs=this.scooters;
-        this.formSetUser.phone=this.phone;
+        //免费天数
+        vueThis.formSetUser.freeDay=window.Number(vueThis.freeDays);  //輸入框的免費天數
+        vueThis.fetchUserQuery(); //rqs免費天數，即設置對話框初始值
+        //中控（SN)
+        vueThis.formSetUser.scooterSNs=vueThis.scooters;
+        //手機號碼
+        vueThis.formSetUser.phone=vueThis.phone;
       }
     }
   },
   methods:{
-    fetchBaseInfo:function(){
+    fetchUserQuery:function(done){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
         vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
@@ -254,8 +256,6 @@ export default {
     }
   },  //methods
   created:function(){
-    this.fetchBaseInfo();
-
     this.fetchEVlist();
     this.fetchGroupList();
     // console.log(this.$route.params);
