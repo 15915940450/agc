@@ -24,9 +24,14 @@
               <!-- 展开行 -->
               <el-table-column type="expand">
                 <template slot-scope="props">
-                  <el-form label-position="left" inline class="im-table-expand">
+                  <el-form label-position="right" inline class="im-table-expand">
                     <el-form-item label="坐标：">
-                      <el-button title="前往地图查看定位" type="text" @click="rrPush(props.row,'point')">
+                      <span v-if="props.row.location==='─'">─</span>
+                      <el-button v-else
+                        title="前往地图查看定位"
+                        type="text"
+                        @click="rrPush(props.row,'point')"
+                        >
                         {{props.row.location}}
                       </el-button>
                     </el-form-item>
