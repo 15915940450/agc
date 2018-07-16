@@ -191,7 +191,7 @@ export default {
       width:window.innerWidth,
       height:window.innerHeight
     });
-    document.querySelector('.el-dialog__wrapper').appendChild(trianglify.svg());
+    document.querySelector('.need_login .el-dialog__wrapper').appendChild(trianglify.svg());
   }
 };
 </script>
