@@ -178,6 +178,14 @@ export default {
     },
     handleSubmit:function(){
       this.loginSend('formLogin');
+    },
+    drawTri:function(){
+      var trianglify=new Trianglify({
+        cell_size:155,
+        width:window.innerWidth,
+        height:window.innerHeight
+      });
+      document.querySelector('.need_login .el-dialog__wrapper').appendChild(trianglify.svg());
     }
   }, //methods
   created:function(){
@@ -186,12 +194,7 @@ export default {
     }
   },
   mounted:function(){
-    var trianglify=new Trianglify({
-      cell_size:155,
-      width:window.innerWidth,
-      height:window.innerHeight
-    });
-    document.querySelector('.need_login .el-dialog__wrapper').appendChild(trianglify.svg());
+    this.drawTri();
   }
 };
 </script>
