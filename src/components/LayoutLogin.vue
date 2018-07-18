@@ -42,7 +42,11 @@
         <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
       </p>
     </el-dialog>
-
+<!-- 連線已逾時
+伺服器 player.vimeo.com 花了太久時間還是無回應。
+該網站可能暫時無法使用或太過忙碌，請過幾分鐘後再試試。
+若無法載入任何網站，請檢查您的網路連線狀態。
+若電腦或網路被防火牆或 Proxy 保護，請確定 Firefox 被允許存取網路。 -->
   </div>
 </template>
 
@@ -180,12 +184,30 @@ export default {
       this.loginSend('formLogin');
     },
     drawTri:function(){
-      var trianglify=new Trianglify({
+      //2560*1600 3840*2400
+      var trianglify,elesTri,eleParent;
+      elesTri=document.querySelectorAll('.need_login .el-dialog__wrapper svg'); //[]
+      if(elesTri.length){
+        //已經存在svg
+        elesTri.forEach(function(ele){
+          ele.remove();
+        });
+
+      }
+      trianglify=new Trianglify({
         cell_size:155,
+        //x_colors:['#333','#F93','#EEE'],
         width:window.innerWidth,
         height:window.innerHeight
       });
-      document.querySelector('.need_login .el-dialog__wrapper').appendChild(trianglify.svg());
+      eleParent=document.querySelector('.need_login .el-dialog__wrapper');
+      eleParent.appendChild(trianglify.svg());
+    },
+    handleResize:function(){
+      var vueThis=this;
+      window.addEventListener('resize',_.debounce(function(){
+        vueThis.drawTri();
+      },330));
     }
   }, //methods
   created:function(){
@@ -194,7 +216,9 @@ export default {
     }
   },
   mounted:function(){
+    //just once
     this.drawTri();
+    this.handleResize();
   }
 };
 </script>
