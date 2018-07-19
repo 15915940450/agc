@@ -139,6 +139,7 @@ export default {
         //用户昵称
         vueThis.formSetUser.userName=vueThis.name==='─'?'':vueThis.name;
         //押金方案
+        console.log(vueThis.depositID);
         vueThis.fetchOptionsScheme('depositListScheme',function(){
           var isFind=vueThis.options_depositListScheme.find(function(v){
             return (window.Number(v.id)===window.Number(vueThis.depositID));
@@ -160,7 +161,7 @@ export default {
     }
   },
   methods:{
-    fetchUserQuery:function(done){
+    fetchUserQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
         vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
