@@ -464,9 +464,9 @@ export default {
         //加載中--)[]--)[xxx]
         vueThis.$rqs(vueThis.$yApi.currentTaocan,function(objRps){
           var arrTmp=objRps.result.filter(function(v){
-            return (v.name!=='代理商群组免费')
+            return (v.name!=='代理商群组免费');
           });
-          vueThis.users[index].currentTaocan=arrTmp
+          vueThis.users[index].currentTaocan=arrTmp;
         },{
           objSendData:sendData,
           reviver:function(k,v){

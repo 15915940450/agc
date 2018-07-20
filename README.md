@@ -11,7 +11,7 @@
 * HeartJoy: the home page. make $rqs to $yApi.accountBaseInfo(always add param phone).
 * BaseStatus.vue (Status...)
 * DemoModal.vue and DemoTable.vue is used frequently.
-* current version is 14.0.3(README.md,package.json,gulpfile.js)
+* current version is 14.0.4(README.md,package.json,gulpfile.js)
 
 
 ## vim

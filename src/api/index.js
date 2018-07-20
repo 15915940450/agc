@@ -24,9 +24,9 @@ export default function(urlMethod,success,paramSettings){
   var settings={
     objSendData:{},
     isLoginRqs:false,
-    fnHandleNOTjsonResult:function(error){_.logErr(error);},
+    fnHandleNOTjsonResult:function(error){console.log(error);},
     fail:function(rps){
-      _.logErr(rps);
+      console.log(rps);
       var msg;
       if(typeof(rps)==='object'){
         msg=rps.msg;
@@ -57,7 +57,7 @@ export default function(urlMethod,success,paramSettings){
   if(method===3){
     method='POSTform';
   }
-  success=success || function(objRps){_.logErr(objRps);};
+  success=success || function(objRps){console.log(objRps);};
 
   //=================settings is the target, will be overcover by param
   Object.assign(settings,paramSettings);

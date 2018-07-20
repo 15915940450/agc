@@ -1,7 +1,7 @@
 var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
-var version='V14.0.3';
+var version='V14.0.4';
 
 //1.backupDist
 gulp.task('backupDist',function(){
@@ -48,6 +48,6 @@ gulp.task('backupEditorConfig',function(){
   });
 });
 
-gulp.task('default',['backupDist','backupYApijs','backup_vimrc'],function(){
+gulp.task('default',['backupDist','backupYApijs'],function(){
   console.log('version:1.9'+version+'. make sure you have check out the agc branch(CMS-FrontEnd).');
 });

@@ -139,17 +139,9 @@ export default {
         //用户昵称
         vueThis.formSetUser.userName=vueThis.name==='─'?'':vueThis.name;
         //押金方案
-        console.log(vueThis.depositID);
-        vueThis.fetchOptionsScheme('depositListScheme',function(){
-          var isFind=vueThis.options_depositListScheme.find(function(v){
-            return (window.Number(v.id)===window.Number(vueThis.depositID));
-          });
-          if(!isFind){
-            vueThis.formSetUser.depositId='';
-          }else{
-            vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
-          }
-        });
+        //console.log(vueThis.depositID);
+        vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
+        vueThis.fetchOptionsScheme('depositListScheme');
         //免费天数
         vueThis.formSetUser.freeDay=window.Number(vueThis.freeDays);  //輸入框的免費天數
         vueThis.fetchUserQuery(); //rqs免費天數，即設置對話框初始值
@@ -200,7 +192,9 @@ export default {
         if(type==='packageListScheme'){
           vueThis.options_packageListScheme=objRps.result.list;
         }
-        done();
+        if(done){
+          done(objRps);
+        }
       },{
         objSendData:sendData
       });
@@ -246,6 +240,8 @@ export default {
     },
     handleGroupSelectChange:function(){
       var vueThis=this;
+      vueThis.fetchOptionsScheme('depositListScheme');
+      /*
       this.fetchOptionsScheme('depositListScheme',function(){
         var isFind=vueThis.options_depositListScheme.find(function(v){
           return (window.Number(v.id)===window.Number(vueThis.formSetUser.depositId));
@@ -254,6 +250,7 @@ export default {
           vueThis.formSetUser.depositId='';
         }
       });
+      */
     }
   },  //methods
   created:function(){
