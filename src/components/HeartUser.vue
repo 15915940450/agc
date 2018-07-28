@@ -27,6 +27,7 @@
               <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
               <el-button class="table_wrap-btn_new" type="primary" @click="showNewUser()">添加</el-button>
               <el-button type="info" @click="showEVin()">激活</el-button>
+              <el-button type="danger" @click="rrPush('/user/changephone')">修改手机</el-button>
             </div>
           </el-col>
         </el-row>
@@ -476,6 +477,11 @@ export default {
           }
         });
       }
+    },
+    rrPush:function(path){
+      this.$router.push({
+        path:path
+      });
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;

@@ -15,7 +15,7 @@
 <script>
 var arrRouteName=[
   'HeartJoy',
-  'HeartGroup-HeartUser',
+  'HeartGroup-HeartUser-HeartUserChangePhone',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
