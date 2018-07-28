@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="im_info">
+      <div class="im_info" v-loading="true">
         <el-card class="box-card">
           <div slot="header">
             <table width="100%" class="im_info_table">
