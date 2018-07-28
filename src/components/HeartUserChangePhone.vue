@@ -41,51 +41,173 @@
       <div class="im_info">
         <el-card class="box-card">
           <div slot="header">
-            <table width="100%">
-              <thead>
-                <tr>
-                  <td width="15"></td>
-                  <td width="35"></td>
-                  <td width="15"></td>
-                  <td width="35"></td>
-                </tr>
-              </thead>
+            <table width="100%" class="im_info_table">
               <tbody>
                 <tr>
                   <td>ID</td>
-                  <td>2098120123</td>
+                  <td>{{twoUsers[0].id}}</td>
                   <td>ID</td>
-                  <td>2098140222</td>
+                  <td>{{twoUsers[1].id}}</td>
                 </tr>
-
+                <!-- 手機號碼，所屬代理商，所在群組，錢包餘額，押金，套餐，免費天數，綁定中控，綁定電池 -->
                 <tr>
-                  <td>押金</td>
-                  <td>【租两颗电池/1788元/2颗电池】</td>
-                  <td>押金</td>
+                  <td>手机号码</td>
+                  <td>{{twoUsers[0].phone}}</td>
+                  <td>手机号码</td>
+                  <td>{{twoUsers[1].phone}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    所属代理商
+                  </td>
+                  <td>{{twoUsers[0].agentName}}</td>
+                  <td>
+                    <div class="hint_3">
+                      <i class="el-icon-warning"></i>
+                      <span>不能修改其他代理商的用户</span>
+                    </div>
+                    所属代理商
+                  </td>
+                  <td>{{twoUsers[1].agentName}}</td>
+                </tr>
+                <tr>
+                  <td>所在群组</td>
+                  <td>{{twoUsers[0].groupName}}</td>
+                  <td>所在群组</td>
+                  <td>{{twoUsers[1].groupName}}</td>
+                </tr>
+                <tr>
+                  <td>钱包馀额</td>
+                  <td>{{twoUsers[0].amount}}</td>
+                  <td>钱包馀额</td>
+                  <td>{{twoUsers[1].amount}}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="hint_1">
+                      <i class="el-icon-warning"></i>
+                      <span>綫上交押金的用户必须先退押金</span>
+                    </div>
+                    押金
+                  </td>
+                  <td>
+                    【
+                    {{twoUsers[0].depositDO.depositName}}
+                    /
+                    {{twoUsers[0].depositDO.amount}}
+                    元/
+                    {{twoUsers[0].depositDO.num}}
+                    颗电池/
+                    {{twoUsers[0].depositDO.type}}
+                    】
+                  </td>
+                  <td>
+                    <div class="hint_1">
+                      <i class="el-icon-warning"></i>
+                      <span>有押金沒有退還</span>
+                    </div>
+                    押金
+                  </td>
                   <td>─</td>
                 </tr>
                 <tr>
                   <td>套餐</td>
                   <td>
                     <ul>
-                      <li>限量套餐月卡/月套餐/199元/90次/30天】</li>
-                      <li>限量套餐月卡/月套餐/199元/90次/30天】</li>
-                      <li>限量套餐月卡/月套餐/199元/90次/30天】</li>
+                      <li v-for="item in twoUsers[0].validPackage" :key="item.id">
+                        【
+                        {{item.name}}
+                        /
+                        {{item.type}}
+                        /
+                        {{item.price}}
+                        元 /
+                        {{item.times}}
+                        次 /
+                        {{item.duration}}
+                        天】
+                      </li>
                     </ul>
                   </td>
                   <td>套餐</td>
                   <td>
                     <ul>
-                      <li>限量套餐月卡/月套餐/199元/90次/30天】</li>
-                      <li>限量套餐月卡/月套餐/199元/90次/30天】</li>
+                      <li v-for="item in twoUsers[1].validPackage" :key="item.id">
+                        【
+                        {{item.name}}
+                        /
+                        {{item.type}}
+                        /
+                        {{item.price}}
+                        元 /
+                        {{item.times}}
+                        次 /
+                        {{item.duration}}
+                        天】
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>免费天数</td>
+                  <td>{{twoUsers[0].freeDays}}</td>
+                  <td>免费天数</td>
+                  <td>{{twoUsers[1].freeDays}}</td>
+                </tr>
+                <tr>
+                  <td>绑定中控</td>
+                  <td>
+                    <ul>
+                      <li v-for="item in twoUsers[0].scootersList" :key="item.id">
+                        {{item.sn}}
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <div class="hint_1">
+                      <i class="el-icon-warning"></i>
+                      <span>有中控未解綁</span>
+                    </div>
+                    绑定中控
+                  </td>
+                  <td>
+                    <ul>
+                      <li v-for="item in twoUsers[1].scootersList" :key="item.id">
+                        {{item.sn}}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>绑定电池</td>
+                  <td>
+                    <ul>
+                      <li v-for="item in twoUsers[0].batteriesList" :key="item.id">
+                        {{item.sn}}
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <div class="hint_3">
+                      <el-tooltip effect="dark" content="Right Center 提示文字" placement="right">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
+                    </div>
+                    绑定电池
+                  </td>
+                  <td>
+                    <ul>
+                      <li v-for="item in twoUsers[1].batteriesList" :key="item.id">
+                        {{item.sn}}
+                      </li>
                     </ul>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div>
-            <el-button type="danger">修改</el-button>
+          <div class="im_info_footer">
+            <el-button :disabled="true" type="danger">修改</el-button>
           </div>
         </el-card>
       </div>
@@ -106,7 +228,7 @@ export default {
           'phone': '12321211111', // 电话
           'groupCode': 11, // 群组code
           'groupName': '测试群组1', // 群组name
-          'freeDays': '', // 免费天数
+          'freeDays': '69', // 免费天数
           'agentId': 2, // 代理商id
           'agentName': 'chao', // 代理商name
           'depositDO': { //押金
@@ -207,7 +329,7 @@ export default {
           'phone': '12321211111', // 电话
           'groupCode': 11, // 群组code
           'groupName': '测试群组1', // 群组name
-          'freeDays': '', // 免费天数
+          'freeDays': '─', // 免费天数
           'agentId': 2, // 代理商id
           'agentName': 'chao', // 代理商name
           'depositDO': { //押金
@@ -325,5 +447,48 @@ export default {
 .im_info{
   padding:0 15px;
   margin-bottom:20px;
+}
+.im_info_table tbody td{
+  padding:8px 0;
+  vertical-align:top;
+  position:relative;
+}
+.im_info_table tbody td .hint_1{
+  position:absolute;
+  left:0;
+  top:0;
+  width:300px;
+}
+.im_info_table tbody td .hint_3{
+  position:absolute;
+  left:0;
+  top:0;
+}
+
+/*表格1234列*/
+.im_info_table tbody td:nth-child(1){
+  color:#666;
+  width:90px;
+  max-width:90px;
+  padding-left:20px;
+}
+.im_info_table tbody td:nth-child(2){
+  border-right:1px solid #EEE;
+}
+.im_info_table tbody td:nth-child(3){
+  color:#666;
+  padding-left:40px;
+  width:90px;
+  max-width:90px;
+}
+.im_info_table tbody td:nth-child(4){
+}
+.im_info_table ul,.im_info_table li{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.im_info_footer{
+  text-align:right;
 }
 </style>
