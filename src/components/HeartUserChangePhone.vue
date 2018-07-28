@@ -63,8 +63,9 @@
                   <td>{{twoUsers[0].agentName}}</td>
                   <td>
                     <div class="hint_3">
-                      <i class="el-icon-warning"></i>
-                      <span>不能修改其他代理商的用户</span>
+                      <el-tooltip effect="dark" content="不能修改其他代理商的用户" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
                     </div>
                     所属代理商
                   </td>
@@ -85,8 +86,9 @@
                 <tr>
                   <td>
                     <div class="hint_1">
-                      <i class="el-icon-warning"></i>
-                      <span>綫上交押金的用户必须先退押金</span>
+                      <el-tooltip effect="dark" content="綫上交押金的用户必须先退押金" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
                     </div>
                     押金
                   </td>
@@ -102,9 +104,10 @@
                     】
                   </td>
                   <td>
-                    <div class="hint_1">
-                      <i class="el-icon-warning"></i>
-                      <span>有押金沒有退還</span>
+                    <div class="hint_3">
+                      <el-tooltip effect="dark" content="有押金沒有退還" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
                     </div>
                     押金
                   </td>
@@ -164,9 +167,10 @@
                     </ul>
                   </td>
                   <td>
-                    <div class="hint_1">
-                      <i class="el-icon-warning"></i>
-                      <span>有中控未解綁</span>
+                    <div class="hint_3">
+                      <el-tooltip effect="dark" content="有中控未解綁" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
                     </div>
                     绑定中控
                   </td>
@@ -189,7 +193,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip effect="dark" content="Right Center 提示文字" placement="right">
+                      <el-tooltip effect="dark" content="有電池未解綁" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -453,16 +457,15 @@ export default {
   vertical-align:top;
   position:relative;
 }
-.im_info_table tbody td .hint_1{
+.im_info_table tbody td .hint_1,.im_info_table tbody td .hint_3{
   position:absolute;
   left:0;
-  top:0;
+  top:10px;
+  color:#E00;
   width:300px;
 }
 .im_info_table tbody td .hint_3{
-  position:absolute;
-  left:0;
-  top:0;
+  left:20px;
 }
 
 /*表格1234列*/
