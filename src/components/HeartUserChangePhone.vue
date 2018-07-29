@@ -26,11 +26,11 @@
         </el-row>
       </div>
       <div class="im_form">
-        <el-form :inline="true" :model="formGetChangePhoneInfo">
-          <el-form-item label="旧手机号码:">
+        <el-form :inline="true" :model="formGetChangePhoneInfo" :rules="rules" ref="formGetChangePhoneInfo">
+          <el-form-item label="旧手机号码:" prop="userPhone">
             <el-input v-model="formGetChangePhoneInfo.userPhone" placeholder="请输入手机号码"></el-input>
           </el-form-item>
-          <el-form-item label="新手机号码:">
+          <el-form-item label="新手机号码:" prop="phone">
             <el-input v-model="formGetChangePhoneInfo.phone" placeholder="请输入手机号码"></el-input>
           </el-form-item>
           <el-form-item>
@@ -228,6 +228,10 @@ export default {
       formGetChangePhoneInfo:{
         userPhone:'', //旧用户手机
         phone:''  //新用户手机
+      },
+      rules:{
+        userPhone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}],
+        phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}]
       },
       twoUsers:[
         {
@@ -437,7 +441,22 @@ export default {
   },
   methods:{
     onSubmit:function(){
-      console.log(6);
+      var vueThis=this;
+      vueThis.$refs['formGetChangePhoneInfo'].validate((valid) => {
+        if(valid){
+          var sendData={
+            userPhone:vueThis.formGetChangePhoneInfo.userPhone,
+            phone:vueThis.formGetChangePhoneInfo.phone,
+            agentId:window.localStorage.agentid
+          };
+          vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
+            //vueThis.loadingUserList=false;
+            console.log(objRps);
+          },{
+            objSendData:sendData
+          });
+        }
+      });
     }
   },
   created:function(){}
