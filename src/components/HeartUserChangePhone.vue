@@ -26,15 +26,15 @@
         </el-row>
       </div>
       <div class="im_form">
-        <el-form :inline="true">
+        <el-form :inline="true" :model="formGetChangePhoneInfo">
           <el-form-item label="旧手机号码:">
-            <el-input placeholder="请输入手机号码"></el-input>
+            <el-input v-model="formGetChangePhoneInfo.userPhone" placeholder="请输入手机号码"></el-input>
           </el-form-item>
           <el-form-item label="新手机号码:">
-            <el-input placeholder="请输入手机号码"></el-input>
+            <el-input v-model="formGetChangePhoneInfo.phone" placeholder="请输入手机号码"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="onSubmit()">查询</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -225,6 +225,10 @@ export default {
   name:'HeartUserChangePhone',
   data:function(){
     return ({
+      formGetChangePhoneInfo:{
+        userPhone:'', //旧用户手机
+        phone:''  //新用户手机
+      },
       twoUsers:[
         {
           'id': 5970,   //id
@@ -431,67 +435,72 @@ export default {
       ]
     });
   },
+  methods:{
+    onSubmit:function(){
+      console.log(6);
+    }
+  },
   created:function(){}
 };
 </script>
 
 <style lang="css" scoped>
-.im_snow_title{
-  border-bottom:1px solid #F8F8FF;
-}
-.title_link{
-  height:50px;
-  line-height:50px;
-  text-align:right;
-  padding-right:15px;
-}
-.im_form{
-  padding:50px 15px 20px;
-}
-.im_info{
-  padding:0 15px;
-  margin-bottom:20px;
-}
-.im_info_table tbody td{
-  padding:8px 0;
-  vertical-align:top;
-  position:relative;
-}
-.im_info_table tbody td .hint_1,.im_info_table tbody td .hint_3{
-  position:absolute;
-  left:0;
-  top:10px;
-  color:#E00;
-  width:300px;
-}
-.im_info_table tbody td .hint_3{
-  left:20px;
-}
+  .im_snow_title{
+    border-bottom:1px solid #F8F8FF;
+  }
+  .title_link{
+    height:50px;
+    line-height:50px;
+    text-align:right;
+    padding-right:15px;
+  }
+  .im_form{
+    padding:50px 15px 20px;
+  }
+  .im_info{
+    padding:0 15px;
+    margin-bottom:20px;
+  }
+  .im_info_table tbody td{
+    padding:8px 0;
+    vertical-align:top;
+    position:relative;
+  }
+  .im_info_table tbody td .hint_1,.im_info_table tbody td .hint_3{
+    position:absolute;
+    left:0;
+    top:10px;
+    color:#E00;
+    width:300px;
+  }
+  .im_info_table tbody td .hint_3{
+    left:20px;
+  }
 
-/*表格1234列*/
-.im_info_table tbody td:nth-child(1){
-  color:#666;
-  width:90px;
-  max-width:90px;
-  padding-left:20px;
-}
-.im_info_table tbody td:nth-child(2){
-  border-right:1px solid #EEE;
-}
-.im_info_table tbody td:nth-child(3){
-  color:#666;
-  padding-left:40px;
-  width:90px;
-  max-width:90px;
-}
-.im_info_table tbody td:nth-child(4){
-}
-.im_info_table ul,.im_info_table li{
-  margin:0;
-  padding:0;
-  list-style:none;
-}
-.im_info_footer{
-  text-align:right;
-}
+  /*表格1234列*/
+  .im_info_table tbody td:nth-child(1){
+    color:#666;
+    width:90px;
+    max-width:90px;
+    padding-left:20px;
+  }
+  .im_info_table tbody td:nth-child(2){
+    border-right:1px solid #EEE;
+  }
+  .im_info_table tbody td:nth-child(3){
+    color:#666;
+    padding-left:40px;
+    width:90px;
+    max-width:90px;
+  }
+  .im_info_table tbody td:nth-child(4){
+  }
+  .im_info_table ul,.im_info_table li{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  .im_info_footer{
+    text-align:right;
+  }
 </style>
