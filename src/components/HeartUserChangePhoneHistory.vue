@@ -1,45 +1,39 @@
 <template lang="html">
-  <!-- this page is copy from heartuser -->
-  <div class="component_user">
+  <div>
     <!-- 面包泶 -->
     <div class="im_breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/combo' }">
-          <small>套餐管理</small>
+        <el-breadcrumb-item :to="{ path: '/group' }">
+          <small>群组管理</small>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user/changephone' }">
+          <small>修改手机</small>
         </el-breadcrumb-item>
         <el-breadcrumb-item>
-          <small>购买记录</small>
+          <small>修改记录</small>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
-    <div class="user_list" v-if="!modalStore.comboEmpty">
-      <!--記錄表格-->
-      <div class="table_with_tab_wrap">
-        <div class="tab_wrap">
-          <template>
-            <el-tabs v-model="currentTab">
-              <el-tab-pane label="套餐记录" name="combo">
-              </el-tab-pane>
-              <el-tab-pane label="分配记录" name="combolog">
-              </el-tab-pane>
-            </el-tabs>
-          </template>
-        </div>
-        <keep-alive>
-          <component
-            v-bind:is="('table-'+currentTab)"
-            >
-          </component>
-        </keep-alive>
+    <div class="im_snow">
+      <div class="im_snow_title">
+        <el-row>
+          <el-col :span="6">
+            <h3 class="title">修改记录</h3>
+          </el-col>
+          <el-col :span="18">
+            <div class="title_link">
+            </div>
+          </el-col>
+        </el-row>
       </div>
     </div>
 
     <!-- empty -->
-    <div v-else>
+    <div>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_combo_his.png" />
-        <p class="im_empty_p">暂无购买记录.</p>
+        <p class="im_empty_p">暂无修改记录.</p>
       </div>
     </div>
 
