@@ -5,6 +5,7 @@ import HeartJoy from '@/components/HeartJoy';
 import HeartGroup from '@/components/HeartGroup';
 import HeartUser from '@/components/HeartUser';
 import HeartUserChangePhone from '@/components/HeartUserChangePhone';
+import HeartUserChangePhoneHistory from '@/components/HeartUserChangePhoneHistory';
 import HeartDeposit from '@/components/HeartDeposit';
 import HeartCombo from '@/components/HeartCombo';
 import HeartComboHistory from '@/components/HeartComboHistory';
@@ -40,6 +41,11 @@ export default new Router({
       path: '/user/changephone',
       name: 'HeartUserChangePhone',
       component:HeartUserChangePhone
+    },
+    {
+      path: '/user/changephonehistory',
+      name: 'HeartUserChangePhoneHistory',
+      component:HeartUserChangePhoneHistory
     },
     {
       path: '/deposit',
