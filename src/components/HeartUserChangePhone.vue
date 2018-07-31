@@ -38,7 +38,7 @@
           </el-form-item>
         </el-form>
       </div>
-      <div class="im_info" v-loading="true">
+      <div class="im_info" v-show="infoDetail">
         <el-card class="box-card">
           <div slot="header">
             <table width="100%" class="im_info_table">
@@ -63,7 +63,7 @@
                   <td>{{twoUsers[0].agentName}}</td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip effect="dark" content="不能修改其他代理商的用户" placement="right-end">
+                      <el-tooltip v-show="limit1" effect="dark" content="不能修改其他代理商的用户" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -86,7 +86,7 @@
                 <tr>
                   <td>
                     <div class="hint_1">
-                      <el-tooltip effect="dark" content="綫上交押金的用户必须先退押金" placement="right-end">
+                      <el-tooltip v-show="limit2" effect="dark" content="綫上交押金的用户必须先退押金" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -105,13 +105,23 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip effect="dark" content="有押金沒有退還" placement="right-end">
+                      <el-tooltip v-show="limit3" effect="dark" content="有押金沒有退還" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
                     押金
                   </td>
-                  <td>─</td>
+                  <td>
+                    【
+                    {{twoUsers[1].depositDO.depositName}}
+                    /
+                    {{twoUsers[1].depositDO.amount}}
+                    元/
+                    {{twoUsers[1].depositDO.num}}
+                    颗电池/
+                    {{twoUsers[1].depositDO.type}}
+                    】
+                  </td>
                 </tr>
                 <tr>
                   <td>套餐</td>
@@ -168,7 +178,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip effect="dark" content="有中控未解綁" placement="right-end">
+                      <el-tooltip v-show="limit4" effect="dark" content="有中控未解綁" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -193,7 +203,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip effect="dark" content="有電池未解綁" placement="right-end">
+                      <el-tooltip v-show="limit5" effect="dark" content="有電池未解綁" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -211,7 +221,7 @@
             </table>
           </div>
           <div class="im_info_footer">
-            <el-button :disabled="true" type="danger">修改</el-button>
+            <el-button :disabled="canNOTmodify" type="danger">修改</el-button>
           </div>
         </el-card>
       </div>
@@ -225,6 +235,7 @@ export default {
   name:'HeartUserChangePhone',
   data:function(){
     return ({
+      infoDetail:true,
       formGetChangePhoneInfo:{
         userPhone:'', //旧用户手机
         phone:''  //新用户手机
@@ -439,19 +450,42 @@ export default {
       ]
     });
   },
+  computed:{
+    limit1:function(){
+      return !(window.Number(this.twoUsers[1].agentId)===window.Number(window.localStorage.agentid));
+    },
+    limit2:function(){
+      return (this.twoUsers[0] && typeof(this.twoUsers[0].depositDO)==='object' && this.twoUsers[0].depositDO.type===1);
+    },
+    limit3:function(){
+      return (this.twoUsers[1] && typeof(this.twoUsers[1].depositDO)==='object');
+    },
+    limit4:function(){
+      return (this.twoUsers[1] && typeof(this.twoUsers[1].scootersList)==='object' && this.twoUsers[1].scootersList.length);
+    },
+    limit5:function(){
+      return (this.twoUsers[1] && typeof(this.twoUsers[1].batteriesList)==='object' && this.twoUsers[1].batteriesList.length);
+    },
+    canNOTmodify:function(){
+      return (this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
+    }
+  },
   methods:{
     onSubmit:function(){
       var vueThis=this;
       vueThis.$refs['formGetChangePhoneInfo'].validate((valid) => {
         if(valid){
+          vueThis.infoDetail=false;
           var sendData={
             userPhone:vueThis.formGetChangePhoneInfo.userPhone,
             phone:vueThis.formGetChangePhoneInfo.phone,
             agentId:window.localStorage.agentid
           };
           vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
-            //vueThis.loadingUserList=false;
-            console.log(objRps);
+            if(objRps.result.length){
+              vueThis.infoDetail=true;
+              vueThis.twoUsers=objRps.result;
+            }
           },{
             objSendData:sendData
           });
