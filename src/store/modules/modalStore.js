@@ -24,6 +24,7 @@ var state={
   EVin:false,
   newUser:false,
 
+  changePhoneLogEmpty:false,
   depositEmpty:false,
   comboEmpty:false
 };
@@ -61,6 +62,7 @@ var mutations={
     state.EVin=false;
     state.newUser=false;
     state.depositEmpty=false;
+    state.changePhoneLogEmpty=false;
     state.comboEmpty=false;
   },
   hideLogin:function(state){
@@ -200,6 +202,12 @@ var mutations={
     state.newUser=false;
   },
 
+  setEmptyChangePhoneLog:function(state){
+    state.changePhoneLogEmpty=true;
+  },
+  setChangePhoneLog:function(state){
+    state.changePhoneLogEmpty=false;
+  },
   setEmptyCombo:function(state){
     state.comboEmpty=true;
   },
