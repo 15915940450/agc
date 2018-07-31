@@ -20,7 +20,7 @@
           </el-col>
           <el-col :span="18">
             <div class="title_link">
-              <router-link to="/user/changephonehistory">修改记录</router-link>
+              <router-link to="/user/changephonehistory/1">修改记录</router-link>
             </div>
           </el-col>
         </el-row>

@@ -71,7 +71,7 @@ export default {
         }
         */
       ],
-      pageNum:1
+      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
   computed:{
@@ -110,6 +110,7 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
+      this.$router.push('/user/changephonehistory/'+val);
     }
   },
   created:function(){

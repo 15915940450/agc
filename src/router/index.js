@@ -43,7 +43,7 @@ export default new Router({
       component:HeartUserChangePhone
     },
     {
-      path: '/user/changephonehistory',
+      path: '/user/changephonehistory/:pn',
       name: 'HeartUserChangePhoneHistory',
       component:HeartUserChangePhoneHistory
     },
