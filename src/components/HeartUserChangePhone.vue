@@ -79,9 +79,9 @@
                 </tr>
                 <tr>
                   <td>钱包馀额</td>
-                  <td>{{twoUsers[0].amount}}</td>
+                  <td>{{twoUsers[0].amount}} 元</td>
                   <td>钱包馀额</td>
-                  <td>{{twoUsers[1].amount}}</td>
+                  <td>{{twoUsers[1].amount}} 元</td>
                 </tr>
                 <tr>
                   <td>
@@ -93,15 +93,20 @@
                     押金
                   </td>
                   <td>
-                    【
-                    {{twoUsers[0].depositDO.depositName}}
-                    /
-                    {{twoUsers[0].depositDO.amount}}
-                    元/
-                    {{twoUsers[0].depositDO.num}}
-                    颗电池/
-                    {{twoUsers[0].depositDO.type}}
-                    】
+                    <span v-if="typeof(twoUsers[0].depositDO)==='object'">
+                      【
+                      {{twoUsers[0].depositDO.depositName}}
+                      /
+                      {{twoUsers[0].depositDO.amount}}
+                      元/
+                      {{twoUsers[0].depositDO.num}}
+                      颗电池/
+                      {{twoUsers[0].depositDO.type}}
+                      】
+                    </span>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                   <td>
                     <div class="hint_3">
@@ -112,21 +117,26 @@
                     押金
                   </td>
                   <td>
-                    【
-                    {{twoUsers[1].depositDO.depositName}}
-                    /
-                    {{twoUsers[1].depositDO.amount}}
-                    元/
-                    {{twoUsers[1].depositDO.num}}
-                    颗电池/
-                    {{twoUsers[1].depositDO.type}}
-                    】
+                    <span v-if="typeof(twoUsers[1].depositDO)==='object'">
+                      【
+                      {{twoUsers[1].depositDO.depositName}}
+                      /
+                      {{twoUsers[1].depositDO.amount}}
+                      元/
+                      {{twoUsers[1].depositDO.num}}
+                      颗电池/
+                      {{twoUsers[1].depositDO.type}}
+                      】
+                    </span>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <td>套餐</td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[0].validPackage.length">
                       <li v-for="item in twoUsers[0].validPackage" :key="item.id">
                         【
                         {{item.name}}
@@ -141,10 +151,13 @@
                         天】
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                   <td>套餐</td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[1].validPackage.length">
                       <li v-for="item in twoUsers[1].validPackage" :key="item.id">
                         【
                         {{item.name}}
@@ -159,6 +172,9 @@
                         天】
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                 </tr>
                 <tr>
@@ -170,11 +186,14 @@
                 <tr>
                   <td>绑定中控</td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[0].scootersList.length">
                       <li v-for="item in twoUsers[0].scootersList" :key="item.id">
                         {{item.sn}}
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                   <td>
                     <div class="hint_3">
@@ -185,21 +204,27 @@
                     绑定中控
                   </td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[1].scootersList.length">
                       <li v-for="item in twoUsers[1].scootersList" :key="item.id">
                         {{item.sn}}
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                 </tr>
                 <tr>
                   <td>绑定电池</td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[0].batteriesList.length">
                       <li v-for="item in twoUsers[0].batteriesList" :key="item.id">
                         {{item.sn}}
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                   <td>
                     <div class="hint_3">
@@ -210,11 +235,14 @@
                     绑定电池
                   </td>
                   <td>
-                    <ul>
+                    <ul v-if="twoUsers[0].batteriesList.length">
                       <li v-for="item in twoUsers[1].batteriesList" :key="item.id">
                         {{item.sn}}
                       </li>
                     </ul>
+                    <span v-else>
+                      ─
+                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -235,7 +263,7 @@ export default {
   name:'HeartUserChangePhone',
   data:function(){
     return ({
-      infoDetail:true,
+      infoDetail:false,
       formGetChangePhoneInfo:{
         userPhone:'', //旧用户手机
         phone:''  //新用户手机
@@ -246,206 +274,32 @@ export default {
       },
       twoUsers:[
         {
-          'id': 5970,   //id
-          'amount': 0,   //钱包余额
-          'phone': '12321211111', // 电话
-          'groupCode': 11, // 群组code
-          'groupName': '测试群组1', // 群组name
-          'freeDays': '69', // 免费天数
-          'agentId': 2, // 代理商id
-          'agentName': 'chao', // 代理商name
-          'depositDO': { //押金
-            'id': 2582,
-            'amount': 0.01, //价格
-            'createTime': 1530674017000,
-            'num': 2, //电池颗数
-            'outTradeNo': 'ehd201807041112370000001284',
-            'status': 1,
-            'type': 1,  // 押金类型 2线下 1线上
-            'userId': 4636,
-            'discountId': 74,
-            'outRefundNo': '',
-            'groupCode': '',
-            'depositCode': 49,
-            'depositName': 'test-2颗电池' //押金名字
-          },
-          'validPackage': [ //有效套餐
-            {
-              'id': 1489,
-              'name': '2个月免费骑',  //套餐名字
-              'createTime': 1531369175000,
-              'duration': 60,  //套餐时长
-              'price': 0, //价格
-              'status': 1,
-              'times': 20000, //骑行次数
-              'type': 2, // 套餐类型  0=月套餐 1=次套餐 2=免费套餐
-              'originalPrice': 0,
-              'code': 0,
-              'groupCode': 2,
-              'freeCode': 1,
-              'remark': '',
-              'agentPrice': ''
-            },
-            {
-              'id': 354,
-              'name': '换电套餐2',
-              'createTime': 1527305062000,
-              'duration': 30,
-              'price': 58.01,
-              'status': 1,
-              'times': 30,
-              'type': 0,
-              'originalPrice': 58.01,
-              'code': 64,
-              'groupCode': 2,
-              'freeCode': 0,
-              'remark': '',
-              'agentPrice': ''
-            }
-          ],
-          'scootersList': [  //中控
-            {
-              'id': '61e1c747e7264fb392b966f80b8ff68b',
-              'sid': '574C54DF6591',
-              'owner': '13682680317',
-              'sn': 'G6000000001', // sn
-              'status': 1,
-              'time': 1529027725000,
-              'updtime': 1532656780000,
-              'protime': 1528992000000,
-              'userName': '',
-              'soc': '',
-              'location': '',
-              'locationUpdateTime': '',
-              'agentId': 0,
-              'agentName': '',
-              'voltage': 0,
-              'agentPhone': '',
-              'country': 'US',
-              'conf': 'US',
-              'fw': '',
-              'hw': ''
-            }
-          ],
-          'batteriesList': [ //电池
-            {
-              'id': 232,
-              'bid': '100bbc07838a',
-              'bindTime': 1530607147000,
-              'sn': '2B1317BJ01210', //sn
-              'batVersion': 'B1',
-              'capacity': 2200,
-              'cellVersion': 'MF1',
-              'maker': 'WK',
-              'proTime': 1510934400000,
-              'scanTime': 1515805582000,
-              'voltage': 600,
-              'userName': '',
-              'userPhone': '13682680317',
-              'status': '已绑定'
-            }
-          ]
+          'id':'─',   //id
+          'amount':'─',   //钱包余额
+          'phone':'─', // 电话
+          'groupCode':'─', // 群组code
+          'groupName':'─', // 群组name
+          'freeDays':'─', // 免费天数
+          'agentId':'─', // 代理商id
+          'agentName':'─', // 代理商name
+          'depositDO':'─',
+          'validPackage':'─',
+          'scootersList':'─',
+          'batteriesList':'─'
         },
         {
-          'id': 5970,   //id
-          'amount': 0,   //钱包余额
-          'phone': '12321211111', // 电话
-          'groupCode': 11, // 群组code
-          'groupName': '测试群组1', // 群组name
-          'freeDays': '─', // 免费天数
-          'agentId': 2, // 代理商id
-          'agentName': 'chao', // 代理商name
-          'depositDO': { //押金
-            'id': 2582,
-            'amount': 0.01, //价格
-            'createTime': 1530674017000,
-            'num': 2, //电池颗数
-            'outTradeNo': 'ehd201807041112370000001284',
-            'status': 1,
-            'type': 1,  // 押金类型 2线下 1线上
-            'userId': 4636,
-            'discountId': 74,
-            'outRefundNo': '',
-            'groupCode': '',
-            'depositCode': 49,
-            'depositName': 'test-2颗电池' //押金名字
-          },
-          'validPackage': [ //有效套餐
-            {
-              'id': 1489,
-              'name': '2个月免费骑',  //套餐名字
-              'createTime': 1531369175000,
-              'duration': 60,  //套餐时长
-              'price': 0, //价格
-              'status': 1,
-              'times': 20000, //骑行次数
-              'type': 2, // 套餐类型  0=月套餐 1=次套餐 2=免费套餐
-              'originalPrice': 0,
-              'code': 0,
-              'groupCode': 2,
-              'freeCode': 1,
-              'remark': '',
-              'agentPrice': ''
-            },
-            {
-              'id': 354,
-              'name': '换电套餐2',
-              'createTime': 1527305062000,
-              'duration': 30,
-              'price': 58.01,
-              'status': 1,
-              'times': 30,
-              'type': 0,
-              'originalPrice': 58.01,
-              'code': 64,
-              'groupCode': 2,
-              'freeCode': 0,
-              'remark': '',
-              'agentPrice': ''
-            }
-          ],
-          'scootersList': [  //中控
-            {
-              'id': '61e1c747e7264fb392b966f80b8ff68b',
-              'sid': '574C54DF6591',
-              'owner': '13682680317',
-              'sn': 'G6000000001', // sn
-              'status': 1,
-              'time': 1529027725000,
-              'updtime': 1532656780000,
-              'protime': 1528992000000,
-              'userName': '',
-              'soc': '',
-              'location': '',
-              'locationUpdateTime': '',
-              'agentId': 0,
-              'agentName': '',
-              'voltage': 0,
-              'agentPhone': '',
-              'country': 'US',
-              'conf': 'US',
-              'fw': '',
-              'hw': ''
-            }
-          ],
-          'batteriesList': [ //电池
-            {
-              'id': 232,
-              'bid': '100bbc07838a',
-              'bindTime': 1530607147000,
-              'sn': '2B1317BJ01210', //sn
-              'batVersion': 'B1',
-              'capacity': 2200,
-              'cellVersion': 'MF1',
-              'maker': 'WK',
-              'proTime': 1510934400000,
-              'scanTime': 1515805582000,
-              'voltage': 600,
-              'userName': '',
-              'userPhone': '13682680317',
-              'status': '已绑定'
-            }
-          ]
+          'id':'─',   //id
+          'amount':'─',   //钱包余额
+          'phone':'─', // 电话
+          'groupCode':'─', // 群组code
+          'groupName':'─', // 群组name
+          'freeDays':'─', // 免费天数
+          'agentId':'─', // 代理商id
+          'agentName':'─', // 代理商name
+          'depositDO':'─',
+          'validPackage':'─',
+          'scootersList':'─',
+          'batteriesList':'─'
         }
       ]
     });

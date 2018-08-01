@@ -105,7 +105,12 @@ export default {
           vueThis.$store.commit('setChangePhoneLog');
         }
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='createTime'){
+            return (_.toSlash(v));
+          }
+        }
       });
     },
     handleCurrentChange:function(val){
