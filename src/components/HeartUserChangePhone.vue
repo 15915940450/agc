@@ -255,6 +255,33 @@
       </div>
     </div>
 
+
+    <div class="modal_wrap">
+      <el-dialog
+        title="填写验证码"
+        :visible.sync="modalChangePhoneYZM"
+        width="330px"
+        :show-close="false"
+        :close-on-click-modal="false"
+        >
+        <div class="modal_wrap-body">
+          <p>已经发送验证码至手机 13700137000{{formGetChangePhoneInfo.phone}}</p>
+          <el-form :inline="true">
+            <el-form-item>
+              <el-input class="input_yzm"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="info" size="mini">重发（59s）</el-button>
+            </el-form-item>
+
+          </el-form>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="modalChangePhoneYZM=false">取 消</el-button>
+          <el-button type="primary" @click="handleSubmit()">确 定</el-button>
+        </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -288,7 +315,8 @@ export default {
       },
       twoUsers:[
         Object.assign({},defaultUser),Object.assign({},defaultUser)
-      ]
+      ],
+      modalChangePhoneYZM:false
     });
   },
   computed:{
@@ -383,6 +411,9 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    handleSubmit:function(){
+
     }
 
   },
@@ -453,5 +484,8 @@ export default {
   }
   .im_info_footer{
     text-align:right;
+  }
+  .input_yzm{
+    width:150px;
   }
 </style>
