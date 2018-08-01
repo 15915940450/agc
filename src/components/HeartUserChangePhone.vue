@@ -101,7 +101,7 @@
                       元/
                       {{twoUsers[0].depositDO.num}}
                       颗电池/
-                      {{twoUsers[0].depositDO.type}}
+                      {{twoUsers[0].depositDO.typeZH}}
                       】
                     </span>
                     <span v-else>
@@ -125,7 +125,7 @@
                       元/
                       {{twoUsers[1].depositDO.num}}
                       颗电池/
-                      {{twoUsers[1].depositDO.type}}
+                      {{twoUsers[1].depositDO.typeZH}}
                       】
                     </span>
                     <span v-else>
@@ -141,7 +141,7 @@
                         【
                         {{item.name}}
                         /
-                        {{item.type}}
+                        {{item.typeZH}}
                         /
                         {{item.price}}
                         元 /
@@ -162,7 +162,7 @@
                         【
                         {{item.name}}
                         /
-                        {{item.type}}
+                        {{item.typeZH}}
                         /
                         {{item.price}}
                         元 /
@@ -235,7 +235,7 @@
                     绑定电池
                   </td>
                   <td>
-                    <ul v-if="twoUsers[0].batteriesList.length">
+                    <ul v-if="twoUsers[1].batteriesList.length">
                       <li v-for="item in twoUsers[1].batteriesList" :key="item.id">
                         {{item.sn}}
                       </li>
@@ -259,6 +259,20 @@
 </template>
 
 <script>
+var defaultUser={
+  id:'該用戶不存在',   //id
+  amount:'─',   //钱包余额
+  phone:'─', // 电话
+  groupCode:'─', // 群组code
+  groupName:'─', // 群组name
+  freeDays:'─', // 免费天数
+  agentId:'─', // 代理商id
+  agentName:'─', // 代理商name
+  depositDO:'─',
+  validPackage:[],
+  scootersList:[],
+  batteriesList:[]
+};
 export default {
   name:'HeartUserChangePhone',
   data:function(){
@@ -273,34 +287,7 @@ export default {
         phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}]
       },
       twoUsers:[
-        {
-          'id':'─',   //id
-          'amount':'─',   //钱包余额
-          'phone':'─', // 电话
-          'groupCode':'─', // 群组code
-          'groupName':'─', // 群组name
-          'freeDays':'─', // 免费天数
-          'agentId':'─', // 代理商id
-          'agentName':'─', // 代理商name
-          'depositDO':'─',
-          'validPackage':'─',
-          'scootersList':'─',
-          'batteriesList':'─'
-        },
-        {
-          'id':'─',   //id
-          'amount':'─',   //钱包余额
-          'phone':'─', // 电话
-          'groupCode':'─', // 群组code
-          'groupName':'─', // 群组name
-          'freeDays':'─', // 免费天数
-          'agentId':'─', // 代理商id
-          'agentName':'─', // 代理商name
-          'depositDO':'─',
-          'validPackage':'─',
-          'scootersList':'─',
-          'batteriesList':'─'
-        }
+        defaultUser,defaultUser
       ]
     });
   },
@@ -321,7 +308,9 @@ export default {
       return (this.twoUsers[1] && typeof(this.twoUsers[1].batteriesList)==='object' && this.twoUsers[1].batteriesList.length);
     },
     canNOTmodify:function(){
-      return (this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
+      var b=window.Boolean(this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
+      //console.log(b);
+      return b;
     }
   },
   methods:{
@@ -337,11 +326,41 @@ export default {
           };
           vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
             if(objRps.result.length){
+              if(objRps.result.length===1){
+                vueThis.twoUsers[0]=objRps.result[0];
+                vueThis.twoUsers[1]=defaultUser;
+              }
+              if(objRps.result.length===2){
+                vueThis.twoUsers=objRps.result;
+              }
               vueThis.infoDetail=true;
-              vueThis.twoUsers=objRps.result;
             }
           },{
-            objSendData:sendData
+            objSendData:sendData,
+            reviver:function(k,v){
+              //押金
+              if(k==='depositDO' && v){
+                if(window.Number(v.type)===1){
+                  v.typeZH='线上';
+                }else{
+                  v.typeZH='线下';
+                }
+              }
+              //套餐
+              if(k==='validPackage' && v.length){
+                v=v.map(function(obj){
+                  if(window.Number(obj.type)===0){
+                    obj.typeZH='月套餐';
+                  }else if(window.Number(obj.type)===1){
+                    obj.typeZH='次套餐';
+                  }else{
+                    obj.typeZH='免费套餐';
+                  }
+                  return obj;
+                });
+              }
+              return v;
+            } //reviver
           });
         }
       });
@@ -393,6 +412,8 @@ export default {
   }
   .im_info_table tbody td:nth-child(2){
     border-right:1px solid #EEE;
+    width:360px;
+    max-width:360px;
   }
   .im_info_table tbody td:nth-child(3){
     color:#666;
@@ -401,6 +422,8 @@ export default {
     max-width:90px;
   }
   .im_info_table tbody td:nth-child(4){
+    width:360px;
+    max-width:360px;
   }
   .im_info_table ul,.im_info_table li{
     margin:0;
