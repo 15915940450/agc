@@ -24,7 +24,7 @@
           </el-table-column>
           <el-table-column
             label="用户ID"
-            prop="agentId"
+            prop="userId"
             >
           </el-table-column>
           <el-table-column
