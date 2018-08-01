@@ -14,6 +14,7 @@
           <el-table-column
             label="ID"
             prop="id"
+            width="90"
             >
           </el-table-column>
           <el-table-column
@@ -108,7 +109,7 @@ export default {
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(v));
+            return (_.toSlash(v).slice(0,19));
           }
         }
       });

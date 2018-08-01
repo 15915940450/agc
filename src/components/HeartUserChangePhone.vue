@@ -255,7 +255,6 @@
       </div>
     </div>
 
-
     <div class="modal_wrap">
       <el-dialog
         title="填写验证码"
@@ -267,9 +266,19 @@
         >
         <div class="modal_wrap-body">
           <p>已经发送验证码至手机 {{formGetChangePhoneInfo.phone}}</p>
-          <el-form :inline="true">
-            <el-form-item>
-              <el-input class="input_yzm"></el-input>
+          <el-form
+            :inline="true"
+            :model="changePhone"
+            :rules="authCodeRules"
+            ref="changePhone"
+            >
+            <el-form-item prop="authCode">
+              <el-input
+                v-model="changePhone.authCode"
+                class="input_yzm"
+                placeholder="請輸入验证码"
+                >
+              </el-input>
             </el-form-item>
             <el-form-item>
               <el-button
@@ -314,6 +323,14 @@ export default {
   name:'HeartUserChangePhone',
   data:function(){
     return ({
+      changePhone:{
+        authCode:''
+      },
+      authCodeRules:{
+        authCode:[
+          {required:true,message:'驗證碼不能爲空',trigger:'blur'}
+        ]
+      },
       timeReSMS:59,
       infoDetail:false,
       formGetChangePhoneInfo:{
@@ -438,9 +455,26 @@ export default {
       });
     },
     handleSubmit:function(){
-
+      var vueThis=this;
+      var sendData={
+        userPhone:vueThis.formGetChangePhoneInfo.userPhone,
+        phone:vueThis.formGetChangePhoneInfo.phone,
+        authCode:vueThis.changePhone.authCode,
+        agentId:window.localStorage.agentid
+      };
+      vueThis.$rqs(vueThis.$yApi.changePhone,function(objRps){
+        vueThis.modalChangePhoneYZM=false;
+        vueThis.changePhone.authCode='';
+        vueThis.formGetChangePhoneInfo.userPhone='';
+        vueThis.formGetChangePhoneInfo.phone='';
+        vueThis.infoDetail=false;
+        vueThis.$message(objRps.msg);
+      },{
+        objSendData:sendData
+      });
     },
     handleReSMS:function(){
+      this.nextYZM();
     }
 
   },
