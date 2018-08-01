@@ -249,7 +249,7 @@
             </table>
           </div>
           <div class="im_info_footer">
-            <el-button :disabled="canNOTmodify" type="danger">修改</el-button>
+            <el-button @click="handleModify()" :disabled="canNOTmodify" type="danger">修改</el-button>
           </div>
         </el-card>
       </div>
@@ -361,7 +361,30 @@ export default {
           });
         }
       });
+    },
+    handleModify:function(){
+      var vueThis=this;
+      vueThis.$confirm('修改后，新手机号码原本的钱包余额、套餐、免费天数将会失效；此操作不可撤销，确定修改吗？','提示',{
+        type:'warning'
+      }).then(() => {
+        //點擊了確定
+        vueThis.nextYZM();
+      }).catch(() => {
+
+      });
+    },
+    nextYZM:function(){
+      var vueThis=this;
+      var sendData={
+        phone:vueThis.formGetChangePhoneInfo.phone, //新
+        userPhone:vueThis.formGetChangePhoneInfo.userPhone
+      };
+      vueThis.$rqs(vueThis.$yApi.sendDuanxin,function(){
+      },{
+        objSendData:sendData
+      });
     }
+
   },
   created:function(){
   }
