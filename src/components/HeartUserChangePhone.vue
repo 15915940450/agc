@@ -263,15 +263,24 @@
         width="330px"
         :show-close="false"
         :close-on-click-modal="false"
+        center
         >
         <div class="modal_wrap-body">
-          <p>已经发送验证码至手机 13700137000{{formGetChangePhoneInfo.phone}}</p>
+          <p>已经发送验证码至手机 {{formGetChangePhoneInfo.phone}}</p>
           <el-form :inline="true">
             <el-form-item>
               <el-input class="input_yzm"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="info" size="mini">重发（59s）</el-button>
+              <el-button
+                type="info"
+                size="mini"
+                :disabled="canNOTsms"
+                @click="handleReSMS()"
+                >
+                重发
+                <span v-if="canNOTsms">（{{timeReSMS}}s）</span>
+              </el-button>
             </el-form-item>
 
           </el-form>
@@ -286,6 +295,7 @@
 </template>
 
 <script>
+var numTimer;
 var defaultUser={
   id:'該用戶不存在',   //id
   amount:'─',   //钱包余额
@@ -304,6 +314,7 @@ export default {
   name:'HeartUserChangePhone',
   data:function(){
     return ({
+      timeReSMS:59,
       infoDetail:false,
       formGetChangePhoneInfo:{
         userPhone:'', //旧用户手机
@@ -320,6 +331,9 @@ export default {
     });
   },
   computed:{
+    canNOTsms:function(){
+      return (this.timeReSMS!==60);
+    },
     limit1:function(){
       return !(window.Number(this.twoUsers[1].agentId)===window.Number(window.localStorage.agentid));
     },
@@ -408,12 +422,25 @@ export default {
         userPhone:vueThis.formGetChangePhoneInfo.userPhone
       };
       vueThis.$rqs(vueThis.$yApi.sendDuanxin,function(){
+        //验证码已发送
+        vueThis.timeReSMS=59;
+        vueThis.modalChangePhoneYZM=true;
+        numTimer=window.setInterval(function(){
+          if(vueThis.timeReSMS<=0){
+            window.clearInterval(numTimer);
+            vueThis.timeReSMS=60;
+          }else{
+            vueThis.timeReSMS--;
+          }
+        },1000);
       },{
         objSendData:sendData
       });
     },
     handleSubmit:function(){
 
+    },
+    handleReSMS:function(){
     }
 
   },
