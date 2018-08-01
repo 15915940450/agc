@@ -287,7 +287,7 @@ export default {
         phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}]
       },
       twoUsers:[
-        defaultUser,defaultUser
+        Object.assign({},defaultUser),Object.assign({},defaultUser)
       ]
     });
   },
@@ -327,12 +327,9 @@ export default {
           vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
             if(objRps.result.length){
               if(objRps.result.length===1){
-                vueThis.twoUsers[0]=objRps.result[0];
-                vueThis.twoUsers[1]=defaultUser;
+                objRps.result[1]=Object.assign({},defaultUser);
               }
-              if(objRps.result.length===2){
-                vueThis.twoUsers=objRps.result;
-              }
+              vueThis.twoUsers=objRps.result;
               vueThis.infoDetail=true;
             }
           },{
@@ -366,7 +363,8 @@ export default {
       });
     }
   },
-  created:function(){}
+  created:function(){
+  }
 };
 </script>
 
