@@ -67,7 +67,7 @@ export default {
           "oldPhone": "15820480937", // 老用户电话
           "newPhone": "15826519061", // 新用户电话
           "agentId": 155,// 代理商id
-          "createTime": 1532679890000, //时间搓
+          "createTime": 1532679890000,
           "userId": 1// 用户id
         }
         */
