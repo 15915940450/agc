@@ -276,7 +276,7 @@
               <el-input
                 v-model="changePhone.authCode"
                 class="input_yzm"
-                placeholder="請輸入验证码"
+                placeholder="请输入验证码"
                 >
               </el-input>
             </el-form-item>
@@ -306,7 +306,7 @@
 <script>
 var numTimer;
 var defaultUser={
-  id:'該用戶不存在',   //id
+  id:'该用户不存在',   //id
   amount:'─',   //钱包余额
   phone:'─', // 电话
   groupCode:'─', // 群组code
@@ -328,7 +328,7 @@ export default {
       },
       authCodeRules:{
         authCode:[
-          {required:true,message:'驗證碼不能爲空',trigger:'blur'}
+          {required:true,message:'验证码不能为空',trigger:'blur'}
         ]
       },
       timeReSMS:59,
@@ -338,8 +338,8 @@ export default {
         phone:''  //新用户手机
       },
       rules:{
-        userPhone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}],
-        phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'手机号必须为11位数字',trigger:'blur'}]
+        userPhone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'请输入正确的手机号码',trigger:'blur'}],
+        phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'请输入正确的手机号码',trigger:'blur'}]
       },
       twoUsers:[
         Object.assign({},defaultUser),Object.assign({},defaultUser)

@@ -63,7 +63,7 @@ export default {
       },
       rules:{
         phone:[
-          {type:'number',required:true,min:10000000000,max:99999999999,message:'手机号必须为11位数字',trigger:'change'}
+          {type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'请输入正确的手机号码',trigger:'blur'}
         ],
         scooterType:[
           {required:true,message:'请选择',trigger:'blur'}

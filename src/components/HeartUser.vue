@@ -219,7 +219,7 @@
                   <el-button
                     type="text"
                     @click="unbindUser(scope)">
-                    解绑
+                    移除用户
                   </el-button>
                   <el-button
                     type="text"
@@ -436,7 +436,7 @@ export default {
       this.$store.commit('showEVin');
     },
     unbindUser:function(scope){
-      this.msg='用户已解绑';
+      this.msg='用户已移除';
       this.unbindPhone=scope.row.phone;
       this.$store.commit('showUserUnbind');
     },
