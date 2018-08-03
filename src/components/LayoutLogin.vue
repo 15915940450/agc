@@ -10,7 +10,7 @@
 
         <!-- 手机号 -->
         <el-form-item prop="phone">
-          <el-input v-model.number="formLogin.phone" @input="hintMsg=''" auto-complete="on" placeholder="请输入手机号码" class="need_login-phone" autofocus="true"></el-input>
+          <el-input v-model="formLogin.phone" @input="hintMsg=''" auto-complete="on" placeholder="请输入手机号码" class="need_login-phone" autofocus="true"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">

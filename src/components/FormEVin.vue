@@ -27,7 +27,7 @@
           </el-form-item>
 
           <el-form-item prop="phone" label="手机号码" :label-width="formLabelWidth">
-            <el-input v-model.number="formEVin.phone" auto-complete="off" placeholder="请输入手机号码"></el-input>
+            <el-input v-model="formEVin.phone" auto-complete="off" placeholder="请输入手机号码"></el-input>
           </el-form-item>
 
           <el-form-item prop="voltage" label="电压" :label-width="formLabelWidth">
