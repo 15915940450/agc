@@ -371,9 +371,8 @@ export default {
       return (this.twoUsers[1] && typeof(this.twoUsers[1].batteriesList)==='object' && this.twoUsers[1].batteriesList.length);
     },
     canNOTmodify:function(){
-      var limit0=this.twoUsers[1] && this.twoUsers[1].id && this.twoUsers[1].id==='─';
       //不可修改
-      var b=window.Boolean(limit0 || this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
+      var b=window.Boolean(this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
       return b;
     }
   },
