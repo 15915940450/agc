@@ -86,7 +86,7 @@
                 <tr>
                   <td>
                     <div class="hint_1">
-                      <el-tooltip v-show="limit2" effect="dark" content="綫上交押金的用户必须先退押金" placement="right-end">
+                      <el-tooltip v-show="limit2" effect="dark" content="线上交押金的用户必须先退押金" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -110,7 +110,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip v-show="limit3" effect="dark" content="有押金沒有退還" placement="right-end">
+                      <el-tooltip v-show="limit3" effect="dark" content="有押金没有退还" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -197,7 +197,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip v-show="limit4" effect="dark" content="有中控未解綁" placement="right-end">
+                      <el-tooltip v-show="limit4" effect="dark" content="有中控未解绑" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -228,7 +228,7 @@
                   </td>
                   <td>
                     <div class="hint_3">
-                      <el-tooltip v-show="limit5" effect="dark" content="有電池未解綁" placement="right-end">
+                      <el-tooltip v-show="limit5" effect="dark" content="有电池未解绑" placement="right-end">
                         <i class="el-icon-warning"></i>
                       </el-tooltip>
                     </div>
@@ -306,7 +306,7 @@
 <script>
 var numTimer;
 var defaultUser={
-  id:'该用户不存在',   //id
+  id:'─',   //id
   amount:'─',   //钱包余额
   phone:'─', // 电话
   groupCode:'─', // 群组code
@@ -352,7 +352,11 @@ export default {
       return (this.timeReSMS!==60);
     },
     limit1:function(){
-      return !(window.Number(this.twoUsers[1].agentId)===window.Number(window.localStorage.agentid));
+      var bLimit1=false;
+      if(this.twoUsers[1].agentId!=='─' && window.Number(this.twoUsers[1].agentId)!==window.Number(window.localStorage.agentid)){
+        bLimit1=true;
+      }
+      return bLimit1;
     },
     limit2:function(){
       return (this.twoUsers[0] && typeof(this.twoUsers[0].depositDO)==='object' && this.twoUsers[0].depositDO.type===1);
@@ -367,8 +371,9 @@ export default {
       return (this.twoUsers[1] && typeof(this.twoUsers[1].batteriesList)==='object' && this.twoUsers[1].batteriesList.length);
     },
     canNOTmodify:function(){
-      var b=window.Boolean(this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
-      //console.log(b);
+      var limit0=this.twoUsers[1] && this.twoUsers[1].id && this.twoUsers[1].id==='─';
+      //不可修改
+      var b=window.Boolean(limit0 || this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
       return b;
     }
   },
@@ -386,7 +391,9 @@ export default {
           vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
             if(objRps.result.length){
               if(objRps.result.length===1){
-                objRps.result[1]=Object.assign({},defaultUser);
+                objRps.result[1]=Object.assign({},defaultUser,{
+                  phone:vueThis.formGetChangePhoneInfo.phone
+                });
               }
               vueThis.twoUsers=objRps.result;
               vueThis.infoDetail=true;

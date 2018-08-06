@@ -77,7 +77,7 @@
               <!-- 亦可以用矩形傾斜實現 -->
             </span>
             <!-- 无限 -->
-            <mark>{{combo.count}}次</mark>
+            <mark>{{combo.count}}</mark>
           </div>
         </el-col>
 
@@ -150,8 +150,12 @@ export default {
         vueThis.loadingComboList=false;
         vueThis.comboList=objRps.result.list;
       },{reviver:function(k,v){
-        if(k==='count' && window.Number(v)>=20000){
-          return ('无限');
+        if(k==='count'){
+          if(window.Number(v)>=20000){
+            return ('无限次');
+          }else{
+            return (v+'颗');
+          }
         }
       }});
     },
