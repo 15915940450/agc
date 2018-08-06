@@ -78,9 +78,9 @@
                   <td>{{twoUsers[1].groupName}}</td>
                 </tr>
                 <tr>
-                  <td>钱包馀额</td>
+                  <td>钱包余额</td>
                   <td>{{twoUsers[0].amount}} 元</td>
-                  <td>钱包馀额</td>
+                  <td>钱包余额</td>
                   <td>{{twoUsers[1].amount}} 元</td>
                 </tr>
                 <tr>
