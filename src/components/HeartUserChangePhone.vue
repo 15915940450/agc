@@ -282,7 +282,8 @@
             </el-form-item>
             <el-form-item>
               <el-button
-                type="info"
+                plain
+                round
                 size="mini"
                 :disabled="canNOTsms"
                 @click="handleReSMS()"
@@ -553,6 +554,6 @@ export default {
     text-align:right;
   }
   .input_yzm{
-    width:150px;
+    width:110px;
   }
 </style>
