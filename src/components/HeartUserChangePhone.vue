@@ -296,7 +296,7 @@
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="modalChangePhoneYZM=false">取 消</el-button>
+          <el-button @click="handleCancel()">取 消</el-button>
           <el-button type="primary" @click="handleSubmit()">确 定</el-button>
         </span>
       </el-dialog>
@@ -449,6 +449,7 @@ export default {
         //验证码已发送
         vueThis.timeReSMS=59;
         vueThis.modalChangePhoneYZM=true;
+        window.clearInterval(numTimer);
         numTimer=window.setInterval(function(){
           if(vueThis.timeReSMS<=0){
             window.clearInterval(numTimer);
@@ -461,27 +462,40 @@ export default {
         objSendData:sendData
       });
     },
+    //已輸入驗證碼，確認修改
     handleSubmit:function(){
       var vueThis=this;
-      var sendData={
-        userPhone:vueThis.formGetChangePhoneInfo.userPhone,
-        phone:vueThis.formGetChangePhoneInfo.phone,
-        authCode:vueThis.changePhone.authCode,
-        agentId:window.localStorage.agentid
-      };
-      vueThis.$rqs(vueThis.$yApi.changePhone,function(objRps){
-        vueThis.modalChangePhoneYZM=false;
-        vueThis.changePhone.authCode='';
-        vueThis.formGetChangePhoneInfo.userPhone='';
-        vueThis.formGetChangePhoneInfo.phone='';
-        vueThis.infoDetail=false;
-        vueThis.$message(objRps.msg);
-      },{
-        objSendData:sendData
+      vueThis.$refs['changePhone'].validate((valid) => {
+        if(valid){
+          var sendData={
+            userPhone:vueThis.formGetChangePhoneInfo.userPhone,
+            phone:vueThis.formGetChangePhoneInfo.phone,
+            authCode:vueThis.changePhone.authCode,
+            agentId:window.localStorage.agentid
+          };
+          vueThis.$rqs(vueThis.$yApi.changePhone,function(objRps){
+            vueThis.resetModal();
+            vueThis.formGetChangePhoneInfo.userPhone='';
+            vueThis.formGetChangePhoneInfo.phone='';
+            vueThis.infoDetail=false;
+            vueThis.$message(objRps.msg);
+          },{
+            objSendData:sendData
+          });
+        }
       });
+    },
+    handleCancel:function(){
+      this.resetModal();
     },
     handleReSMS:function(){
       this.nextYZM();
+    },
+    resetModal:function(){
+      var vueThis=this;
+      vueThis.modalChangePhoneYZM=false;
+      vueThis.changePhone.authCode='';
+      vueThis.$refs['changePhone'].clearValidate();
     }
 
   },
