@@ -56,6 +56,7 @@
                   <td>手机号码</td>
                   <td>{{twoUsers[1].phone}}</td>
                 </tr>
+                <!-- limit1 -->
                 <tr>
                   <td>
                     所属代理商
@@ -77,12 +78,21 @@
                   <td>所在群组</td>
                   <td>{{twoUsers[1].groupName}}</td>
                 </tr>
+                <!-- limit6 -->
                 <tr>
                   <td>钱包余额</td>
                   <td>{{twoUsers[0].amount}} 元</td>
-                  <td>钱包余额</td>
+                  <td>
+                    <div class="hint_3">
+                      <el-tooltip v-show="limit6" effect="dark" content="有余额不能修改" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
+                    </div>
+                    钱包余额
+                  </td>
                   <td>{{twoUsers[1].amount}} 元</td>
                 </tr>
+                <!-- limit2,3 -->
                 <tr>
                   <td>
                     <div class="hint_1">
@@ -133,6 +143,7 @@
                     </span>
                   </td>
                 </tr>
+                <!-- limit7 -->
                 <tr>
                   <td>套餐</td>
                   <td>
@@ -155,7 +166,14 @@
                       ─
                     </span>
                   </td>
-                  <td>套餐</td>
+                  <td>
+                    套餐
+                    <div class="hint_3">
+                      <el-tooltip v-show="limit7" effect="dark" content="有套餐不能修改" placement="right-end">
+                        <i class="el-icon-warning"></i>
+                      </el-tooltip>
+                    </div>
+                  </td>
                   <td>
                     <ul v-if="twoUsers[1].validPackage.length">
                       <li v-for="item in twoUsers[1].validPackage" :key="item.id">
@@ -183,6 +201,7 @@
                   <td>免费天数</td>
                   <td>{{twoUsers[1].freeDays}}</td>
                 </tr>
+                <!-- limit4 -->
                 <tr>
                   <td>绑定中控</td>
                   <td>
@@ -214,6 +233,7 @@
                     </span>
                   </td>
                 </tr>
+                <!-- limit5 -->
                 <tr>
                   <td>绑定电池</td>
                   <td>
@@ -378,9 +398,16 @@ export default {
     limit5:function(){
       return (this.twoUsers[1] && typeof(this.twoUsers[1].batteriesList)==='object' && this.twoUsers[1].batteriesList.length);
     },
+    limit6:function(){
+      //餘額
+      return (this.twoUsers[1] && +this.twoUsers[1].amount);
+    },
+    limit7:function(){
+      return (this.twoUsers[1] && typeof(this.twoUsers[1].validPackage)==='object' && this.twoUsers[1].validPackage.length);
+    },
     canNOTmodify:function(){
       //不可修改
-      var b=window.Boolean(this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5);
+      var b=window.Boolean(this.limit1 || this.limit2 || this.limit3 || this.limit4 || this.limit5 || this.limit6 || this.limit7);
       return b;
     }
   },
@@ -437,7 +464,7 @@ export default {
     },
     handleModify:function(){
       var vueThis=this;
-      vueThis.$confirm('修改后，新手机号码原本的钱包余额、套餐、免费天数将会失效；此操作不可撤销，确定修改吗？','提示',{
+      vueThis.$confirm('修改后，新手机号码原本的免费天数将会失效；此操作不可撤销，确定修改吗？','提示',{
         type:'warning'
       }).then(() => {
         //點擊了確定
