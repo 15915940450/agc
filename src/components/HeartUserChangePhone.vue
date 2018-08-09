@@ -352,11 +352,18 @@ export default {
     canNOTsms:function(){
       return (this.timeReSMS!==60);
     },
+    //1.所属代理商:agentId
     limit1:function(){
       var bLimit1=false;
-      if(this.twoUsers[1].agentId!=='─' && window.Number(this.twoUsers[1].agentId)!==window.Number(window.localStorage.agentid)){
+      /*
+      if(this.twoUsers[1].agentId!=='─' && this.twoUsers[1].agentId && window.Number(this.twoUsers[1].agentId)!==window.Number(window.localStorage.agentid)){
         bLimit1=true;
       }
+      */
+      var numAgentId=+this.twoUsers[1].agentId; //0,NaN,224
+      //&& && (...)
+      numAgentId && numAgentId!==+window.localStorage.agentid && (bLimit1=true);
+
       return bLimit1;
     },
     limit2:function(){
