@@ -398,6 +398,9 @@ export default {
             v.currentTaocan='加载中...';
             return v;
           }
+          if(k==='freeDays' && v===''){
+            return 0;
+          }
         }
       });
     },

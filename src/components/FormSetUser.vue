@@ -117,9 +117,16 @@ export default {
   },
   computed:{
     maxFD:function(){
-      return (this.freeDays+this.agentFreeDays);
+      if(this.freeDays===undefined){
+        return 0;
+      }else{
+        return (this.freeDays+this.agentFreeDays);
+      }
     },
     computedFreeDays:function(){
+      //this.maxFD:用戶可被分配的最大免費天數
+      //this.computedFreeDays:實時提示的用戶剩餘免費天數
+      //this.formSetUser.freeDay:輸入框的免費天數
       //hint提示的值
       if(this.formSetUser.freeDay===undefined){
         return this.maxFD;
