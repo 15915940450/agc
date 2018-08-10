@@ -359,8 +359,8 @@ export default {
         phone:''  //新用户手机
       },
       rules:{
-        userPhone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'请输入正确的手机号码',trigger:'blur'}],
-        phone:[{type:'string',required:true,pattern:/^1(3|4|5|7|8)\d{9}$/,message:'请输入正确的手机号码',trigger:'blur'}]
+        userPhone:[{type:'string',required:true,pattern:/^1\d{10}$/,message:'请输入正确的手机号码',trigger:'blur'}],
+        phone:[{type:'string',required:true,pattern:/^1\d{10}$/,message:'请输入正确的手机号码',trigger:'blur'}]
       },
       twoUsers:[
         Object.assign({},defaultUser),Object.assign({},defaultUser)

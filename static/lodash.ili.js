@@ -6958,7 +6958,7 @@ http://localhost/agc/static/lodash.ili.js
     }
     //9.isPhone
     function isPhone(phone){
-      if((/^1(3|4|5|7|8)\d{9}$/.test(''+phone))){
+      if((/^1\d{10}$/.test(''+phone))){
         return true;
       }
     }
