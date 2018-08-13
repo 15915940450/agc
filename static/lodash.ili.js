@@ -7099,6 +7099,14 @@ http://localhost/agc/static/lodash.ili.js
       }
       return result;
     }
+    //checkNeedChrome,如果ua是IE，非chrome或safari
+    function checkNeedChrome(){
+      var ua=window.navigator.userAgent.toLowerCase();
+      var isIE=ua.match(/(trident|edge)/gi);
+      var isNOTsafariNORchrome=!ua.match(/(safari|chrome)/gi);
+      var needChrome=isNOTsafariNORchrome || isIE;
+      return needChrome;
+    }
     //====================================ili()
 
     /**
@@ -16755,6 +16763,7 @@ http://localhost/agc/static/lodash.ili.js
     lodash.toK = toK;
     lodash.toSlash = toSlash;
     lodash.createArrDataSource = createArrDataSource;
+    lodash.checkNeedChrome = checkNeedChrome;
     //===========================================ili
     lodash.compact = compact;
     lodash.concat = concat;
