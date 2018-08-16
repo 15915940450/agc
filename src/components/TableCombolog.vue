@@ -87,7 +87,7 @@ export default {
     			"id": 1, //ID
     			"createTime": 1512104184000, //操作时间
     			"phone": "13823791641", //被操作人手机号码
-    			"discountName": "租一颗电池 ￥999一颗", //套餐名称
+    			"discountName": "租一颗电池 ￥999一颗",
     			"remainNumber": 123, //剩余份数
     			"number":1//分配数量
 	    	}

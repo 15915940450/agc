@@ -164,13 +164,7 @@
                           v-if="item.name!=='代理商群组免费'"
                           :key="item.id"
                           >
-                          {{item.name}}
-                          /
-                          {{['月卡','次卡','两月卡'][item.type]}}
-                          /
-                          {{item.times}}次
-                          /
-                          {{item.duration}}天
+                          {{item.neroTaocan}}
                         </div>
                       </div>
                     </el-form-item>
@@ -467,6 +461,7 @@ export default {
       if(row.currentTaocan==='加载中...'){
         //加載中--)[]--)[xxx]
         vueThis.$rqs(vueThis.$yApi.currentTaocan,function(objRps){
+          //_.logErr(objRps)
           var arrTmp=objRps.result.filter(function(v){
             return (v.name!=='代理商群组免费');
           });
@@ -474,8 +469,16 @@ export default {
         },{
           objSendData:sendData,
           reviver:function(k,v){
-            if(k==='times' && v>=20000){
-              return '无限';
+            if(v.duration!==undefined){
+              var dORe=v.duration+'天';
+              if(v.duration==='' || v.duration==='─'){
+                dORe=v.expirationDate.replace(/-/,'');
+              }
+              if(v.times>=20000){
+                v.times='无限';
+              }
+              v.neroTaocan=`${v.name} / ${['月卡','次卡','两月卡'][v.type]} / ¥${v.price} / ${v.times}次 / ${dORe}`;
+              return (v);
             }
           }
         });
