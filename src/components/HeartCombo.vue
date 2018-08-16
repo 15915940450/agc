@@ -57,7 +57,8 @@
           <div class="combo_card">
             <h4>{{combo.name}}</h4>
             <p class="combo_card_info">
-              <span>有效期{{combo.duration}}天</span>
+              <span v-if="combo.duration!=='' && combo.duration!=='─'">有效期 {{combo.duration}} 天</span>
+              <span v-else>{{combo.expirationDate}} 失效</span>
               <span>
                 <strong>{{combo.agentPrice}}</strong>
                 元/份
