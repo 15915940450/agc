@@ -20,7 +20,7 @@
               <el-option
                 v-for="item in options_packageListScheme"
                 :key="item.id"
-                :label="(item.name+' / '+typePackage[item.type]+' / ¥'+item.price+' / '+item.count+'次 / '+item.duration+' 天')"
+                :label="item.neroTaocan"
                 :value="item.id">
               </el-option>
             </el-select>
@@ -94,7 +94,17 @@ export default {
           vueThis.options_packageListScheme=objRps.result.list;
         }
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(v.duration!==undefined){
+            var dORe=v.duration+'天';
+            if(v.duration==='' || v.duration==='─'){
+              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
+            }
+            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
+            return (v);
+          }
+        }
       });
     },
     handleComfirm:function(refName){
