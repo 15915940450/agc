@@ -46,7 +46,7 @@
               <el-option
                 v-for="item in options_packageListScheme"
                 :key="item.id"
-                :label="(item.name+' / '+typePackage[item.type]+' / ¥'+item.price+' / '+item.count+'次 / '+item.duration+' 天')"
+                :label="item.neroTaocan"
                 :value="item.id">
               </el-option>
             </el-select>
@@ -55,16 +55,16 @@
 
           <el-form-item prop="freeDayEnable" label="自动免费" :label-width="formLabelWidth">
             <el-switch v-model="formGroupCreate.freeDayEnable" active-text="自动" inactive-color="#999">
-              
+
             </el-switch>
           </el-form-item>
           <el-form-item prop="freeDay" :label-width="formLabelWidth">
             新用户自动免费
-            <el-input-number 
-              v-model="formGroupCreate.freeDay" 
-              :disabled="!formGroupCreate.freeDayEnable" 
-              size="mini" 
-              :min="0" 
+            <el-input-number
+              v-model="formGroupCreate.freeDay"
+              :disabled="!formGroupCreate.freeDayEnable"
+              size="mini"
+              :min="0"
               :max="100"
               >
             </el-input-number>
@@ -120,7 +120,7 @@ export default {
         freeDay:0,
         agentId:window.localStorage.agentid
       },
-      
+
       grouptype:0,
       typePackage:['月套卡','次套卡','免费套餐'],
       options_cityListScheme: [],
@@ -173,7 +173,17 @@ export default {
           vueThis.options_packageListScheme=objRps.result.list;
         }
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(v.duration!==undefined){
+            var dORe=v.duration+'天';
+            if(v.duration==='' || v.duration==='─'){
+              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
+            }
+            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
+            return (v);
+          }
+        }
       });
     },
     handleCancel:function(refName){

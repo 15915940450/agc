@@ -15,7 +15,7 @@
               <el-option
                 v-for="item in optionsGroups"
                 :key="item.code"
-                :label="(item.name)"
+                :label="item.name"
                 :value="item.code">
               </el-option>
             </el-select>
