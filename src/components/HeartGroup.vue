@@ -66,7 +66,11 @@
       :yajin="yajin"
       :taocan="taocan"
       />
-    <FormGroupSet v-bind="groupSetItem" />
+    <FormGroupSet
+      v-bind="groupSetItem"
+      :yajin="yajin"
+      :taocan="taocan"
+      />
     <StatusGroupCreate />
     <BaseStatus :msg="msg" />
 

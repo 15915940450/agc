@@ -25,7 +25,7 @@
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.depositScheme" multiple placeholder="请选择">
               <el-option
-                v-for="item in options_depositListScheme"
+                v-for="item in yajin"
                 :key="item.id"
                 :label="(item.name+' / ¥'+item.deposit+' / '+item.num+'颗电池')"
                 :value="item.id">
@@ -36,7 +36,7 @@
             <el-select v-model="formGroupSet.packageScheme" multiple placeholder="请选择">
               <!-- 名称/类型/价格/次数/天数 -->
               <el-option
-                v-for="item in options_packageListScheme"
+                v-for="item in taocan"
                 :key="item.id"
                 :label="item.neroTaocan"
                 :value="item.id">
@@ -79,7 +79,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormGroupSet',
-  props:['code','name','deposits','packages','type','freeDay'],
+  props:['code','name','deposits','packages','type','freeDay','yajin','taocan'],
   data:function(){
     return ({
       rules:{
@@ -108,8 +108,6 @@ export default {
         freeDay:0,
         agentId:window.localStorage.agentid
       },
-      options_depositListScheme: [],
-      options_packageListScheme: [],
       loading:false,
 
       formLabelWidth:'85px'
@@ -139,37 +137,6 @@ export default {
     }
   },
   methods:{
-    fetchOptionsScheme:function(type){
-      var vueThis=this;
-      var advancedParam=JSON.stringify({
-        groupCode:null
-      });
-      var sendData={
-        advancedParam:advancedParam,
-        pageNum:1,
-        pageSize:969
-      };
-      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
-        if(type==='depositListScheme'){
-          vueThis.options_depositListScheme=objRps.result.list;
-        }
-        if(type==='packageListScheme'){
-          vueThis.options_packageListScheme=objRps.result.list;
-        }
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(v.duration!==undefined){
-            var dORe=v.duration+'天';
-            if(v.duration==='' || v.duration==='─'){
-              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
-            }
-            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
-            return (v);
-          }
-        }
-      });
-    },
     handleCancel:function(){
       this.$refs['formGroupSet'].resetFields();
       this.$store.commit('hideGroupSet');
@@ -201,8 +168,6 @@ export default {
 
   },  //methods
   created:function(){
-    this.fetchOptionsScheme('depositListScheme');
-    this.fetchOptionsScheme('packageListScheme');
   }
 
 };
