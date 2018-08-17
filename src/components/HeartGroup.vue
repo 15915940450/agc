@@ -64,6 +64,7 @@
 
     <FormGroupCreate
       :yajin="yajin"
+      :taocan="taocan"
       />
     <FormGroupSet v-bind="groupSetItem" />
     <StatusGroupCreate />
@@ -84,6 +85,7 @@ export default {
   data:function(){
     return ({
       yajin:[],
+      taocan:[],
       group:[],
       msg:'群组设置成功',
       groupSetItem:null,
@@ -147,7 +149,7 @@ export default {
           vueThis.yajin=objRps.result.list;
         }
         if(type==='packageListScheme'){
-          vueThis.options_packageListScheme=objRps.result.list;
+          vueThis.taocan=objRps.result.list;
         }
       },{
         objSendData:sendData,
@@ -182,6 +184,7 @@ export default {
   created:function(){
     this.fetchData();
     this.fetchYajinOrTaocan('depositListScheme');
+    this.fetchYajinOrTaocan('packageListScheme');
   }
 
 

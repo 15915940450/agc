@@ -44,7 +44,7 @@
           <el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.packageScheme" multiple placeholder="请选择">
               <el-option
-                v-for="item in options_packageListScheme"
+                v-for="item in taocan"
                 :key="item.id"
                 :label="item.neroTaocan"
                 :value="item.id">
@@ -86,7 +86,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormGroupCreate',
-  props:['yajin'],
+  props:['yajin','taocan'],
   data:function(){
     return ({
       rules:{
@@ -123,9 +123,7 @@ export default {
       },
 
       grouptype:0,
-      typePackage:['月套卡','次套卡','免费套餐'],
       options_cityListScheme: [],
-      options_packageListScheme: [],
       loading:false,
 
       formLabelWidth:'90px'
@@ -153,36 +151,6 @@ export default {
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
         vueThis.options_cityListScheme=objRps.result.list;
-      });
-    },
-    fetchOptionsScheme:function(type){
-      var vueThis=this;
-      var advancedParam=JSON.stringify({
-        groupCode:null
-      });
-      var sendData={
-        advancedParam:advancedParam,
-        pageNum:1,
-        pageSize:969
-      };
-      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
-        if(type==='depositListScheme'){
-        }
-        if(type==='packageListScheme'){
-          vueThis.options_packageListScheme=objRps.result.list;
-        }
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(v.duration!==undefined){
-            var dORe=v.duration+'天';
-            if(v.duration==='' || v.duration==='─'){
-              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
-            }
-            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
-            return (v);
-          }
-        }
       });
     },
     handleCancel:function(refName){
@@ -224,8 +192,6 @@ export default {
 
   },  //methods
   created:function(){
-    //this.fetchOptionsScheme('depositListScheme');
-    this.fetchOptionsScheme('packageListScheme');
     this.fetchCityList();
     // this.fetchGroupType();
     // console.log(this.grouptype);
