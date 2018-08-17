@@ -2,5 +2,6 @@
 /config/
 /dist/
 /*.js
+!/gulpfile.js
 /test/unit/coverage/
 /static/lodash.ili.js

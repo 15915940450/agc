@@ -34,7 +34,7 @@
           <el-form-item prop="depositScheme" label="押金方案" :label-width="formLabelWidth">
             <el-select v-model="formGroupCreate.depositScheme" multiple placeholder="请选择">
               <el-option
-                v-for="item in options_depositListScheme"
+                v-for="item in yajin"
                 :key="item.id"
                 :label="(item.name+' / ¥'+item.deposit+' / '+item.num+'颗电池')"
                 :value="item.id">
@@ -86,6 +86,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormGroupCreate',
+  props:['yajin'],
   data:function(){
     return ({
       rules:{
@@ -124,7 +125,6 @@ export default {
       grouptype:0,
       typePackage:['月套卡','次套卡','免费套餐'],
       options_cityListScheme: [],
-      options_depositListScheme: [],
       options_packageListScheme: [],
       loading:false,
 
@@ -167,7 +167,6 @@ export default {
       };
       vueThis.$rqs(vueThis.$yApi[type],function(objRps){
         if(type==='depositListScheme'){
-          vueThis.options_depositListScheme=objRps.result.list;
         }
         if(type==='packageListScheme'){
           vueThis.options_packageListScheme=objRps.result.list;
@@ -225,7 +224,7 @@ export default {
 
   },  //methods
   created:function(){
-    this.fetchOptionsScheme('depositListScheme');
+    //this.fetchOptionsScheme('depositListScheme');
     this.fetchOptionsScheme('packageListScheme');
     this.fetchCityList();
     // this.fetchGroupType();

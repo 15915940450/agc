@@ -1,7 +1,8 @@
+/* eslint-disable */
 var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
-var version='V15.1.0';
+var version='V15.1.1';
 
 //1.backupDist
 gulp.task('backupDist',function(){

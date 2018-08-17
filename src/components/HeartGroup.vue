@@ -62,7 +62,9 @@
       </el-row>
     </div>
 
-    <FormGroupCreate />
+    <FormGroupCreate
+      :yajin="yajin"
+      />
     <FormGroupSet v-bind="groupSetItem" />
     <StatusGroupCreate />
     <BaseStatus :msg="msg" />
@@ -81,6 +83,7 @@ export default {
   name:'HeartGroup',
   data:function(){
     return ({
+      yajin:[],
       group:[],
       msg:'群组设置成功',
       groupSetItem:null,
@@ -129,6 +132,40 @@ export default {
         objSendData:sendData
       });
     },
+    fetchYajinOrTaocan:function(type){
+      var vueThis=this;
+      var advancedParam=JSON.stringify({
+        groupCode:null
+      });
+      var sendData={
+        advancedParam:advancedParam,
+        pageNum:1,
+        pageSize:969
+      };
+      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
+        if(type==='depositListScheme'){
+          vueThis.yajin=objRps.result.list;
+        }
+        if(type==='packageListScheme'){
+          vueThis.options_packageListScheme=objRps.result.list;
+        }
+      },{
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(v.duration!==undefined){
+            var dORe=v.duration+'天';
+            if(+v.count>=20000){
+              v.count='无限';
+            }
+            if(v.duration==='' || v.duration==='─'){
+              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
+            }
+            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
+            return (v);
+          }
+        }
+      });
+    },
     groupCreate:function(){
       this.$store.commit('showGroupCreate');
     },
@@ -144,6 +181,7 @@ export default {
   },  //methods
   created:function(){
     this.fetchData();
+    this.fetchYajinOrTaocan('depositListScheme');
   }
 
 
@@ -209,7 +247,7 @@ export default {
     font-weight: bold;
     margin-left:-10px;
   }
-  
+
   .group_card-footer{
     text-align:center;
     margin-top: 20px;
