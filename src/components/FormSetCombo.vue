@@ -99,7 +99,7 @@ export default {
           if(v.duration!==undefined){
             var dORe=v.duration+'天';
             if(v.duration==='' || v.duration==='─'){
-              dORe=v.expirationDate && v.expirationDate.replace(/-/,'');
+              dORe=v.expirationDate && v.expirationDate.replace(/-/gi,'');
             }
             v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
             return (v);

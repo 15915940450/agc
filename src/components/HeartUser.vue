@@ -472,7 +472,7 @@ export default {
             if(v.duration!==undefined){
               var dORe=v.duration+'天';
               if(v.duration==='' || v.duration==='─'){
-                dORe=v.expirationDate.replace(/-/,'');
+                dORe=v.expirationDate.replace(/-/gi,'');
               }
               if(v.times>=20000){
                 v.times='无限';
