@@ -9,6 +9,7 @@ import HeartUserChangePhoneHistory from '@/components/HeartUserChangePhoneHistor
 import HeartDeposit from '@/components/HeartDeposit';
 import HeartCombo from '@/components/HeartCombo';
 import HeartComboHistory from '@/components/HeartComboHistory';
+import HeartXls from '@/components/HeartXls';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
 import HeartSysSetting from '@/components/HeartSysSetting';
@@ -61,6 +62,11 @@ export default new Router({
       path: '/combo/history',
       name: 'HeartComboHistory',
       component: HeartComboHistory
+    },
+    {
+      path: '/xls',
+      name: 'HeartXls',
+      component: HeartXls
     },
     {
       path: '/evs/:pn', //中控

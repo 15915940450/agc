@@ -18,6 +18,7 @@ var arrRouteName=[
   'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
+  'HeartXls',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting'
 ];
@@ -54,12 +55,18 @@ export default {
         },
         {
           id:5,
+          name:'报表管理',
+          theClass:'heartxls',
+          link:'/xls'
+        },
+        {
+          id:6,
           name:'中控管理',
           theClass:'heartevs',
           link:'/evs/1'
         },
         {
-          id:6,
+          id:7,
           name:'系统管理',
           theClass:'heartsyssetting',
           link:'/sys'

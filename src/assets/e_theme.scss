@@ -303,6 +303,21 @@ input::-ms-clear, input::-ms-reveal {
   color:#333;
   margin-top:15px;
 }
+//vim_table
+.vim_table{
+  width:630px;
+  border-collapse: collapse;
+}
+.vim_table td,.vim_table th{
+  text-align: left;
+  padding:14px 8px 10px;
+  border:1px solid #EEE;
+  font-size: 15px;
+  font-weight: 500;
+  
+  border-left: none;
+  border-right: none;
+}
 //snow 2018/07/28
 .im_snow{
   background:white;
