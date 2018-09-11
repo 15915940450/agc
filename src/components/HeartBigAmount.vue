@@ -41,10 +41,11 @@
       <el-form 
         :model="bigAmount" 
         ref="bigAmount" 
-        label-width="120px"
+        label-width="130px"
         label-position="left"
         size="mini"
         >
+
         <h4>收款帐户信息</h4>
         <el-form-item label="帐户名称:">
           深圳易马达科技有限公司
@@ -64,6 +65,59 @@
             <el-button type="text">复制</el-button>
           </span>
         </el-form-item>
+
+        <h4>付款账户信息</h4>
+        <el-form-item label="城市：">
+          <el-select v-model="bigAmount.city" placeholder="请选择">
+            <el-option label="区域一" value="shanghai"></el-option>
+            <el-option label="区域二" value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="代理商公司名称:">
+          <el-input v-model="bigAmount.x1"></el-input>
+        </el-form-item>
+        <el-form-item label="实际付款人名称：">
+          <el-input v-model="bigAmount.x2"></el-input>
+        </el-form-item>
+        <el-form-item label="支付金额：">
+          <el-input v-model="bigAmount.x3"></el-input>
+        </el-form-item>
+
+        <h4>申请内容</h4>
+        <el-form-item label="业务类型：">
+          <el-select v-model="bigAmount.city" placeholder="请选择">
+            <el-option label="充值电池押金" value="shanghai"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="单价：">
+          ￥ 998
+        </el-form-item>
+        <el-form-item label="数量：">
+          <el-input v-model="bigAmount.x3" placeholder="请输入数量"></el-input>
+        </el-form-item>
+        <el-form-item label="申请金额：">
+          ￥ 998 
+        </el-form-item>
+        <el-form-item label="付款凭单：">
+          <!-- multiple -->
+          <el-upload
+            class="upload-demo"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :before-remove="beforeRemove"
+            :limit="3"
+            :on-exceed="handleExceed"
+            :file-list="fileList"
+            :multiple="false"
+            >
+            <el-button size="small" type="success">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">支持jpg,png格式图片，不超过2M</div>
+          </el-upload>
+
+
+          <a href="javascript:;" class="see_demo">查看范例</a>
+        </el-form-item>
         <!-- <el-form-item
           label="年龄"
           prop="age"
@@ -76,7 +130,6 @@
         </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="submitForm('bigAmount')">提交</el-button>
-          <el-button @click="resetForm('bigAmount')">重置</el-button>
         </el-form-item>
       </el-form>
 
@@ -92,8 +145,15 @@ export default {
   data:function(){
     return ({
       bigAmount:{
-        age:18
-      }
+        age:18,
+        city:'',
+        x1:'',
+        x2:'',
+        x3:''
+      },
+      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+      
+      // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
     });
   },
   computed:{
@@ -106,7 +166,27 @@ export default {
       }
     }
   },
-  methods:{},
+  methods:{
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    submitForm:function(formName){
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          console.log('submit!');
+        }
+      });
+    }
+  },
   created:function(){
   }
 };
@@ -139,7 +219,10 @@ export default {
   }
   .big_amount_wrap{
     width: 690px;
-    margin-top: 60px;
+    margin-top: 20px;
     margin-left: 15px;
+  }
+  .see_demo{
+    color: #0CF !important;
   }
 </style>
