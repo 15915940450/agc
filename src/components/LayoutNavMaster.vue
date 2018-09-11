@@ -18,6 +18,7 @@ var arrRouteName=[
   'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
+  'HeartBigAmount',
   'HeartXls',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting'
@@ -55,18 +56,24 @@ export default {
         },
         {
           id:5,
+          name:'套餐管理',
+          theClass:'heartbigamount',
+          link:'/bigamount'
+        },
+        {
+          id:6,
           name:'报表管理',
           theClass:'heartxls',
           link:'/xls'
         },
         {
-          id:6,
+          id:7,
           name:'中控管理',
           theClass:'heartevs',
           link:'/evs/1'
         },
         {
-          id:7,
+          id:8,
           name:'系统管理',
           theClass:'heartsyssetting',
           link:'/sys'
