@@ -38,7 +38,7 @@ export default {
         },
         {
           id:2,
-          name:'群组管理',
+          name:'用户中心',
           theClass:'heartgroup',
           link:'/group'
         },
@@ -56,7 +56,7 @@ export default {
         },
         {
           id:5,
-          name:'套餐管理',
+          name:'大额充值',
           theClass:'heartbigamount',
           link:'/bigamount'
         },
@@ -74,7 +74,7 @@ export default {
         },
         {
           id:8,
-          name:'系统管理',
+          name:'系统设置',
           theClass:'heartsyssetting',
           link:'/sys'
         }
@@ -197,6 +197,21 @@ export default {
   #im_nav li.active a.heartsyssetting .icon_menu{
     background-position: 10px -265px;
   }
+  /*大额充值*/
+  #im_nav li a.heartbigamount .icon_menu{
+    background-position: -40px -365px;
+  }
+  #im_nav li.active a.heartbigamount .icon_menu{
+    background-position: 10px -365px;
+  }
+  /*syssetting*/
+  #im_nav li a.heartxls .icon_menu{
+    background-position: -40px -315px;
+  }
+  #im_nav li.active a.heartxls .icon_menu{
+    background-position: 10px -315px;
+  }
+
    ._port1590_ #im_nav li a .icon_menu{
     margin-left: -15px;
   }

@@ -30,7 +30,8 @@ export default {
   name: 'App',
   data:function(){
     return ({
-      port1590:(window.location.port==='1590')
+      port1590:false
+      // port1590:(window.location.port==='1590')
     });
   },
   components:{
