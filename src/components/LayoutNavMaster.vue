@@ -1,14 +1,84 @@
 <template lang="html">
   <div class="left_nav">
-    <ul id="im_nav">
+    <!-- <ul id="im_nav">
       <li v-for="(item) in imNav" :class="{active:(isActive+'')===(item.id+'')}" :key="item.id">
-        <a :class="item.theClass" href="javascript:;" @click="rrPush(item)">
+        <a v-if="item.navLevel!==2" :class="item.theClass" href="javascript:;" @click="rrPush(item)">
           <i class="icon_menu">icon_menu</i>
           <span>{{item.name}}</span>
         </a>
+        <el-dropdown v-else>
+          <span class="el-dropdown-link">
+            <a :class="item.theClass" href="javascript:;">
+              <i class="icon_menu">icon_menu</i>
+              <span>{{item.name}}</span>
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </a>
+            
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>用户查询</el-dropdown-item>
+            <el-dropdown-item>群组管理</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </li>
     </ul>
-    <div class="indicator"></div>
+    <div class="indicator"></div> -->
+
+
+    <el-menu
+      default-active="1"
+      @select="handleSelect"
+      >
+
+      <el-menu-item index="1">
+        <i class="icon_menu heartjoy">icon_menu</i>
+        <span slot="title">首页概览</span>
+      </el-menu-item>
+
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="icon_menu heartgroup">icon_menu</i>
+          <span>用户中心</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="2-1">
+            <small class="sec">用户查询</small>
+          </el-menu-item>
+          <el-menu-item index="2-2">
+            <small class="sec">群组管理</small>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+
+      
+
+      <el-menu-item index="3">
+        <i class="icon_menu heartdeposit">icon_menu</i>
+        <span slot="title">押金管理</span>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <i class="icon_menu heartcombo">icon_menu</i>
+        <span slot="title">套餐管理</span>
+      </el-menu-item>
+      <el-menu-item index="5">
+        <i class="icon_menu heartbigamount">icon_menu</i>
+        <span slot="title">大额充值</span>
+      </el-menu-item>
+      <el-menu-item index="6">
+        <i class="icon_menu heartxls">icon_menu</i>
+        <span slot="title">报表管理</span>
+      </el-menu-item>
+      <el-menu-item index="7">
+        <i class="icon_menu heartevs">icon_menu</i>
+        <span slot="title">中控管理</span>
+      </el-menu-item>
+      <el-menu-item index="8">
+        <i class="icon_menu heartsyssetting">icon_menu</i>
+        <span slot="title">系统设置</span>
+      </el-menu-item>
+
+    </el-menu>
+
   </div>
 </template>
 
@@ -40,7 +110,8 @@ export default {
           id:2,
           name:'用户中心',
           theClass:'heartgroup',
-          link:'/group'
+          link:'/group',
+          navLevel:2
         },
         {
           id:3,
@@ -89,6 +160,12 @@ export default {
       });
 
     },
+    handleSelect:function(index){
+      console.log(index);
+      this.$router.push({
+        path:this.imNav[index-1].link
+      });
+    },
     setDefaultNavActive:function(){
       var vueThis=this;
       var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
@@ -116,103 +193,82 @@ export default {
   .left_nav{
     position: relative;
   }
-  #im_nav,#im_nav *{
-    margin: 0;
-    padding: 0;
-  }
-  #im_nav li{
-    height: 50px;
-    list-style: none;
-    overflow: hidden;
-  }
-
-  #im_nav li a{
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    color:#333333;
-    line-height: 50px;
-    height: 50px;
-  }
-  #im_nav li:hover a,#im_nav li.active a{
-    color:#FF6600;
-  }
-  #im_nav li a .icon_menu{
+  .left_nav .icon_menu{
     display: inline-block;
     background:url(../assets/icon_menu.png) no-repeat 0 0;
-    width: 50px;
+    width: 24px;
     height: 20px;
     text-indent: -96900px;
-    position: relative;
-    top:15px;
-    border-left:3px solid #FFF;
     color:#FF6600;
     transition: all 0.2s ease-out;
   }
-  #im_nav li.active a .icon_menu{
-    border-left:3px solid #FF6600;
+  
+  .left_nav li{
+    border-left: 4px solid #FFF;
   }
-  .indicator{
-    display: none;
+  .left_nav .is-active{
+    /*background: #FF6600;*/
+    border-left: 4px solid #FF6600;
   }
-  /*joy*/
-  #im_nav li a.heartjoy .icon_menu{
-    background-position: -40px -15px;
+  .left_nav li>ul>li,.left_nav li>ul>li.is-active{
+    border-left: none;
+    /*padding-left: 20px;*/
   }
-  #im_nav li.active a.heartjoy .icon_menu{
-    background-position: 10px -15px;
-  }
-  /*group*/
-  #im_nav li a.heartgroup .icon_menu{
-    background-position: -40px -65px;
-  }
-  #im_nav li.active a.heartgroup .icon_menu{
-    background-position: 10px -65px;
-  }
-  /*deposit*/
-  #im_nav li a.heartdeposit .icon_menu{
-    background-position: -40px -115px;
-  }
-  #im_nav li.active a.heartdeposit .icon_menu{
-    background-position: 10px -115px;
-  }
-  /*combo*/
-  #im_nav li a.heartcombo .icon_menu{
-    background-position: -40px -165px;
-  }
-  #im_nav li.active a.heartcombo .icon_menu{
-    background-position: 10px -165px;
-  }
-  /*evs*/
-  #im_nav li a.heartevs .icon_menu{
-    background-position: -40px -215px;
-  }
-  #im_nav li.active a.heartevs .icon_menu{
-    background-position: 10px -215px;
-  }
-  /*syssetting*/
-  #im_nav li a.heartsyssetting .icon_menu{
-    background-position: -40px -265px;
-  }
-  #im_nav li.active a.heartsyssetting .icon_menu{
-    background-position: 10px -265px;
-  }
-  /*大额充值*/
-  #im_nav li a.heartbigamount .icon_menu{
-    background-position: -40px -365px;
-  }
-  #im_nav li.active a.heartbigamount .icon_menu{
-    background-position: 10px -365px;
-  }
-  /*syssetting*/
-  #im_nav li a.heartxls .icon_menu{
-    background-position: -40px -315px;
-  }
-  #im_nav li.active a.heartxls .icon_menu{
-    background-position: 10px -315px;
+  .left_nav small.sec{
+    font-size: 13px;
+    margin-left: 10px;
   }
 
-   ._port1590_ #im_nav li a .icon_menu{
-    margin-left: -15px;
+
+
+  .left_nav .icon_menu.heartjoy{
+    background-position: -60px -16px;
   }
+  .left_nav .is-active .icon_menu.heartjoy{
+    background-position: -10px -16px;
+  }
+  .left_nav .icon_menu.heartgroup{
+    background-position: -60px -66px;
+  }
+  .left_nav .is-active .icon_menu.heartgroup{
+    background-position: -10px -66px;
+  }
+  .left_nav .icon_menu.heartdeposit{
+    background-position: -60px -116px;
+  }
+  .left_nav .is-active .icon_menu.heartdeposit{
+    background-position: -10px -116px;
+  }
+  .left_nav .icon_menu.heartcombo{
+    background-position: -60px -166px;
+  }
+  .left_nav .is-active .icon_menu.heartcombo{
+    background-position: -10px -166px;
+  }
+  
+  .left_nav .icon_menu.heartbigamount{
+    background-position: -60px -216px;
+  }
+  .left_nav .is-active .icon_menu.heartbigamount{
+    background-position: -10px -216px;
+  }
+  .left_nav .icon_menu.heartxls{
+    background-position: -60px -266px;
+  }
+  .left_nav .is-active .icon_menu.heartxls{
+    background-position: -10px -266px;
+  }
+  .left_nav .icon_menu.heartevs{
+    background-position: -60px -316px;
+  }
+  .left_nav .is-active .icon_menu.heartevs{
+    background-position: -10px -316px;
+  }
+  .left_nav .icon_menu.heartsyssetting{
+    background-position: -60px -366px;
+  }
+  .left_nav .is-active .icon_menu.heartsyssetting{
+    background-position: -10px -366px;
+  }
+
 </style>
