@@ -1,32 +1,8 @@
 <template lang="html">
   <div class="left_nav">
-    <!-- <ul id="im_nav">
-      <li v-for="(item) in imNav" :class="{active:(isActive+'')===(item.id+'')}" :key="item.id">
-        <a v-if="item.navLevel!==2" :class="item.theClass" href="javascript:;" @click="rrPush(item)">
-          <i class="icon_menu">icon_menu</i>
-          <span>{{item.name}}</span>
-        </a>
-        <el-dropdown v-else>
-          <span class="el-dropdown-link">
-            <a :class="item.theClass" href="javascript:;">
-              <i class="icon_menu">icon_menu</i>
-              <span>{{item.name}}</span>
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </a>
-            
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>用户查询</el-dropdown-item>
-            <el-dropdown-item>群组管理</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </li>
-    </ul>
-    <div class="indicator"></div> -->
-
 
     <el-menu
-      default-active="1"
+      :default-active="isActive"
       @select="handleSelect"
       >
 
@@ -35,7 +11,7 @@
         <span slot="title">首页概览</span>
       </el-menu-item>
 
-      <el-submenu index="2">
+      <el-submenu index="">
         <template slot="title">
           <i class="icon_menu heartgroup">icon_menu</i>
           <span>用户中心</span>
@@ -44,7 +20,7 @@
           <el-menu-item index="2-1">
             <small class="sec">用户查询</small>
           </el-menu-item>
-          <el-menu-item index="2-2">
+          <el-menu-item index="2">
             <small class="sec">群组管理</small>
           </el-menu-item>
         </el-menu-item-group>
@@ -98,7 +74,7 @@ export default {
   name:'LayoutNavMaster',
   data:function(){
     return ({
-      isActive:1, //1,2,3,4,5
+      isActive:'1', //1,2,3,4,5(string)
       imNav:[
         {
           id:1,
@@ -153,15 +129,8 @@ export default {
     });
   },
   methods:{
-    rrPush:function(item){
-      // 编程式导航
-      this.$router.push({
-        path:item.link
-      });
-
-    },
     handleSelect:function(index){
-      console.log(index);
+      // console.log(index);
       this.$router.push({
         path:this.imNav[index-1].link
       });
@@ -169,13 +138,13 @@ export default {
     setDefaultNavActive:function(){
       var vueThis=this;
       var defaultNavActive=_.findIndexVague(arrRouteName,vueThis.$route.name);  //-1,0,1,2,3,4
-      vueThis.isActive=(defaultNavActive===-1?1:defaultNavActive+1);
+      vueThis.isActive=''+(defaultNavActive===-1?1:defaultNavActive+1);
     },
     listenRouteChange:function(){
       var vueThis=this;
       vueThis.$router.beforeEach((to, from, next) => {
         var navActive=_.findIndexVague(arrRouteName,to.name);
-        vueThis.isActive=(navActive===-1?1:navActive+1);
+        vueThis.isActive=''+(navActive===-1?1:navActive+1);
         next();
       });
     }
