@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import HeartJoy from '@/components/HeartJoy';
 import HeartGroup from '@/components/HeartGroup';
 import HeartUser from '@/components/HeartUser';
+import HeartSearchUser from '@/components/HeartSearchUser';
 import HeartUserChangePhone from '@/components/HeartUserChangePhone';
 import HeartUserChangePhoneHistory from '@/components/HeartUserChangePhoneHistory';
 import HeartDeposit from '@/components/HeartDeposit';
@@ -33,6 +34,11 @@ export default new Router({
       path: '/group', //群组
       name: 'HeartGroup',
       component: HeartGroup
+    },
+    {
+      path: '/searchuser', //群组
+      name: 'HeartSearchUser',
+      component: HeartSearchUser
     },
     {
       path: '/user/:groupcode/:type/:pn',  //用户,type:1(线上交押金),2(线下交押金)

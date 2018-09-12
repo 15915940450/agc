@@ -129,7 +129,7 @@
             title=""
             :visible.sync="demoImg"
             width="860px"
-            :before-close="handleClose">
+            >
             <div>
               <img src="../assets/big_amount_demo_img.png" alt="">
             </div>

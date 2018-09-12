@@ -1,13 +1,13 @@
 <template lang="html">
-  <div class="">
-    demo
+  <div class="search_user">
+    HeartSearchUser
   </div>
 </template>
 <script>
 import {mapState} from 'vuex';
 
 export default {
-  name:'',
+  name:'HeartSearchUser',
   data:function(){
     return ({
     });

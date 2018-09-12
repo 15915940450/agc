@@ -17,7 +17,7 @@
           <span>用户中心</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="2-1">
+          <el-menu-item index="9">
             <small class="sec">用户查询</small>
           </el-menu-item>
           <el-menu-item index="2">
@@ -61,7 +61,7 @@
 <script>
 var arrRouteName=[
   'HeartJoy',
-  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory',
+  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartSearchUser',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
   'HeartBigAmount',
@@ -124,6 +124,12 @@ export default {
           name:'系统设置',
           theClass:'heartsyssetting',
           link:'/sys'
+        },
+        {
+          id:9,
+          name:'用户查询',
+          theClass:'heartsearchuser',
+          link:'/searchuser'
         }
       ]
     });
