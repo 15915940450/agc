@@ -51,38 +51,78 @@
       </div>
     </div>
 
+    
     <div class="combo_list" v-loading="loadingComboList">
-      <el-row :gutter="10">
-        <el-col :span="8" v-for="combo in comboList" :key="combo.id">
-          <div class="combo_card">
-            <h4>{{combo.name}}</h4>
-            <p class="combo_card_info">
-              <span v-if="combo.duration!=='' && combo.duration!=='─'">有效期 {{combo.duration}} 天</span>
-              <span v-else>{{combo.expirationDate}} 失效</span>
-              <span>
-                <strong>{{combo.agentPrice}}</strong>
-                元/份
-              </span>
-            </p>
-            <p class="combo_card_buy">
-              <span>
-                剩余
-                <strong>{{combo.number}}</strong>
-                份
-              </span>
-              <span>
-                <el-button type="primary" size="mini" @click="handleComboBuy(combo)">购买</el-button>
-              </span>
-            </p>
-            <span class="mark_triangle">
-              <!-- 亦可以用矩形傾斜實現 -->
-            </span>
-            <!-- 无限 -->
-            <mark>{{combo.count}}</mark>
-          </div>
-        </el-col>
+      <el-tabs v-model="TabActive">
+        <el-tab-pane label="可用" name="available">
+          <el-row :gutter="10">
+            <el-col :span="8" v-for="combo in comboList" :key="combo.id">
+              <div class="combo_card">
+                <h4>{{combo.name}}</h4>
+                <p class="combo_card_info">
+                  <span v-if="combo.duration!=='' && combo.duration!=='─'">有效期 {{combo.duration}} 天</span>
+                  <span v-else>{{combo.expirationDate}} 失效</span>
+                  <span>
+                    <strong>{{combo.agentPrice}}</strong>
+                    元/份
+                  </span>
+                </p>
+                <p class="combo_card_buy">
+                  <span>
+                    剩余
+                    <strong>{{combo.number}}</strong>
+                    份
+                  </span>
+                  <span>
+                    <el-button type="primary" size="mini" @click="handleComboBuy(combo)">购买</el-button>
+                  </span>
+                </p>
+                <span class="mark_triangle">
+                  <!-- 亦可以用矩形傾斜實現 -->
+                </span>
+                <!-- 无限 -->
+                <mark>{{combo.count}}</mark>
+              </div>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
 
-      </el-row>
+        <!-- 過期 -->
+        <el-tab-pane label="过期" name="un">
+          <el-row :gutter="10">
+            <el-col :span="8" v-for="combo in comboListUn" :key="combo.id">
+              <div class="combo_card">
+                <h4>{{combo.name}}</h4>
+                <p class="combo_card_info un">
+                  <span v-if="combo.duration!=='' && combo.duration!=='─'">有效期 {{combo.duration}} 天</span>
+                  <span v-else>{{combo.expirationDate}} 失效</span>
+                  <span>
+                    <strong>{{combo.agentPrice}}</strong>
+                    元/份
+                  </span>
+                </p>
+                <p class="combo_card_buy un">
+                  <span>
+                    剩余
+                    <strong>{{combo.number}}</strong>
+                    份
+                  </span>
+                  <span class="o0">
+                    <el-button type="primary" size="mini" @click="handleComboBuy(combo)">购买</el-button>
+                  </span>
+                </p>
+                <span class="mark_triangle un">
+                  <!-- 亦可以用矩形傾斜實現 -->
+                </span>
+                <!-- 无限 -->
+                <mark>{{combo.count}}</mark>
+                <img class="img_outofday" src="../assets/outofday.png" alt="過期">
+              </div>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
+      </el-tabs>
+      
     </div>
     <div class="im_empty" v-if="!comboList.length && !loadingComboList">
       <img class="im_empty_img" src="../assets/empty_combo.png" alt="暂无可购买的套餐" />
@@ -104,6 +144,7 @@ export default {
   name:'HeartCombo',
   data:function(){
     return ({
+      TabActive:'available',
       loadingComboList:true,
       comboBuyItem:null,
       comboList:[
@@ -120,6 +161,8 @@ export default {
         // "number":3  //购买数量
       // }
 
+      ],
+      comboListUn:[
       ]
     });
   },
@@ -129,12 +172,14 @@ export default {
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
-        this.fetchComboList();
+        this.fetchComboList(1);
+        this.fetchComboList(2);
       }
     },
     'modalStore.statusTopUp':function(val){
       if(!val){
-        this.fetchComboList();
+        this.fetchComboList(1);
+        this.fetchComboList(2);
       }
     }
   },
@@ -143,22 +188,31 @@ export default {
     StatusTopUp
   },
   methods:{
-    fetchComboList:function(){
+    fetchComboList:function(paramType){
       var vueThis=this;
+      var sendData={
+        type:paramType
+      };
       vueThis.loadingComboList=true;
       vueThis.$rqs(vueThis.$yApi.comboList,function(objRps){
         // console.log(objRps);
         vueThis.loadingComboList=false;
-        vueThis.comboList=objRps.result.list;
-      },{reviver:function(k,v){
-        if(k==='count'){
-          if(window.Number(v)>=20000){
-            return ('无限次');
-          }else{
-            return (v+'颗');
-          }
+        if(+paramType===1){
+          vueThis.comboList=objRps.result.list;
+        }else{        
+          vueThis.comboListUn=objRps.result.list;
         }
-      }});
+      },{
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='count'){
+            if(window.Number(v)>=20000){
+              return ('无限次');
+            }else{
+              return (v+'颗');
+            }
+          }
+        }});
     },
     handleComboBuy:function(combo){
       this.comboBuyItem=combo;
@@ -166,7 +220,8 @@ export default {
     }
   },
   created:function(){
-    this.fetchComboList();
+    this.fetchComboList(1);
+    this.fetchComboList(2);
   }
 };
 </script>
@@ -240,6 +295,7 @@ export default {
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 15px;
+    position: relative;
   }
   mark{
     position: absolute;
@@ -261,6 +317,9 @@ export default {
     top: -44px;
     right: -44px;
     transform: rotate(-45deg);
+  }
+  .mark_triangle.un{
+    border-color: #cfcfd0;
   }
   .combo_card h4{
     font-size: 18px;
@@ -291,7 +350,15 @@ export default {
     font-weight: 500;
     color: #F60;
   }
+  .combo_card_buy.un strong,.combo_card_info.un strong{
+    color: #555;
+  }
   .combo_history_entrance{
     float:right;
+  }
+  .img_outofday{
+    position: absolute;
+    left: 72px;
+    top: 0;
   }
 </style>

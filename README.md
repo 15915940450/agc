@@ -12,6 +12,7 @@
 * BaseStatus.vue (Status...)
 * DemoModal.vue and DemoTable.vue is used frequently.
 * current version is 15.0.0(README.md,package.json,gulpfile.js)
+* assets: src="../assets/empty_combo.png"
 
 
 ## vim
