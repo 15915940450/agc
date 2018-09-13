@@ -13,7 +13,13 @@
         <el-form :model="formGroupSet" :rules="rules" ref="formGroupSet">
 
           <el-form-item prop="name" label="群组名称" :label-width="formLabelWidth">
-            <el-input v-model="formGroupSet.name" auto-complete="off" placeholder="限字母、数字、汉字、符号，不超过10个字"></el-input>
+            <el-input 
+              v-model="formGroupSet.name" 
+              auto-complete="off" 
+              placeholder="限字母、数字、汉字、符号，不超过10个字"
+              >
+              
+            </el-input>
           </el-form-item>
           <el-form-item prop="canRefund" label="群组类型" :label-width="formLabelWidth">
             <el-select v-model="formGroupSet.canRefund" placeholder="请选择" disabled>
