@@ -8,7 +8,7 @@
           <small>套餐管理</small>
         </el-breadcrumb-item>
         <el-breadcrumb-item>
-          <small>购买记录</small>
+          <small>套餐记录</small>
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>

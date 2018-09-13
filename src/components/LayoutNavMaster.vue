@@ -61,13 +61,14 @@
 <script>
 var arrRouteName=[
   'HeartJoy',
-  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartSearchUser',
+  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
   'HeartBigAmount',
   'HeartXls',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
-  'HeartSysSetting'
+  'HeartSysSetting',
+  'HeartSearchUser'
 ];
 
 export default {
