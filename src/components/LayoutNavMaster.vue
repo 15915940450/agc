@@ -4,6 +4,7 @@
     <el-menu
       :default-active="isActive"
       @select="handleSelect"
+      :default-openeds="arrOpeneds"
       >
 
       <el-menu-item index="1">
@@ -11,7 +12,7 @@
         <span slot="title">首页概览</span>
       </el-menu-item>
 
-      <el-submenu index="">
+      <el-submenu index="100">
         <template slot="title">
           <i class="icon_menu heartgroup">icon_menu</i>
           <span>用户中心</span>
@@ -76,6 +77,7 @@ export default {
   data:function(){
     return ({
       isActive:'1', //1,2,3,4,5(string)
+
       imNav:[
         {
           id:1,
@@ -134,6 +136,20 @@ export default {
         }
       ]
     });
+  },
+  computed:{
+    arrOpeneds:function(){
+      var arrOpeneds=[];
+      // console.log(this.isActive);
+      switch(true){
+      case (+this.isActive===9 || +this.isActive===2):
+        arrOpeneds=['100'];
+        break;
+      default:
+
+      }
+      return arrOpeneds;
+    }
   },
   methods:{
     handleSelect:function(index){
