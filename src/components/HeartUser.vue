@@ -500,12 +500,13 @@ export default {
     }
   },
   created:function(){
-    this.fetchData();
     // console.log(this.$route.params);
     //不是线上交押金（1）
     this.isType2=!(this.$route.params.type==='1');
     //search
     this.search=this.$route.query.userPhone || '';
+    //拉去數據
+    this.fetchData();
   }
 };
 </script>

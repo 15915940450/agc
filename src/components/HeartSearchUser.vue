@@ -7,7 +7,7 @@
       <!-- el-autocomplete -->
       <el-autocomplete
         class="search_input"
-        v-model="userPhone"
+        v-model.trim="userPhone"
         :fetch-suggestions="querySearch"
         placeholder="请输入手机号码"
         suffix-icon="el-icon-search"
@@ -76,11 +76,24 @@ export default {
         if(objRps.result.total){
           //輸入歷史列表存貯到localstorage
           var searchphone=JSON.parse(window.localStorage.searchphone || '[]');
-          searchphone.push({
-            value:vueThis.userPhone
+
+          var found=searchphone.findIndex(function(v){
+            return (''+v.value===''+vueThis.userPhone);
           });
-          var strsearchphone=JSON.stringify(searchphone);
-          window.localStorage.setItem('searchphone',strsearchphone);
+          // console.log(found); //-1
+          //去重，最多10條
+          if(found===-1){
+            var searchphoneLen=searchphone.unshift({
+              value:vueThis.userPhone
+            });
+            if(searchphoneLen>10){
+              searchphone.length=10;
+            }
+            var strsearchphone=JSON.stringify(searchphone);
+            window.localStorage.setItem('searchphone',strsearchphone);
+          }
+
+          
           //跳轉頁面
           var groupcode=objRps.result.list[0].groupCode;
           var type=1;
