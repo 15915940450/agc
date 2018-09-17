@@ -69,9 +69,19 @@ export default {
           userPhone:vueThis.userPhone
         })
       };
+      // console.log(window.localStorage.searchphone); //undefined,''--->[]
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
-        console.log(objRps);
+        // console.log(objRps);
+        //有結果返回
         if(objRps.result.total){
+          //輸入歷史列表存貯到localstorage
+          var searchphone=JSON.parse(window.localStorage.searchphone || '[]');
+          searchphone.push({
+            value:vueThis.userPhone
+          });
+          var strsearchphone=JSON.stringify(searchphone);
+          window.localStorage.setItem('searchphone',strsearchphone);
+          //跳轉頁面
           var groupcode=objRps.result.list[0].groupCode;
           var type=1;
           var pn=1;
@@ -81,6 +91,12 @@ export default {
               userPhone:vueThis.userPhone
             }
           });
+
+
+          // var searchphone=[
+          //   {value:vueThis.userPhone}
+          // ];
+          
 
           // var sendData={
           //   pageNum:1,
@@ -94,6 +110,11 @@ export default {
           // },{
           //   objSendData:sendData
           // });
+        }else{
+          vueThis.$message({
+            showClose: true,
+            message: '该用户不存在，请检查手机号码'
+          });
         }
       },{
         objSendData:sendData
@@ -111,14 +132,17 @@ export default {
       };
     },
     loadAll() {
-      return [
-        { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-        { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-        { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-        { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
-        { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
-        { "value": "贡茶", "address": "上海市长宁区金钟路633号" }
-      ];
+      // return [
+      //   { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
+      //   { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
+      //   { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+      //   { "value": "泷千家(天山西路店)", "address": "天山西路438号" },
+      //   { "value": "胖仙女纸杯蛋糕（上海凌空店）", "address": "上海市长宁区金钟路968号1幢18号楼一层商铺18-101" },
+      //   { "value": "贡茶", "address": "上海市长宁区金钟路633号" }
+      // ];
+      var searchphone=JSON.parse(window.localStorage.searchphone || '[]');
+      console.log(searchphone);
+      return (searchphone);
     },
     handleSelect(item) {
       _.logErr(item);
