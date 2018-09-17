@@ -24,8 +24,12 @@
       </el-input> -->
       <p class="latest_add">
         最近添加： 
-        <a href="javascript:;">13800138000</a>
-        <a href="javascript:;">13800138000</a>
+        <a href="javascript:;" v-for="item in userLastAdd" :key="item" @click="handleClickLastAdd(item)">
+          {{item}}
+        </a>
+        <span v-if="!userLastAdd.length">
+          无
+        </span>
       </p>
     </div>
   </div>
@@ -38,7 +42,8 @@ export default {
   data:function(){
     return ({
       userPhone:'',
-      userphoneINlocalstorage: []
+      userphoneINlocalstorage:[],
+      userLastAdd:[]
     });
   },
   computed:{
@@ -49,6 +54,7 @@ export default {
     'modalStore.needLogin':function(val){
       if(!val){
         this.fetchData();
+        this.fetchLastAdd();
       }
     },
     'userPhone':_.debounce(function(val){
@@ -60,16 +66,18 @@ export default {
   components:{
   },
   methods: {
-    fetchData:function(){
+    fetchData:function(userPhone){
       var vueThis=this;
+      userPhone=userPhone || vueThis.userPhone;
       var sendData={
         pageNum:1,
         pageSize:10,
         advancedParam:JSON.stringify({
-          userPhone:vueThis.userPhone
+          userPhone:userPhone
         })
       };
       // console.log(window.localStorage.searchphone); //undefined,''--->[]
+      //用戶列表
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
         // console.log(objRps);
         //有結果返回
@@ -78,13 +86,13 @@ export default {
           var searchphone=JSON.parse(window.localStorage.searchphone || '[]');
 
           var found=searchphone.findIndex(function(v){
-            return (''+v.value===''+vueThis.userPhone);
+            return (''+v.value===''+userPhone);
           });
           // console.log(found); //-1
           //去重，最多10條
           if(found===-1){
             var searchphoneLen=searchphone.unshift({
-              value:vueThis.userPhone
+              value:userPhone
             });
             if(searchphoneLen>10){
               searchphone.length=10;
@@ -101,7 +109,7 @@ export default {
           vueThis.$router.push({
             path:'/user/'+groupcode+'/'+type+'/'+pn,
             query:{
-              userPhone:vueThis.userPhone
+              userPhone:userPhone
             }
           });
 
@@ -133,6 +141,15 @@ export default {
         objSendData:sendData
       });
     },
+    fetchLastAdd:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userLastAdd,function(objRps){
+        if(objRps.result.list.length>2){
+          objRps.result.list.length===2;
+        }
+        vueThis.userLastAdd=objRps.result.list;
+      });
+    },
     querySearch(queryString, cb) {
       var userphoneINlocalstorage = this.userphoneINlocalstorage;
       var results = queryString ? userphoneINlocalstorage.filter(this.createFilter(queryString)) : userphoneINlocalstorage;
@@ -154,15 +171,19 @@ export default {
       //   { "value": "贡茶", "address": "上海市长宁区金钟路633号" }
       // ];
       var searchphone=JSON.parse(window.localStorage.searchphone || '[]');
-      console.log(searchphone);
+      // console.log(searchphone);
       return (searchphone);
     },
     handleSelect(item) {
       _.logErr(item);
+    },
+    handleClickLastAdd:function(item){
+      // console.log(item);
+      this.fetchData(item);
     }
   },
   created:function(){
-    
+    this.fetchLastAdd();
   },
   mounted:function(){
     this.userphoneINlocalstorage = this.loadAll();
