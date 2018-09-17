@@ -279,6 +279,7 @@ import FormSetCombo from './FormSetCombo.vue';
 import FormSetDeposit from './FormSetDeposit.vue';
 import FormSetFreeDay from './FormSetFreeDay.vue';
 
+
 export default {
   name:'HeartUser',
   data:function(){
@@ -503,6 +504,8 @@ export default {
     // console.log(this.$route.params);
     //不是线上交押金（1）
     this.isType2=!(this.$route.params.type==='1');
+    //search
+    this.search=this.$route.query.userPhone || '';
   }
 };
 </script>

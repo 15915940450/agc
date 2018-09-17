@@ -9,7 +9,7 @@
         class="search_input"
         v-model="userPhone"
         :fetch-suggestions="querySearch"
-        placeholder="请输入内容"
+        placeholder="请输入手机号码"
         suffix-icon="el-icon-search"
         @select="handleSelect"
         >
@@ -37,7 +37,7 @@ export default {
   name:'HeartSearchUser',
   data:function(){
     return ({
-      userPhone: '',
+      userPhone:'',
       userphoneINlocalstorage: []
     });
   },
@@ -50,11 +50,55 @@ export default {
       if(!val){
         this.fetchData();
       }
-    }
+    },
+    'userPhone':_.debounce(function(val){
+      if(_.isPhone(val)){
+        this.fetchData();
+      }
+    },1520)
   },
   components:{
   },
   methods: {
+    fetchData:function(){
+      var vueThis=this;
+      var sendData={
+        pageNum:1,
+        pageSize:10,
+        advancedParam:JSON.stringify({
+          userPhone:vueThis.userPhone
+        })
+      };
+      vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
+        console.log(objRps);
+        if(objRps.result.total){
+          var groupcode=objRps.result.list[0].groupCode;
+          var type=1;
+          var pn=1;
+          vueThis.$router.push({
+            path:'/user/'+groupcode+'/'+type+'/'+pn,
+            query:{
+              userPhone:vueThis.userPhone
+            }
+          });
+
+          // var sendData={
+          //   pageNum:1,
+          //   pageSize:10,
+          //   advancedParam:JSON.stringify({
+          //     groupCodes:[groupcode]
+          //   })
+          // };
+          // vueThis.$rqs(vueThis.$yApi.groupList,function(objRps2){
+          //   console.log(objRps2);
+          // },{
+          //   objSendData:sendData
+          // });
+        }
+      },{
+        objSendData:sendData
+      });
+    },
     querySearch(queryString, cb) {
       var userphoneINlocalstorage = this.userphoneINlocalstorage;
       var results = queryString ? userphoneINlocalstorage.filter(this.createFilter(queryString)) : userphoneINlocalstorage;
