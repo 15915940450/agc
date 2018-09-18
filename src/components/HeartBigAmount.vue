@@ -44,6 +44,7 @@
         label-width="130px"
         label-position="left"
         size="mini"
+        :rules="rules"
         >
         <el-card class="box-card">
 
@@ -68,7 +69,7 @@
         </el-form-item>
         <!-- form start 69 -->
         <h4>付款账户信息</h4>
-        <el-form-item label="城市：">
+        <el-form-item label="城市：" prop="cityCode">
 
           <el-select v-model="bigAmount.cityCode" placeholder="请选择">
             <el-option
@@ -80,26 +81,26 @@
           </el-select>
 
         </el-form-item>
-        <el-form-item label="代理商公司名称:">
+        <el-form-item label="代理商公司名称:" prop="agentCompany">
           <el-input v-model="bigAmount.agentCompany" placeholder="请输入公司名称或付款人名称"></el-input>
         </el-form-item>
-        <el-form-item label="实际付款人名称：">
+        <el-form-item label="实际付款人名称：" prop="actualPayer">
           <el-input v-model="bigAmount.actualPayer" placeholder="请输入付款凭证单上的付款人或付款公司名称"></el-input>
         </el-form-item>
-        <el-form-item label="支付金额(元)：">
-          <el-input v-model="bigAmount.payAmount" placeholder="请输入公司名称或付款人名称"></el-input>
+        <el-form-item label="支付金额(元)：" prop="payAmount">
+          <el-input v-model.number="bigAmount.payAmount" placeholder="请输入付款凭单上的金额"></el-input>
         </el-form-item>
 
         <h4>申请内容</h4>
         <el-form-item label="业务类型：">
-          <el-select v-model="bigAmount.city" placeholder="请选择">
-            <el-option label="充值电池押金" value="shanghai"></el-option>
+          <el-select v-model="bigAmount.forNext" placeholder="请选择" disabled>
+            <el-option label="充值电池押金" value="1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="单价：">
-          ￥ 998
+          ￥ {{price}}
         </el-form-item>
-        <el-form-item label="数量：">
+        <el-form-item label="数量：" prop="batteryNum">
           <el-input-number 
             v-model="bigAmount.batteryNum" 
             :min="1" 
@@ -162,12 +163,65 @@ export default {
       demoImg:false,
       price:0,
       bigAmount:{
-        age:18,
+        forNext:'1',
         cityCode:null,
         agentCompany:'',
         actualPayer:'',
         payAmount:'',
+        // bigAmountPayVoucher:'',
         batteryNum:1
+      },
+      rules:{
+        agentCompany:[
+          {
+            required:true,
+            message:'请输入公司名称',
+            trigger:'blur'
+          },
+          {
+            min:2,
+            max:15,
+            message:'长度在 2 到 15 个字符',
+            trigger:'blur'
+          }
+        ],
+        actualPayer:[
+          {
+            max:15,
+            message:'15 个字符以内',
+            trigger:'blur'
+          }
+        ],
+        payAmount:[
+          {
+            type:'integer',
+            required:true,
+            max:500000,
+            message:'金额在500,000以内，必要',
+            trigger:'blur'
+          }
+        ],
+        batteryNum:[
+          {
+            required:true,
+            message:'请输入一个数字',
+            trigger:'blur'
+          }
+        ],
+        // bigAmountPayVoucher:[
+        //   {
+        //     required:true,
+        //     message:'请上传付款凭单',
+        //     trigger:'blur'
+        //   }
+        // ],
+        cityCode:[
+          {
+            required:true,
+            message:'请选择城市',
+            trigger:'blur'
+          }
+        ]
       },
       options_cityListScheme:[],
       fileList:[
@@ -200,6 +254,12 @@ export default {
     }
   },
   methods:{
+    userQuery:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.price=objRps.result.batteryAmount;
+      });
+    },
     fetchCityList:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
@@ -245,12 +305,28 @@ export default {
       var vueThis=this;
       vueThis.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(vueThis.fileList);
+          // console.log(vueThis.fileList);
+          var sendData={
+            cityCode:vueThis.bigAmount.cityCode,
+            agentCompany:vueThis.bigAmount.agentCompany,
+            actualPayer:vueThis.bigAmount.actualPayer,
+            payAmount:vueThis.bigAmount.payAmount,
+            payVoucher:vueThis.bigAmountPayVoucher,
+            amount:vueThis.bigAmountAmount,
+            batteryNum:vueThis.bigAmount.batteryNum
+          };
+          vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
+            _.logErr(objRps)
+
+          },{
+            objSendData:sendData
+          });
         }
       });
     }
   },
   created:function(){
+    this.userQuery();
     this.fetchCityList();
     this.action=this.$yApi.uploadImg;
   }
