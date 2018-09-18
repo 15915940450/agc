@@ -62,7 +62,7 @@
 <script>
 var arrRouteName=[
   'HeartJoy',
-  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory',
+  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartUserCombo',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
   'HeartBigAmount',

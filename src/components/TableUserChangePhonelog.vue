@@ -37,6 +37,23 @@
             prop="newPhone"
             >
           </el-table-column>
+          <el-table-column
+            label="备注"
+            >
+            <template slot-scope="scope">
+              <el-tooltip
+                v-if="scope.row.remark"
+                effect="dark" 
+                :content="scope.row.remark" 
+                placement="left"
+                >
+                <el-button type="text">查看</el-button>
+              </el-tooltip>
+              <span v-else>─</span>
+            </template>
+
+            
+          </el-table-column>
         </el-table>
 
       </div>
