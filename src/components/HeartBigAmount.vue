@@ -109,15 +109,16 @@
         <el-form-item label="付款凭单：">
           <!-- multiple -->
           <el-upload
-            class="upload-demo"
+            ref="uploadimg"
             :action="action"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
             :before-remove="beforeRemove"
-            :limit="3"
+            :limit="1"
             :on-exceed="handleExceed"
+            :on-success="handleSuccess"
+            :on-remove="handleRemove"
             :file-list="fileList"
             :multiple="false"
+            accept="image/*"
             >
             <el-button size="small" type="success">上传图片</el-button>
             <div slot="tip" class="el-upload__tip">支持jpg,png格式图片，不超过2M</div>
@@ -169,7 +170,9 @@ export default {
         x2:'',
         x3:''
       },
-      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+      fileList:[
+        // {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
+      ]
       
       // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
     });
@@ -189,24 +192,36 @@ export default {
       this.demoImg=true;
     },
     handleNumChange:function(){
-      console.log(99);
+      console.log('handleNumChange');
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    //上傳附件
+    handleExceed() {
+      this.$message.warning('只能上传一张图片');
     },
-    handlePreview(file) {
-      console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    beforeRemove(file, fileList) {
+    beforeRemove(file) {
       return this.$confirm(`确定移除 ${ file.name }？`);
     },
+    handleSuccess:function(file,fileList){
+      var vueThis=this;
+      if(+fileList.response.code===1000){
+        vueThis.fileList[0]=fileList.response.result;
+      }else{
+        vueThis.$refs.uploadimg.clearFiles();
+        vueThis.$notify.error({
+          title: '错误',
+          message:fileList.response.msg
+        });
+      }
+    },
+    handleRemove:function(file,fileList){
+      this.fileList=fileList;
+    },
+
     submitForm:function(formName){
-      this.$refs[formName].validate((valid) => {
+      var vueThis=this;
+      vueThis.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('submit!');
+          console.log(vueThis.fileList);
         }
       });
     }
