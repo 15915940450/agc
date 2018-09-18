@@ -110,7 +110,7 @@
           <!-- multiple -->
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            :action="action"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
@@ -160,6 +160,7 @@ export default {
   name:'HeartBigAmount',
   data:function(){
     return ({
+      action:'',
       demoImg:false,
       bigAmount:{
         age:18,
@@ -211,6 +212,7 @@ export default {
     }
   },
   created:function(){
+    this.action=this.$yApi.uploadImg;
   }
 };
 </script>
