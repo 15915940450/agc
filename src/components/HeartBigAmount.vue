@@ -113,7 +113,8 @@
         <el-form-item label="申请金额：">
           ￥ {{bigAmountAmount}}
         </el-form-item>
-        <el-form-item label="付款凭单：">
+        <el-form-item label="付款凭单：" prop="bigAmountPayVoucher">
+          
           <!-- multiple -->
           <el-upload
             ref="uploadimg"
@@ -142,6 +143,8 @@
               <img src="../assets/big_amount_demo_img.png" alt="">
             </div>
           </el-dialog>
+          <!-- hidden -->
+          <el-input type="hidden" v-model="bigAmount.bigAmountPayVoucher" placeholder="请上传付款凭单"></el-input>
         </el-form-item>
         </el-card>
 
@@ -168,7 +171,7 @@ export default {
         agentCompany:'',
         actualPayer:'',
         payAmount:'',
-        // bigAmountPayVoucher:'',
+        bigAmountPayVoucher:'',
         batteryNum:1
       },
       rules:{
@@ -208,13 +211,12 @@ export default {
             trigger:'blur'
           }
         ],
-        // bigAmountPayVoucher:[
-        //   {
-        //     required:true,
-        //     message:'请上传付款凭单',
-        //     trigger:'blur'
-        //   }
-        // ],
+        bigAmountPayVoucher:[
+          {
+            required:true,
+            message:'请上传付款凭单'
+          }
+        ],
         cityCode:[
           {
             required:true,
@@ -234,9 +236,6 @@ export default {
   },
   computed:{
     ...mapState(['agent','modalStore']),
-    bigAmountPayVoucher:function(){
-      return (this.fileList.url);
-    },
     bigAmountAmount:function(){
       var num=this.bigAmount.batteryNum;
       // console.log(num);
@@ -251,6 +250,13 @@ export default {
       if(!val){
         this.fetchComboList();
       }
+    },
+    fileList:{
+      handler:function(val){
+        // _.logErr(val);
+        this.bigAmount.bigAmountPayVoucher=val.length?val[0].url:'';
+      },
+      deep:true
     }
   },
   methods:{
@@ -311,7 +317,7 @@ export default {
             agentCompany:vueThis.bigAmount.agentCompany,
             actualPayer:vueThis.bigAmount.actualPayer,
             payAmount:vueThis.bigAmount.payAmount,
-            payVoucher:vueThis.bigAmountPayVoucher,
+            payVoucher:vueThis.bigAmount.bigAmountPayVoucher,
             amount:vueThis.bigAmountAmount,
             batteryNum:vueThis.bigAmount.batteryNum
           };
