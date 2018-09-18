@@ -66,22 +66,28 @@
             <el-button type="text">复制</el-button>
           </span>
         </el-form-item>
-
+        <!-- form start 69 -->
         <h4>付款账户信息</h4>
         <el-form-item label="城市：">
-          <el-select v-model="bigAmount.city" placeholder="请选择">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+
+          <el-select v-model="bigAmount.cityCode" placeholder="请选择">
+            <el-option
+              v-for="item in options_cityListScheme"
+              :key="item.cityCode"
+              :label="item.name"
+              :value="item.cityCode">
+            </el-option>
           </el-select>
+
         </el-form-item>
         <el-form-item label="代理商公司名称:">
-          <el-input v-model="bigAmount.x1" placeholder="请输入公司名称或付款人名称"></el-input>
+          <el-input v-model="bigAmount.agentCompany" placeholder="请输入公司名称或付款人名称"></el-input>
         </el-form-item>
         <el-form-item label="实际付款人名称：">
-          <el-input v-model="bigAmount.x2" placeholder="请输入付款凭证单上的付款人或付款公司名称"></el-input>
+          <el-input v-model="bigAmount.actualPayer" placeholder="请输入付款凭证单上的付款人或付款公司名称"></el-input>
         </el-form-item>
         <el-form-item label="支付金额(元)：">
-          <el-input v-model="bigAmount.x3" placeholder="请输入公司名称或付款人名称"></el-input>
+          <el-input v-model="bigAmount.payAmount" placeholder="请输入公司名称或付款人名称"></el-input>
         </el-form-item>
 
         <h4>申请内容</h4>
@@ -95,16 +101,16 @@
         </el-form-item>
         <el-form-item label="数量：">
           <el-input-number 
-            v-model="bigAmount.x3" 
-            @change="handleNumChange" 
+            v-model="bigAmount.batteryNum" 
             :min="1" 
             :max="9999" 
             label="请输入数量"
+            @input.native="handleIN"
             >
           </el-input-number>
         </el-form-item>
         <el-form-item label="申请金额：">
-          ￥ 998 
+          ￥ {{bigAmountAmount}}
         </el-form-item>
         <el-form-item label="付款凭单：">
           <!-- multiple -->
@@ -137,16 +143,7 @@
           </el-dialog>
         </el-form-item>
         </el-card>
-        <!-- <el-form-item
-          label="年龄"
-          prop="age"
-          :rules="[
-            { required: true, message: '年龄不能为空'},
-            { type: 'number', message: '年龄必须为数字值'}
-          ]"
-        >
-          <el-input type="age" v-model.number="bigAmount.age" auto-complete="off"></el-input>
-        </el-form-item> -->
+
         <el-button class="btn_submit" type="primary" @click="submitForm('bigAmount')">提交</el-button>
       </el-form>
       
@@ -163,13 +160,16 @@ export default {
     return ({
       action:'',
       demoImg:false,
+      price:0,
       bigAmount:{
         age:18,
-        city:'',
-        x1:'',
-        x2:'',
-        x3:''
+        cityCode:null,
+        agentCompany:'',
+        actualPayer:'',
+        payAmount:'',
+        batteryNum:1
       },
+      options_cityListScheme:[],
       fileList:[
         // {
         //   name:'demo.png',
@@ -179,7 +179,18 @@ export default {
     });
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    bigAmountPayVoucher:function(){
+      return (this.fileList.url);
+    },
+    bigAmountAmount:function(){
+      var num=this.bigAmount.batteryNum;
+      // console.log(num);
+      if(num===undefined || window.isNaN(num)){
+        num=0;
+      }
+      return ((+num)*(+this.price));
+    }
   },
   watch:{
     'modalStore.needLogin':function(val){
@@ -189,11 +200,17 @@ export default {
     }
   },
   methods:{
+    fetchCityList:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
+        vueThis.options_cityListScheme=objRps.result.list;
+      });
+    },
+    handleIN:function(ev){
+      this.bigAmount.batteryNum=ev.target.value;
+    },
     openDia:function(){
       this.demoImg=true;
-    },
-    handleNumChange:function(){
-      console.log('handleNumChange');
     },
     //上傳附件
     handleExceed() {
@@ -234,6 +251,7 @@ export default {
     }
   },
   created:function(){
+    this.fetchCityList();
     this.action=this.$yApi.uploadImg;
   }
 };
