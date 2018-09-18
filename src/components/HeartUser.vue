@@ -501,7 +501,7 @@ export default {
       this.fetchData();
     },
     toUserCombo:function(userPhone){
-      this.rrPush('/user/'+userPhone+'/1');
+      this.rrPush('/usercombo/'+userPhone+'/1');
     }
   },
   created:function(){

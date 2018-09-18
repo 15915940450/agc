@@ -47,7 +47,7 @@ export default new Router({
       component: HeartUser
     },
     {
-      path: '/user/:userphone/:pn',  //userphone
+      path: '/usercombo/:userphone/:pn',  //userphone
       name: 'HeartUserCombo',
       component: HeartUserCombo
     },
