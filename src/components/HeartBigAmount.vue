@@ -197,7 +197,7 @@ export default {
         ],
         payAmount:[
           {
-            type:'integer',
+            type:'number',
             required:true,
             max:500000,
             message:'金额在500,000以内，必要',
@@ -220,8 +220,7 @@ export default {
         cityCode:[
           {
             required:true,
-            message:'请选择城市',
-            trigger:'blur'
+            message:'请选择城市'
           }
         ]
       },
@@ -316,9 +315,9 @@ export default {
             cityCode:vueThis.bigAmount.cityCode,
             agentCompany:vueThis.bigAmount.agentCompany,
             actualPayer:vueThis.bigAmount.actualPayer,
-            payAmount:vueThis.bigAmount.payAmount,
+            payAmount:''+vueThis.bigAmount.payAmount,
             payVoucher:vueThis.bigAmount.bigAmountPayVoucher,
-            amount:vueThis.bigAmountAmount,
+            amount:''+vueThis.bigAmountAmount,
             batteryNum:vueThis.bigAmount.batteryNum
           };
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
