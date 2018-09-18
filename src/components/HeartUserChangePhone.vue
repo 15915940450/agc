@@ -39,7 +39,9 @@
         </el-form>
       </div>
       <div class="im_info" v-show="infoDetail">
+        <!-- <el-form> -->
         <el-card class="box-card">
+          
           <div slot="header">
             <table width="100%" class="im_info_table">
               <tbody>
@@ -267,11 +269,28 @@
                 </tr>
               </tbody>
             </table>
+            <div class="remark_wrap">
+              <el-input
+                placeholder="请输入备注内容，20字以内"
+                v-model="remark"
+                :maxlength="20"
+                clearable>
+              </el-input>
+            </div>
           </div>
           <div class="im_info_footer">
-            <el-button @click="handleModify()" :disabled="canNOTmodify" type="danger">修改</el-button>
+
+            <el-button 
+              @click="handleModify()" 
+              :disabled="canNOTmodify" 
+              type="danger"
+              >
+              修改
+            </el-button>
           </div>
+          
         </el-card>
+        <!-- </el-form> -->
       </div>
     </div>
 
@@ -365,7 +384,8 @@ export default {
       twoUsers:[
         Object.assign({},defaultUser),Object.assign({},defaultUser)
       ],
-      modalChangePhoneYZM:false
+      modalChangePhoneYZM:false,
+      remark:''
     });
   },
   computed:{
@@ -505,7 +525,8 @@ export default {
             userPhone:vueThis.formGetChangePhoneInfo.userPhone,
             phone:vueThis.formGetChangePhoneInfo.phone,
             authCode:vueThis.changePhone.authCode,
-            agentId:window.localStorage.agentid
+            agentId:window.localStorage.agentid,
+            remark:vueThis.remark
           };
           vueThis.$rqs(vueThis.$yApi.changePhone,function(objRps){
             vueThis.resetModal();
@@ -603,5 +624,9 @@ export default {
   }
   .input_yzm{
     width:110px;
+  }
+  .remark_wrap{
+    padding-top: 40px;
+    margin-left: 20px;
   }
 </style>
