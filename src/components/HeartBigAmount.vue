@@ -171,10 +171,11 @@ export default {
         x3:''
       },
       fileList:[
-        // {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
+        // {
+        //   name:'demo.png',
+        //   url:'https://immotor-china.oss-cn-shenzhen.aliyuncs.com/agent/pay/voucher651ebe258fc04a6586706e8c44937d1e.jpg'
+        // }
       ]
-      
-      // {name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
     });
   },
   computed:{
@@ -204,7 +205,13 @@ export default {
     handleSuccess:function(file,fileList){
       var vueThis=this;
       if(+fileList.response.code===1000){
-        vueThis.fileList[0]=fileList.response.result;
+        // console.log(fileList.name);
+        vueThis.fileList.push({
+          name:fileList.name,
+          url:fileList.response.result
+        });
+        // vueThis.fileList[0].name=fileList.name;
+        // vueThis.fileList[0].url=fileList.response.result;
       }else{
         vueThis.$refs.uploadimg.clearFiles();
         vueThis.$notify.error({
