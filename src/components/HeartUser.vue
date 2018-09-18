@@ -167,6 +167,8 @@
                           {{item.neroTaocan}}
                         </div>
                       </div>
+
+                      <a href="javascript:;" @click="toUserCombo(props.row.phone)">查看详情</a>
                     </el-form-item>
                     <el-form-item label="注册时间：">
                       <span v-html="props.row.time"></span>
@@ -497,6 +499,9 @@ export default {
     resetSearch:function(){
       this.search='';
       this.fetchData();
+    },
+    toUserCombo:function(userPhone){
+      this.rrPush('/user/'+userPhone+'/1');
     }
   },
   created:function(){

@@ -7,6 +7,7 @@ import HeartUser from '@/components/HeartUser';
 import HeartSearchUser from '@/components/HeartSearchUser';
 import HeartUserChangePhone from '@/components/HeartUserChangePhone';
 import HeartUserChangePhoneHistory from '@/components/HeartUserChangePhoneHistory';
+import HeartUserCombo from '@/components/HeartUserCombo';
 import HeartDeposit from '@/components/HeartDeposit';
 import HeartCombo from '@/components/HeartCombo';
 import HeartComboHistory from '@/components/HeartComboHistory';
@@ -44,6 +45,11 @@ export default new Router({
       path: '/user/:groupcode/:type/:pn',  //用户,type:1(线上交押金),2(线下交押金)
       name: 'HeartUser',
       component: HeartUser
+    },
+    {
+      path: '/user/:userphone/:pn',  //userphone
+      name: 'HeartUserCombo',
+      component: HeartUserCombo
     },
     {
       path: '/user/changephone',
