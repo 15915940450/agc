@@ -25,6 +25,7 @@ var state={
   newUser:false,
 
   changePhoneLogEmpty:false,
+  bigAmountHistoryEmpty:false,
   depositEmpty:false,
   comboEmpty:false
 };
@@ -63,6 +64,7 @@ var mutations={
     state.newUser=false;
     state.depositEmpty=false;
     state.changePhoneLogEmpty=false;
+    state.bigAmountHistoryEmpty=false;
     state.comboEmpty=false;
   },
   hideLogin:function(state){
@@ -207,6 +209,12 @@ var mutations={
   },
   setChangePhoneLog:function(state){
     state.changePhoneLogEmpty=false;
+  },
+  setEmptyBigAmountHistory:function(state){
+    state.bigAmountHistoryEmpty=true;
+  },
+  setBigAmountHistory:function(state){
+    state.bigAmountHistoryEmpty=false;
   },
   setEmptyCombo:function(state){
     state.comboEmpty=true;
