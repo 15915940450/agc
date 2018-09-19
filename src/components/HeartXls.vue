@@ -31,11 +31,13 @@
             <td>
               <div class="range">
                 <el-date-picker
-                  v-model="value6"
+                  v-model="se"
                   type="daterange"
                   range-separator="至"
                   start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  end-placeholder="结束日期"
+                  :picker-options="pickerOptions"
+                  >
                 </el-date-picker>
               </div>
             </td>
@@ -53,78 +55,36 @@
 
 <script>
 import {mapState} from 'vuex';
-import FormComboBuy from './FormComboBuy.vue';
-import StatusTopUp from './StatusTopUp.vue';
 
 export default {
-  name:'HeartCombo',
+  name:'HeartXls',
   data:function(){
     return ({
-      value6: '',
-
-      loadingComboList:true,
-      comboBuyItem:null,
-      comboList:[
-      // {
-        // "id": "00ac16323a9a48149f0e349681cf8631",//套餐ID
-        // "name": "租一颗电池",//套餐名称
-        // "type": 1,//套餐类型（0=月套餐 1=次套餐 2=免费套餐）
-        // "price": "1200",//金额
-        // "duration": "30",//可用时长（天）
-        // "count": 100,//换电次数,20000:无限次>=20000
-        // "remark":"打折7.5", //套餐备注
-        // "agentPrice":23.00, //代理商购买价格
-        // "code":66,
-        // "number":3  //购买数量
-      // }
-
-      ]
+      pickerOptions:{
+        disabledDate:function(dateObj){
+          return (dateObj.getTime()>_.dateAgo(0));
+        }
+      },
+      se:[]
     });
   },
   computed:{
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    'modalStore.needLogin':function(val){
-      if(!val){
-        this.fetchComboList();
-      }
-    },
-    'modalStore.statusTopUp':function(val){
-      if(!val){
-        this.fetchComboList();
+    se:{
+      // deep:true,
+      handler:function(){
+        // _.logErr(val);
+        // this.fetchThePaths();
       }
     }
   },
   components:{
-    FormComboBuy,
-    StatusTopUp
   },
   methods:{
-    fetchComboList:function(){
-      var vueThis=this;
-      vueThis.loadingComboList=true;
-      vueThis.$rqs(vueThis.$yApi.comboList,function(objRps){
-        // console.log(objRps);
-        vueThis.loadingComboList=false;
-        vueThis.comboList=objRps.result.list;
-      },{reviver:function(k,v){
-        if(k==='count'){
-          if(window.Number(v)>=20000){
-            return ('无限次');
-          }else{
-            return (v+'颗');
-          }
-        }
-      }});
-    },
-    handleComboBuy:function(combo){
-      this.comboBuyItem=combo;
-      this.$store.commit('showComboBuy');
-    }
   },
   created:function(){
-    this.fetchComboList();
   }
 };
 </script>
