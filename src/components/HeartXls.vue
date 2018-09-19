@@ -42,7 +42,9 @@
               </div>
             </td>
             <td>
-              <el-button type="primary">导出</el-button>
+                <a class="exportXls mybtn" :href="hrefExport">导出</a>
+              <!-- <el-button type="primary"> -->
+              <!-- </el-button> -->
             </td>
           </tr>
         </tbody>
@@ -60,6 +62,7 @@ export default {
   name:'HeartXls',
   data:function(){
     return ({
+      hrefExport:'',
       pickerOptions:{
         disabledDate:function(dateObj){
           return (dateObj.getTime()>_.dateAgo(0));
@@ -74,9 +77,15 @@ export default {
   watch:{
     se:{
       // deep:true,
-      handler:function(){
-        // _.logErr(val);
-        // this.fetchThePaths();
+      handler:function(val){
+        // _.logErr(val);  //[(Date)"2018-09-03T16:00:00.000Z",(Date)"2018-09-17T16:00:00.000Z"] or null
+        if(val){
+          var startTime=_.toSlash(val[0],{slash:'-'}).slice(0,10);
+          var endTime=_.toSlash(val[1],{slash:'-'}).slice(0,10);
+          this.hrefExport=this.$yApi.exportCombo+'?startTime='+startTime+'&endTime='+endTime;
+        }else{
+          this.hrefExport=this.$yApi.exportCombo;
+        }
       }
     }
   },
@@ -85,6 +94,7 @@ export default {
   methods:{
   },
   created:function(){
+    this.hrefExport=this.$yApi.exportCombo;
   }
 };
 </script>
@@ -102,5 +112,9 @@ export default {
   }
   .hint_info{
     color:#2490f2;
+  }
+  .exportXls{
+    position:relative;
+    top:-2px;
   }
 </style>
