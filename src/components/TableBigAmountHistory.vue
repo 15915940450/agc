@@ -69,7 +69,7 @@
 import {mapState} from 'vuex';
 
 export default {
-  name:'TableUserChangePhonelog',
+  name:'TableBigAmountHistory',
   data:function(){
     return ({
       total:0,
