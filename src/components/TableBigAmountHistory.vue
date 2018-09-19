@@ -47,7 +47,7 @@
             label="操作"
             >
             <template slot-scope="scope">
-              <el-button type="text">查看</el-button>
+              <el-button type="text" @click="toDetail()">查看</el-button>
             </template>
 
             
@@ -118,6 +118,9 @@ export default {
     }
   },
   methods:{
+    toDetail:function(){
+      
+    },
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingData=true;
