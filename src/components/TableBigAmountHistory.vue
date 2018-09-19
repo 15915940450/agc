@@ -28,14 +28,20 @@
             >
           </el-table-column>
           <el-table-column
-            label="申请金额"
+            label="申请金额(元)"
             prop="amount"
             >
           </el-table-column>
           <el-table-column
             label="状态"
-            prop="checkStatus"
             >
+            <template slot-scope="scope">
+              <span 
+                :class="scope.row.checkStatus | statusNum"
+                >
+                {{scope.row.checkStatus | statusZh}}
+              </span>
+            </template>
           </el-table-column>
           <el-table-column
             label="操作"
@@ -93,6 +99,14 @@ export default {
   computed:{
     ...mapState(['agent','modalStore'])
   },
+  filters:{
+    statusZh:function(v){
+      return (['待审核','同意','拒绝'][v]);
+    },
+    statusNum:function(v){
+      return ('status'+v);
+    }
+  },
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
@@ -127,6 +141,12 @@ export default {
           if(k==='createTime'){
             return (v.slice(0,-2));
           }
+          if(k==='payType'){
+            return (['','','','充值电池押金'][v]);
+          }
+          // if(k==='checkStatus'){
+          //   return (['待审核','同意','拒绝'][v]);
+          // }
         }
       });
     },
@@ -142,4 +162,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.status0{
+}
+.status1{
+  color:#41b883;
+}
+.status2{
+  color:#fb654c;
+}
 </style>
