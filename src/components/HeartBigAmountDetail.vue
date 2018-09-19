@@ -35,19 +35,41 @@
           <el-collapse-item title="审核结果" name="1">
             <template slot="title">
               <span class="result">审核结果</span>
-              <el-tag type="success">同意</el-tag>
+              <el-tag>
+                {{detail.checkStatus}}
+              </el-tag>
             </template>
             <div>
               <span class="l">备注：</span>
               
-              <span class="r">申请金额比实际转账金额少1000元，请补足差额后重新申请</span>
+              <span class="r">
+                {{detail.remark}}
+              </span>
             </div>
             <div>
               <span class="l">附件：</span>
               
               <span class="r">
-                <el-button type="text">点击查看</el-button>
+                <el-button 
+                  v-if="detail.attachment && detail.attachment!=='─'"
+                  type="text" 
+                  @click="openDiaAttachment()"
+                  >
+                  点击查看
+                </el-button>
+                <span v-else>
+                  {{detail.attachment}}
+                </span>
               </span>
+              <el-dialog
+                title=""
+                :visible.sync="attachmentImg"
+                width="860px"
+                >
+                <div>
+                  <img :src="detail.attachment" alt="">
+                </div>
+              </el-dialog>
             </div>
           </el-collapse-item>
           <el-collapse-item title="收款帐户信息" name="2">
@@ -71,49 +93,58 @@
             <div>
               <span class="l">申请时间：</span>
               
-              <span class="r">2018-08-09 00:09:08</span>
+              <span class="r">{{detail.createTime}}</span>
             </div>
             <div>
               <span class="l">城市：</span>
               
-              <span class="r">深圳市</span>
+              <span class="r">{{detail.cityName}}</span>
             </div>
             <div>
               <span class="l">代理商公司名称：</span>
               
-              <span class="r">—</span>
+              <span class="r">{{detail.agentCompany}}</span>
             </div>
             <div>
               <span class="l">实际付款人名称：</span>
               
-              <span class="r">深圳市万年青有限公司</span>
+              <span class="r">{{detail.actualPayer}}</span>
             </div>
             <div>
               <span class="l">业务类型：</span>
               
-              <span class="r">深圳市</span>
+              <span class="r">充值电池押金</span>
             </div>
             <div>
               <span class="l">单价：</span>
               
-              <span class="r">￥ 998</span>
+              <span class="r">￥ {{detail.price}}</span>
             </div>
             <div>
               <span class="l">数量：</span>
               
-              <span class="r">1</span>
+              <span class="r">{{detail.batteryNum}}</span>
             </div>
             <div>
               <span class="l">支付金额：</span>
               
-              <span class="r">￥ 998</span>
+              <span class="r">￥ {{detail.amount}}</span>
             </div>
             <div>
               <span class="l">付款凭单：</span>
               
               <span class="r">
-                <el-button type="text">点击查看</el-button> 
+                <el-button type="text" @click="openDiaPV()">点击查看</el-button> 
               </span>
+              <el-dialog
+                title=""
+                :visible.sync="payVoucherImg"
+                width="860px"
+                >
+                <div>
+                  <img :src="detail.payVoucher" alt="">
+                </div>
+              </el-dialog>
             </div>
           </el-collapse-item>
         </el-collapse>
@@ -132,7 +163,25 @@ export default {
   name:'',
   data:function(){
     return ({
-      activeName:'1'
+      activeName:'1',
+      id:null,
+      attachmentImg:false,
+      payVoucherImg:false,
+      detail:{
+        id:null,  // 押金id
+        payType:'无', //3大额支付 充值电池押金
+        amount:0, // 申请金额
+        batteryNum:0,   //购买电池数
+        checkStatus:0,  //0 待审批,1同意,2拒绝
+        remark:'无', //备注
+        attachment:'无', //附件
+        cityName:'无', //城市名
+        agentCompany:'无', //代理名公司
+        actualPayer:'无', //实际付款人
+        payVoucher:'无', //付款凭单
+        price:0, //单价
+        createTime:'无' //创建时间
+      }
     });
   },
   computed:{
@@ -149,8 +198,41 @@ export default {
   components:{
   },
   methods: {
+    openDiaAttachment:function(){
+      this.attachmentImg=true;
+    },
+    openDiaPV:function(){
+      this.payVoucherImg=true;
+    },
+    fetchData:function(){
+      var vueThis=this;
+      var sendData={
+        pageSize:1,
+        pageNum:1,
+        advancedParam:JSON.stringify({
+          id:vueThis.id
+        })
+      };
+      vueThis.$rqs(vueThis.$yApi.getBigAmountHistory,function(objRps){
+        // _.logErr(objRps)
+        vueThis.detail=Object.assign({},objRps.result.list[0]);
+      },{
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='checkStatus'){
+            return (['待审核','同意','拒绝'][v]);
+          }
+          if(k==='createTime'){
+            return (v.slice(0,-2));
+          }
+          
+        }
+      });
+    }
   },
   created:function(){
+    this.id=+this.$route.params.id;
+    this.fetchData();
   }
 };
 </script>
@@ -170,11 +252,11 @@ export default {
   font-weight: 500;
 }
 .l{
-  width: 130px;
+  width: 110px;
   display: inline-block;
 }
 .l,.r{
   color: #696969;
-  font-size: 12px;
+  /*font-size: 12px;*/
 }
 </style>
