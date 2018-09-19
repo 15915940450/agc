@@ -13,6 +13,8 @@
 * DemoModal.vue and DemoTable.vue is used frequently.
 * current version is 16.0.0(README.md,package.json,gulpfile.js)
 * assets: src="../assets/empty_combo.png"
+* TEST環境：119.23.155.83:8764 -- jacky(CMS)
+* 正式環境：agent.ehuandian.net
 
 
 ## vim

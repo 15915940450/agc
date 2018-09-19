@@ -50,5 +50,5 @@ gulp.task('backupEditorConfig',function(){
 });
 
 gulp.task('default',['backupDist','backupYApijs'],function(){
-  console.log('version:1.9'+version+'. make sure you have check out the agc branch(CMS-FrontEnd).');
+  console.log('version:1.9'+version+'. make sure you have check out the jacky branch(CMS-FrontEnd).');
 });
