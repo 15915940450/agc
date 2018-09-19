@@ -161,7 +161,7 @@
             width="860px"
             >
             <div>
-              <img src="../assets/big_amount_demo_img.png" alt="">
+              <img class="max_img" src="../assets/big_amount_demo_img.png" alt="">
             </div>
           </el-dialog>
           <!-- hidden -->

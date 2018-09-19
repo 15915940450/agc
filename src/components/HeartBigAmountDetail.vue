@@ -70,10 +70,10 @@
               <el-dialog
                 title=""
                 :visible.sync="attachmentImg"
-                width="860px"
+                width="960px"
                 >
                 <div>
-                  <img :src="detail.attachment" alt="">
+                  <img class="max_img" :src="detail.attachment" alt="">
                 </div>
               </el-dialog>
             </div>
@@ -145,10 +145,10 @@
               <el-dialog
                 title=""
                 :visible.sync="payVoucherImg"
-                width="860px"
+                width="960px"
                 >
                 <div>
-                  <img :src="detail.payVoucher" alt="">
+                  <img class="max_img" :src="detail.payVoucher" alt="">
                 </div>
               </el-dialog>
             </div>
