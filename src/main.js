@@ -5,6 +5,7 @@ import router from './router';
 import store from './store';
 
 import EUI from 'element-ui';
+import VueClipboard from 'vue-clipboard2';
 import './assets/e_theme.scss';
 import 'vue-awesome/icons';
 import Icon from 'vue-awesome/components/Icon';
@@ -14,6 +15,7 @@ import yApi from './api/y_api.js';
 import App from './App';
 
 Vue.use(EUI,{size:'small'});
+Vue.use(VueClipboard);
 Vue.component('icon', Icon);
 
 Vue.prototype.$rqs=rqs;

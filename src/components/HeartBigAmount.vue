@@ -50,21 +50,42 @@
 
         <h4 class="first">收款帐户信息</h4>
         <el-form-item label="帐户名称:">
-          深圳易马达科技有限公司
+          {{msgZHMC}}
           <span class="copy">
-            <el-button type="text">复制</el-button>
+            <el-button 
+              type="text"
+              v-clipboard:copy="msgZHMC"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              >
+              复制
+            </el-button>
           </span>
         </el-form-item>
         <el-form-item label="开户银行:">
-          招商银行深圳建安支行
+          {{msgKHYH}}
           <span class="copy">
-            <el-button type="text">复制</el-button>
+            <el-button 
+              type="text"
+              v-clipboard:copy="msgKHYH"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              >
+              复制
+            </el-button>
           </span>
         </el-form-item>
         <el-form-item label="收款账户：">
-          755928540810505
+          {{msgSKZH}}
           <span class="copy">
-            <el-button type="text">复制</el-button>
+            <el-button 
+              type="text"
+              v-clipboard:copy="msgSKZH"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+              >
+              复制
+            </el-button>
           </span>
         </el-form-item>
         <!-- form start 69 -->
@@ -162,6 +183,9 @@ export default {
   name:'HeartBigAmount',
   data:function(){
     return ({
+      msgZHMC:'深圳易马达科技有限公司',
+      msgKHYH:'招商银行深圳建安支行',
+      msgSKZH:'755928540810505',
       action:'',
       demoImg:false,
       price:0,
@@ -259,6 +283,17 @@ export default {
     }
   },
   methods:{
+    onCopy:function(e){
+      var vueThis=this;
+      vueThis.$message({
+        message:'已成功复制到剪贴板： '+e.text,
+        type:'success'
+      });
+    },
+    onError:function(){
+      var vueThis=this;
+      vueThis.$message.error('复制失败。');
+    },
     userQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
