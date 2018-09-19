@@ -29,7 +29,7 @@
         </el-dropdown>
 
         
-        <router-link class="big_amount_history_entrance" to="/">
+        <router-link class="big_amount_history_entrance" to="/bigamount/history">
           申请记录
         </router-link>
       </h3>
@@ -321,8 +321,16 @@ export default {
             batteryNum:vueThis.bigAmount.batteryNum
           };
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
-            _.logErr(objRps)
-
+            // _.logErr(objRps)
+            vueThis.$alert(objRps.msg, '提示', {
+              confirmButtonText: '确定',
+              callback: action => {
+                vueThis.$message({
+                  type: 'success',
+                  message: `action: ${ action }`
+                });
+              }
+            });
           },{
             objSendData:sendData
           });

@@ -65,7 +65,7 @@ var arrRouteName=[
   'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartUserCombo',
   'HeartDeposit',
   'HeartCombo-HeartComboHistory',
-  'HeartBigAmount',
+  'HeartBigAmount-HeartBigAmountHistory',
   'HeartXls',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting',
