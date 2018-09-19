@@ -168,8 +168,11 @@ export default {
       },{
         objSendData:sendData,
         reviver:function(k,v){
-          if(k==='createTime'){
-            return (v.slice(0,-2));
+          if(k==='createTime' || k==='finishTime'){
+            return (_.toSlash(v).slice(0,10));
+          }
+          if(k==='times' && +v===20000){
+            return ('无限次');
           }
         }
       });
