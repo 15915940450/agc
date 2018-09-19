@@ -42,7 +42,7 @@
             >
             <template slot-scope="scope">
               <el-tooltip
-                v-if="scope.row.remark"
+                v-if="scope.row.remark && scope.row.remark!=='─'"
                 effect="dark" 
                 :content="scope.row.remark" 
                 placement="left"
