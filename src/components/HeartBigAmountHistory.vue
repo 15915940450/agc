@@ -53,11 +53,11 @@ export default {
   },
   watch:{
     // deep watcher
-    'modalStore.needLogin':function(val){
-      if(!val){
-        this.fetchData();
-      }
-    }
+    // 'modalStore.needLogin':function(val){
+    //   if(!val){
+    //     this.fetchData();
+    //   }
+    // }
   },
   components:{
     TableBigAmountHistory
@@ -68,6 +68,6 @@ export default {
   }
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 
 </style>

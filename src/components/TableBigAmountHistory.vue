@@ -18,38 +18,30 @@
             >
           </el-table-column>
           <el-table-column
-            label="操作时间"
+            label="申请时间"
             prop="createTime"
             >
           </el-table-column>
           <el-table-column
-            label="用户ID"
-            prop="userId"
+            label="业务类型"
+            prop="payType"
             >
           </el-table-column>
           <el-table-column
-            label="旧手机号码"
-            prop="oldPhone"
+            label="申请金额"
+            prop="amount"
             >
           </el-table-column>
           <el-table-column
-            label="新手机号码"
-            prop="newPhone"
+            label="状态"
+            prop="checkStatus"
             >
           </el-table-column>
           <el-table-column
-            label="备注"
+            label="操作"
             >
             <template slot-scope="scope">
-              <el-tooltip
-                v-if="scope.row.remark"
-                effect="dark" 
-                :content="scope.row.remark" 
-                placement="left"
-                >
-                <el-button type="text">查看</el-button>
-              </el-tooltip>
-              <span v-else>─</span>
+              <el-button type="text">查看</el-button>
             </template>
 
             
@@ -74,18 +66,24 @@ export default {
   name:'TableUserChangePhonelog',
   data:function(){
     return ({
-      total:5,
-      changePhoneHistoryEmpty:true,
+      total:0,
       loadingData:true,
       log:[
         /*
         {
-          "id":1, //id
-          "oldPhone": "15820480937", // 老用户电话
-          "newPhone": "15826519061", // 新用户电话
-          "agentId": 155,// 代理商id
-          "createTime": 1532679890000,
-          "userId": 1// 用户id
+            "id":123,  // 押金id
+            "payType":3, //3大额支付 充值电池押金
+            "amount":42132, // 申请金额
+            "batteryNum":23,   //购买电池数
+            "checkStatus":1,  //0 待审批,1同意,2拒绝
+            "remark":"好的", //备注
+            "attachment": "http://imgcn.immotor.com/power/power/img/1509614587556filename.jpg", //附件
+            "cityName":"深圳市", //城市名
+            "agentCompany":"深圳", //代理名公司
+            "actualPayer":"深圳市万年青有限公司", //实际付款人
+            "payVoucher":"http://imgcn.immotor.com/power/power/img/1509614587556filename.jpg", //付款凭单
+            "price":23, //单价
+            "createTime":"2018-3-9 22:11:33.0" //创建时间
         }
         */
       ],
@@ -113,27 +111,28 @@ export default {
         pageSize:vueThis.$yApi.defaultPS,
         pageNum:vueThis.pageNum
       };
-      vueThis.$rqs(vueThis.$yApi.changePhoneLog,function(objRps){
+      vueThis.$rqs(vueThis.$yApi.getBigAmountHistory,function(objRps){
+        // _.logErr(objRps);
         vueThis.loadingData=false;
         vueThis.total=objRps.result.total;
         vueThis.log=objRps.result.list;
         if(!vueThis.total){
-          vueThis.$store.commit('setEmptyChangePhoneLog');
+          vueThis.$store.commit('setEmptyBigAmountHistory');
         }else{
-          vueThis.$store.commit('setChangePhoneLog');
+          vueThis.$store.commit('setBigAmountHistory');
         }
       },{
         objSendData:sendData,
         reviver:function(k,v){
           if(k==='createTime'){
-            return (_.toSlash(v).slice(0,19));
+            return (v.slice(0,-2));
           }
         }
       });
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
-      this.$router.push('/user/changephonehistory/'+val);
+      this.$router.push('/bigamount/history/'+val);
     }
   },
   created:function(){

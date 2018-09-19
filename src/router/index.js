@@ -83,7 +83,7 @@ export default new Router({
       component: HeartBigAmount
     },
     {
-      path: '/bigamount/history',
+      path: '/bigamount/history/:pn',
       name: 'HeartBigAmountHistory',
       component: HeartBigAmountHistory
     },

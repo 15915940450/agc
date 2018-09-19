@@ -29,7 +29,7 @@
         </el-dropdown>
 
         
-        <router-link class="big_amount_history_entrance" to="/bigamount/history">
+        <router-link class="big_amount_history_entrance" to="/bigamount/history/1">
           申请记录
         </router-link>
       </h3>

@@ -74,8 +74,7 @@ export default {
   name:'TableUserChangePhonelog',
   data:function(){
     return ({
-      total:5,
-      changePhoneHistoryEmpty:true,
+      total:0,
       loadingData:true,
       log:[
         /*
