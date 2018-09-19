@@ -13,6 +13,7 @@ import HeartCombo from '@/components/HeartCombo';
 import HeartComboHistory from '@/components/HeartComboHistory';
 import HeartBigAmount from '@/components/HeartBigAmount';
 import HeartBigAmountHistory from '@/components/HeartBigAmountHistory';
+import HeartBigAmountDetail from '@/components/HeartBigAmountDetail';
 import HeartXls from '@/components/HeartXls';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
@@ -86,6 +87,11 @@ export default new Router({
       path: '/bigamount/history/:pn',
       name: 'HeartBigAmountHistory',
       component: HeartBigAmountHistory
+    },
+    {
+      path: '/bigamount/:id',
+      name: 'HeartBigAmountDetail',
+      component: HeartBigAmountDetail
     },
     {
       path: '/xls',

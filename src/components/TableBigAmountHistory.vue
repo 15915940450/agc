@@ -47,7 +47,7 @@
             label="操作"
             >
             <template slot-scope="scope">
-              <el-button type="text" @click="toDetail()">查看</el-button>
+              <el-button type="text" @click="toDetail(scope.row.id)">查看</el-button>
             </template>
 
             
@@ -118,15 +118,20 @@ export default {
     }
   },
   methods:{
-    toDetail:function(){
-      
+    toDetail:function(id){
+      this.$router.push({
+        path:'/bigamount/'+id
+      });
     },
     fetchData:function(){
       var vueThis=this;
       vueThis.loadingData=true;
       var sendData={
         pageSize:vueThis.$yApi.defaultPS,
-        pageNum:vueThis.pageNum
+        pageNum:vueThis.pageNum,
+        advancedParam:JSON.stringify({
+          id:null
+        })
       };
       vueThis.$rqs(vueThis.$yApi.getBigAmountHistory,function(objRps){
         // _.logErr(objRps);
