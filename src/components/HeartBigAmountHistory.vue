@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <section class="im_snow" v-if="!modalStore.changePhoneLogEmpty">
+    <section class="im_snow" v-if="!modalStore.bigAmountHistoryEmpty">
       <div class="im_snow_title">
         <el-row>
           <el-col :span="6">

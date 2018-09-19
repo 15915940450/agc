@@ -15,7 +15,7 @@
       </el-breadcrumb>
     </div>
 
-    <div class="im_snow" v-if="!modalStore.bigAmountHistoryEmpty">
+    <div class="im_snow" v-if="!modalStore.changePhoneLogEmpty">
       <div class="im_snow_title">
         <el-row>
           <el-col :span="6">
