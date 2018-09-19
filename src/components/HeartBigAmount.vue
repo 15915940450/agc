@@ -346,7 +346,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="css" scoped>
   .component_big_amount{
     background:#fafbfc;
   }
