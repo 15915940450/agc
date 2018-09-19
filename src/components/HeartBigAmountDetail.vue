@@ -35,9 +35,15 @@
           <el-collapse-item title="审核结果" name="1">
             <template slot="title">
               <span class="result">审核结果</span>
-              <el-tag>
+              <el-tag :type="detail.checkStatus | toClass">
+                {{detail.checkStatus | toZH}}
+              </el-tag>
+              <!-- <el-tag type="success">
                 {{detail.checkStatus}}
               </el-tag>
+              <el-tag type="danger">
+                {{detail.checkStatus}}
+              </el-tag> -->
             </template>
             <div>
               <span class="l">备注：</span>
@@ -187,6 +193,14 @@ export default {
   computed:{
     ...mapState(['agent','modalStore'])
   },
+  filters:{
+    toClass:function(v){
+      return (['','success','danger'][v]);
+    },
+    toZH:function(v){
+      return (['待审核','同意','拒绝'][v]);
+    }
+  },
   watch:{
     // deep watcher
     'modalStore.needLogin':function(val){
@@ -219,9 +233,9 @@ export default {
       },{
         objSendData:sendData,
         reviver:function(k,v){
-          if(k==='checkStatus'){
-            return (['待审核','同意','拒绝'][v]);
-          }
+          // if(k==='checkStatus'){
+          //   return (['待审核','同意','拒绝'][v]);
+          // }
           if(k==='createTime'){
             return (v.slice(0,-2));
           }
