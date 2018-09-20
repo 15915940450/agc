@@ -88,7 +88,12 @@
             </el-button>
           </span>
         </el-form-item>
-        <!-- form start 69 -->
+<!-- form start 91 
+  保存未提交數據流程：
+  1.嘗試從本地存貯中讀取表單數據：getInputUnsave()
+  2.監聽bigAmount（deep），將bigAmount和fileList合成一個數組存貯在本地存貯中：FormDataBigAmount
+  3.儅表單成功提交（ajax），清除存貯項目 (removeItem,setItem)
+-->
         <h4>付款账户信息</h4>
         <el-form-item label="城市：" prop="cityCode">
 
@@ -191,12 +196,12 @@ export default {
       price:0,
       bigAmount:{
         forNext:'1',
-        cityCode:null,
-        agentCompany:'',
-        actualPayer:'',
-        payAmount:'',
-        bigAmountPayVoucher:'',
-        batteryNum:1
+        cityCode:null,  //城市
+        agentCompany:'',  //代理商公司名称
+        actualPayer:'', //实际付款人名称
+        payAmount:'',   //支付金额
+        bigAmountPayVoucher:'', //付款凭单
+        batteryNum:1  //数量
       },
       rules:{
         agentCompany:[
@@ -274,9 +279,17 @@ export default {
         this.fetchComboList();
       }
     },
-    fileList:{
+    bigAmount:{
       handler:function(val){
         // _.logErr(val);
+        // _.logErr(this.fileList);
+        var arr=[val,this.fileList];
+        window.localStorage.FormDataBigAmount=JSON.stringify(arr);
+      },
+      deep:true
+    },
+    fileList:{
+      handler:function(val){
         this.bigAmount.bigAmountPayVoucher=val.length?val[0].url:'';
       },
       deep:true
@@ -359,12 +372,14 @@ export default {
             cityCode:vueThis.bigAmount.cityCode,
             agentCompany:vueThis.bigAmount.agentCompany,
             actualPayer:vueThis.bigAmount.actualPayer,
-            payAmount:''+vueThis.bigAmount.payAmount,
+            payAmount:''+vueThis.bigAmount.payAmount,   //支付金额(input)
             payVoucher:vueThis.bigAmount.bigAmountPayVoucher,
-            amount:''+vueThis.bigAmountAmount,
+            amount:''+vueThis.bigAmountAmount,  //申请金额
             batteryNum:vueThis.bigAmount.batteryNum
           };
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
+            //已成功提交，清楚未保存表單數據
+            window.localStorage.removeItem('FormDataBigAmount');
             // _.logErr(objRps)
             vueThis.$alert(objRps.msg,'提示',{
               confirmButtonText:'确定',
@@ -383,12 +398,28 @@ export default {
       this.$router.push({
         path:'/bigamount/history/1'
       });
+    },
+    getInputUnsave:function(){
+      var vueThis=this;
+      var formData=window.localStorage.FormDataBigAmount; //undefined
+      if(formData){
+        vueThis.initFormData(JSON.parse(formData)); //[objBigAmount,arrFileList]
+      }
+    },
+    initFormData:function(data){
+      this.bigAmount.cityCode=data[0].cityCode;
+      this.bigAmount.agentCompany=data[0].agentCompany;
+      this.bigAmount.actualPayer=data[0].actualPayer;
+      this.bigAmount.payAmount=data[0].payAmount;
+      this.bigAmount.batteryNum=data[0].batteryNum;
+      this.fileList=data[1];
     }
   },
   created:function(){
     this.userQuery();
     this.fetchCityList();
     this.action=this.$yApi.uploadImg;
+    this.getInputUnsave();
   }
 };
 </script>

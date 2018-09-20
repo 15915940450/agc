@@ -221,8 +221,8 @@ export default {
     fetchData:function(){
       var vueThis=this;
       var sendData={
-        pageSize:1,
-        pageNum:1,
+        // pageSize:1,
+        // pageNum:1,
         advancedParam:JSON.stringify({
           id:vueThis.id
         })
