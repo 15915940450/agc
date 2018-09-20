@@ -302,8 +302,17 @@ export default {
     },
     fetchCityList:function(){
       var vueThis=this;
+      var sendData={
+        pageNum:1,
+        pageSize:1520,
+        advancedParam:JSON.stringify({
+          all:0
+        })
+      };
       vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
         vueThis.options_cityListScheme=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleIN:function(ev){
@@ -357,19 +366,22 @@ export default {
           };
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
             // _.logErr(objRps)
-            vueThis.$alert(objRps.msg, '提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                vueThis.$message({
-                  type: 'success',
-                  message: `action: ${ action }`
-                });
+            vueThis.$alert(objRps.msg,'提示',{
+              confirmButtonText:'确定',
+              callback:action => {
+                // console.log(action);  //confirm,cancel
+                vueThis.rrPush();
               }
             });
           },{
             objSendData:sendData
           });
         }
+      });
+    },
+    rrPush:function(){
+      this.$router.push({
+        path:'/bigamount/history/1'
       });
     }
   },

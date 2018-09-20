@@ -149,8 +149,17 @@ export default {
   methods:{
     fetchCityList:function(){
       var vueThis=this;
+      var sendData={
+        pageNum:1,
+        pageSize:1520,
+        advancedParam:JSON.stringify({
+          all:0
+        })
+      };
       vueThis.$rqs(vueThis.$yApi.userCityList,function(objRps){
         vueThis.options_cityListScheme=objRps.result.list;
+      },{
+        objSendData:sendData
       });
     },
     handleCancel:function(refName){
