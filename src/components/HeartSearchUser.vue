@@ -77,7 +77,7 @@ export default {
         })
       };
       // console.log(window.localStorage.searchphone); //undefined,''--->[]
-      //用戶列表
+      //用戶列表(currentGroupType //1-可退(綫上) 2-不可退(綫下))
       vueThis.$rqs(vueThis.$yApi.userList,function(objRps){
         // console.log(objRps);
         //有結果返回
@@ -104,7 +104,7 @@ export default {
           
           //跳轉頁面
           var groupcode=objRps.result.list[0].groupCode;
-          var type=1;
+          var type=+objRps.result.list[0].currentGroupType || 1;  //默認 1-可退(綫上)
           var pn=1;
           vueThis.$router.push({
             path:'/user/'+groupcode+'/'+type+'/'+pn,
@@ -113,24 +113,6 @@ export default {
             }
           });
 
-
-          // var searchphone=[
-          //   {value:vueThis.userPhone}
-          // ];
-          
-
-          // var sendData={
-          //   pageNum:1,
-          //   pageSize:10,
-          //   advancedParam:JSON.stringify({
-          //     groupCodes:[groupcode]
-          //   })
-          // };
-          // vueThis.$rqs(vueThis.$yApi.groupList,function(objRps2){
-          //   console.log(objRps2);
-          // },{
-          //   objSendData:sendData
-          // });
         }else{
           vueThis.$message({
             showClose: true,
