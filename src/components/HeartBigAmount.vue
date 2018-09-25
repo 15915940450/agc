@@ -270,7 +270,7 @@ export default {
       if(num===undefined || window.isNaN(num)){
         num=0;
       }
-      return ((+num)*(+this.price));
+      return (+(+num)*(+this.price)).toFixed(2);
     }
   },
   watch:{
@@ -310,7 +310,7 @@ export default {
     userQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.price=objRps.result.batteryAmount;
+        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
       });
     },
     fetchCityList:function(){
