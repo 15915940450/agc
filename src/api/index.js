@@ -40,6 +40,11 @@ export default function(urlMethod,success,paramSettings){
         duration:5000
       });
     },
+    complete4:function(){
+      if(vueThis.loading){
+        vueThis.loading=false;
+      }
+    },
     reviver:false
   };
 
@@ -77,10 +82,9 @@ export default function(urlMethod,success,paramSettings){
 
   xmlhttp.onreadystatechange=function(){
     if(xmlhttp.readyState===4){
-      //when complete, set loading to false
-      if(vueThis.loading){
-        vueThis.loading=false;
-      }
+      //when complete4, set loading to false
+      settings.complete4();
+      
       if(xmlhttp.status===200){
         try{
           var objRps;
