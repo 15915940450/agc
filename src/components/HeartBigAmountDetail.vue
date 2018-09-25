@@ -46,27 +46,41 @@
               </el-tag> -->
             </template>
             <div>
-              <span class="l">备注：</span>
-              
-              <span class="r">
-                {{detail.remark}}
-              </span>
+              <!-- 
+                <el-row>
+                  <el-col :span="3">
+                  </el-col>
+                  <el-col :span="21">
+                  </el-col>
+                </el-row>
+               -->
+              <el-row>
+                <el-col :span="3">
+                  备注：
+                </el-col>
+                <el-col :span="21">
+                  {{detail.remark}}
+                </el-col>
+              </el-row>
             </div>
             <div>
-              <span class="l">附件：</span>
-              
-              <span class="r">
-                <el-button 
-                  v-if="detail.attachment && detail.attachment!=='─'"
-                  type="text" 
-                  @click="openDiaAttachment()"
-                  >
-                  点击查看
-                </el-button>
-                <span v-else>
-                  {{detail.attachment}}
-                </span>
-              </span>
+              <el-row>
+                <el-col :span="3">
+                  附件：
+                </el-col>
+                <el-col :span="21">
+                  <el-button 
+                    v-if="detail.attachment && detail.attachment!=='─'"
+                    type="text" 
+                    @click="openDiaAttachment()"
+                    >
+                    点击查看
+                  </el-button>
+                  <span v-else>
+                    {{detail.attachment}}
+                  </span>
+                </el-col>
+              </el-row>
               <el-dialog
                 title=""
                 :visible.sync="attachmentImg"
@@ -267,10 +281,10 @@ export default {
 }
 .l{
   width: 110px;
-  display: inline-block;
 }
 .l,.r{
   color: #696969;
+  display: inline-block;
   /*font-size: 12px;*/
 }
 </style>
