@@ -174,7 +174,14 @@
         </el-form-item>
         </el-card>
 
-        <el-button class="btn_submit" type="primary" @click="submitForm('bigAmount')">提交</el-button>
+        <el-button 
+          class="btn_submit" 
+          type="primary" 
+          @click="submitForm('bigAmount')"
+          :disabled="summitting"
+          >
+          提交
+        </el-button>
       </el-form>
       
     </section>
@@ -203,6 +210,7 @@ export default {
         bigAmountPayVoucher:'', //付款凭单
         batteryNum:1  //数量
       },
+      summitting:false,
       rules:{
         agentCompany:[
           {
@@ -377,7 +385,11 @@ export default {
             amount:''+vueThis.bigAmountAmount,  //申请金额
             batteryNum:vueThis.bigAmount.batteryNum
           };
+          //避免重複提交
+          vueThis.summitting=true;
+
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
+            vueThis.summitting=false;
             //已成功提交，清楚未保存表單數據
             window.localStorage.removeItem('FormDataBigAmount');
             // _.logErr(objRps)
