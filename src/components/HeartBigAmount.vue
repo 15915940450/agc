@@ -389,7 +389,6 @@ export default {
           vueThis.summitting=true;
 
           vueThis.$rqs(vueThis.$yApi.postBigAmount,function(objRps){
-            vueThis.summitting=false;
             //已成功提交，清楚未保存表單數據
             window.localStorage.removeItem('FormDataBigAmount');
             // _.logErr(objRps)
@@ -401,7 +400,10 @@ export default {
               }
             });
           },{
-            objSendData:sendData
+            objSendData:sendData,
+            complete4:function(){
+              vueThis.summitting=false;
+            }
           });
         }
       });
