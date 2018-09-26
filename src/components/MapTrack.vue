@@ -61,7 +61,7 @@ export default {
     return ({
       pickerOptions:{
         disabledDate:function(dateObj){
-          return (dateObj.getTime()>_.dateAgo(0));
+          return (dateObj.getTime()>_.dateAgo(0).getTime());
         }
       },
       se:[_.dateAgo(0),_.dateAgo(0)],  //dateragne(start and end)

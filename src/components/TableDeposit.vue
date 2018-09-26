@@ -82,7 +82,7 @@ export default {
       total:0,
       pickerOptions:{
         disabledDate:function(dateObj){
-          return (dateObj.getTime()>_.dateAgo(0));
+          return (dateObj.getTime()>_.dateAgo(0).getTime());
         }
       },
       loadingDepositList:true,

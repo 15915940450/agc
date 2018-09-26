@@ -65,7 +65,7 @@ export default {
       hrefExport:'',
       pickerOptions:{
         disabledDate:function(dateObj){
-          return (dateObj.getTime()>_.dateAgo(0));
+          return (dateObj.getTime()>_.dateAgo(0).getTime() || dateObj.getTime()<_.dateAgo(60).getTime());
         }
       },
       se:[]
