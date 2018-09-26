@@ -41,7 +41,7 @@
       <el-form 
         :model="bigAmount" 
         ref="bigAmount" 
-        label-width="130px"
+        label-width="150px"
         label-position="left"
         size="mini"
         :rules="rules"
@@ -227,6 +227,11 @@ export default {
         ],
         actualPayer:[
           {
+            required:true,
+            message:'请输入付款凭证单上的付款人或付款公司名称',
+            trigger:'blur'
+          },
+          {
             max:15,
             message:'15 个字符以内',
             trigger:'blur'
@@ -237,7 +242,7 @@ export default {
             type:'number',
             required:true,
             max:500000,
-            message:'金额在500,000以内，必要',
+            message:'金额在500,000以内',
             trigger:'blur'
           }
         ],
