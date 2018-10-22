@@ -2,7 +2,7 @@
 var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
-var version='V16.0.1';
+var version='V16.0.2';
 
 //1.backupDist
 gulp.task('backupDist',function(){
@@ -11,8 +11,8 @@ gulp.task('backupDist',function(){
     //copy dist to /var/www/html/CMS-FrontEnd
     //mind: index.html need to change
     gulp.src(['./dist/**/*','!./dist/index.html'],{base:'./dist/'}).pipe(gulp.dest('../CMS-FrontEnd/agent/'));
-    //copy index.html, replace v=1.9(lodash.ili.js)
-    gulp.src('./dist/index.html',{base:'./dist/'}).pipe(gulpReplace('<!DOCTYPE html><html>','<!DOCTYPE html><html v="'+version+'">')).pipe(gulp.dest('../CMS-FrontEnd/agent/'));
+    //copy index.html, replace v=1.5.9(lodash.ili.js)
+    gulp.src('./dist/index.html',{base:'./dist/'}).pipe(gulpReplace('<!DOCTYPE html><html>','<!DOCTYPE html><html v="'+version+'">')).pipe(gulpReplace('lodash.ili.js?v=1.5.9','lodash.ili.js?v='+version)).pipe(gulp.dest('../CMS-FrontEnd/agent/'));
   }); //end of del
 });
 
