@@ -37,7 +37,20 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item prop="freeDay" label="免费天数" :label-width="formLabelWidth">
+          <el-form-item class="formitem_freeday" prop="freeDay" :label-width="formLabelWidth">
+            <label class="formitem_label_freeday" for="freeDay">
+              免费天数
+
+              <el-tooltip placement="top">
+                <div slot="content">
+                  代理商赠送 {{agentFreeDays}} 天
+                  <br/>
+                  活动赠送 {{freeDays}} 天
+                </div>
+                <i class="el-icon-info"></i>
+              </el-tooltip>
+
+            </label>
             <el-input-number
               v-model="formSetUser.freeDay"
               :min="0"
@@ -73,7 +86,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormSetUser',
-  props:['name','groupCode','depositID','freeDays','scooters','phone'],
+  props:['name','groupCode','depositID','freeDays','scooters','phone','agentFreeDays'],
   data:function(){
     //自定义校验规则
     var zh2length10=function(rule,value,callback){
@@ -106,7 +119,7 @@ export default {
         phone:''
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)
-      agentFreeDays:0,  //rqs返回的值
+      freeDays1:0,  //rqs返回的值
       optionsEVs:[],
       optionsGroups:[],
       options_depositListScheme: [],
@@ -120,7 +133,7 @@ export default {
       if(this.freeDays===undefined){
         return 0;
       }else{
-        return (this.freeDays+this.agentFreeDays);
+        return (this.freeDays+this.freeDays1);
       }
     },
     computedFreeDays:function(){
@@ -163,7 +176,7 @@ export default {
     fetchUserQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.agentFreeDays=window.Number(objRps.result.freeDays);
+        vueThis.freeDays1=window.Number(objRps.result.freeDays);
       });
     },
     fetchGroupList:function(){
@@ -270,4 +283,15 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.formitem_freeday{
+  position: relative;
+}
+.formitem_label_freeday{
+  width: 88px;
+  display: inline-block;
+  text-align: right;
+  position: absolute;
+  left: -100px;
+  top: 0;
+}
 </style>
