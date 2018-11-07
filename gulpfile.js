@@ -3,7 +3,7 @@ var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
 var rename=require('gulp-rename');
-var version='V18.0.5';
+var version='V18.0.6';
 
 //1.backupDist
 gulp.task('backupDist',function(){
@@ -17,7 +17,7 @@ gulp.task('backupDist',function(){
     gulp.src('./dist/index.html',{base:'./dist/'})
     .pipe(gulpReplace('<!DOCTYPE html><html>','<!DOCTYPE html><html v="'+version+'">'))
     .pipe(gulpReplace('lodash.ili.js?v=1.5.9','lodash.ili.js?v='+version))
-    .pipe(gulpReplace('<script id=php></script>','<script type="text/javascript">var serverTime=window.Number(""+<?php echo time(); ?>+"000");var dobjServerTime=new Date(serverTime);var offsetMS=+(-480-(dobjServerTime.getTimezoneOffset()))*60*1000;console.log("==dobjServerTime==" 服務器時間：("+serverTime+")    "+dobjServerTime); </script>'))
+    .pipe(gulpReplace('<script id=php></script>','<script>var serverTime=window.Number(""+<?php echo time(); ?>+"000");console.log(serverTime);</script>'))
     .pipe(rename('./index.php'))
     .pipe(gulp.dest('../CMS-FrontEnd/agent/'));
 
