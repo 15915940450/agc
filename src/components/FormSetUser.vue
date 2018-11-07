@@ -86,7 +86,7 @@ import {mapState} from 'vuex';
 
 export default {
   name:'FormSetUser',
-  props:['name','groupCode','depositID','freeDays','scooters','phone','agentFreeDays'],
+  props:['name','groupCode','depositID','freeDays','agentFreeDays','scooters','phone'],
   data:function(){
     //自定义校验规则
     var zh2length10=function(rule,value,callback){
@@ -130,10 +130,10 @@ export default {
   },
   computed:{
     maxFD:function(){
-      if(this.freeDays===undefined){
+      if(this.agentFreeDays===undefined){
         return 0;
       }else{
-        return (this.freeDays+this.freeDaysRps);
+        return (this.agentFreeDays+this.freeDaysRps);
       }
     },
     computedFreeDays:function(){
@@ -163,7 +163,7 @@ export default {
         vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
         vueThis.fetchOptionsScheme('depositListScheme');
         //免费天数
-        vueThis.formSetUser.freeDayInput=window.Number(vueThis.freeDays);  //輸入框的免費天數
+        vueThis.formSetUser.freeDayInput=window.Number(vueThis.agentFreeDays);  //輸入框的免費天數
         vueThis.fetchUserQuery(); //rqs免費天數，即設置對話框初始值
         //中控（SN)
         vueThis.formSetUser.scooterSNs=vueThis.scooters;
