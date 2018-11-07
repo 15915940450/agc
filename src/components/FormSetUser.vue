@@ -37,8 +37,8 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item class="formitem_freeday" prop="freeDay" :label-width="formLabelWidth">
-            <label class="formitem_label_freeday" for="freeDay">
+          <el-form-item class="formitem_freeday" prop="freeDayInput" :label-width="formLabelWidth">
+            <label class="formitem_label_freeday" for="freeDayInput">
               免费天数
 
               <el-tooltip placement="top">
@@ -52,7 +52,7 @@
 
             </label>
             <el-input-number
-              v-model="formSetUser.freeDay"
+              v-model="formSetUser.freeDayInput"
               :min="0"
               :max="maxFD"
               >
@@ -106,20 +106,20 @@ export default {
         userName:[
           {validator:zh2length10,trigger:'blur'}
         ],
-        freeDay:[
+        freeDayInput:[
           {required:true,message:'请输入',trigger:'blur'},
           {type:'integer',message:'请输入一个整数',trigger:'blur'}
         ]
       },
       formSetUser:{
         scooterSNs:[],
-        freeDay:0, //輸入框的免費天數值
+        freeDayInput:0, //輸入框的免費天數值
         groupCode:'',
         depositId:'',
         phone:''
       },
       disabledDeposit:this.$route.params.type==='1'?true:false, //可退群组内用户，不可修改押金方案，其他可以修改(//1=可退 2=不可退)
-      freeDays1:0,  //rqs返回的值
+      freeDaysRps:0,  //rqs返回的值
       optionsEVs:[],
       optionsGroups:[],
       options_depositListScheme: [],
@@ -133,18 +133,18 @@ export default {
       if(this.freeDays===undefined){
         return 0;
       }else{
-        return (this.freeDays+this.freeDays1);
+        return (this.freeDays+this.freeDaysRps);
       }
     },
     computedFreeDays:function(){
       //this.maxFD:用戶可被分配的最大免費天數
       //this.computedFreeDays:實時提示的用戶剩餘免費天數
-      //this.formSetUser.freeDay:輸入框的免費天數
+      //this.formSetUser.freeDayInput:輸入框的免費天數
       //hint提示的值
-      if(this.formSetUser.freeDay===undefined){
+      if(this.formSetUser.freeDayInput===undefined){
         return this.maxFD;
       }else{
-        return (this.maxFD-this.formSetUser.freeDay);
+        return (this.maxFD-this.formSetUser.freeDayInput);
       }
     },
 
@@ -163,7 +163,7 @@ export default {
         vueThis.formSetUser.depositId=''+vueThis.depositID;  //7
         vueThis.fetchOptionsScheme('depositListScheme');
         //免费天数
-        vueThis.formSetUser.freeDay=window.Number(vueThis.freeDays);  //輸入框的免費天數
+        vueThis.formSetUser.freeDayInput=window.Number(vueThis.freeDays);  //輸入框的免費天數
         vueThis.fetchUserQuery(); //rqs免費天數，即設置對話框初始值
         //中控（SN)
         vueThis.formSetUser.scooterSNs=vueThis.scooters;
@@ -176,7 +176,7 @@ export default {
     fetchUserQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.freeDays1=window.Number(objRps.result.freeDays);
+        vueThis.freeDaysRps=window.Number(objRps.result.freeDays);
       });
     },
     fetchGroupList:function(){
@@ -231,7 +231,7 @@ export default {
           var sendData={
             groupCode:vueThis.formSetUser.groupCode,
             depositId:vueThis.formSetUser.depositId,
-            freeDay:vueThis.formSetUser.freeDay?vueThis.formSetUser.freeDay:0,
+            freeDay:vueThis.formSetUser.freeDayInput?vueThis.formSetUser.freeDayInput:0,
             scooterSNs:vueThis.formSetUser.scooterSNs,
             phone:vueThis.formSetUser.phone,
             userName:vueThis.formSetUser.userName
