@@ -17,7 +17,7 @@ gulp.task('backupDist',function(){
     gulp.src('./dist/index.html',{base:'./dist/'})
     .pipe(gulpReplace('<!DOCTYPE html><html>','<!DOCTYPE html><html v="'+version+'">'))
     .pipe(gulpReplace('lodash.ili.js?v=1.5.9','lodash.ili.js?v='+version))
-    .pipe(gulpReplace('<script id="php"></script>','<script type="text/javascript">var serverTime=window.Number(""+<?php echo time(); ?>+"000");var dobjServerTime=new Date(serverTime);var offsetMS=+(-480-(dobjServerTime.getTimezoneOffset()))*60*1000;console.log("==dobjServerTime==" 服務器時間：("+serverTime+")    "+dobjServerTime); </script>'))
+    .pipe(gulpReplace('<script id=php></script>','<script type="text/javascript">var serverTime=window.Number(""+<?php echo time(); ?>+"000");var dobjServerTime=new Date(serverTime);var offsetMS=+(-480-(dobjServerTime.getTimezoneOffset()))*60*1000;console.log("==dobjServerTime==" 服務器時間：("+serverTime+")    "+dobjServerTime); </script>'))
     .pipe(rename('./index.php'))
     .pipe(gulp.dest('../CMS-FrontEnd/agent/'));
 
