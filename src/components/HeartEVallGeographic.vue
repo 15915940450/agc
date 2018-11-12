@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="evallgeographic eqcalc">
+    <!-- head -->
     <div class="evallgeographic_head">
       <h3 class="title with_sub">
         <span class="real_title">中控分布</span>
@@ -19,16 +20,28 @@
       </h3>
       
     </div>
+
+    <!-- amap -->
+    <div class="ali_amap">
+      <section id="a-map"></section>
+    </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 
+//global
+var map;
+
 export default {
   name:'HeartEVallGeographic',
   data:function(){
-    return ({});
+    return ({
+      container:'a-map',
+
+      points:[]
+    });
   },
   computed:{
     ...mapState(['agent','modalStore'])
@@ -41,9 +54,55 @@ export default {
     }
   },
   methods:{
+    //獲取一系列點坐標
+    fetchData:function(){
+      var vueThis=this;
+      //allEVgeographic
+      vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
+        // _.logErr(objRps)
+        objRps={
+          //   "code": 1000,
+          //   "result":
+          //        [
+          //           {
+          // "id": "574C547427C4",   // 中控sn
+          // "longitude": 103.940565,  //经度
+          // "latitude": 30.771326  //维度
+          //       },
+          //       {
+          // "id": "574C547427C5",   // 中控sn
+          // "longitude": 103.640565,  //经度
+          // "latitude": 30.771326  //维度
+          //       }
+          //       ]
 
-  },
-  created:function(){
+        };
+        vueThis.points=objRps.result;
+        // console.log(vueThis.points);
+      });
+      return vueThis;
+    },
+    //高德地圖入口
+    aliAmap:function(){
+      var vueThis=this;
+      vueThis.initMap();
+    },
+    initMap:function(){
+      var vueThis=this;
+      map = new AMap.Map(vueThis.container, {
+        resizeEnable: true,
+        mapStyle:'amap://styles/whitesmoke'
+      });
+      AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],function(){
+        map.addControl(new AMap.ToolBar());
+        map.addControl(new AMap.Scale());
+        map.addControl(new AMap.OverView({isOpen:true}));
+      });
+    }
+  },  //methods
+  //注意是 mounted
+  mounted:function(){
+    this.fetchData().aliAmap();
   }
 };
 </script>
@@ -61,5 +120,9 @@ export default {
   }
   .today_active{
     margin-left: 20px;
+  }
+  #amap_container{
+    width: 100%;
+    height: 600px;
   }
 </style>
