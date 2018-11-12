@@ -45,10 +45,23 @@
         <i class="icon_menu heartxls">icon_menu</i>
         <span slot="title">报表管理</span>
       </el-menu-item>
-      <el-menu-item index="7">
-        <i class="icon_menu heartevs">icon_menu</i>
-        <span slot="title">中控管理</span>
-      </el-menu-item>
+
+      <el-submenu index="200">
+        <template slot="title">
+          <i class="icon_menu heartevs">icon_menu</i>
+          <span>中控管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="7">
+            <small class="sec">中控列表</small>
+          </el-menu-item>
+          <el-menu-item index="10">
+            <small class="sec">中控分布</small>
+          </el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+
+
       <el-menu-item index="8">
         <i class="icon_menu heartsyssetting">icon_menu</i>
         <span slot="title">系统设置</span>
@@ -69,7 +82,8 @@ var arrRouteName=[
   'HeartXls',
   'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
   'HeartSysSetting',
-  'HeartSearchUser'
+  'HeartSearchUser',
+  'HeartEVallGeographic'
 ];
 
 export default {
@@ -133,6 +147,12 @@ export default {
           name:'用户查询',
           theClass:'heartsearchuser',
           link:'/searchuser'
+        },
+        {
+          id:10,
+          name:'中控分布',
+          theClass:'heartevallgeographic',
+          link:'/evallgeographic'
         }
       ]
     });
@@ -144,6 +164,9 @@ export default {
       switch(true){
       case (+this.isActive===9 || +this.isActive===2):
         arrOpeneds=['100'];
+        break;
+      case (+this.isActive===7 || +this.isActive===10):
+        arrOpeneds=['200'];
         break;
       default:
 

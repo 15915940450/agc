@@ -17,6 +17,7 @@ import HeartBigAmountDetail from '@/components/HeartBigAmountDetail';
 import HeartXls from '@/components/HeartXls';
 import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
+import HeartEVallGeographic from '@/components/HeartEVallGeographic';
 import HeartSysSetting from '@/components/HeartSysSetting';
 import MapTrack from '@/components/MapTrack';
 import MapGeographic from '@/components/MapGeographic';
@@ -119,6 +120,11 @@ export default new Router({
           component:MapGeographic
         }
       ]
+    },
+    {
+      path: '/evallgeographic', //系统管理
+      name: 'HeartEVallGeographic',
+      component: HeartEVallGeographic
     },
     {
       path: '/sys', //系统管理
