@@ -102,7 +102,7 @@ export default {
   },  //methods
   //注意是 mounted
   mounted:function(){
-    this.fetchData().aliAmap();
+    this.aliAmap();
   }
 };
 </script>
