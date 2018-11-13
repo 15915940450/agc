@@ -84,6 +84,11 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   width: 50px;
   max-width: 50px;
 }
+.beta .el-badge__content{
+  background:#53a6fa;
+  text-transform: capitalize;
+  margin-left: 8px;
+}
 //amap
 .map_track{
   position: relative;
@@ -156,7 +161,7 @@ h3.title{
   left:0;
   top:0;
   z-index:9;
-  overdlow:hidden;
+  overflow:hidden;
 }
 // 模态扩展
 .modal_wrap .el-select--small{

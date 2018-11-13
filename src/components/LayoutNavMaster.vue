@@ -9,7 +9,10 @@
 
       <el-menu-item index="1">
         <i class="icon_menu heartjoy">icon_menu</i>
-        <span slot="title">首页概览</span>
+        <span slot="title">
+          首页概览
+          <el-badge value="beta" class="beta"></el-badge>
+        </span>
       </el-menu-item>
 
       <el-submenu index="100">
@@ -286,4 +289,5 @@ export default {
     background-position: -10px -366px;
   }
 
+  
 </style>
