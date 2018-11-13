@@ -196,8 +196,8 @@ export default {
   data:function(){
     return ({
       msgZHMC:'深圳易马达科技有限公司',
-      msgKHYH:'招商银行深圳建安支行',
-      msgSKZH:'755928540810505',
+      msgKHYH:'招商银行深圳创维大厦支行',
+      msgSKZH:'755928540810201',
       action:'',
       demoImg:false,
       price:0,
