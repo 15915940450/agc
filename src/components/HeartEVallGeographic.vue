@@ -47,8 +47,8 @@ export default {
     ...mapState(['agent','modalStore']),
     markers:function(){
       var markers=this.points.map(function(v){
-        _.logErr(v);
-        //marker===>markers
+        // _.logErr(v);
+        //标记: marker===>markers
         return new AMap.Marker({
           position:[v.longitude,v.latitude],
           icon:new AMap.Icon({
@@ -79,7 +79,6 @@ export default {
       var vueThis=this;
       //allEVgeographic
       vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
-        // _.logErr(objRps)
         objRps={
           'code': 1000,
           'result':
@@ -98,7 +97,7 @@ export default {
 
         };
         vueThis.points=objRps.result;
-        // console.log(vueThis.markers);
+        // points===》markers===》addCluster()
         vueThis.addCluster();
       });
       return vueThis;
@@ -119,9 +118,10 @@ export default {
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.OverView({isOpen:true}));
       });
-      
+      //初始化成功，獲取坐標數據
       vueThis.fetchData();
     },
+    //坐標數據獲取成功，添加聚合圖
     addCluster:function(){
       var vueThis=this;
       if (cluster) {
