@@ -31,8 +31,8 @@
 <script>
 import {mapState} from 'vuex';
 
-//global
-var map,cluster,markers=[];
+//cluster:群聚
+var map,cluster;
 
 export default {
   name:'HeartEVallGeographic',
@@ -44,7 +44,27 @@ export default {
     });
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    markers:function(){
+      var markers=this.points.map(function(v){
+        _.logErr(v);
+        //marker===>markers
+        return new AMap.Marker({
+          position:[v.longitude,v.latitude],
+          icon:new AMap.Icon({
+            image:'./static/ev.png',
+            imageSize:new AMap.Size(50,60),
+            size:new AMap.Size(50,60)
+          }),
+          offset: new AMap.Pixel(-25,-60),
+          title:'中控SN: '+v.id,
+          extData:{
+            id:v.id
+          }
+        });
+      });
+      return (markers);
+    }
   },
   watch:{
     'modalStore.needLogin':function(val){
@@ -61,24 +81,25 @@ export default {
       vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
         // _.logErr(objRps)
         objRps={
-          //   "code": 1000,
-          //   "result":
-          //        [
-          //           {
-          // "id": "574C547427C4",   // 中控sn
-          // "longitude": 103.940565,  //经度
-          // "latitude": 30.771326  //维度
-          //       },
-          //       {
-          // "id": "574C547427C5",   // 中控sn
-          // "longitude": 103.640565,  //经度
-          // "latitude": 30.771326  //维度
-          //       }
-          //       ]
+            "code": 1000,
+            "result":
+                 [
+                    {
+          "id": "574C547427C4",   // 中控sn
+          "longitude": 103.940565,  //经度
+          "latitude": 30.771326  //维度
+                },
+                {
+          "id": "574C547427C5",   // 中控sn
+          "longitude": 103.640565,  //经度
+          "latitude": 30.771326  //维度
+                }
+                ]
 
         };
         vueThis.points=objRps.result;
-        // console.log(vueThis.points);
+        // console.log(vueThis.markers);
+        vueThis.addCluster();
       });
       return vueThis;
     },
@@ -98,15 +119,17 @@ export default {
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.OverView({isOpen:true}));
       });
-      vueThis.addCluster();
+      
+      vueThis.fetchData();
     },
     addCluster:function(){
       var vueThis=this;
       if (cluster) {
         cluster.setMap(null);
       }
-      cluster = new AMap.MarkerClusterer(map, markers, {gridSize: 80});
+      cluster = new AMap.MarkerClusterer(map, vueThis.markers, {gridSize: 80});
       // vueThis.clickScooterMarker(markers);
+      
     }
 
 
