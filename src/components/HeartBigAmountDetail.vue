@@ -101,12 +101,12 @@
             <div>
               <span class="l">开户银行：</span>
               
-              <span class="r">招商银行深圳建安支行</span>
+              <span class="r">招商银行深圳创维大厦支行</span>
             </div>
             <div>
               <span class="l">收款账户：</span>
               
-              <span class="r">755928540810505</span>
+              <span class="r">755928540810201</span>
             </div>
           </el-collapse-item>
           <el-collapse-item title="申请信息" name="3">
