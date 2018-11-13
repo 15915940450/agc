@@ -118,18 +118,40 @@ export default {
             groupCode:vueThis.formSetCombo.groupCode
           };
           vueThis.$rqs(vueThis.$yApi.setCombo,function(objRps){
+            //批量設置套餐成功
             vueThis.$store.commit('hideSetCombo');
             vueThis.$store.commit('setNeedFetchData');
-            vueThis.$message({
-              message: objRps.msg,
-              type: 'success'
-            });
+
+            vueThis.push2record(objRps.msg);
+            // vueThis.$message({
+            //   message: objRps.msg,
+            //   type: 'success'
+            // });
           },{
             objSendData:sendData
           });
         }
       });
 
+    },
+    push2record:function(msg){
+      var vueThis=this;
+      vueThis.$confirm(msg, '提示', {
+        confirmButtonText: '查看',
+        cancelButtonText: '好的',
+        type: 'success'
+      }).then(() => {
+        //confirm:跳往 套餐管理-套餐记录-分配记录
+        vueThis.rrPush();
+      });
+    },
+    rrPush:function(){
+      this.$router.push({
+        path:'/combo/history',
+        query:{
+          tab:'allot'
+        }
+      });
     }
   },
   created:function(){
