@@ -16,7 +16,7 @@
             <i class="el-icon-info"></i>
           </span>
         </el-tooltip>
-        <small class="today_active">今日活跃中控： 90</small>
+        <small class="today_active">今日活跃中控： {{activeEV}}</small>
       </h3>
       
     </div>
@@ -39,6 +39,7 @@ export default {
   data:function(){
     return ({
       container:'a-map',
+      activeEV:'─',
 
       points:[]
     });
@@ -78,24 +79,24 @@ export default {
     fetchData:function(){
       var vueThis=this;
       //allEVgeographic
-      vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
-        objRps={
-          'code': 1000,
-          'result':
-                 [
-                   {
-                     'id': 'G5A1A100637',   // 中控sn
-                     'longitude': 103.940565,  //经度
-                     'latitude': 30.771326  //维度
-                   },
-                   {
-                     'id': 'G5000000033',   // 中控sn,
-                     'longitude': 114.359027,  //经度
-                     'latitude': 23.014435  //维度
-                   }
-                 ]
+      vueThis.$rqs(vueThis.$yApi.allEVgeographic,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result':
+        //          [
+        //            {
+        //              'id': 'G5A1A100637',   // 中控sn
+        //              'longitude': 103.940565,  //经度
+        //              'latitude': 30.771326  //维度
+        //            },
+        //            {
+        //              'id': 'G5000000033',   // 中控sn,
+        //              'longitude': 114.359027,  //经度
+        //              'latitude': 23.014435  //维度
+        //            }
+        //          ]
 
-        };
+        // };
         vueThis.points=objRps.result;
         // points===》markers===》addCluster()
         vueThis.addCluster();
@@ -160,13 +161,24 @@ export default {
         path:'/evs/1'
       });
       window.open(routeData.href,'_blank');
+    },
+
+    fetchActiveEV:function(){
+      var vueThis=this;
+      //getAtctiveEV
+      vueThis.$rqs(vueThis.$yApi.getAtctiveEV,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': 12 //活跃中控数
+        // };
+        vueThis.activeEV=objRps.result;
+      });
     }
-
-
   },  //methods
   //注意是 mounted
   mounted:function(){
     this.aliAmap();
+    this.fetchActiveEV();
   }
 };
 </script>
