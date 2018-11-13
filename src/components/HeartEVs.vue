@@ -280,6 +280,8 @@ export default {
     }
   },
   created:function(){
+    //初始化搜索
+    this.search=this.$route.query.sn || null;
     this.fetchData();
   }
 

@@ -84,14 +84,14 @@ export default {
           'result':
                  [
                    {
-                     'id': '574C547427C4',   // 中控sn
+                     'id': 'G5A1A100637',   // 中控sn
                      'longitude': 103.940565,  //经度
                      'latitude': 30.771326  //维度
                    },
                    {
-                     'id': '574C547427C5',   // 中控sn
-                     'longitude': 103.640565,  //经度
-                     'latitude': 30.771326  //维度
+                     'id': 'G5000000033',   // 中控sn,
+                     'longitude': 114.359027,  //经度
+                     'latitude': 23.014435  //维度
                    }
                  ]
 
@@ -128,8 +128,27 @@ export default {
         cluster.setMap(null);
       }
       cluster = new AMap.MarkerClusterer(map, vueThis.markers, {gridSize: 80});
-      // vueThis.clickScooterMarker(markers);
+      vueThis.handleClickEVMarker();
       
+    },
+    handleClickEVMarker:function(){
+      var vueThis=this;
+      vueThis.markers.forEach(function(v){
+        AMap.event.addListener(v,'click',function(){
+          var sn=v.getExtData().id;
+          //前往列表頁，並搜索出sn
+          vueThis.rrPush(sn);
+        });
+      });
+      return vueThis;
+    },
+    rrPush:function(sn){
+      this.$router.push({
+        path:'/evs/1',
+        query:{
+          sn:sn
+        }
+      });
     }
 
 
