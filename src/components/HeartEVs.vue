@@ -143,9 +143,9 @@ export default {
   data:function(){
     return ({
       total:0,
-      search:'',
+      search:'',  //搜索用的中控SN
       isNotSearch:true,
-      scooterSN:'',
+      scooterSN:'', //子組件屬性用的中控SN，記錄點擊了那一條數據
       evs:[
       //   {
       //   "id": "1",//id
