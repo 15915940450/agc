@@ -137,7 +137,8 @@ export default {
         AMap.event.addListener(v,'click',function(){
           var sn=v.getExtData().id;
           //前往列表頁，並搜索出sn
-          vueThis.rrPush(sn);
+          // vueThis.rrPush(sn);
+          vueThis.rrPushBlank(sn);
         });
       });
       return vueThis;
@@ -149,6 +150,16 @@ export default {
           sn:sn
         }
       });
+    },
+    rrPushBlank:function(sn){
+      var vueThis=this;
+      var routeData=vueThis.$router.resolve({
+        query:{
+          sn:sn
+        },
+        path:'/evs/1'
+      });
+      window.open(routeData.href,'_blank');
     }
 
 
