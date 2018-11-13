@@ -17,6 +17,51 @@
         </el-button>
       </el-popover>
     </h3>
+
+    <!-- 四個卡片 -->
+    <el-row :gutter="10">
+      <el-col :span="6">
+        <el-card class="box-card">
+          <div>
+            <h3>
+              押金用户数
+              <i class="el-icon-info gray_info"></i>
+            </h3>
+            <h2 class="data_h2">9,102,928</h2>
+            <!-- 脚 -->
+            <el-row :gutter="8">
+              <el-col :span="12">
+                <div>
+                  <p class="key_p">单电用户</p>
+                  <p class="value_p">102928</p>
+                </div>
+              </el-col>
+              <el-col :span="12">
+                <div>
+                  <p class="key_p">双电用户</p>
+                  <p class="value_p">102928</p>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card class="box-card">
+          
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card class="box-card">
+          
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card class="box-card">
+          
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -58,5 +103,26 @@ export default {
 <style lang="css" scoped>
   .title_span{
     margin-right: 20px;
+  }
+  .gray_info{
+    color: #fc8989;
+    float: right;
+    margin-top: 4px;
+  }
+  .data_h2{
+    text-align: left;
+    margin:8px 0;
+    font-size: 29px;
+    color: #FF8933;
+  }
+  .key_p{
+    color: #999;
+    font-size: 12px;
+    margin: 8px 0 0;
+  }
+  .value_p{
+    color: #555;
+    font-size: 1.3em;
+    margin: 8px 0 0;
   }
 </style>
