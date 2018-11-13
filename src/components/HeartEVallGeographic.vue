@@ -81,20 +81,20 @@ export default {
       vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
         // _.logErr(objRps)
         objRps={
-            "code": 1000,
-            "result":
+          'code': 1000,
+          'result':
                  [
-                    {
-          "id": "574C547427C4",   // 中控sn
-          "longitude": 103.940565,  //经度
-          "latitude": 30.771326  //维度
-                },
-                {
-          "id": "574C547427C5",   // 中控sn
-          "longitude": 103.640565,  //经度
-          "latitude": 30.771326  //维度
-                }
-                ]
+                   {
+                     'id': '574C547427C4',   // 中控sn
+                     'longitude': 103.940565,  //经度
+                     'latitude': 30.771326  //维度
+                   },
+                   {
+                     'id': '574C547427C5',   // 中控sn
+                     'longitude': 103.640565,  //经度
+                     'latitude': 30.771326  //维度
+                   }
+                 ]
 
         };
         vueThis.points=objRps.result;
