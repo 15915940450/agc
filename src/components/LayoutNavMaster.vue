@@ -10,7 +10,7 @@
       <el-menu-item index="1">
         <i class="icon_menu heartjoy">icon_menu</i>
         <span slot="title">
-          首页概览
+          首页
           <el-badge value="beta" class="beta"></el-badge>
         </span>
       </el-menu-item>
@@ -98,7 +98,7 @@ export default {
       imNav:[
         {
           id:1,
-          name:'首页概览',
+          name:'首页',
           theClass:'heartjoy',
           link:'/'
         },
