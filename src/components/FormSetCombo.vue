@@ -149,7 +149,7 @@ export default {
       this.$router.push({
         path:'/combo/history',
         query:{
-          tab:'allot'
+          currentTab:'combolog'
         }
       });
     }

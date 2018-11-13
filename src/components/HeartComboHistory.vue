@@ -56,7 +56,7 @@ export default {
   name:'HeartComboHistory', /* HeartComboHistory is copy from HeartUser */
   data:function(){
     return ({
-      currentTab:'combo'
+      currentTab:'combo'  //combo,combolog
     });
   },
   computed:{
@@ -65,6 +65,10 @@ export default {
   components:{
     TableCombo,
     TableCombolog
+  },
+  created:function(){
+    // console.log(this.$route.query.currentTab); //undefined
+    this.currentTab=this.$route.query.currentTab || 'combo';
   }
 };
 </script>
