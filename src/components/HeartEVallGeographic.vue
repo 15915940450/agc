@@ -32,7 +32,7 @@
 import {mapState} from 'vuex';
 
 //global
-var map;
+var map,cluster,markers=[];
 
 export default {
   name:'HeartEVallGeographic',
@@ -98,7 +98,18 @@ export default {
         map.addControl(new AMap.Scale());
         map.addControl(new AMap.OverView({isOpen:true}));
       });
+      vueThis.addCluster();
+    },
+    addCluster:function(){
+      var vueThis=this;
+      if (cluster) {
+        cluster.setMap(null);
+      }
+      cluster = new AMap.MarkerClusterer(map, markers, {gridSize: 80});
+      // vueThis.clickScooterMarker(markers);
     }
+
+
   },  //methods
   //注意是 mounted
   mounted:function(){
