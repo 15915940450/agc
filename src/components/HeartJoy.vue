@@ -25,21 +25,27 @@
           <div>
             <h3>
               押金用户数
-              <i class="el-icon-info gray_info"></i>
+              <el-tooltip 
+                effect="dark" 
+                content="目前拥有押金的用户数" 
+                placement="top-end"
+                >
+                <i class="el-icon-info gray_info"></i>
+              </el-tooltip>
             </h3>
             <h2 class="data_h2">9,102,928</h2>
             <!-- 脚 -->
             <el-row :gutter="8">
               <el-col :span="12">
                 <div>
-                  <p class="key_p">单电用户</p>
-                  <p class="value_p">102928</p>
+                  <span class="key_span">单电用户</span>
+                  <span class="value_span">102928</span>
                 </div>
               </el-col>
               <el-col :span="12">
                 <div>
-                  <p class="key_p">双电用户</p>
-                  <p class="value_p">102928</p>
+                  <span class="key_span">双电用户</span>
+                  <span class="value_span">102928</span>
                 </div>
               </el-col>
             </el-row>
@@ -115,14 +121,16 @@ export default {
     font-size: 29px;
     color: #FF8933;
   }
-  .key_p{
+  .key_span{
+    display: block;
     color: #999;
     font-size: 12px;
-    margin: 8px 0 0;
+    margin-top:8px;
   }
-  .value_p{
+  .value_span{
+    display: block;
     color: #555;
     font-size: 1.3em;
-    margin: 8px 0 0;
+    margin-top:8px;
   }
 </style>
