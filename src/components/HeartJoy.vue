@@ -112,10 +112,28 @@ export default {
   methods:{
     fetchData:function(){
       var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.accountBaseInfo,function(objRps){
-        Object.keys(objRps.result).forEach(function(v){
-          vueThis[v]=objRps.result[v];
-        });
+      //ecUser
+      vueThis.$rqs(vueThis.$yApi.testApi,function(objRps){
+        objRps={
+          'code': 1000,
+          'result': {
+            'userNum':421311,   //用户数  
+            'userNumInfo':[
+              {
+                'day': '6/5',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
+                
+              }
+
+            ]
+
+ 
+          }
+        };
+        console.log(objRps);
       });
     }
   },
