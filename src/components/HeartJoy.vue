@@ -84,6 +84,7 @@ var arrTitles=['新增用戶','退出用戶','净增用戶'];
 var arrLabels=[]; //["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
 var arrKeys=['newIncreate','quit','netIncreate'];
 var arrValues=[]; //[{"value":[12,12,12,12,0,12,12]},{"value":[1,1,1,1,0,1,1]},{"value":[34,34,34,34,0,34,34]}]
+var arrStack=['净','净',''];  //堆叠的series
 
 export default {
   name:'HeartJoy',
@@ -138,6 +139,7 @@ export default {
     }
   },
   methods:{
+    //獲取數據,生成 arrLabels 和 arrValues
     fetchData:function(){
       var vueThis=this;
       //ecUser
@@ -151,28 +153,28 @@ export default {
                 'day': '6/1',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-1,  //退出用户数
                 'netIncreate':34   // 净增用户数
               },
               {
                 'day': '6/2',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-51,  //退出用户数
                 'netIncreate':34   // 净增用户数
               },
               {
                 'day': '6/3',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-51,  //退出用户数
                 'netIncreate':34   // 净增用户数
               },
               {
                 'day': '6/4',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-51,  //退出用户数
                 'netIncreate':34   // 净增用户数
               },
               {
@@ -186,14 +188,14 @@ export default {
                 'day': '6/6',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-51,  //退出用户数
                 'netIncreate':34   // 净增用户数
               },
               {
                 'day': '6/7',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
-                'quit':1,  //退出用户数
+                'quit':-51,  //退出用户数
                 'netIncreate':34   // 净增用户数
               }
             ]
@@ -234,22 +236,34 @@ export default {
       objEcharts.setOption(vueThis.iliECoption());
       return vueThis;
     },
+    // 我的option
     iliECoption:function(){
       return ({
         grid: {
-          top:160,
-          bottom:60,
-          left:60,
-          right:90
+          top:60,
+          bottom:30,
+          left:30,
+          right:10,
+          containLabel: true
         },
-        tooltip:{
-          trigger:'axis'
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          },
+          formatter:function(params){
+            // console.log(params);
+            var tmp=params.map(function(v){
+              //將負值顯示為正值
+              return `${v.seriesName}: ${Math.abs(v.data)}`;
+            }).join('<br />');
+            tmp=params[0].name+'<br />'+tmp;
+            return tmp;
+          }
         },
         legend:{
           data:arrTitles,
-          x:'right',
-          y:12,
-          padding:[10,150,5,5],
+          x:'center',
           selectedMode:'multiple'
         },
         toolbox:{
@@ -258,30 +272,13 @@ export default {
         animation:false,
         xAxis:{
           type:'category',
-          boundaryGap:false,
-          axisLine : {    // 轴线
-            show:false
-          },
-          axisTick:{
-            length:2,
-            interval:0
-          },
-          axisLabel :{
-            rotate:-15,
-            margin:12
-          },
+          boundaryGap: false,
+          axisTick : {show: false},
           data:[]  //ajax
         },
         yAxis:{
           type:'value',
-          splitLine:{
-            lineStyle:{
-              color:['#EEE']
-            }
-          },
-          axisLine : {    // 轴线
-            show:false
-          },
+          
           axisLabel:{
             formatter:'{value}'
           }
@@ -291,16 +288,9 @@ export default {
           for(var i=0;i<arrTitles.length;i++){
             arr[i]={
               name:arrTitles[i],
-              type:'line',
-              symbol:'circle',
-              symbolSize:13,
-              showAllSymbol:true,
-              itemStyle:{
-                normal:{
-                  borderWidth:2,
-                  borderColor:'#FFF'
-                }
-              },
+              type:'bar',
+              stack: arrStack[i],
+              barWidth:10,
               data:[]
             };
           }
