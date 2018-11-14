@@ -69,9 +69,9 @@
           <el-button size="mini" plain>按月查看</el-button>
         </el-button-group>
       </div>
-      <div v-for="o in 4" :key="o" class="text item">
-        {{'列表内容 ' + o }}
-      </div>
+      <section id="ec_main">
+        
+      </section>
     </el-card>
   </div>
 </template>
@@ -115,7 +115,12 @@ export default {
         footSpanLeftValue:'─',
         footSpanRightKey:'未绑定',
         footSpanRightValue:'─'
-      }]
+      }],
+      idEC:'ec_main',
+      objEcharts:null,
+      arrTitles:['新增用戶','退出用戶','净增用戶'],
+      arrLabels:[],
+      arrValues:[]
     });
   },
   computed:{
@@ -192,11 +197,119 @@ export default {
         };
         console.log(objRps);
       });
+    },
+    //ec入口
+    ec:function(){
+      this.initE();
+      return this;
+    },
+    initE:function(){
+      var vueThis=this;
+      var eleE=document.getElementById(vueThis.idEC);
+      vueThis.objEcharts=window.echarts.init(eleE,{renderer:'svg'});
+      vueThis.objEcharts.setOption(vueThis.iliECoption(vueThis.arrTitles));
+      return vueThis;
+    },
+    iliECoption:function(arrTitles){
+      return ({
+        grid: {
+          top:160,
+          bottom:60,
+          left:60,
+          right:90
+        },
+        tooltip:{
+          trigger:'axis'
+        },
+        legend:{
+          data:arrTitles,
+          x:'right',
+          y:12,
+          padding:[10,150,5,5],
+          selectedMode:'multiple'
+        },
+        toolbox:{
+          show:false
+        },
+        animation:false,
+        xAxis:{
+          type:'category',
+          boundaryGap:false,
+          axisLine : {    // 轴线
+            show:false
+          },
+          axisTick:{
+            length:2,
+            interval:0
+          },
+          axisLabel :{
+            rotate:-15,
+            margin:12
+          },
+          data:[]  //ajax
+        },
+        yAxis:{
+          type:'value',
+          splitLine:{
+            lineStyle:{
+              color:['#EEE']
+            }
+          },
+          axisLine : {    // 轴线
+            show:false
+          },
+          axisLabel:{
+            formatter:'{value}'
+          }
+        },
+        series:(function(){
+          var arr=[];
+          for(var i=0;i<arrTitles.length;i++){
+            arr[i]={
+              name:arrTitles[i],
+              type:'line',
+              symbol:'circle',
+              symbolSize:13,
+              showAllSymbol:true,
+              itemStyle:{
+                normal:{
+                  borderWidth:2,
+                  borderColor:'#FFF'
+                }
+              },
+              data:[]
+            };
+          }
+          return arr;
+        })()
+      });
+    },
+    setE:function(){
+      var vueThis=this;
+      vueThis.objEcharts.setOption({
+        xAxis:{
+          data:vueThis.arrLabels
+        },
+        series:(function(){
+          var arr=[];
+          for(var i=0;i<vueThis.arrTitles.length;i++){
+            arr[i]={
+              name:vueThis.arrTitles[i],
+              data:vueThis.arrValues[i].values
+            };
+          }
+          return arr;
+        })()  //series
+      });
+      return vueThis;
     }
   },
   created:function(){
-    this.fetchData();
-  } //created
+    // this.fetchData();
+  }, //created
+  mounted:function(){
+    this.ec().fetchData();
+  }
 };
 </script>
 
@@ -235,5 +348,9 @@ export default {
   }
   .ec_card{
     margin-top:10px;
+  }
+  #ec_main{
+    width: 100%;
+    height: 400px;
   }
 </style>
