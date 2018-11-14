@@ -61,7 +61,7 @@
         <span class="title">用户数据</span>
         <small class="user_small">
           用户数 
-          <strong>962</strong>
+          <strong>{{userNum}}</strong>
         </small>
         <!-- 按鈕組：日，月 -->
         <el-button-group class="type_group">
@@ -137,11 +137,11 @@ export default {
         {
           h3:'押金用户数',
           tooltipContent:'目前拥有押金的用户数',
-          dataH2:'9,102,928',
+          dataH2:'─',  //9,102,928
           footSpanLeftKey:'单电用户',
-          footSpanLeftValue:'102928',
+          footSpanLeftValue:'─',
           footSpanRightKey:'双电用户',
-          footSpanRightValue:'102928'
+          footSpanRightValue:'─'
         },{
           h3:'虚拟电池数',
           tooltipContent:'通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。',
@@ -169,6 +169,7 @@ export default {
         }
       ],
       idEC:'ec_main',
+      userNum:'─',
       type:0  //type===0 日
     });
   },
@@ -209,6 +210,72 @@ export default {
     }
   },
   methods:{
+    //卡片數據獲取
+    fetchCardData0:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.card0,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': {
+        //     'depositUserNum':421311,   //押金用户数 
+        //     'singularBatteryNum':22,    // 单电用户数
+        //     'doubleBatteryNum':323    //双电用户 
+        //   }
+        // };
+        vueThis.arrCard[0].dataH2=objRps.result.depositUserNum;
+        vueThis.arrCard[0].footSpanLeftValue=objRps.result.singularBatteryNum;
+        vueThis.arrCard[0].footSpanRightValue=objRps.result.doubleBatteryNum;
+      });
+    },
+    fetchCardData1:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.card1,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': {
+        //     'batteryNum':421311,   //虚拟电池数  
+        //     'assignNum':22,    // 已分配电池数
+        //     'unAssignNum':323    //未分配电池数
+        //   }
+        // };
+        vueThis.arrCard[1].dataH2=objRps.result.batteryNum;
+        vueThis.arrCard[1].footSpanLeftValue=objRps.result.assignNum;
+        vueThis.arrCard[1].footSpanRightValue=objRps.result.unAssignNum;
+      });
+    },
+    fetchCardData2:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.card2,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': {
+        //     'freeDayNum':421311,   //免费天数数  
+        //     'assignNum':22,    // 已分配数
+        //     'unAssignNum':323    //未分配数
+        //   }
+        // };
+        vueThis.arrCard[2].dataH2=objRps.result.freeDayNum;
+        vueThis.arrCard[2].footSpanLeftValue=objRps.result.assignNum;
+        vueThis.arrCard[2].footSpanRightValue=objRps.result.unAssignNum;
+      });
+    },
+    fetchCardData3:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.card3,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': {
+        //     'scooterNum':421311,   //中控数  
+        //     'bindNum':22,    // 已绑定数
+        //     'unbindNum':323    //未绑定数
+        //   }
+        // };
+        vueThis.arrCard[3].dataH2=objRps.result.scooterNum;
+        vueThis.arrCard[3].footSpanLeftValue=objRps.result.bindNum;
+        vueThis.arrCard[3].footSpanRightValue=objRps.result.unbindNum;
+      });
+    },
+
     //獲取數據,生成 arrLabels 和 arrValues
     fetchData:function(){
       var vueThis=this;
@@ -216,65 +283,31 @@ export default {
         type:vueThis.type
       };
       //ecUser
-      vueThis.$rqs(vueThis.$yApi.testApi,function(objRps){
-        objRps={
-          'code': 1000,
-          'result': {
-            'userNum':421311,   //用户数  
-            'userNumInfo':[
-              {
-                'day': '6/1',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-1,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              },
-              {
-                'day': '6/2',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-51,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              },
-              {
-                'day': '6/3',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-51,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              },
-              {
-                'day': '6/4',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-51,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              },
-              {
-                'day': '6/5',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':0,  // 新增用户数
-                'quit':0,  //退出用户数
-                'netIncreate':0   // 净增用户数
-              },
-              {
-                'day': '6/6',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-51,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              },
-              {
-                'day': '6/7',  //哪一天 6/5   6月5号
-                'month':'12月', // 哪一个月
-                'newIncreate':12,  // 新增用户数
-                'quit':-51,  //退出用户数
-                'netIncreate':34   // 净增用户数
-              }
-            ]
-          }
-        };
+      vueThis.$rqs(vueThis.$yApi.ecUser,function(objRps){
+        // objRps={
+        //   'code': 1000,
+        //   'result': {
+        //     'userNum':421311,   //用户数  
+        //     'userNumInfo':[
+        //       {
+        //         'day': '6/1',  //哪一天 6/5   6月5号
+        //         'month':'11月', // 哪一个月
+        //         'newIncreate':12,  // 新增用户数
+        //         'quit':-1,  //退出用户数
+        //         'netIncreate':34   // 净增用户数
+        //       },
+        //       {
+        //         'day': '6/2',  //哪一天 6/5   6月5号
+        //         'month':'12月', // 哪一个月
+        //         'newIncreate':12,  // 新增用户数
+        //         'quit':-51,  //退出用户数
+        //         'netIncreate':34   // 净增用户数
+        //       }
+        //     ]
+        //   }
+        // };
         // console.log(objRps);
+        vueThis.userNum=objRps.result.userNum;
         //labels橫坐標
         arrLabels=objRps.result.userNumInfo.map(function(v){
           return (v[vueThis.typeLabel]);
@@ -383,7 +416,10 @@ export default {
     }
   },
   created:function(){
-    // this.fetchData();
+    this.fetchCardData0();
+    this.fetchCardData1();
+    this.fetchCardData2();
+    this.fetchCardData3();
   }, //created
   mounted:function(){
     this.ec().fetchData();
@@ -429,6 +465,6 @@ export default {
   }
   #ec_main{
     width: 100%;
-    height: 400px;
+    min-height: calc(100vh - 467px);
   }
 </style>
