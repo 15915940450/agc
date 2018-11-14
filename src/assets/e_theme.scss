@@ -342,3 +342,8 @@ input::-ms-clear, input::-ms-reveal {
   background: #000;
   color: #FFF !important;
 }
+
+// card(首頁ec用到的卡片沒有下邊框)
+.ec_card .el-card__header{
+  border-bottom: none;
+}

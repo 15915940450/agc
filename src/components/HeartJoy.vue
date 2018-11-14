@@ -54,6 +54,25 @@
       </el-col>
       <!-- for col end -->
     </el-row>
+
+    <!-- ec -->
+    <el-card class="ec_card">
+      <div slot="header" class="clearfix">
+        <span class="title">用户数据</span>
+        <small class="user_small">
+          用户数 
+          <strong>962</strong>
+        </small>
+        <!-- 按鈕組：日，月 -->
+        <el-button-group class="type_group">
+          <el-button size="mini" type="primary">按日查看</el-button>
+          <el-button size="mini" plain>按月查看</el-button>
+        </el-button-group>
+      </div>
+      <div v-for="o in 4" :key="o" class="text item">
+        {{'列表内容 ' + o }}
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -120,17 +139,55 @@ export default {
             'userNum':421311,   //用户数  
             'userNumInfo':[
               {
-                'day': '6/5',  //哪一天 6/5   6月5号
+                'day': '6/1',  //哪一天 6/5   6月5号
                 'month':'12月', // 哪一个月
                 'newIncreate':12,  // 新增用户数
                 'quit':1,  //退出用户数
                 'netIncreate':34   // 净增用户数
-                
+              },
+              {
+                'day': '6/2',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
+              },
+              {
+                'day': '6/3',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
+              },
+              {
+                'day': '6/4',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
+              },
+              {
+                'day': '6/5',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':0,  // 新增用户数
+                'quit':0,  //退出用户数
+                'netIncreate':0   // 净增用户数
+              },
+              {
+                'day': '6/6',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
+              },
+              {
+                'day': '6/7',  //哪一天 6/5   6月5号
+                'month':'12月', // 哪一个月
+                'newIncreate':12,  // 新增用户数
+                'quit':1,  //退出用户数
+                'netIncreate':34   // 净增用户数
               }
-
             ]
-
- 
           }
         };
         console.log(objRps);
@@ -169,5 +226,14 @@ export default {
     color: #555;
     font-size: 1.3em;
     margin-top:8px;
+  }
+  .type_group{
+    float: right;
+  }
+  .user_small{
+    margin-left: 20px;
+  }
+  .ec_card{
+    margin-top:10px;
   }
 </style>
