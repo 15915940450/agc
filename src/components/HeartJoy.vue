@@ -84,7 +84,7 @@ var arrTitles=['新增用戶','退出用戶','净增用戶'];
 var arrLabels=[]; //["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
 var arrKeys=['newIncreate','quit','netIncreate'];
 var arrValues=[]; //[{"value":[12,12,12,12,0,12,12]},{"value":[1,1,1,1,0,1,1]},{"value":[34,34,34,34,0,34,34]}]
-var arrStack=['净','净',''];  //堆叠的series
+var arrStacks=['净','净',''];  //堆叠的series
 
 export default {
   name:'HeartJoy',
@@ -239,13 +239,6 @@ export default {
     // 我的option
     iliECoption:function(){
       return ({
-        grid: {
-          top:60,
-          bottom:30,
-          left:30,
-          right:10,
-          containLabel: true
-        },
         tooltip : {
           trigger: 'axis',
           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -261,41 +254,29 @@ export default {
             return tmp;
           }
         },
-        legend:{
-          data:arrTitles,
-          x:'center',
-          selectedMode:'multiple'
+        legend: {
+          data:arrTitles
         },
-        toolbox:{
-          show:false
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
         },
-        animation:false,
-        xAxis:{
-          type:'category',
-          boundaryGap: false,
-          axisTick : {show: false},
-          data:[]  //ajax
-        },
-        yAxis:{
-          type:'value',
-          
-          axisLabel:{
-            formatter:'{value}'
+        yAxis : [
+          {
+            axisTick : {show: false},
+            type : 'value'
           }
-        },
-        series:(function(){
-          var arr=[];
-          for(var i=0;i<arrTitles.length;i++){
-            arr[i]={
-              name:arrTitles[i],
-              type:'bar',
-              stack: arrStack[i],
-              barWidth:10,
-              data:[]
-            };
+        ],
+        xAxis : [
+          {
+            type : 'category',
+            axisTick : {show: false},
+            data : []
           }
-          return arr;
-        })()
+        ],
+        series : []
       });
     },
     setE:function(){
@@ -308,6 +289,9 @@ export default {
           var arr=[];
           for(var i=0;i<arrTitles.length;i++){
             arr[i]={
+              type:'bar',
+              barWidth:10,
+              stack:arrStacks[i],
               name:arrTitles[i],
               data:arrValues[i].value
             };
