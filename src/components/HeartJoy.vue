@@ -79,48 +79,52 @@
 <script>
 import {mapState} from 'vuex';
 
+var objEcharts=null;
+var arrTitles=['新增用戶','退出用戶','净增用戶'];
+var arrLabels=[]; //["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
+var arrKeys=['newIncreate','quit','netIncreate'];
+var arrValues=[]; //[{"value":[12,12,12,12,0,12,12]},{"value":[1,1,1,1,0,1,1]},{"value":[34,34,34,34,0,34,34]}]
+
 export default {
   name:'HeartJoy',
   data:function(){
     return ({
-      arrCard:[{
-        h3:'押金用户数',
-        tooltipContent:'目前拥有押金的用户数',
-        dataH2:'9,102,928',
-        footSpanLeftKey:'单电用户',
-        footSpanLeftValue:'102928',
-        footSpanRightKey:'双电用户',
-        footSpanRightValue:'102928'
-      },{
-        h3:'虚拟电池数',
-        tooltipContent:'通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。',
-        dataH2:'─',
-        footSpanLeftKey:'已分配',
-        footSpanLeftValue:'─',
-        footSpanRightKey:'可分配',
-        footSpanRightValue:'─'
-      },{
-        h3:'免费天数',
-        tooltipContent:'目前可分配和已分配的天数之和',
-        dataH2:'─',
-        footSpanLeftKey:'已分配',
-        footSpanLeftValue:'─',
-        footSpanRightKey:'可分配',
-        footSpanRightValue:'─'
-      },{
-        h3:'中控数',
-        tooltipContent:'已录入的所有中控总数',
-        dataH2:'─',
-        footSpanLeftKey:'已绑定',
-        footSpanLeftValue:'─',
-        footSpanRightKey:'未绑定',
-        footSpanRightValue:'─'
-      }],
-      idEC:'ec_main',
-      objEcharts:null,
-      arrTitles:['新增用戶','退出用戶','净增用戶'],
-      arrLabels:[],
-      arrValues:[]
+      arrCard:[
+        {
+          h3:'押金用户数',
+          tooltipContent:'目前拥有押金的用户数',
+          dataH2:'9,102,928',
+          footSpanLeftKey:'单电用户',
+          footSpanLeftValue:'102928',
+          footSpanRightKey:'双电用户',
+          footSpanRightValue:'102928'
+        },{
+          h3:'虚拟电池数',
+          tooltipContent:'通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。',
+          dataH2:'─',
+          footSpanLeftKey:'已分配',
+          footSpanLeftValue:'─',
+          footSpanRightKey:'可分配',
+          footSpanRightValue:'─'
+        },{
+          h3:'免费天数',
+          tooltipContent:'目前可分配和已分配的天数之和',
+          dataH2:'─',
+          footSpanLeftKey:'已分配',
+          footSpanLeftValue:'─',
+          footSpanRightKey:'可分配',
+          footSpanRightValue:'─'
+        },{
+          h3:'中控数',
+          tooltipContent:'已录入的所有中控总数',
+          dataH2:'─',
+          footSpanLeftKey:'已绑定',
+          footSpanLeftValue:'─',
+          footSpanRightKey:'未绑定',
+          footSpanRightValue:'─'
+        }
+      ],
+      idEC:'ec_main'
     });
   },
   computed:{
@@ -195,8 +199,28 @@ export default {
             ]
           }
         };
-        console.log(objRps);
-      });
+        // console.log(objRps);
+        //labels橫坐標
+        arrLabels=objRps.result.userNumInfo.map(function(v){
+          return (v.day);
+        });
+
+        // _.logErr(arrLabels);
+
+        //value值(series)
+        arrValues=arrKeys.map(function(v){
+          var arr=objRps.result.userNumInfo.map(function(obj){
+            return (obj[v]);
+          });
+          return ({
+            value:arr  //array
+          });
+        });
+
+        // _.logErr(arrValues);
+
+        vueThis.setE();
+      }); //請求
     },
     //ec入口
     ec:function(){
@@ -206,11 +230,11 @@ export default {
     initE:function(){
       var vueThis=this;
       var eleE=document.getElementById(vueThis.idEC);
-      vueThis.objEcharts=window.echarts.init(eleE,{renderer:'svg'});
-      vueThis.objEcharts.setOption(vueThis.iliECoption(vueThis.arrTitles));
+      objEcharts=window.echarts.init(eleE,{renderer:'svg'});
+      objEcharts.setOption(vueThis.iliECoption());
       return vueThis;
     },
-    iliECoption:function(arrTitles){
+    iliECoption:function(){
       return ({
         grid: {
           top:160,
@@ -286,16 +310,16 @@ export default {
     },
     setE:function(){
       var vueThis=this;
-      vueThis.objEcharts.setOption({
+      objEcharts.setOption({
         xAxis:{
-          data:vueThis.arrLabels
+          data:arrLabels
         },
         series:(function(){
           var arr=[];
-          for(var i=0;i<vueThis.arrTitles.length;i++){
+          for(var i=0;i<arrTitles.length;i++){
             arr[i]={
-              name:vueThis.arrTitles[i],
-              data:vueThis.arrValues[i].values
+              name:arrTitles[i],
+              data:arrValues[i].value
             };
           }
           return arr;
