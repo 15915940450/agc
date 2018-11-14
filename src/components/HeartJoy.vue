@@ -80,11 +80,35 @@
 import {mapState} from 'vuex';
 
 var objEcharts=null;
-var arrTitles=['新增用戶','退出用戶','净增用戶'];
-var arrLabels=[]; //["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
-var arrKeys=['newIncreate','quit','netIncreate'];
-var arrValues=[]; //[{"value":[12,12,12,12,0,12,12]},{"value":[1,1,1,1,0,1,1]},{"value":[34,34,34,34,0,34,34]}]
-var arrStacks=['净','净',''];  //堆叠的series
+
+//最重要的arrLabels，arrValues
+var arrLabels=[]; 
+//["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
+var arrValues=[]; 
+// [
+// {"value":[12,12,12,12,0,12,12]},
+// {"value":[1,1,1,1,0,1,1]},
+// {"value":[34,34,34,34,0,34,34]}
+// ]
+
+var arrEC=[
+  {
+    title:'新增用戶',
+    key:'newIncreate',
+    stack:'净',
+    color:'#478ef9'
+  },{
+    title:'退出用戶',
+    key:'quit',
+    stack:'净',
+    color:'#df83ef'
+  },{
+    title:'净增用戶',
+    key:'netIncreate',
+    stack:'',
+    color:'#ff72b3'
+  }
+];
 
 export default {
   name:'HeartJoy',
@@ -210,9 +234,9 @@ export default {
         // _.logErr(arrLabels);
 
         //value值(series)
-        arrValues=arrKeys.map(function(v){
+        arrValues=arrEC.map(function(v){
           var arr=objRps.result.userNumInfo.map(function(obj){
-            return (obj[v]);
+            return (obj[v.key]);
           });
           return ({
             value:arr  //array
@@ -255,7 +279,9 @@ export default {
           }
         },
         legend: {
-          data:arrTitles
+          data:arrEC.map(function(v){
+            return (v.title);
+          })
         },
         grid: {
           left: '3%',
@@ -285,19 +311,18 @@ export default {
         xAxis:{
           data:arrLabels
         },
-        series:(function(){
-          var arr=[];
-          for(var i=0;i<arrTitles.length;i++){
-            arr[i]={
-              type:'bar',
-              barWidth:10,
-              stack:arrStacks[i],
-              name:arrTitles[i],
-              data:arrValues[i].value
-            };
-          }
-          return arr;
-        })()  //series
+        series:arrEC.map(function(v,i){
+          return ({
+            type:'bar',
+            barWidth:10,
+            itemStyle:{
+              color:v.color
+            },
+            stack:v.stack,
+            name:v.title,
+            data:arrValues[i].value
+          });
+        })  //series
       });
       return vueThis;
     }
