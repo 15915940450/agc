@@ -70,6 +70,7 @@
             :type="buttonColor0" 
             :plain="isPlain0" 
             @click="handleClickType(0)"
+            :disabled="!isPlain0"
             >
             按日查看
           </el-button>
@@ -77,6 +78,7 @@
             size="mini" 
             :type="buttonColor1" 
             :plain="isPlain1" 
+            :disabled="isPlain0"
             @click="handleClickType(1)"
             >
             按月查看
@@ -191,6 +193,9 @@ export default {
     },
     isPlain1:function(){
       return !this.type;
+    },
+    typeLabel:function(){
+      return (['day','month'][this.type]);
     }
   },
   watch:{
@@ -198,12 +203,18 @@ export default {
       if(!val){
         this.fetchData();
       }
+    },
+    type:function(){
+      this.fetchData();
     }
   },
   methods:{
     //獲取數據,生成 arrLabels 和 arrValues
     fetchData:function(){
       var vueThis=this;
+      var sendData={
+        type:vueThis.type
+      };
       //ecUser
       vueThis.$rqs(vueThis.$yApi.testApi,function(objRps){
         objRps={
@@ -266,7 +277,7 @@ export default {
         // console.log(objRps);
         //labels橫坐標
         arrLabels=objRps.result.userNumInfo.map(function(v){
-          return (v.day);
+          return (v[vueThis.typeLabel]);
         });
 
         // _.logErr(arrLabels);
@@ -284,6 +295,8 @@ export default {
         // _.logErr(arrValues);
 
         vueThis.setE();
+      },{
+        objSendData:sendData
       }); //請求
     },
     //ec入口
