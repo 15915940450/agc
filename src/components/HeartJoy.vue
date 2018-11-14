@@ -65,8 +65,22 @@
         </small>
         <!-- 按鈕組：日，月 -->
         <el-button-group class="type_group">
-          <el-button size="mini" type="primary">按日查看</el-button>
-          <el-button size="mini" plain>按月查看</el-button>
+          <el-button 
+            size="mini" 
+            :type="buttonColor0" 
+            :plain="isPlain0" 
+            @click="handleClickType(0)"
+            >
+            按日查看
+          </el-button>
+          <el-button 
+            size="mini" 
+            :type="buttonColor1" 
+            :plain="isPlain1" 
+            @click="handleClickType(1)"
+            >
+            按月查看
+          </el-button>
         </el-button-group>
       </div>
       <section id="ec_main">
@@ -83,14 +97,17 @@ var objEcharts=null;
 
 //最重要的arrLabels，arrValues
 var arrLabels=[]; 
-//["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
-var arrValues=[]; 
-// [
-// {"value":[12,12,12,12,0,12,12]},
-// {"value":[1,1,1,1,0,1,1]},
-// {"value":[34,34,34,34,0,34,34]}
-// ]
-
+/*
+["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
+*/
+var arrValues=[];
+/*
+[
+{"value":[12,12,12,12,0,12,12]},
+{"value":[1,1,1,1,0,1,1]},
+{"value":[34,34,34,34,0,34,34]}
+]
+*/
 var arrEC=[
   {
     title:'新增用戶',
@@ -149,11 +166,32 @@ export default {
           footSpanRightValue:'─'
         }
       ],
-      idEC:'ec_main'
+      idEC:'ec_main',
+      type:0  //type===0 日
     });
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    buttonColor0:function(){
+      var color='';
+      if(!this.type){
+        color='primary';
+      }
+      return color;
+    },
+    isPlain0:function(){
+      return !!this.type;
+    },
+    buttonColor1:function(){
+      var color='';
+      if(this.type){
+        color='primary';
+      }
+      return color;
+    },
+    isPlain1:function(){
+      return !this.type;
+    }
   },
   watch:{
     'modalStore.needLogin':function(val){
@@ -325,6 +363,10 @@ export default {
         })  //series
       });
       return vueThis;
+    },
+    handleClickType:function(type){
+      var vueThis=this;
+      vueThis.type=type;
     }
   },
   created:function(){
