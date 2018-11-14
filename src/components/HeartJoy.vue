@@ -20,53 +20,39 @@
 
     <!-- 四個卡片 -->
     <el-row :gutter="10">
-      <el-col :span="6">
+      <el-col :span="6" v-for="(card,index) in arrCard" :key="index">
         <el-card class="box-card">
           <div>
             <h3>
-              押金用户数
+              {{card.h3}}
               <el-tooltip 
                 effect="dark" 
-                content="目前拥有押金的用户数" 
                 placement="top-end"
                 >
+                <div slot="content" v-html="card.tooltipContent"></div>
                 <i class="el-icon-info gray_info"></i>
               </el-tooltip>
             </h3>
-            <h2 class="data_h2">9,102,928</h2>
+            <h2 class="data_h2">{{card.dataH2}}</h2>
             <!-- 脚 -->
             <el-row :gutter="8">
               <el-col :span="12">
                 <div>
-                  <span class="key_span">单电用户</span>
-                  <span class="value_span">102928</span>
+                  <span class="key_span">{{card.footSpanLeftKey}}</span>
+                  <span class="value_span">{{card.footSpanLeftValue}}</span>
                 </div>
               </el-col>
               <el-col :span="12">
                 <div>
-                  <span class="key_span">双电用户</span>
-                  <span class="value_span">102928</span>
+                  <span class="key_span">{{card.footSpanRightKey}}</span>
+                  <span class="value_span">{{card.footSpanRightValue}}</span>
                 </div>
               </el-col>
             </el-row>
           </div>
         </el-card>
       </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          
-        </el-card>
-      </el-col>
+      <!-- for col end -->
     </el-row>
   </div>
 </template>
@@ -78,6 +64,39 @@ export default {
   name:'HeartJoy',
   data:function(){
     return ({
+      arrCard:[{
+        h3:'押金用户数',
+        tooltipContent:'目前拥有押金的用户数',
+        dataH2:'9,102,928',
+        footSpanLeftKey:'单电用户',
+        footSpanLeftValue:'102928',
+        footSpanRightKey:'双电用户',
+        footSpanRightValue:'102928'
+      },{
+        h3:'虚拟电池数',
+        tooltipContent:'通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。',
+        dataH2:'─',
+        footSpanLeftKey:'已分配',
+        footSpanLeftValue:'─',
+        footSpanRightKey:'可分配',
+        footSpanRightValue:'─'
+      },{
+        h3:'免费天数',
+        tooltipContent:'目前可分配和已分配的天数之和',
+        dataH2:'─',
+        footSpanLeftKey:'已分配',
+        footSpanLeftValue:'─',
+        footSpanRightKey:'可分配',
+        footSpanRightValue:'─'
+      },{
+        h3:'中控数',
+        tooltipContent:'已录入的所有中控总数',
+        dataH2:'─',
+        footSpanLeftKey:'已绑定',
+        footSpanLeftValue:'─',
+        footSpanRightKey:'未绑定',
+        footSpanRightValue:'─'
+      }]
     });
   },
   computed:{
