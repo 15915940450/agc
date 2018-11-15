@@ -71,6 +71,7 @@ export default {
     'modalStore.needLogin':function(val){
       if(!val){
         this.fetchData();
+        this.fetchActiveEV();
       }
     }
   },

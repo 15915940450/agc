@@ -103,6 +103,8 @@ export default {
     'modalStore.needLogin':function(val){
       if(!val){
         this.fetchData();
+        this.fetchYajinOrTaocan('depositListScheme');
+        this.fetchYajinOrTaocan('packageListScheme');
       }
     },
     'modalStore.statusGroupCreate':function(val){
