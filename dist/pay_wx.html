@@ -282,9 +282,10 @@
       /*
       ====================
       */
-      var HOST='http://agent.ehuandian.net/agent';
+      var protocol=window.location.protocol;
+      var HOST=protocol+'//agent.ehuandian.net/agent';
       if(window.location.host.indexOf('agent.ehuandian.net')===-1){
-        HOST='http://119.23.155.83:8764/agent';
+        HOST=protocol+'//119.23.155.83:8764/agent';
       }
 
       var pay = JSON.parse(window.decodeURIComponent(_.querystringParse().yap));
