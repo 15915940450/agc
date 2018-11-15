@@ -289,7 +289,8 @@ export default {
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
-        this.fetchComboList();
+        this.userQuery();
+        this.fetchCityList();
       }
     },
     bigAmount:{

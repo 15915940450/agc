@@ -203,6 +203,10 @@ export default {
     'modalStore.needLogin':function(val){
       if(!val){
         this.fetchData();
+        this.fetchCardData0();
+        this.fetchCardData1();
+        this.fetchCardData2();
+        this.fetchCardData3();
       }
     },
     type:function(){
