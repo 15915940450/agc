@@ -33,7 +33,7 @@
                 <i class="el-icon-info gray_info"></i>
               </el-tooltip>
             </h3>
-            <h2 class="data_h2">{{card.dataH2}}</h2>
+            <h2 class="data_h2">{{card.dataH2 | toK}}</h2>
             <!-- 脚 -->
             <el-row :gutter="8">
               <el-col :span="12">
@@ -199,6 +199,11 @@ export default {
       return (['day','month'][this.type]);
     }
   },
+  filters:{
+    toK:function(value){
+      return _.toK(value);
+    }
+  },
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
@@ -333,7 +338,12 @@ export default {
 
         vueThis.setE();
       },{
-        objSendData:sendData
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='quit'){
+            return (-v);
+          }
+        }
       }); //請求
     },
     //ec入口
