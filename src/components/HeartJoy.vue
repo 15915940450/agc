@@ -13,7 +13,7 @@
           3、试用规则的最终解释权属e换电运营团队所有。
         </div>
         <el-button type="text" slot="reference">
-          免责声明
+          试用声明
         </el-button>
       </el-popover>
     </h3>
@@ -115,17 +115,17 @@ var arrEC=[
     title:'新增用戶',
     key:'newIncreate',
     stack:'净',
-    color:'#478ef9'
+    color:'#018ECB'
   },{
     title:'退出用戶',
     key:'quit',
     stack:'净',
-    color:'#df83ef'
+    color:'#CC2800'
   },{
     title:'净增用戶',
     key:'netIncreate',
     stack:'',
-    color:'#ff72b3'
+    color:'#00CC66'
   }
 ];
 
@@ -390,6 +390,7 @@ export default {
         yAxis : [
           {
             axisTick : {show: false},
+            minInterval: 1,
             type : 'value'
           }
         ],
