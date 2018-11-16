@@ -198,8 +198,9 @@ export default {
   .today_active{
     margin-left: 20px;
   }
-  #amap_container{
+  #a-map{
     width: 100%;
-    height: 600px;
+    height: calc(100vh - 142px - 50px - 3px);
+    min-height: 550px;
   }
 </style>

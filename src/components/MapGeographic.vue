@@ -9,7 +9,7 @@
     </div>
     
     <div id="a-map"></div>
-    <h5 class="{'no_data':this.point}">无定位。</h5>
+    <h5 :class="{'no_data':!this.point,'hidden':this.point}">无定位。</h5>
     
   </div>
 </template>

@@ -96,7 +96,8 @@ html,body,p,a,header,hgroup,menu,nav,section,article,aside,details,figcaption,fi
   background: #FFF;
 }
 #a-map{
-  min-height: calc(100vh - 142px - 45px - 50px - 3px);
+  height: calc(100vh - 142px - 45px - 50px - 3px);
+  min-height:520px;
 }
 .no_data{
   position: absolute;

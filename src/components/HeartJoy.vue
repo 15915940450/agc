@@ -479,6 +479,7 @@ export default {
   }
   #ec_main{
     width: 100%;
-    min-height: calc(100vh - 467px);
+    min-height: 300px;
+    height: calc(100vh - 467px);
   }
 </style>
