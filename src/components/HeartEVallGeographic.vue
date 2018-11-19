@@ -129,7 +129,10 @@ export default {
       if (cluster) {
         cluster.setMap(null);
       }
-      cluster = new AMap.MarkerClusterer(map, vueThis.markers, {gridSize: 80});
+      cluster = new AMap.MarkerClusterer(map,vueThis.markers,{
+        maxZoom:17,
+        gridSize:80
+      });
       vueThis.handleClickEVMarker();
       
     },
