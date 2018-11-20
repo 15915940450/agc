@@ -10,7 +10,7 @@
           placement="bottom-start"
           >
           <div slot="content">
-            中控的地理分布情况，未激活的中控无法查看地理位置。点击中控可查看中控详情
+            中控最后一次更新的位置信息。部分中控可能由于外部环境导致信号微弱无法及时更新位置。
           </div>
           <span class="hint_info">
             <i class="el-icon-info"></i>
