@@ -24,7 +24,6 @@
           <el-form-item label="分配天数" :label-width="formLabelWidth" prop="freeDay">
             <el-input-number
               v-model="formSetFreeDay.freeDay"
-              :min="0"
               :max="max"
               @input.native="handleIN"
               >
