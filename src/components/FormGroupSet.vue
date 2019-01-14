@@ -17,7 +17,7 @@
 					</el-form-item>
 					<el-form-item v-if="formGroupSet.userType==2" prop="subAccountNumber" :label-width="formLabelWidth">
 						每个账号可绑定&nbsp;&nbsp;&nbsp;&nbsp;
-						<el-input-number v-model="formGroupSet.subAccountNumber" :min="0" :max="100" style="width: 80px;" size="mini"
+						<el-input-number v-model="formGroupSet.subAccountNumber" :min="1" :max="100" style="width: 80px;" size="mini"
 						 :controls="false">
 						</el-input-number>
 						&nbsp;&nbsp;&nbsp;&nbsp;个子账号
@@ -115,7 +115,7 @@
 					name: '',
 					canRefund: '',
 					userType: '1',
-					subAccountNumber: 1,
+					subAccountNumber: 3,
 					depositScheme: [],
 					packageScheme: [],
 					groupCode: -1,
