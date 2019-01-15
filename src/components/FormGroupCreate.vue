@@ -10,8 +10,8 @@
 					<el-form-item prop="userType" label="账号类型" :label-width="formLabelWidth">
 						<el-select v-model="formGroupCreate.userType" placeholder="请选择">
 							<!-- 1普通账号，2亲情账号 -->
-							<el-option v-if="formGroupCreate.userType!==1" label="普通账号" el-select value="1"></el-option>
-							<el-option v-if="formGroupCreate.userType!==2" label="亲情账号" value="2"></el-option>
+							<el-option v-if="groupUserType!==2" label="普通账号" el-select value="1"></el-option>
+							<el-option v-if="groupUserType!==1" label="亲情账号" value="2"></el-option>
 						</el-select>
 					</el-form-item>
 					<el-form-item v-if="formGroupCreate.userType==2" prop="subAccountNumber" :label-width="formLabelWidth">
@@ -141,7 +141,7 @@
 					name: '',
 					canRefund: '',
 					cityCode: '',
-					userType: '1',
+					userType: '',
 					subAccountNumber: 3,
 					depositScheme: [],
 					packageScheme: [],
@@ -150,9 +150,9 @@
 					agentId: window.localStorage.agentid
 				},
 				grouptype: 0,
+				groupUserType: 1,
 				options_cityListScheme: [],
 				loading: false,
-
 				formLabelWidth: '90px'
 			});
 		},
@@ -225,9 +225,9 @@
 				var vueThis = this;
 				vueThis.$rqs(vueThis.$yApi.userQuery, function(objRps) {
 					vueThis.grouptype = objRps.result.groupType;
+					vueThis.groupUserType = objRps.result.groupUserType;
 				});
-			}
-
+			},
 		}, //methods
 		created: function() {
 			this.fetchCityList();
