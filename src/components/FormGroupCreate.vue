@@ -112,7 +112,7 @@
 					}],
 					subAccountNumber: [{
 						required: true,
-						message: '',
+						message: '请输入子账号个数',
 						trigger: 'change'
 					}],
 					freeDay: [{

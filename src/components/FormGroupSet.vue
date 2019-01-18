@@ -89,6 +89,11 @@
 							trigger: 'blur'
 						}
 					],
+					subAccountNumber: [{
+						required: true,
+						message: '请输入子账号个数',
+						trigger: 'change'
+					}],
 					freeDay: [{
 							required: true,
 							message: '请输入',
