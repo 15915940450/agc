@@ -71,7 +71,8 @@ export default {
       if(this.imPW.newPasswordCheck!==''){
         this.$refs.formPW.validateField('newPasswordCheck');
       }
-      if(value===this.imPW.oldPassword){
+			//modify by sinclair for bug ID1001985
+      if(value===this.imPW.oldPassword && this.imPW.oldPassword.length > 0){
         callback(new Error('不能设置正在使用的密码!'));
       }
       callback();
