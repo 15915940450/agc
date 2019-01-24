@@ -124,7 +124,7 @@
       </el-tabs>
       
     </div>
-    <div class="im_empty" v-if="!comboList.length && !loadingComboList">
+    <div class="im_empty" style="top: 450px;" v-if="!comboList.length && !loadingComboList">
       <img class="im_empty_img" src="../assets/empty_combo.png" alt="暂无可购买的套餐" />
       <p class="im_empty_p">暂无可购买的套餐</p>
     </div>
