@@ -3,7 +3,7 @@ var gulp=require('gulp');
 var del=require('del');
 var gulpReplace=require('gulp-replace');
 var rename=require('gulp-rename');
-var version='20.0.0';
+var version='20.0.1';
 
 //1.backupDist
 gulp.task('backupDist',function(){
