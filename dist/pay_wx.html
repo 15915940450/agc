@@ -182,6 +182,11 @@
     <script src="http://119.23.155.83:82/lodash.ili.js?v=1.5.9"></script>
     <script src="./static/qrcode.min.js" charset="utf-8"></script>
     <script>
+      var clientWidth=document.documentElement.clientWidth || document.body.clientWidth;
+      if(+clientWidth<440){
+        //手機端
+        document.querySelector('.code_wrap-tip').style.display='none';
+      }
       var rqs=function(urlMethod,success,paramSettings){
         var defaultSettings={
           objSendData:{},
