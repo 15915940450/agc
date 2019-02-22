@@ -1,29 +1,13 @@
 <template>
   <div id="app" :class="{_port1590_:port1590}">
-    <LayoutTopBar />
-
-    <el-row>
-      <el-col id="left_nav_wrap">
-        <LayoutNavMaster />
-      </el-col>
-      <el-col id="main_wrap">
-        <router-view />
-        <footer class="copyright">
-          <p class="kefu">
-            <span class="kefu_phone">客服：400-618-7238</span>
-            <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
-          </p>
-        </footer>
-      </el-col>
-    </el-row>
+    <router-view />
+    
 
     <LayoutLogin />
   </div>
 </template>
 
 <script>
-import LayoutTopBar from './components/LayoutTopBar.vue';
-import LayoutNavMaster from './components/LayoutNavMaster.vue';
 import LayoutLogin from './components/LayoutLogin.vue';
 
 export default {
@@ -35,8 +19,6 @@ export default {
     });
   },
   components:{
-    LayoutTopBar,
-    LayoutNavMaster,
     LayoutLogin
   }
 };
