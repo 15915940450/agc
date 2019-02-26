@@ -47,6 +47,34 @@
 該網站可能暫時無法使用或太過忙碌，請過幾分鐘後再試試。
 若無法載入任何網站，請檢查您的網路連線狀態。
 若電腦或網路被防火牆或 Proxy 保護，請確定 Firefox 被允許存取網路。 -->
+    <el-dialog
+      title="协议标题"
+      :visible.sync="modalStore.objRpsProtocol"
+      width="600px"
+      custom-class="one_agreement"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      :center="true"
+      :modal="false"
+      top="10px"
+      >
+      <div>
+        文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <p class="agree">
+          <el-checkbox v-model="protocol">我已阅读并理解，接受以上协议条款内容</el-checkbox>
+        </p>
+        <el-button type="info" :loading="loadingAgreement" @click="handleAgreement()" disabled>
+          确 定（5）
+        </el-button>
+      </span>
+      <p class="kefu">
+        <span class="kefu_phone">客服：400-618-7238</span>
+        <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
+      </p>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,12 +93,14 @@ export default {
   name:'LayoutLogin',
   data() {
     return {
+      protocol:false,
       width:'380px',
       customClass:'onelogin',
       top:'10vh',
       sendLoginCount:sendLoginCount,
       hintMsg:'',
       loading:false,
+      loadingAgreement:false,
       vImg:'',
       formLogin: {
         phone: '',
@@ -163,9 +193,45 @@ export default {
       }
     },
     handleSuccess:function(objRps){
+      objRps={
+        'code': 1000,
+        'msg': '',
+        'result': {
+          'batteryAmount': 100,  //电池单价,充值和退款时计算金额
+          'groupType':0, //群组类型 默认0 不可退，1可退，2全部
+          'phone': '15820480937',
+          'name': 'chao',  //代理商姓名
+          'id': 2,  //代理商id
+          'protocol': 0 ,// 是否同意协议 0 否 1是
+          'type': 1, //1-总代，2-普通代理 ，3-网点
+          'agent_menus':[
+            {
+              'id': '6ce1d74a6ece4b2aa74eba720476cca5',//id
+              'icon':'icon',//小图标名称
+              'name': '运营统计',//名称
+              'badge':'beta',//右侧标记
+              'url': '',//url为空则为一个模块
+              'menus': [
+                {
+                  'menuId': '6ce1d74a6ece4b2aa74eba720476cca5',//菜单ID
+                  'menuName': '用户群组',//菜单名称
+                  'url': 'http://console.immotor.com/CMS-FrontEnd/batterystation/operation-city-list.php'//页面路径
+                },
+                {
+                  'menuId': '6ce1d74a6ece4b2aa74eba720476cca5',
+                  'menuName': '用户',
+                  'url': 'http://console.immotor.com/CMS-FrontEnd/batterystation/operation-user-list.php'
+                }
+              ]
+            }
+          ]
+        }
+      };
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
+      //設置是否需要同意協議
+      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
 
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
@@ -173,6 +239,7 @@ export default {
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
+
       // this.$refs['formLogin'].clearValidate();
 
       //电池单价
@@ -195,7 +262,7 @@ export default {
     },
     drawTri:function(){
       //2560*1600 3840*2400
-      var trianglify,elesTri,eleParent;
+      var trianglify,elesTri,eleParents;
       elesTri=document.querySelectorAll('.need_login .el-dialog__wrapper svg'); //[]
       if(elesTri.length){
         //已經存在svg
@@ -210,8 +277,10 @@ export default {
         width:window.innerWidth,
         height:window.innerHeight
       });
-      eleParent=document.querySelector('.need_login .el-dialog__wrapper');
-      eleParent.appendChild(trianglify.svg());
+      eleParents=document.querySelectorAll('.need_login .el-dialog__wrapper');
+      for(var i=0;i<eleParents.length;i++){
+        eleParents[i].appendChild(trianglify.svg());
+      }
     },
     handleResize:function(){
       var vueThis=this;
@@ -287,6 +356,10 @@ export default {
   .v_img{
     cursor: pointer;
     min-width: 50px;
+  }
+  .agree{
+    text-align: left;
+    padding-left: 5px;
   }
   @media screen and (min-height:800px){
     .kefu{
