@@ -21,7 +21,6 @@
         </p>
         <el-button 
           type="info" 
-          :loading="loadingAgreement" 
           @click="handleAgreement()" 
           :disabled="disabledAgreeBtn"
           >
@@ -108,7 +107,6 @@ export default {
       sendLoginCount:sendLoginCount,
       hintMsg:'',
       loading:false,
-      loadingAgreement:false,
       vImg:'',
       formLogin: {
         phone: '',
@@ -143,6 +141,12 @@ export default {
     }
   },
   watch:{
+    'modalStore.needLogin':function(val){
+      if(!val){
+        this.agreeTimeLeft=5;
+        this.countAgreementTime();
+      }
+    },
     need_vcode:function(val){
       //首次更新验证码
       if(val){
@@ -319,6 +323,8 @@ export default {
       vueThis.$rqs(vueThis.$yApi.THILINA,function(){
         vueThis.$store.commit('hideAgreement');
         window.localStorage.setItem('objrpsprotocol',1);
+        vueThis.agreeTimeLeft=5;
+        vueThis.protocol=false;
       },{
         objSendData:sendData
       });
@@ -328,12 +334,12 @@ export default {
     if(this.need_vcode){
       this.updateVimg();
     }
+    this.countAgreementTime();
   },
   mounted:function(){
     //just once
     this.drawTri();
     this.handleResize();
-    this.countAgreementTime();
   }
 };
 </script>
