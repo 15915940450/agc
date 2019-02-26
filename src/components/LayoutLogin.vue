@@ -66,8 +66,14 @@
         <p class="agree">
           <el-checkbox v-model="protocol">我已阅读并理解，接受以上协议条款内容</el-checkbox>
         </p>
-        <el-button type="info" :loading="loadingAgreement" @click="handleAgreement()" disabled>
-          确 定（5）
+        <el-button 
+          type="info" 
+          :loading="loadingAgreement" 
+          @click="handleAgreement()" 
+          :disabled="disabledAgreeBtn"
+          >
+          确 定
+          <span v-if="agreeTimeLeft">（{{agreeTimeLeft}}）</span>
         </el-button>
       </span>
       <p class="kefu">
@@ -93,6 +99,7 @@ export default {
   name:'LayoutLogin',
   data() {
     return {
+      agreeTimeLeft:5,
       protocol:false,
       width:'380px',
       customClass:'onelogin',
@@ -129,6 +136,9 @@ export default {
         bNeedVcode=true;
       }
       return (bNeedVcode);
+    },
+    disabledAgreeBtn:function(){
+      return !(!this.agreeTimeLeft && this.protocol);
     }
   },
   watch:{
@@ -287,6 +297,16 @@ export default {
       window.addEventListener('resize',_.debounce(function(){
         vueThis.drawTri();
       },330));
+    },
+    countAgreementTime:function(){
+      var vueThis=this;
+      var Timer=window.setInterval(function(){
+        if(vueThis.agreeTimeLeft){
+          vueThis.agreeTimeLeft--;
+        }else{
+          window.clearInterval(Timer);
+        }
+      },1e3);
     }
   }, //methods
   created:function(){
@@ -298,6 +318,7 @@ export default {
     //just once
     this.drawTri();
     this.handleResize();
+    this.countAgreementTime();
   }
 };
 </script>
