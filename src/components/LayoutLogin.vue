@@ -23,14 +23,16 @@
             :key="index"
             >
             <div>
-              <el-button class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
-              <el-button  class="shop">默认按钮</el-button>
+              <el-row :gutter="16">
+                <el-col v-for="(shopItem,i) in item.shop" :span="8" :key="i">
+                  <el-button 
+                    class="shop"
+                    >
+                    {{shopItem.name}}
+                  </el-button>
+                </el-col>
+              </el-row>
+              
             </div>
           </el-collapse-item>
 
@@ -420,6 +422,30 @@ export default {
               {
                 'id':123, //ID
                 'phone':'15019001400', //手机号码
+                'name':'neroneroneroneronero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'ggg1',//父级代理名称
                 'agentId':1,//父级代理商ID
@@ -578,8 +604,8 @@ export default {
     padding-left: 5px;
   }
   .shop{
-    margin-left: 10px;
     margin-bottom: 10px;
+    width: 100%;
   }
   @media screen and (min-height:800px){
     .kefu{
