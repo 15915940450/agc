@@ -101,6 +101,7 @@ export default {
     return {
       agreeTimeLeft:5,
       protocol:false,
+      type:0, //1-总代，2-普通代理 ，3-网点
       width:'380px',
       customClass:'onelogin',
       top:'10vh',
@@ -218,7 +219,7 @@ export default {
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
           'protocol': 0 ,// 是否同意协议 0 否 1是
-          'type': 1, //1-总代，2-普通代理 ，3-网点
+          'type': 2, //1-总代，2-普通代理 ，3-网点
           'agent_menus':[
             {
               'id': '6ce1d74a6ece4b2aa74eba720476cca5',//id
@@ -254,6 +255,9 @@ export default {
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
+
+      //總代？
+      this.type=+objRps.result.type;
 
       // this.$refs['formLogin'].clearValidate();
 
@@ -325,6 +329,13 @@ export default {
         window.localStorage.setItem('objrpsprotocol',1);
         vueThis.agreeTimeLeft=5;
         vueThis.protocol=false;
+
+        //总代应进入【代理工作台】
+        if(vueThis.type===1){
+          vueThis.$router.push({
+            path:'/general'
+          });
+        }
       },{
         objSendData:sendData
       });
