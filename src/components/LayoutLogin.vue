@@ -1,5 +1,39 @@
 <template lang="html">
   <div class="need_login">
+    <el-dialog
+      title="协议标题"
+      :visible.sync="modalStore.objRpsProtocol"
+      width="600px"
+      custom-class="one_agreement"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      :center="true"
+      :modal="false"
+      top="10px"
+      >
+      <div>
+        文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <p class="agree">
+          <el-checkbox v-model="protocol">我已阅读并理解，接受以上协议条款内容</el-checkbox>
+        </p>
+        <el-button 
+          type="info" 
+          :loading="loadingAgreement" 
+          @click="handleAgreement()" 
+          :disabled="disabledAgreeBtn"
+          >
+          确 定
+          <span v-if="agreeTimeLeft">（{{agreeTimeLeft}}）</span>
+        </el-button>
+      </span>
+      <p class="kefu">
+        <span class="kefu_phone">客服：400-618-7238</span>
+        <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
+      </p>
+    </el-dialog>
     <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false" :top="top">
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
       <h2 class="project_name">代理商管理后台</h2>
@@ -47,40 +81,7 @@
 該網站可能暫時無法使用或太過忙碌，請過幾分鐘後再試試。
 若無法載入任何網站，請檢查您的網路連線狀態。
 若電腦或網路被防火牆或 Proxy 保護，請確定 Firefox 被允許存取網路。 -->
-    <el-dialog
-      title="协议标题"
-      :visible.sync="modalStore.objRpsProtocol"
-      width="600px"
-      custom-class="one_agreement"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :show-close="false"
-      :center="true"
-      :modal="false"
-      top="10px"
-      >
-      <div>
-        文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。文本颜色如果和背景颜色太接近就会难以阅读。考虑到无障碍设计的需求，我们参考了 WCAG 的标准，将正文文本、标题和背景色之间保持在了 7:1 以上的 AAA 级对比度。
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <p class="agree">
-          <el-checkbox v-model="protocol">我已阅读并理解，接受以上协议条款内容</el-checkbox>
-        </p>
-        <el-button 
-          type="info" 
-          :loading="loadingAgreement" 
-          @click="handleAgreement()" 
-          :disabled="disabledAgreeBtn"
-          >
-          确 定
-          <span v-if="agreeTimeLeft">（{{agreeTimeLeft}}）</span>
-        </el-button>
-      </span>
-      <p class="kefu">
-        <span class="kefu_phone">客服：400-618-7238</span>
-        <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
-      </p>
-    </el-dialog>
+    
   </div>
 </template>
 
@@ -307,6 +308,20 @@ export default {
           window.clearInterval(Timer);
         }
       },1e3);
+    },
+    handleAgreement:function(){
+      var vueThis=this;
+      var sendData={
+        id:window.localStorage.agentid,
+        protocol:1
+      };
+      //setProtocol
+      vueThis.$rqs(vueThis.$yApi.THILINA,function(){
+        vueThis.$store.commit('hideAgreement');
+        window.localStorage.setItem('objrpsprotocol',1);
+      },{
+        objSendData:sendData
+      });
     }
   }, //methods
   created:function(){

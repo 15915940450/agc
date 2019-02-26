@@ -1,6 +1,6 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
-  objRpsProtocol:window.localStorage.objrpsprotocol?false:true,
+  objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
   baseStatus:false,
   needFetchData:false,
 
@@ -35,6 +35,7 @@ var mutations={
   showLogin:function(state){
     //需要登录时清空会话存贮
     // window.sessionStorage.clear();
+    window.localStorage.removeItem('objrpsprotocol');
     window.localStorage.removeItem('agentphone');
     window.localStorage.removeItem('agentname');
     window.localStorage.removeItem('agentid');
@@ -42,6 +43,7 @@ var mutations={
     window.localStorage.removeItem('tradeCheck');
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
+    state.objRpsProtocol=true;
     state.baseStatus=false;
     state.needFetchData=false;
     state.topUp=false;
@@ -71,6 +73,9 @@ var mutations={
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
     state.needLogin=false;
+  },
+  hideAgreement:function(){
+    state.objRpsProtocol=false;
   },
   showBaseStatus:function(state){
     state.baseStatus=true;
