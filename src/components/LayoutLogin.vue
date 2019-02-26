@@ -13,9 +13,32 @@
       :modal="false"
       center
       >
-      <span>需要注意的是内容是默认不居中的</span>
+      <div>
+        <el-collapse v-model="activeNames" @change="handleChange">
+
+          <el-collapse-item 
+            v-for="(item,index) in shopList" 
+            :title="item.agentName" 
+            :name="index" 
+            :key="index"
+            >
+            <div>
+              <el-button class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+              <el-button  class="shop">默认按钮</el-button>
+            </div>
+          </el-collapse-item>
+
+          
+        </el-collapse>
+      </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="centerDialogVisible = false">进 入</el-button>
+        
       </span>
     </el-dialog>
     <!-- 協議 -->
@@ -118,6 +141,8 @@ export default {
   name:'LayoutLogin',
   data() {
     return {
+      activeNames:[0,1],
+      shopList:[],
       centerDialogVisible:true,
       agreeTimeLeft:5,
       protocol:false,
@@ -176,6 +201,9 @@ export default {
     }
   },
   methods:{
+    handleChange:function(val) {
+      console.log(val);
+    },
     //登录接口=> /user/login
     loginSend:function(refName){
       var vueThis=this;
@@ -359,6 +387,120 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    // 獲取門店
+    fetchDescendant:function(){
+      var vueThis=this;
+      var sendData={
+        type:2  //后代类型 1-代理商 2-网点 默认为1
+      };
+      //getDescendant
+      vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
+        objRps={
+          'code': 1000,
+          'result': {
+            'total': 2000, 
+            'list': [
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':123, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'ggg1',//父级代理名称
+                'agentId':1,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              }
+            ]
+            // [
+            //   {
+            //     'agentName':'aaa',//父级代理名称
+            //     'agentId':234,//父级代理商ID
+            //     shop:[
+            //       {
+            //         'id':123, //ID
+            //         'phone':'15019001400', //手机号码
+            //         'name':'nero', //名称
+            //         'canOP':1//是否可操作，0-不可操作 1-可操作
+            //       },
+            //       {
+            //         id:2,
+            //         'phone':'222',
+            //         'name':'nero222', //名称
+            //         'canOP':1
+            //       },
+            //     ]
+            //   },
+            //   {
+            //     'agentName':'hhh',//父级代理名称
+            //     'agentId':6,//父级代理商ID
+            //     shop:[
+            //       {
+            //         id:123,
+            //         'phone':'15019001400',
+            //         'name':'nero', //名称
+            //         'canOP':1
+            //       },
+            //       {
+            //         id:2,
+            //         'phone':'222',
+            //         'name':'nero222', //名称
+            //         'canOP':1
+            //       },
+            //     ]
+            //   }
+            // ]
+          }
+        };
+
+        var changeData=[];
+        for(var i=0;i<objRps.result.list.length;i++){
+          var v=objRps.result.list[i];
+          var parentInChangeData=changeData.find(function(vv){
+            return (vv.agentId===v.agentId);
+          });
+          if(parentInChangeData){
+            //需要合并
+            parentInChangeData.shop.push({
+              id:v.id,
+              'phone':v.phone,
+              'name':v.name, //名称
+              'canOP':v.canOP
+            });
+          }else{
+            //直接push
+            changeData.push({
+              'agentName':v.agentName,//父级代理名称
+              'agentId':v.agentId,//父级代理商ID
+              shop:[
+                {
+                  id:v.id,
+                  'phone':v.phone,
+                  'name':v.name, //名称
+                  'canOP':v.canOP
+                }
+              ]
+            });
+          }
+        } //for
+        vueThis.shopList=changeData;
+      },{
+        objSendData:sendData
+      });
     }
   }, //methods
   created:function(){
@@ -366,6 +508,7 @@ export default {
       this.updateVimg();
     }
     this.countAgreementTime();
+    this.fetchDescendant();
   },
   mounted:function(){
     //just once
@@ -433,6 +576,10 @@ export default {
   .agree{
     text-align: left;
     padding-left: 5px;
+  }
+  .shop{
+    margin-left: 10px;
+    margin-bottom: 10px;
   }
   @media screen and (min-height:800px){
     .kefu{
