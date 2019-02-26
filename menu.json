@@ -1,0 +1,95 @@
+{
+    "code": 1000,
+    "msg": "",
+    "result": {
+        // ...
+
+        //代理工作臺菜單
+        "general_menus":[],
+
+        //門店管理系統菜單
+        "agent_menus":[
+          {
+            "id": "xxx",//id
+            "icon":"heartjoy",//小图标名称
+            "name": "首页",//名称
+            "url": "/",//url为空则为一个模块
+            "menus": []
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartgroup",//小图标名称
+            "name": "用户中心",//名称
+            "url": "",//url为空则为一个模块
+            "menus": [
+              {
+                "menuId": "xxx",//菜单ID
+                "menuName": "用户查询",//菜单名称
+                "url": "/searchuser"//页面路径
+              },
+              {
+                "menuId": "xxx",
+                "menuName": "群组管理",
+                "url": "/group"
+              }
+            ]
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartdeposit",//小图标名称
+            "name": "押金管理",//名称
+            "url": "/deposit",//url为空则为一个模块
+            "menus": []
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartcombo",//小图标名称
+            "name": "套餐管理",//名称
+            "url": "/combo",//url为空则为一个模块
+            "menus": []
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartbigamount",//小图标名称
+            "name": "大额充值",//名称
+            "url": "/bigamount",//url为空则为一个模块
+            "menus": []
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartxls",//小图标名称
+            "name": "报表管理",//名称
+            "url": "/xls",//url为空则为一个模块
+            "menus": []
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartevs",//小图标名称
+            "name": "中控管理",//名称
+            "url": "",//url为空则为一个模块
+            "menus": [
+              {
+                "menuId": "xxx",//菜单ID
+                "menuName": "中控列表",//菜单名称
+                "url": "/evs/1"//页面路径
+              },
+              {
+                "menuId": "xxx",
+                "menuName": "中控分布",
+                "url": "/evallgeographic"
+              }
+            ]
+          },
+          {
+            "id": "xxx",//id
+            "icon":"heartsyssetting",//小图标名称
+            "name": "系统设置",//名称
+            "url": "/sys",//url为空则为一个模块
+            "menus": []
+          }
+
+
+
+        ]
+    }
+}
