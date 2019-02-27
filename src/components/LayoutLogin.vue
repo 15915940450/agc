@@ -213,6 +213,12 @@ export default {
       if(!window.sessionStorage.totalshopisonly){
         this.handleGeneral(to.path);
       }
+    },
+    'modalStore.needFetchD':function(val){
+      if(val){
+        this.$store.commit('showShop');
+        this.fetchDescendant();
+      }
     }
   },
   components:{

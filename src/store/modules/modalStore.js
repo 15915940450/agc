@@ -3,6 +3,7 @@ var state={
   objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
   //false:是總代，不顯示
   needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
+  needFetchD:false,
   baseStatus:false,
   needFetchData:false,
 
@@ -75,6 +76,12 @@ var mutations={
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
     state.needLogin=false;
+  },
+  clearNeedFetchD:function(){
+    state.needFetchData=false;
+  },
+  setNeedFetchD:function(){
+    state.needFetchD=true;
   },
   hideAgreement:function(){
     state.objRpsProtocol=false;
