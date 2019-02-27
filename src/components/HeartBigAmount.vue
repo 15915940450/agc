@@ -490,7 +490,7 @@ export default {
   }
   .copy{
     float: right;
-    margin-right: 300px;
+    margin-right: 250px;
   }
   .btn_submit{
     width: 190px;

@@ -1,7 +1,8 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
   objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
-  needShop:(window.sessionStorage.headerid || window.sessionStorage.isgeneral)?false:true,
+  //false:是總代，不顯示
+  needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
   baseStatus:false,
   needFetchData:false,
 

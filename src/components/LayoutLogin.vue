@@ -13,7 +13,7 @@
       :modal="false"
       >
       <div>
-        <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse v-model="activeNames">
 
           <el-collapse-item 
             v-for="(item,index) in shopList" 
@@ -231,11 +231,11 @@ export default {
         window.sessionStorage.removeItem('isgeneral');
         if(!window.sessionStorage.headerid){
           this.$store.commit('showShop');
+        }else if(this.modalStore.needShop){
+          //創建時顯示了網點
+          this.fetchDescendant();
         }
       }
-    },
-    handleChange:function(val) {
-      console.log(val);
     },
     //登录接口=> /user/login
     loginSend:function(refName){
@@ -442,7 +442,7 @@ export default {
         objRps={
           'code': 1000,
           'result': {
-            'total': 2000, 
+            'total': 1, 
             'list': [
               {
                 'id':1, //ID
@@ -566,6 +566,11 @@ export default {
         } //for
         vueThis.shopList=changeData;
         console.log('shop list');
+        if(+objRps.result.total===1){
+          // 只有一个网点，则直接进入网点，不需要选择网点
+          window.sessionStorage.setItem('totalshopisonly',1);
+          vueThis.$store.commit('hideShop');
+        }
       },{
         objSendData:sendData
       });
@@ -584,7 +589,6 @@ export default {
     if(this.modalStore.objRpsProtocol){
       this.countAgreementTime();
     }
-    //創建時顯示了網點
     // console.log(this.$route.path);  //general
     this.handleGeneral();
   },
