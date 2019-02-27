@@ -430,6 +430,7 @@ export default {
         }else{
           //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
           vueThis.$store.commit('showShop');
+          vueThis.fetchDescendant();
         }
       },{
         objSendData:sendData
