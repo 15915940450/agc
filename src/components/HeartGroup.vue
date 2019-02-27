@@ -1,6 +1,26 @@
 <template lang="html">
   <div class="component_group eqcalc">
-    <h3 class="title">群组列表</h3>
+    <el-row>
+      <el-col :span="6">
+        <h3 class="title">群组列表</h3>
+      </el-col>
+      <el-col :span="18">
+        <div class="table_wrap-search">
+          <div class="table_wrap-search_wrap">
+            <el-input 
+              @input="imSearch()" 
+              class="table_wrap-input_serach" 
+              placeholder="请输入群组名称" 
+              v-model="search" 
+              suffix-icon="el-icon-search"
+              >
+            </el-input>
+          </div>
+          <el-button @click="resetSearch()" class="table_wrap-btn_reset" type="warning">重置</el-button>
+        </div>
+      </el-col>
+    </el-row>
+
     <div class="group-list" v-loading="loadingGroupList">
       <el-row :gutter="10">
         <el-col v-for="(item) in group" :span="6" :key="item.id">
@@ -88,6 +108,8 @@ export default {
   name:'HeartGroup',
   data:function(){
     return ({
+      search:'',
+      isNotSearch:true,
       yajin:[],
       taocan:[],
       group:[],
@@ -130,7 +152,10 @@ export default {
       vueThis.loadingGroupList=true;
       var sendData={
         pageNum:vueThis.pageNum,
-        pageSize:vueThis.$yApi.defaultPS
+        pageSize:vueThis.$yApi.defaultPS,
+        advancedParam:JSON.stringify({
+          name:vueThis.search
+        })
       };
       vueThis.$rqs(vueThis.$yApi.groupList,function(objRps){
         vueThis.loadingGroupList=false;
@@ -139,6 +164,14 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    imSearch:_.debounce(function(){
+      this.isNotSearch=false;
+      this.fetchData();
+    },690),
+    resetSearch:function(){
+      this.search='';
+      this.fetchData();
     },
     fetchYajinOrTaocan:function(type){
       var vueThis=this;

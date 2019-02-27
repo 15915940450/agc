@@ -66,6 +66,114 @@ export default {
         path:'/sys'
       });
     },
+    // 獲取門店
+    fetchDescendant:function(){
+      var vueThis=this;
+      var sendData={
+        type:2  //后代类型 1-代理商 2-网点 默认为1
+      };
+      //getDescendant
+      vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
+        objRps={
+          'code': 1000,
+          'result': {
+            'total': 13, 
+            'list': [
+              {
+                'id':1, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':2, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':3, //ID
+                'phone':'15019001400', //手机号码
+                'name':'neroneroneroneronero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':4, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':0//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':5, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':6, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'ggg1',//父级代理名称
+                'agentId':1,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              }
+            ]
+          }
+        };
+
+        var changeData=[];
+        for(var i=0;i<objRps.result.list.length;i++){
+          var v=objRps.result.list[i];
+          var parentInChangeData=changeData.find(function(vv){
+            return (vv.agentId===v.agentId);
+          });
+          if(parentInChangeData){
+            //需要合并
+            parentInChangeData.shop.push({
+              id:v.id,
+              'phone':v.phone,
+              'name':v.name, //名称
+              'canOP':v.canOP
+            });
+          }else{
+            //直接push
+            changeData.push({
+              'agentName':v.agentName,//父级代理名称
+              'agentId':v.agentId,//父级代理商ID
+              shop:[
+                {
+                  id:v.id,
+                  'phone':v.phone,
+                  'name':v.name, //名称
+                  'canOP':v.canOP
+                }
+              ]
+            });
+          }
+        } //for
+        vueThis.shopList=changeData;
+        console.log('shop list');
+        if(+objRps.result.total===1){
+          // 只有一个网点，则直接进入网点，不需要选择网点
+          window.sessionStorage.setItem('totalshopisonly',1);
+          vueThis.$store.commit('hideShop');
+        }else{
+          window.sessionStorage.removeItem('totalshopisonly');
+        }
+      },{
+        objSendData:sendData
+      });
+    },
     handleChangeShop:function(){
       this.$store.commit('showShop');
       this.fetchDescendant();
