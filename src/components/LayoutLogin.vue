@@ -210,6 +210,11 @@ export default {
       // 对路由变化作出响应...
       // console.log(to.path); // /general
       this.handleGeneral(to.path);
+    },
+    'modalStore.needShop':function(val){
+      if(val){
+        this.fetchDescendant();
+      }
     }
   },
   components:{
@@ -217,6 +222,7 @@ export default {
   },
   methods:{
     handleGeneral:function(path){
+      path=path || this.$route.path;
       //是general則存貯，否則刪除
       if(/general/i.test(path)){
         window.sessionStorage.setItem('isgeneral',1);
@@ -225,7 +231,6 @@ export default {
         window.sessionStorage.removeItem('isgeneral');
         if(!window.sessionStorage.headerid){
           this.$store.commit('showShop');
-          this.fetchDescendant();
         }
       }
     },
@@ -339,7 +344,6 @@ export default {
       if(this.type!==1 && +objRps.result.protocol){
         //顯示網點列表
         this.$store.commit('showShop');
-        this.fetchDescendant();
       }
 
       // this.$refs['formLogin'].clearValidate();
@@ -422,7 +426,6 @@ export default {
         }else{
           //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
           vueThis.$store.commit('showShop');
-          vueThis.fetchDescendant();
         }
       },{
         objSendData:sendData
@@ -583,7 +586,7 @@ export default {
     }
     //創建時顯示了網點
     // console.log(this.$route.path);  //general
-    this.handleGeneral(this.$route.path);
+    this.handleGeneral();
   },
   mounted:function(){
     //just once

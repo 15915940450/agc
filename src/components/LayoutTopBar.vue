@@ -7,7 +7,6 @@
         </h1>
       </el-col>
       <el-col :span="18" class="topbar_right_wrap">
-        切换网点
         <el-dropdown>
           <span class="el-dropdown-link">
             <img class="top_bar-head" src="../assets/default_head.png" width="20" />
@@ -24,6 +23,15 @@
             <el-dropdown-item></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <!-- 切换网点 -->
+        <el-button 
+          class="change_shop" 
+          type="text" 
+          size="medium"
+          @click="handleChangeShop()"
+          >
+          切换网点
+        </el-button>
       </el-col>
     </el-row>
 
@@ -51,6 +59,9 @@ export default {
       this.$router.push({
         path:'/sys'
       });
+    },
+    handleChangeShop:function(){
+      this.$store.commit('showShop');
     }
   } //methods
 };
@@ -90,11 +101,17 @@ export default {
   }
   .topbar_right_wrap .el-dropdown{
     float: right;
+    cursor: pointer;
   }
   .topbar_user{
     min-width: 66px;
     display: block;
     font-size: 13px;
   }
-  
+  .change_shop{
+    color:blueviolet;
+    float: right;
+    margin-right: 30px;
+    margin-top: 13px;
+  }
 </style>
