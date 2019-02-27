@@ -72,6 +72,7 @@
 
     </el-menu>
 
+    <!-- <div>{{menus}}</div> -->
   </div>
 </template>
 
@@ -88,6 +89,8 @@ var arrRouteName=[
   'HeartSearchUser',
   'HeartEVallGeographic'
 ];
+
+import {mapState} from 'vuex';
 
 export default {
   name:'LayoutNavMaster',
@@ -161,6 +164,10 @@ export default {
     });
   },
   computed:{
+    ...mapState(['agent']),
+    menus:function(){
+      return (JSON.stringify(this.agent.agentMenus));
+    },
     arrOpeneds:function(){
       var arrOpeneds=[];
       // console.log(this.isActive);
