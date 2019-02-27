@@ -3,7 +3,7 @@
     <!-- 網點 -->
     <el-dialog
       title="请选择网点"
-      :visible.sync="centerDialogVisible"
+      :visible.sync="modalStore.needShop"
       width="600px"
       custom-class="one_agreement"
       :close-on-click-modal="false"
@@ -11,7 +11,6 @@
       :show-close="false"
       :center="true"
       :modal="false"
-      center
       >
       <div>
         <el-collapse v-model="activeNames" @change="handleChange">
@@ -26,7 +25,9 @@
               <el-row :gutter="16">
                 <el-col v-for="(shopItem,i) in item.shop" :span="8" :key="i">
                   <el-button 
+                    :disabled="!shopItem.canOP"
                     class="shop"
+                    @click="handleShopClick(shopItem.id)"
                     >
                     {{shopItem.name}}
                   </el-button>
@@ -146,7 +147,6 @@ export default {
     return {
       activeNames:[0,1],
       shopList:[],
-      centerDialogVisible:true,
       agreeTimeLeft:5,
       protocol:false,
       type:0, //1-总代，2-普通代理 ，3-网点
@@ -302,6 +302,7 @@ export default {
       this.$store.commit('hideLogin');
       //設置是否需要同意協議
       window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
+      
 
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
@@ -312,6 +313,11 @@ export default {
 
       //總代？
       this.type=+objRps.result.type;
+      //1:非总代(子代)在身份验证通过之后，出现【选择网点】窗口,2:協議已經同意
+      if(this.type!==1 && +objRps.result.protocol){
+        //顯示網點列表
+        this.$store.commit('showShop');
+      }
 
       // this.$refs['formLogin'].clearValidate();
 
@@ -371,6 +377,7 @@ export default {
         }
       },1e3);
     },
+    //同意協議
     handleAgreement:function(){
       var vueThis=this;
       var sendData={
@@ -389,6 +396,9 @@ export default {
           vueThis.$router.push({
             path:'/general'
           });
+        }else{
+          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
+          vueThis.$store.commit('showShop');
         }
       },{
         objSendData:sendData
@@ -437,7 +447,7 @@ export default {
                 'name':'nero', //名称
                 'agentName':'aaa234',//父级代理名称
                 'agentId':234,//父级代理商ID
-                'canOP':1//是否可操作，0-不可操作 1-可操作
+                'canOP':0//是否可操作，0-不可操作 1-可操作
               },
               {
                 'id':123, //ID
@@ -531,6 +541,9 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    handleShopClick:function(id){
+      
     }
   }, //methods
   created:function(){

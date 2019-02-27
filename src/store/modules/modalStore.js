@@ -1,6 +1,7 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
   objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
+  needShop:false,
   baseStatus:false,
   needFetchData:false,
 
@@ -76,6 +77,12 @@ var mutations={
   },
   hideAgreement:function(){
     state.objRpsProtocol=false;
+  },
+  showShop:function(){
+    state.needShop=true;
+  },
+  hideShop:function(){
+    state.needShop=false;
   },
   showBaseStatus:function(state){
     state.baseStatus=true;
