@@ -291,6 +291,7 @@ export default {
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
+    //處理objRps
     handleSuccess:function(objRps){
       objRps={
         'code': 1000,
@@ -303,26 +304,97 @@ export default {
           'id': 2,  //代理商id
           'protocol': 0 ,// 是否同意协议 0 否 1是
           'type': 2, //1-总代，2-普通代理 ，3-网点
+          //門店管理系統菜單
           'agent_menus':[
             {
-              'id': '6ce1d74a6ece4b2aa74eba720476cca5',//id
-              'icon':'icon',//小图标名称
-              'name': '运营统计',//名称
-              'badge':'beta',//右侧标记
+              'id': 'xxx',//id
+              'icon':'heartjoy',//小图标名称
+              'name': '首页',//名称
+              'badge':'beta',
+              'url': '/',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartgroup',//小图标名称
+              'name': '用户中心',//名称
+              'badge':'',
               'url': '',//url为空则为一个模块
               'menus': [
                 {
-                  'menuId': '6ce1d74a6ece4b2aa74eba720476cca5',//菜单ID
-                  'menuName': '用户群组',//菜单名称
-                  'url': 'http://console.immotor.com/CMS-FrontEnd/batterystation/operation-city-list.php'//页面路径
+                  'menuId': 'xxx',//菜单ID
+                  'menuName': '用户查询',//菜单名称
+                  'url': '/searchuser'//页面路径
                 },
                 {
-                  'menuId': '6ce1d74a6ece4b2aa74eba720476cca5',
-                  'menuName': '用户',
-                  'url': 'http://console.immotor.com/CMS-FrontEnd/batterystation/operation-user-list.php'
+                  'menuId': 'xxx',
+                  'menuName': '群组管理',
+                  'url': '/group'
                 }
               ]
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartdeposit',//小图标名称
+              'name': '押金管理',//名称
+              'badge':'',
+              'url': '/deposit',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartcombo',//小图标名称
+              'name': '套餐管理',//名称
+              'badge':'',
+              'url': '/combo',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartbigamount',//小图标名称
+              'name': '大额充值',//名称
+              'badge':'',
+              'url': '/bigamount',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartxls',//小图标名称
+              'name': '报表管理',//名称
+              'badge':'',
+              'url': '/xls',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartevs',//小图标名称
+              'name': '中控管理',//名称
+              'badge':'',
+              'url': '',//url为空则为一个模块
+              'menus': [
+                {
+                  'menuId': 'xxx',//菜单ID
+                  'menuName': '中控列表',//菜单名称
+                  'url': '/evs/1'//页面路径
+                },
+                {
+                  'menuId': 'xxx',
+                  'menuName': '中控分布',
+                  'url': '/evallgeographic'
+                }
+              ]
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartsyssetting',//小图标名称
+              'name': '系统设置',//名称
+              'badge':'',
+              'url': '/sys',//url为空则为一个模块
+              'menus': []
             }
+
+
+
           ]
         }
       };
