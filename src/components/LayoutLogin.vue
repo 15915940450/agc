@@ -399,9 +399,9 @@ export default {
         }
       };
       // 存貯門店菜單
-      var strAgentMenus=JSON.stringify(objRps.result.agent_menus);
-      window.localStorage.setItem('agent_menus',strAgentMenus);
-      this.$store.commit('setAgentMenus',strAgentMenus);
+      var objAgentMenus=objRps.result.agent_menus;
+      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
+      this.$store.commit('setAgentMenus',objAgentMenus);
       
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);

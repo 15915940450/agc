@@ -2,7 +2,7 @@ var state={
   phone:window.localStorage.agentphone,
   name:window.localStorage.agentname,
   id:window.localStorage.agentid,
-  agentMenus:window.localStorage.agent_menus
+  agentMenus:window.localStorage.agent_menus?JSON.parse(window.localStorage.agent_menus):[]
 };
 
 var mutations={
@@ -11,8 +11,8 @@ var mutations={
     state.name=obj.name;
     state.id=obj.id;
   },
-  setAgentMenus:function(strAgentMenus){
-    state.agentMenus=strAgentMenus;
+  setAgentMenus:function(state,objAgentMenus){
+    state.agentMenus=objAgentMenus;
   }
 };
 

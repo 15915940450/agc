@@ -72,7 +72,7 @@
 
     </el-menu>
 
-    <!-- <div>{{menus}}</div> -->
+    <div>{{agent.agentMenus[0].name}}</div>
   </div>
 </template>
 
@@ -165,9 +165,6 @@ export default {
   },
   computed:{
     ...mapState(['agent']),
-    menus:function(){
-      return (JSON.stringify(this.agent.agentMenus));
-    },
     arrOpeneds:function(){
       var arrOpeneds=[];
       // console.log(this.isActive);
