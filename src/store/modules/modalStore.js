@@ -41,6 +41,7 @@ var mutations={
     //需要登录时清空会话存贮
     window.sessionStorage.clear();
 
+    window.localStorage.removeItem('agent_menus');
     window.localStorage.removeItem('objrpsprotocol');
     window.localStorage.removeItem('agentphone');
     window.localStorage.removeItem('agentname');
