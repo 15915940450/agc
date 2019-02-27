@@ -192,9 +192,12 @@ export default {
   watch:{
     'modalStore.needLogin':function(val){
       if(!val){
+        //不需要登錄（隱藏了模態）
         this.agreeTimeLeft=5;
-        this.fetchDescendant();
         this.countAgreementTime();
+      }else{
+        //需要登錄
+        window.sessionStorage.removeItem('headerid');
       }
     },
     need_vcode:function(val){
@@ -318,6 +321,7 @@ export default {
       if(this.type!==1 && +objRps.result.protocol){
         //顯示網點列表
         this.$store.commit('showShop');
+        this.fetchDescendant();
       }
 
       // this.$refs['formLogin'].clearValidate();
@@ -557,6 +561,10 @@ export default {
     //創建時如果顯示了協議:countdown
     if(this.modalStore.objRpsProtocol){
       this.countAgreementTime();
+    }
+    //創建時顯示了網點
+    if(this.modalStore.needShop){
+      this.fetchDescendant();
     }
   },
   mounted:function(){

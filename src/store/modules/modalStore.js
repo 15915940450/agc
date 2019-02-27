@@ -1,7 +1,7 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
   objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
-  needShop:false,
+  needShop:window.sessionStorage.headerid?false:true,
   baseStatus:false,
   needFetchData:false,
 
