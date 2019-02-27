@@ -209,7 +209,10 @@ export default {
     $route:function(to){
       // 对路由变化作出响应...
       // console.log(to.path); // /general
-      this.handleGeneral(to.path);
+      //如果只有一個網點
+      if(!window.sessionStorage.totalshopisonly){
+        this.handleGeneral(to.path);
+      }
     },
     'modalStore.needShop':function(val){
       if(val){
