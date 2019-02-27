@@ -68,6 +68,7 @@ export default {
     },
     handleChangeShop:function(){
       this.$store.commit('showShop');
+      this.fetchDescendant();
     }
   }, //methods
   created:function(){

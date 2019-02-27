@@ -213,11 +213,6 @@ export default {
       if(!window.sessionStorage.totalshopisonly){
         this.handleGeneral(to.path);
       }
-    },
-    'modalStore.needShop':function(val){
-      if(val){
-        this.fetchDescendant();
-      }
     }
   },
   components:{
@@ -234,10 +229,7 @@ export default {
         window.sessionStorage.removeItem('isgeneral');
         if(!window.sessionStorage.headerid){
           this.$store.commit('showShop');
-          if(this.modalStore.needShop){
-            //創建時顯示了網點
-            this.fetchDescendant();
-          }
+          this.fetchDescendant();
         }
       }
     },
@@ -348,6 +340,7 @@ export default {
       if(this.type!==1 && +objRps.result.protocol){
         //顯示網點列表
         this.$store.commit('showShop');
+        this.fetchDescendant();
       }
 
       // this.$refs['formLogin'].clearValidate();
