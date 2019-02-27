@@ -594,8 +594,8 @@ export default {
     if(this.need_vcode){
       this.updateVimg();
     }
-    //創建時如果顯示了協議:countdown
-    if(this.modalStore.objRpsProtocol){
+    //創建時如果顯示了協議并且已經登錄:countdown
+    if(this.modalStore.objRpsProtocol && !this.modalStore.needLogin){
       this.countAgreementTime();
     }
     // console.log(this.$route.path);  //general
