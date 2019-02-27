@@ -209,7 +209,7 @@ export default {
     $route:function(to){
       // 对路由变化作出响应...
       // console.log(to.path); // /general
-      //如果只有一個網點
+      //如果不只有一個網點
       if(!window.sessionStorage.totalshopisonly){
         this.handleGeneral(to.path);
       }
@@ -445,7 +445,7 @@ export default {
         objRps={
           'code': 1000,
           'result': {
-            'total': 1, 
+            'total': 13, 
             'list': [
               {
                 'id':1, //ID

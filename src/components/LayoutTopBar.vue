@@ -25,6 +25,7 @@
         </el-dropdown>
         <!-- 切换网点 -->
         <el-button 
+          v-if="showChangeShop"
           class="change_shop" 
           type="text" 
           size="medium"
@@ -44,10 +45,15 @@ import {mapState} from 'vuex';
 
 export default {
   name:'LayoutTopBar',
+  data:function(){
+    return ({
+      showChangeShop:false
+    });
+  },
   computed:{
     ...mapState(['agent'])
   },
-  methods: {
+  methods:{
     logout:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userLogout,function(){
@@ -63,7 +69,10 @@ export default {
     handleChangeShop:function(){
       this.$store.commit('showShop');
     }
-  } //methods
+  }, //methods
+  created:function(){
+    this.showChangeShop=!window.sessionStorage.totalshopisonly;
+  }
 };
 </script>
 
