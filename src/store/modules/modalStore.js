@@ -5,7 +5,9 @@ var state={
   needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
   needFetchD:false,
   baseStatus:false,
+
   needFetchData:false,
+  showChangeShop:!window.sessionStorage.totalshopisonly?true:false,
 
   topUp:false,
   comboBuy:false,
@@ -37,7 +39,8 @@ var state={
 var mutations={
   showLogin:function(state){
     //需要登录时清空会话存贮
-    // window.sessionStorage.clear();
+    window.sessionStorage.clear();
+
     window.localStorage.removeItem('objrpsprotocol');
     window.localStorage.removeItem('agentphone');
     window.localStorage.removeItem('agentname');
@@ -82,6 +85,12 @@ var mutations={
   },
   setNeedFetchD:function(){
     state.needFetchD=true;
+  },
+  setChangeShop:function(){
+    state.showChangeShop=true;
+  },
+  clearChangeShop:function(){
+    state.showChangeShop=false;
   },
   hideAgreement:function(){
     state.objRpsProtocol=false;

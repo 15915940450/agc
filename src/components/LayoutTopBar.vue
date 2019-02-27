@@ -25,7 +25,7 @@
         </el-dropdown>
         <!-- 切换网点 -->
         <el-button 
-          v-if="showChangeShop"
+          v-if="modalStore.showChangeShop"
           class="change_shop" 
           type="text" 
           size="medium"
@@ -47,11 +47,10 @@ export default {
   name:'LayoutTopBar',
   data:function(){
     return ({
-      showChangeShop:false
     });
   },
   computed:{
-    ...mapState(['agent'])
+    ...mapState(['agent','modalStore'])
   },
   methods:{
     logout:function(){
@@ -71,7 +70,6 @@ export default {
     }
   }, //methods
   created:function(){
-    this.showChangeShop=!window.sessionStorage.totalshopisonly;
   }
 };
 </script>

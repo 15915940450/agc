@@ -446,7 +446,7 @@ export default {
         objRps={
           'code': 1000,
           'result': {
-            'total': 13, 
+            'total': 1, 
             'list': [
               {
                 'id':1, //ID
@@ -571,12 +571,15 @@ export default {
         vueThis.shopList=changeData;
         console.log('shop list');
         if(+objRps.result.total===1){
-          // 只有一个网点，则直接进入网点，不需要选择网点
+          // 只有一个网点，则直接进入网点，不需要选择网点,隱藏切換網點
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
+          vueThis.$store.commit('clearChangeShop');
+          window.sessionStorage.setItem('headerid',changeData[0].shop[0].id);
         }else{
           window.sessionStorage.removeItem('totalshopisonly');
-        }
+          vueThis.$store.commit('setChangeShop');
+        } 
       },{
         objSendData:sendData
       });
