@@ -193,6 +193,7 @@ export default {
     'modalStore.needLogin':function(val){
       if(!val){
         this.agreeTimeLeft=5;
+        this.fetchDescendant();
         this.countAgreementTime();
       }
     },
@@ -370,7 +371,7 @@ export default {
     countAgreementTime:function(){
       var vueThis=this;
       var Timer=window.setInterval(function(){
-        if(vueThis.agreeTimeLeft){
+        if(vueThis.agreeTimeLeft>0){
           vueThis.agreeTimeLeft--;
         }else{
           window.clearInterval(Timer);
@@ -399,6 +400,7 @@ export default {
         }else{
           //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
           vueThis.$store.commit('showShop');
+          vueThis.fetchDescendant();
         }
       },{
         objSendData:sendData
@@ -418,7 +420,7 @@ export default {
             'total': 2000, 
             'list': [
               {
-                'id':123, //ID
+                'id':1, //ID
                 'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'aaa234',//父级代理名称
@@ -426,7 +428,7 @@ export default {
                 'canOP':1//是否可操作，0-不可操作 1-可操作
               },
               {
-                'id':123, //ID
+                'id':2, //ID
                 'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'aaa234',//父级代理名称
@@ -434,7 +436,7 @@ export default {
                 'canOP':1//是否可操作，0-不可操作 1-可操作
               },
               {
-                'id':123, //ID
+                'id':3, //ID
                 'phone':'15019001400', //手机号码
                 'name':'neroneroneroneronero', //名称
                 'agentName':'aaa234',//父级代理名称
@@ -442,7 +444,7 @@ export default {
                 'canOP':1//是否可操作，0-不可操作 1-可操作
               },
               {
-                'id':123, //ID
+                'id':4, //ID
                 'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'aaa234',//父级代理名称
@@ -450,7 +452,7 @@ export default {
                 'canOP':0//是否可操作，0-不可操作 1-可操作
               },
               {
-                'id':123, //ID
+                'id':5, //ID
                 'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'aaa234',//父级代理名称
@@ -458,7 +460,7 @@ export default {
                 'canOP':1//是否可操作，0-不可操作 1-可操作
               },
               {
-                'id':123, //ID
+                'id':6, //ID
                 'phone':'15019001400', //手机号码
                 'name':'nero', //名称
                 'agentName':'ggg1',//父级代理名称
@@ -538,20 +540,24 @@ export default {
           }
         } //for
         vueThis.shopList=changeData;
+        console.log('shop list');
       },{
         objSendData:sendData
       });
     },
     handleShopClick:function(id){
-      
+      this.$store.commit('hideShop');
+      window.sessionStorage.setItem('headerid',id);
     }
   }, //methods
   created:function(){
     if(this.need_vcode){
       this.updateVimg();
     }
-    this.countAgreementTime();
-    this.fetchDescendant();
+    //創建時如果顯示了協議:countdown
+    if(this.modalStore.objRpsProtocol){
+      this.countAgreementTime();
+    }
   },
   mounted:function(){
     //just once
