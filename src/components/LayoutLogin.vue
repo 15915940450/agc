@@ -205,12 +205,30 @@ export default {
       if(val){
         this.updateVimg();
       }
+    },
+    $route:function(to){
+      // 对路由变化作出响应...
+      // console.log(to.path); // /general
+      this.handleGeneral(to.path);
     }
   },
   components:{
     TextAgreement
   },
   methods:{
+    handleGeneral:function(path){
+      //是general則存貯，否則刪除
+      if(/general/i.test(path)){
+        window.sessionStorage.setItem('isgeneral',1);
+        this.$store.commit('hideShop');
+      }else{
+        window.sessionStorage.removeItem('isgeneral');
+        if(!window.sessionStorage.headerid){
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+        }
+      }
+    },
     handleChange:function(val) {
       console.log(val);
     },
@@ -563,9 +581,8 @@ export default {
       this.countAgreementTime();
     }
     //創建時顯示了網點
-    if(this.modalStore.needShop){
-      this.fetchDescendant();
-    }
+    // console.log(this.$route.path);  //general
+    this.handleGeneral(this.$route.path);
   },
   mounted:function(){
     //just once

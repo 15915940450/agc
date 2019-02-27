@@ -7,6 +7,7 @@
         </h1>
       </el-col>
       <el-col :span="18" class="topbar_right_wrap">
+        切换网点
         <el-dropdown>
           <span class="el-dropdown-link">
             <img class="top_bar-head" src="../assets/default_head.png" width="20" />
