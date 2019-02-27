@@ -573,6 +573,8 @@ export default {
           // 只有一个网点，则直接进入网点，不需要选择网点
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
+        }else{
+          window.sessionStorage.removeItem('totalshopisonly');
         }
       },{
         objSendData:sendData
