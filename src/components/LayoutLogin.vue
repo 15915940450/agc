@@ -12,8 +12,8 @@
       :center="true"
       :modal="false"
       >
-      <div>
-        <el-collapse v-model="activeNames">
+      <div class="one_shop">
+        <el-collapse v-model="activeNames" class="oh">
 
           <el-collapse-item 
             v-for="(item,index) in shopList" 
@@ -21,7 +21,7 @@
             :name="index" 
             :key="index"
             >
-            <div>
+            <div class="shop_wrap">
               <el-row :gutter="16">
                 <el-col v-for="(shopItem,i) in item.shop" :span="8" :key="i">
                   <el-button 
@@ -446,7 +446,7 @@ export default {
         objRps={
           'code': 1000,
           'result': {
-            'total': 1, 
+            'total': 10, 
             'list': [
               {
                 'id':1, //ID
@@ -671,6 +671,13 @@ export default {
   .shop{
     margin-bottom: 10px;
     width: 100%;
+  }
+  .one_shop{
+    max-height: 500px;
+    overflow: auto;
+  }
+  .shop_wrap{
+    padding-right: 20px;
   }
   @media screen and (min-height:800px){
     .kefu{
