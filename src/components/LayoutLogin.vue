@@ -570,6 +570,7 @@ export default {
     handleShopClick:function(id){
       this.$store.commit('hideShop');
       window.sessionStorage.setItem('headerid',id);
+      window.location.reload(false);
     }
   }, //methods
   created:function(){
