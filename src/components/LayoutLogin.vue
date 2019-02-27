@@ -234,9 +234,10 @@ export default {
         window.sessionStorage.removeItem('isgeneral');
         if(!window.sessionStorage.headerid){
           this.$store.commit('showShop');
-        }else if(this.modalStore.needShop){
-          //創建時顯示了網點
-          this.fetchDescendant();
+          if(this.modalStore.needShop){
+            //創建時顯示了網點
+            this.fetchDescendant();
+          }
         }
       }
     },
