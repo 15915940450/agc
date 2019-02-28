@@ -29,7 +29,7 @@
           <el-table-column
             label="ID"
             prop="id"
-            width="50"
+            width="110"
             >
           </el-table-column>
             <el-table-column

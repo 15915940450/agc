@@ -184,8 +184,8 @@ export default function(urlMethod,success,paramSettings){
 
   xmlhttp.open(method,url,true);
   xmlhttp.setRequestHeader('Content-type',ContentType);
-  if (window.sessionStorage.headerid) {
-    xmlhttp.setRequestHeader('agentid', window.sessionStorage.headerid);
+  if(window.sessionStorage.headerid){
+    xmlhttp.setRequestHeader('agentId',window.sessionStorage.headerid);
   }
   xmlhttp.withCredentials=true;
   xmlhttp.send(data2send);

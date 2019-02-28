@@ -2,7 +2,7 @@
   <div class="need_login">
     <!-- 網點 -->
     <el-dialog
-      title="请选择网点"
+      title="请选择门店"
       :visible.sync="modalStore.needShop"
       width="600px"
       custom-class="one_agreement"
@@ -77,6 +77,7 @@
         <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
       </p>
     </el-dialog>
+
     <!-- 登陸 -->
     <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false" :top="top">
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
@@ -149,7 +150,7 @@ export default {
       shopList:[],
       agreeTimeLeft:5,
       protocol:false,
-      type:0, //1-总代，2-普通代理 ，3-网点
+      type:0, //1-总代，2-普通代理 ，3-门店
       width:'380px',
       customClass:'onelogin',
       top:'10vh',
@@ -225,20 +226,6 @@ export default {
     TextAgreement
   },
   methods:{
-    handleGeneral:function(path){
-      path=path || this.$route.path;
-      //是general則存貯，否則刪除
-      if(/general/i.test(path)){
-        window.sessionStorage.setItem('isgeneral',1);
-        this.$store.commit('hideShop');
-      }else{
-        window.sessionStorage.removeItem('isgeneral');
-        if(!window.sessionStorage.headerid){
-          this.$store.commit('showShop');
-          this.fetchDescendant();
-        }
-      }
-    },
     //登录接口=> /user/login
     loginSend:function(refName){
       var vueThis=this;
@@ -291,8 +278,10 @@ export default {
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
+    
     //處理objRps
     handleSuccess:function(objRps){
+      /*
       objRps={
         'code': 1000,
         'msg': '',
@@ -303,7 +292,7 @@ export default {
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
           'protocol': 0 ,// 是否同意协议 0 否 1是
-          'type': 2, //1-总代，2-普通代理 ，3-网点
+          'type': 3, //1-总代，2-普通代理 ，3-门店
           //門店管理系統菜單
           'agent_menus':[
             {
@@ -398,33 +387,18 @@ export default {
           ]
         }
       };
-      // 存貯門店菜單
-      var objAgentMenus=objRps.result.agent_menus;
-      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
-      this.$store.commit('setAgentMenus',objAgentMenus);
+      */
       
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
-      //設置是否需要同意協議
-      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
       
-
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
       this.formLogin.validateCode='';
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
-
-      //總代？
-      this.type=+objRps.result.type;
-      //1:非总代(子代)在身份验证通过之后，出现【选择网点】窗口,2:協議已經同意
-      if(this.type!==1 && +objRps.result.protocol){
-        //顯示網點列表
-        this.$store.commit('showShop');
-        this.fetchDescendant();
-      }
 
       // this.$refs['formLogin'].clearValidate();
 
@@ -439,6 +413,8 @@ export default {
         name:objRps.result.name,
         id:objRps.result.id
       });
+
+      this.handleLPS(objRps);
     },
     updateVimg:function(){
       this.vImg=this.$yApi.userValidateCode+'?n='+(Math.random()+'').substring(3,15);
@@ -474,15 +450,36 @@ export default {
         vueThis.drawTri();
       },330));
     },
-    countAgreementTime:function(){
-      var vueThis=this;
-      var Timer=window.setInterval(function(){
-        if(vueThis.agreeTimeLeft>0){
-          vueThis.agreeTimeLeft--;
-        }else{
-          window.clearInterval(Timer);
-        }
-      },1e3);
+
+    //=============處理登錄(in success)，協議，網點之間的關係
+    handleLPS:function(objRps){
+      // 存貯門店菜單
+      var objAgentMenus=objRps.result.agent_menus || [];
+      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
+      this.$store.commit('setAgentMenus',objAgentMenus);
+
+      //設置是否需要同意協議
+      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
+      if(+objRps.result.protocol){
+        // 協議已經同意
+        this.$store.commit('hideAgreement');
+      }else{
+        this.$store.commit('showAgreement');
+      }
+
+      //總代？
+      this.type=+objRps.result.type;
+      if(this.type===1){
+        //總代
+        this.$store.commit('hideShop');
+        this.$router.push({
+          path:'/general'
+        });
+      }else{
+        //顯示網點列表
+        this.$store.commit('showShop');
+        this.fetchDescendant();
+      }
     },
     //同意協議
     handleAgreement:function(){
@@ -492,7 +489,7 @@ export default {
         protocol:1
       };
       //setProtocol
-      vueThis.$rqs(vueThis.$yApi.THILINA,function(){
+      vueThis.$rqs(vueThis.$yApi.setProtocol,function(){
         vueThis.$store.commit('hideAgreement');
         window.localStorage.setItem('objrpsprotocol',1);
         vueThis.agreeTimeLeft=5;
@@ -504,7 +501,7 @@ export default {
             path:'/general'
           });
         }else{
-          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
+          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择门店】窗口
           vueThis.$store.commit('showShop');
           vueThis.fetchDescendant();
         }
@@ -512,14 +509,16 @@ export default {
         objSendData:sendData
       });
     },
+
     // 獲取門店
     fetchDescendant:function(){
       var vueThis=this;
       var sendData={
-        type:2  //后代类型 1-代理商 2-网点 默认为1
+        type:2  //后代类型 1-代理商 2-门店 默认为1
       };
       //getDescendant
-      vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
+      vueThis.$rqs(vueThis.$yApi.getDescendant,function(objRps){
+        /*
         objRps={
           'code': 1000,
           'result': {
@@ -614,6 +613,7 @@ export default {
             // ]
           }
         };
+        */
 
         var changeData=[];
         for(var i=0;i<objRps.result.list.length;i++){
@@ -648,7 +648,7 @@ export default {
         vueThis.shopList=changeData;
         console.log('shop list');
         if(+objRps.result.total===1){
-          // 只有一个网点，则直接进入网点，不需要选择网点,隱藏切換網點
+          // 只有一个门店，则直接进入门店，不需要选择门店,隱藏切換網點
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
           vueThis.$store.commit('clearChangeShop');
@@ -661,10 +661,36 @@ export default {
         objSendData:sendData
       });
     },
+    //同意協議倒數計時
+    countAgreementTime:function(){
+      var vueThis=this;
+      var Timer=window.setInterval(function(){
+        if(vueThis.agreeTimeLeft>0){
+          vueThis.agreeTimeLeft--;
+        }else{
+          window.clearInterval(Timer);
+        }
+      },1e3);
+    },
+    //處理選擇網點
     handleShopClick:function(id){
       this.$store.commit('hideShop');
       window.sessionStorage.setItem('headerid',id);
       window.location.reload(false);
+    },
+    handleGeneral:function(path){
+      path=path || this.$route.path;
+      //是general則存貯，否則刪除
+      if(/general/i.test(path)){
+        window.sessionStorage.setItem('isgeneral',1);
+        this.$store.commit('hideShop');
+      }else{
+        window.sessionStorage.removeItem('isgeneral');
+        if(!window.sessionStorage.headerid){
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+        }
+      }
     }
   }, //methods
   created:function(){

@@ -7,7 +7,7 @@
 			</el-menu-item>
 			<el-menu-item index="2">
 				<i class="icon_menu heartstores">icon_menu</i>
-				<span slot="title">网点管理</span>
+				<span slot="title">门店管理</span>
 			</el-menu-item>
 		</el-menu>
 	</div>
