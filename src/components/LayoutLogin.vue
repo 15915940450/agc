@@ -454,7 +454,7 @@ export default {
     //=============處理登錄(in success)，協議，網點之間的關係
     handleLPS:function(objRps){
       // 存貯門店菜單
-      var objAgentMenus=objRps.result.agent_menus;
+      var objAgentMenus=objRps.result.agent_menus || [];
       window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
       this.$store.commit('setAgentMenus',objAgentMenus);
 
