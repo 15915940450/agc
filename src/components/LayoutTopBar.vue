@@ -23,7 +23,7 @@
             <el-dropdown-item></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <!-- 切换网点 -->
+        <!-- 切换门店 -->
         <el-button 
           v-if="modalStore.showChangeShop"
           class="change_shop" 
@@ -31,7 +31,7 @@
           size="medium"
           @click="handleChangeShop()"
           >
-          切换网点
+          切换门店
         </el-button>
       </el-col>
     </el-row>

@@ -2,7 +2,7 @@
   <div class="need_login">
     <!-- 網點 -->
     <el-dialog
-      title="请选择网点"
+      title="请选择门店"
       :visible.sync="modalStore.needShop"
       width="600px"
       custom-class="one_agreement"
@@ -150,7 +150,7 @@ export default {
       shopList:[],
       agreeTimeLeft:5,
       protocol:false,
-      type:0, //1-总代，2-普通代理 ，3-网点
+      type:0, //1-总代，2-普通代理 ，3-门店
       width:'380px',
       customClass:'onelogin',
       top:'10vh',
@@ -291,7 +291,7 @@ export default {
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
           'protocol': 0 ,// 是否同意协议 0 否 1是
-          'type': 3, //1-总代，2-普通代理 ，3-网点
+          'type': 3, //1-总代，2-普通代理 ，3-门店
           //門店管理系統菜單
           'agent_menus':[
             {
@@ -499,7 +499,7 @@ export default {
             path:'/general'
           });
         }else{
-          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
+          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择门店】窗口
           vueThis.$store.commit('showShop');
           vueThis.fetchDescendant();
         }
@@ -512,7 +512,7 @@ export default {
     fetchDescendant:function(){
       var vueThis=this;
       var sendData={
-        type:2  //后代类型 1-代理商 2-网点 默认为1
+        type:2  //后代类型 1-代理商 2-门店 默认为1
       };
       //getDescendant
       vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
@@ -644,7 +644,7 @@ export default {
         vueThis.shopList=changeData;
         console.log('shop list');
         if(+objRps.result.total===1){
-          // 只有一个网点，则直接进入网点，不需要选择网点,隱藏切換網點
+          // 只有一个门店，则直接进入门店，不需要选择门店,隱藏切換網點
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
           vueThis.$store.commit('clearChangeShop');
