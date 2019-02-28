@@ -62,6 +62,9 @@ export default function(urlMethod,success,paramSettings){
   if(method===3){
     method='POSTform';
   }
+	if(method===4){
+		method='PUTjson';
+	}
   success=success || function(objRps){console.log(objRps);};
 
   //=================settings is the target, will be overcover by param
@@ -171,7 +174,13 @@ export default function(urlMethod,success,paramSettings){
     data2send=JSON.stringify(settings.objSendData);
     ContentType='application/json';
   }
-
+	//add by sinclair put json
+	if(method==='PUTjson'){
+		method='PUT';
+		data2send=JSON.stringify(settings.objSendData);
+		ContentType='application/json';
+	}
+	//end
 
   xmlhttp.open(method,url,true);
   xmlhttp.setRequestHeader('Content-type',ContentType);

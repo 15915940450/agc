@@ -21,8 +21,12 @@ import HeartEVs from '@/components/HeartEVs';
 import HeartEVamap from '@/components/HeartEVamap';
 import HeartEVallGeographic from '@/components/HeartEVallGeographic';
 import HeartSysSetting from '@/components/HeartSysSetting';
+import HeartStores from '@/components/HeartStores';
+import HeartSubAgent from '@/components/HeartSubAgent';
+import HeartAgentAccess from '@/components/HeartAgentAccess';
 import MapTrack from '@/components/MapTrack';
 import MapGeographic from '@/components/MapGeographic';
+
 
 import HelloWorld from '@/components/HelloWorld';
 import AjaxTest from '@/components/AjaxTest';
@@ -165,7 +169,21 @@ export default new Router({
     {
       path:'/general',
       component:General,
-      children:[]
+      children:[{
+				path:'/:pn',
+				name:'HeartSubAgent',
+				component: HeartSubAgent,
+			},
+			{
+				path:'/access/:agentId',
+				name:'HeartAgentAccess',
+				component:HeartAgentAccess
+			}
+			,{
+				path:'/stores/:pn',
+				name:'HeartStores',
+				component: HeartStores
+			}]
     }
   ]
   /*

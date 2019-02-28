@@ -1,15 +1,12 @@
 <template>
   <div>
-    <!-- 你可能需要修改這裏 -->
-    <!-- <LayoutTopBar /> -->
-
+    <LayoutTopBarGeneral/>
     <el-row>
       <el-col id="left_nav_wrap">
-        <!-- 這是代理工作臺左側菜單組件 -->
-        <LayoutNavGeneral />
+        <LayoutNavGeneral/>
       </el-col>
       <el-col id="main_wrap">
-        <router-view />
+        <router-view/>
         <footer class="copyright">
           <p class="kefu">
             <span class="kefu_phone">客服：400-618-7238</span>
@@ -22,46 +19,46 @@
 </template>
 
 <script>
-// import LayoutTopBar from './LayoutTopBar.vue';
-import LayoutNavGeneral from './LayoutNavGeneral.vue';
+import LayoutTopBarGeneral from "./LayoutTopBarGeneral.vue";
+import LayoutNavGeneral from "./LayoutNavGeneral.vue";
 
 export default {
-  name: 'App',
-  data:function(){
-    return ({
-      port1590:false
+  name: "App",
+  data: function() {
+    return {
+      port1590: false
       // port1590:(window.location.port==='1590')
-    });
+    };
   },
-  components:{
-    // LayoutTopBar,
+  components: {
+    LayoutTopBarGeneral,
     LayoutNavGeneral
   }
 };
 </script>
 
 <style>
-  #app {
-    width: 1200px;
-    margin:0 auto;
-    background: #FFF;
-    box-shadow: 0px 0px 2px 2px rgba(0,0,0,.1);
-  }
-  #app._port1590_{
-    width: 1070px;
-  }
-  #app a{
-    color:#fc8181;
-    text-decoration: none;
-    transition:all 0.2s ease-out;
-    font-weight: 300;
-    outline:none;
-  }
-  #app a:hover{
-    color: #ff3333;
-    outline:none;
-  }
-  #app a:active{
-    outline:none;
-  }
+#app {
+  width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+#app._port1590_ {
+  width: 1070px;
+}
+#app a {
+  color: #fc8181;
+  text-decoration: none;
+  transition: all 0.2s ease-out;
+  font-weight: 300;
+  outline: none;
+}
+#app a:hover {
+  color: #ff3333;
+  outline: none;
+}
+#app a:active {
+  outline: none;
+}
 </style>
