@@ -77,6 +77,7 @@
         <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
       </p>
     </el-dialog>
+
     <!-- 登陸 -->
     <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false" :top="top">
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
@@ -291,6 +292,7 @@ export default {
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
+    
     //處理objRps
     handleSuccess:function(objRps){
       objRps={
@@ -302,7 +304,7 @@ export default {
           'phone': '15820480937',
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
-          'protocol': 0 ,// 是否同意协议 0 否 1是
+          'protocol': 1 ,// 是否同意协议 0 否 1是
           'type': 2, //1-总代，2-普通代理 ，3-网点
           //門店管理系統菜單
           'agent_menus':[
@@ -398,33 +400,17 @@ export default {
           ]
         }
       };
-      // 存貯門店菜單
-      var objAgentMenus=objRps.result.agent_menus;
-      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
-      this.$store.commit('setAgentMenus',objAgentMenus);
       
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
-      //設置是否需要同意協議
-      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
       
-
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
       this.formLogin.validateCode='';
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
-
-      //總代？
-      this.type=+objRps.result.type;
-      //1:非总代(子代)在身份验证通过之后，出现【选择网点】窗口,2:協議已經同意
-      if(this.type!==1 && +objRps.result.protocol){
-        //顯示網點列表
-        this.$store.commit('showShop');
-        this.fetchDescendant();
-      }
 
       // this.$refs['formLogin'].clearValidate();
 
@@ -439,6 +425,8 @@ export default {
         name:objRps.result.name,
         id:objRps.result.id
       });
+
+      this.handleLPS(objRps);
     },
     updateVimg:function(){
       this.vImg=this.$yApi.userValidateCode+'?n='+(Math.random()+'').substring(3,15);
@@ -474,15 +462,38 @@ export default {
         vueThis.drawTri();
       },330));
     },
-    countAgreementTime:function(){
-      var vueThis=this;
-      var Timer=window.setInterval(function(){
-        if(vueThis.agreeTimeLeft>0){
-          vueThis.agreeTimeLeft--;
+
+    //=============處理登錄(in success)，協議，網點之間的關係
+    handleLPS:function(objRps){
+      // 存貯門店菜單
+      var objAgentMenus=objRps.result.agent_menus;
+      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
+      this.$store.commit('setAgentMenus',objAgentMenus);
+
+      //設置是否需要同意協議
+      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
+
+      //總代？
+      this.type=+objRps.result.type;
+      // 協議已經同意
+      if(+objRps.result.protocol){
+        if(this.type===1){
+          //總代
         }else{
-          window.clearInterval(Timer);
+          //顯示網點列表
+          this.$store.commit('showShop');
+          this.fetchDescendant();
         }
-      },1e3);
+      }else{
+        // 協議沒有同意
+        if(this.type===1){
+          //總代
+        }else{
+          //顯示網點列表
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+        }
+      }
     },
     //同意協議
     handleAgreement:function(){
@@ -512,6 +523,7 @@ export default {
         objSendData:sendData
       });
     },
+
     // 獲取門店
     fetchDescendant:function(){
       var vueThis=this;
@@ -660,6 +672,17 @@ export default {
       },{
         objSendData:sendData
       });
+    },
+    //同意協議倒數計時
+    countAgreementTime:function(){
+      var vueThis=this;
+      var Timer=window.setInterval(function(){
+        if(vueThis.agreeTimeLeft>0){
+          vueThis.agreeTimeLeft--;
+        }else{
+          window.clearInterval(Timer);
+        }
+      },1e3);
     },
     handleShopClick:function(id){
       this.$store.commit('hideShop');
