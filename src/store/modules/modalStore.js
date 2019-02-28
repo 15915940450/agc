@@ -1,11 +1,13 @@
 var state={
   needLogin:window.localStorage.agentphone?false:true,
-  objRpsProtocol:+window.localStorage.objrpsprotocol?false:true,
+  objRpsProtocol:false,
   //false:是總代，不顯示
-  needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
-  needFetchD:false,
-  baseStatus:false,
+  needShop:false,
+  // needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
 
+  needFetchD:false,
+
+  baseStatus:false,
   needFetchData:false,
   showChangeShop:!window.sessionStorage.totalshopisonly?true:false,
 
@@ -50,7 +52,10 @@ var mutations={
     window.localStorage.removeItem('tradeCheck');
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
-    state.objRpsProtocol=true;
+    state.objRpsProtocol=false;
+    state.needShop=false,
+    state.needFetchD=false,
+
     state.baseStatus=false;
     state.needFetchData=false;
     state.topUp=false;
@@ -82,7 +87,7 @@ var mutations={
     state.needLogin=false;
   },
   clearNeedFetchD:function(){
-    state.needFetchData=false;
+    state.needFetchD=false;
   },
   setNeedFetchD:function(){
     state.needFetchD=true;
@@ -92,6 +97,9 @@ var mutations={
   },
   clearChangeShop:function(){
     state.showChangeShop=false;
+  },
+  showAgreement:function(){
+    state.objRpsProtocol=true;
   },
   hideAgreement:function(){
     state.objRpsProtocol=false;

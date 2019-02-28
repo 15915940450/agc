@@ -472,6 +472,12 @@ export default {
 
       //設置是否需要同意協議
       window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
+      if(+objRps.result.protocol){
+        // 協議已經同意
+        this.$store.commit('hideAgreement');
+      }else{
+        this.$store.commit('showAgreement');
+      }
 
       //總代？
       this.type=+objRps.result.type;
