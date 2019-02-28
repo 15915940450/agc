@@ -1,9 +1,9 @@
 var state={
-  needLogin:window.localStorage.agentphone?false:true,
+  //顯示：代理商不存在或者沒有同意協議
+  needLogin:(!window.localStorage.agentphone || !+window.localStorage.objrpsprotocol)?true:false,
   objRpsProtocol:false,
   //false:是總代，不顯示
-  needShop:false,
-  // needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
+  needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
 
   needFetchD:false,
 

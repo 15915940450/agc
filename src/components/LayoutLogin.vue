@@ -226,20 +226,6 @@ export default {
     TextAgreement
   },
   methods:{
-    handleGeneral:function(path){
-      path=path || this.$route.path;
-      //是general則存貯，否則刪除
-      if(/general/i.test(path)){
-        window.sessionStorage.setItem('isgeneral',1);
-        this.$store.commit('hideShop');
-      }else{
-        window.sessionStorage.removeItem('isgeneral');
-        if(!window.sessionStorage.headerid){
-          this.$store.commit('showShop');
-          this.fetchDescendant();
-        }
-      }
-    },
     //登录接口=> /user/login
     loginSend:function(refName){
       var vueThis=this;
@@ -304,7 +290,7 @@ export default {
           'phone': '15820480937',
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
-          'protocol': 1 ,// 是否同意协议 0 否 1是
+          'protocol': 0 ,// 是否同意协议 0 否 1是
           'type': 3, //1-总代，2-普通代理 ，3-网点
           //門店管理系統菜單
           'agent_menus':[
@@ -682,10 +668,25 @@ export default {
         }
       },1e3);
     },
+    //處理選擇網點
     handleShopClick:function(id){
       this.$store.commit('hideShop');
       window.sessionStorage.setItem('headerid',id);
       window.location.reload(false);
+    },
+    handleGeneral:function(path){
+      path=path || this.$route.path;
+      //是general則存貯，否則刪除
+      if(/general/i.test(path)){
+        window.sessionStorage.setItem('isgeneral',1);
+        this.$store.commit('hideShop');
+      }else{
+        window.sessionStorage.removeItem('isgeneral');
+        if(!window.sessionStorage.headerid){
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+        }
+      }
     }
   }, //methods
   created:function(){
