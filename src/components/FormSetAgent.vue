@@ -67,15 +67,11 @@ export default {
       var vueThis = this;
       vueThis.loadingAgent = true;
       //判断search参数，如果为手机号，设置为phone参数，其它为name参数
-      var advancedParam = JSON.stringify({
-        type: 1
-      });
       var sendData = {
-        advancedParam: advancedParam,
+        type: 1,
         pageNum: 1,
         pageSize: 10000
       };
-      console.log(sendData);
       vueThis.$rqs(
         vueThis.$yApi.subAgentStoresList,
         function(objRps) {
