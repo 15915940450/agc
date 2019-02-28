@@ -139,6 +139,12 @@ h3.title{
   position:relative;
   z-index:10;
 }
+.one_agreement{
+  border-radius: 10px;
+  margin-top:calc((100vh - 700px) / 2) !important;
+  position:relative;
+  z-index:10;
+}
 .need_login-phone input{
   background: url(./user.png) no-repeat 5px center !important;
   background-size: 20px 20px !important;
@@ -342,6 +348,9 @@ input::-ms-clear, input::-ms-reveal {
   border-radius: 3px;
   background: #000;
   color: #FFF !important;
+}
+.oh{
+  overflow: hidden;
 }
 
 // card(首頁ec用到的卡片沒有下邊框)

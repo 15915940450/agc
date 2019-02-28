@@ -1,5 +1,83 @@
 <template lang="html">
   <div class="need_login">
+    <!-- 網點 -->
+    <el-dialog
+      title="请选择网点"
+      :visible.sync="modalStore.needShop"
+      width="600px"
+      custom-class="one_agreement"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      :center="true"
+      :modal="false"
+      >
+      <div class="one_shop">
+        <el-collapse v-model="activeNames" class="oh">
+
+          <el-collapse-item 
+            v-for="(item,index) in shopList" 
+            :title="item.agentName" 
+            :name="index" 
+            :key="index"
+            >
+            <div class="shop_wrap">
+              <el-row :gutter="16">
+                <el-col v-for="(shopItem,i) in item.shop" :span="8" :key="i">
+                  <el-button 
+                    :disabled="!shopItem.canOP"
+                    class="shop"
+                    @click="handleShopClick(shopItem.id)"
+                    >
+                    {{shopItem.name}}
+                  </el-button>
+                </el-col>
+              </el-row>
+              
+            </div>
+          </el-collapse-item>
+
+          
+        </el-collapse>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        
+      </span>
+    </el-dialog>
+    <!-- 協議 -->
+    <el-dialog
+      title="协议标题"
+      :visible.sync="modalStore.objRpsProtocol"
+      width="600px"
+      custom-class="one_agreement"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      :center="true"
+      :modal="false"
+      >
+      <!-- 協議内容 -->
+      <TextAgreement />
+      
+      <span slot="footer" class="dialog-footer">
+        <p class="agree">
+          <el-checkbox v-model="protocol">我已阅读并理解，接受以上协议条款内容</el-checkbox>
+        </p>
+        <el-button 
+          type="info" 
+          @click="handleAgreement()" 
+          :disabled="disabledAgreeBtn"
+          >
+          确 定
+          <span v-if="agreeTimeLeft">（{{agreeTimeLeft}}）</span>
+        </el-button>
+      </span>
+      <p class="kefu">
+        <span class="kefu_phone">客服：400-618-7238</span>
+        <span class="kefu_copy">2018 &copy;深圳易马达科技有限公司版权所有</span>
+      </p>
+    </el-dialog>
+    <!-- 登陸 -->
     <el-dialog :visible.sync="modalStore.needLogin" :width="width" :custom-class="customClass" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false" :center="true" :modal="false" :top="top">
       <img class="login_logo" src="../assets/e_logo.png" alt="immotor" width="58" />
       <h2 class="project_name">代理商管理后台</h2>
@@ -47,12 +125,14 @@
 該網站可能暫時無法使用或太過忙碌，請過幾分鐘後再試試。
 若無法載入任何網站，請檢查您的網路連線狀態。
 若電腦或網路被防火牆或 Proxy 保護，請確定 Firefox 被允許存取網路。 -->
+    
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex';
 import Trianglify from 'trianglify';
+import TextAgreement from './TextAgreement.vue';
 
 
 //5次则需要验证码
@@ -65,6 +145,11 @@ export default {
   name:'LayoutLogin',
   data() {
     return {
+      activeNames:[0,1],
+      shopList:[],
+      agreeTimeLeft:5,
+      protocol:false,
+      type:0, //1-总代，2-普通代理 ，3-网点
       width:'380px',
       customClass:'onelogin',
       top:'10vh',
@@ -99,17 +184,61 @@ export default {
         bNeedVcode=true;
       }
       return (bNeedVcode);
+    },
+    disabledAgreeBtn:function(){
+      return !(!this.agreeTimeLeft && this.protocol);
     }
   },
   watch:{
+    'modalStore.needLogin':function(val){
+      if(!val){
+        //不需要登錄（隱藏了模態）
+        this.agreeTimeLeft=5;
+        this.countAgreementTime();
+      }else{
+        //需要登錄
+        window.sessionStorage.removeItem('headerid');
+      }
+    },
     need_vcode:function(val){
       //首次更新验证码
       if(val){
         this.updateVimg();
       }
+    },
+    $route:function(to){
+      // 对路由变化作出响应...
+      // console.log(to.path); // /general
+      //如果不只有一個網點
+      if(!window.sessionStorage.totalshopisonly){
+        this.handleGeneral(to.path);
+      }
+    },
+    'modalStore.needFetchD':function(val){
+      if(val){
+        this.$store.commit('showShop');
+        this.fetchDescendant();
+      }
     }
   },
+  components:{
+    TextAgreement
+  },
   methods:{
+    handleGeneral:function(path){
+      path=path || this.$route.path;
+      //是general則存貯，否則刪除
+      if(/general/i.test(path)){
+        window.sessionStorage.setItem('isgeneral',1);
+        this.$store.commit('hideShop');
+      }else{
+        window.sessionStorage.removeItem('isgeneral');
+        if(!window.sessionStorage.headerid){
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+        }
+      }
+    },
     //登录接口=> /user/login
     loginSend:function(refName){
       var vueThis=this;
@@ -162,10 +291,124 @@ export default {
         window.localStorage.setItem('sendLoginCount',''+this.sendLoginCount);
       }
     },
+    //處理objRps
     handleSuccess:function(objRps){
+      objRps={
+        'code': 1000,
+        'msg': '',
+        'result': {
+          'batteryAmount': 100,  //电池单价,充值和退款时计算金额
+          'groupType':0, //群组类型 默认0 不可退，1可退，2全部
+          'phone': '15820480937',
+          'name': 'chao',  //代理商姓名
+          'id': 2,  //代理商id
+          'protocol': 0 ,// 是否同意协议 0 否 1是
+          'type': 2, //1-总代，2-普通代理 ，3-网点
+          //門店管理系統菜單
+          'agent_menus':[
+            {
+              'id': 'xxx',//id
+              'icon':'heartjoy',//小图标名称
+              'name': '首页',//名称
+              'badge':'beta',
+              'url': '/',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartgroup',//小图标名称
+              'name': '用户中心',//名称
+              'badge':'',
+              'url': '',//url为空则为一个模块
+              'menus': [
+                {
+                  'menuId': 'xxx',//菜单ID
+                  'menuName': '用户查询',//菜单名称
+                  'url': '/searchuser'//页面路径
+                },
+                {
+                  'menuId': 'xxx',
+                  'menuName': '群组管理',
+                  'url': '/group'
+                }
+              ]
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartdeposit',//小图标名称
+              'name': '押金管理',//名称
+              'badge':'',
+              'url': '/deposit',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartcombo',//小图标名称
+              'name': '套餐管理',//名称
+              'badge':'',
+              'url': '/combo',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartbigamount',//小图标名称
+              'name': '大额充值',//名称
+              'badge':'',
+              'url': '/bigamount',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartxls',//小图标名称
+              'name': '报表管理',//名称
+              'badge':'',
+              'url': '/xls',//url为空则为一个模块
+              'menus': []
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartevs',//小图标名称
+              'name': '中控管理',//名称
+              'badge':'',
+              'url': '',//url为空则为一个模块
+              'menus': [
+                {
+                  'menuId': 'xxx',//菜单ID
+                  'menuName': '中控列表',//菜单名称
+                  'url': '/evs/1'//页面路径
+                },
+                {
+                  'menuId': 'xxx',
+                  'menuName': '中控分布',
+                  'url': '/evallgeographic'
+                }
+              ]
+            },
+            {
+              'id': 'xxx',//id
+              'icon':'heartsyssetting',//小图标名称
+              'name': '系统设置',//名称
+              'badge':'',
+              'url': '/sys',//url为空则为一个模块
+              'menus': []
+            }
+
+
+
+          ]
+        }
+      };
+      // 存貯門店菜單
+      var objAgentMenus=objRps.result.agent_menus;
+      window.localStorage.setItem('agent_menus',JSON.stringify(objAgentMenus));
+      this.$store.commit('setAgentMenus',objAgentMenus);
+      
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
       this.$store.commit('hideLogin');
+      //設置是否需要同意協議
+      window.localStorage.setItem('objrpsprotocol',objRps.result.protocol);
+      
 
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
       this.formLogin.password='';
@@ -173,6 +416,16 @@ export default {
       this.vImg='';
       this.sendLoginCount=0;
       window.localStorage.removeItem('sendLoginCount');
+
+      //總代？
+      this.type=+objRps.result.type;
+      //1:非总代(子代)在身份验证通过之后，出现【选择网点】窗口,2:協議已經同意
+      if(this.type!==1 && +objRps.result.protocol){
+        //顯示網點列表
+        this.$store.commit('showShop');
+        this.fetchDescendant();
+      }
+
       // this.$refs['formLogin'].clearValidate();
 
       //电池单价
@@ -195,7 +448,7 @@ export default {
     },
     drawTri:function(){
       //2560*1600 3840*2400
-      var trianglify,elesTri,eleParent;
+      var trianglify,elesTri,eleParents;
       elesTri=document.querySelectorAll('.need_login .el-dialog__wrapper svg'); //[]
       if(elesTri.length){
         //已經存在svg
@@ -210,20 +463,220 @@ export default {
         width:window.innerWidth,
         height:window.innerHeight
       });
-      eleParent=document.querySelector('.need_login .el-dialog__wrapper');
-      eleParent.appendChild(trianglify.svg());
+      eleParents=document.querySelectorAll('.need_login .el-dialog__wrapper');
+      for(var i=0;i<eleParents.length;i++){
+        eleParents[i].appendChild(trianglify.svg());
+      }
     },
     handleResize:function(){
       var vueThis=this;
       window.addEventListener('resize',_.debounce(function(){
         vueThis.drawTri();
       },330));
+    },
+    countAgreementTime:function(){
+      var vueThis=this;
+      var Timer=window.setInterval(function(){
+        if(vueThis.agreeTimeLeft>0){
+          vueThis.agreeTimeLeft--;
+        }else{
+          window.clearInterval(Timer);
+        }
+      },1e3);
+    },
+    //同意協議
+    handleAgreement:function(){
+      var vueThis=this;
+      var sendData={
+        id:window.localStorage.agentid,
+        protocol:1
+      };
+      //setProtocol
+      vueThis.$rqs(vueThis.$yApi.THILINA,function(){
+        vueThis.$store.commit('hideAgreement');
+        window.localStorage.setItem('objrpsprotocol',1);
+        vueThis.agreeTimeLeft=5;
+        vueThis.protocol=false;
+
+        //总代应进入【代理工作台】
+        if(vueThis.type===1){
+          vueThis.$router.push({
+            path:'/general'
+          });
+        }else{
+          //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择网点】窗口
+          vueThis.$store.commit('showShop');
+          vueThis.fetchDescendant();
+        }
+      },{
+        objSendData:sendData
+      });
+    },
+    // 獲取門店
+    fetchDescendant:function(){
+      var vueThis=this;
+      var sendData={
+        type:2  //后代类型 1-代理商 2-网点 默认为1
+      };
+      //getDescendant
+      vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
+        objRps={
+          'code': 1000,
+          'result': {
+            'total': 10, 
+            'list': [
+              {
+                'id':1, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':2, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':3, //ID
+                'phone':'15019001400', //手机号码
+                'name':'neroneroneroneronero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':4, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':0//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':5, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'aaa234',//父级代理名称
+                'agentId':234,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              },
+              {
+                'id':6, //ID
+                'phone':'15019001400', //手机号码
+                'name':'nero', //名称
+                'agentName':'ggg1',//父级代理名称
+                'agentId':1,//父级代理商ID
+                'canOP':1//是否可操作，0-不可操作 1-可操作
+              }
+            ]
+            // [
+            //   {
+            //     'agentName':'aaa',//父级代理名称
+            //     'agentId':234,//父级代理商ID
+            //     shop:[
+            //       {
+            //         'id':123, //ID
+            //         'phone':'15019001400', //手机号码
+            //         'name':'nero', //名称
+            //         'canOP':1//是否可操作，0-不可操作 1-可操作
+            //       },
+            //       {
+            //         id:2,
+            //         'phone':'222',
+            //         'name':'nero222', //名称
+            //         'canOP':1
+            //       },
+            //     ]
+            //   },
+            //   {
+            //     'agentName':'hhh',//父级代理名称
+            //     'agentId':6,//父级代理商ID
+            //     shop:[
+            //       {
+            //         id:123,
+            //         'phone':'15019001400',
+            //         'name':'nero', //名称
+            //         'canOP':1
+            //       },
+            //       {
+            //         id:2,
+            //         'phone':'222',
+            //         'name':'nero222', //名称
+            //         'canOP':1
+            //       },
+            //     ]
+            //   }
+            // ]
+          }
+        };
+
+        var changeData=[];
+        for(var i=0;i<objRps.result.list.length;i++){
+          var v=objRps.result.list[i];
+          var parentInChangeData=changeData.find(function(vv){
+            return (vv.agentId===v.agentId);
+          });
+          if(parentInChangeData){
+            //需要合并
+            parentInChangeData.shop.push({
+              id:v.id,
+              'phone':v.phone,
+              'name':v.name, //名称
+              'canOP':v.canOP
+            });
+          }else{
+            //直接push
+            changeData.push({
+              'agentName':v.agentName,//父级代理名称
+              'agentId':v.agentId,//父级代理商ID
+              shop:[
+                {
+                  id:v.id,
+                  'phone':v.phone,
+                  'name':v.name, //名称
+                  'canOP':v.canOP
+                }
+              ]
+            });
+          }
+        } //for
+        vueThis.shopList=changeData;
+        console.log('shop list');
+        if(+objRps.result.total===1){
+          // 只有一个网点，则直接进入网点，不需要选择网点,隱藏切換網點
+          window.sessionStorage.setItem('totalshopisonly',1);
+          vueThis.$store.commit('hideShop');
+          vueThis.$store.commit('clearChangeShop');
+          window.sessionStorage.setItem('headerid',changeData[0].shop[0].id);
+        }else{
+          window.sessionStorage.removeItem('totalshopisonly');
+          vueThis.$store.commit('setChangeShop');
+        } 
+      },{
+        objSendData:sendData
+      });
+    },
+    handleShopClick:function(id){
+      this.$store.commit('hideShop');
+      window.sessionStorage.setItem('headerid',id);
+      window.location.reload(false);
     }
   }, //methods
   created:function(){
     if(this.need_vcode){
       this.updateVimg();
     }
+    //創建時如果顯示了協議并且已經登錄:countdown
+    if(this.modalStore.objRpsProtocol && !this.modalStore.needLogin){
+      this.countAgreementTime();
+    }
+    // console.log(this.$route.path);  //general
+    this.handleGeneral();
   },
   mounted:function(){
     //just once
@@ -287,6 +740,21 @@ export default {
   .v_img{
     cursor: pointer;
     min-width: 50px;
+  }
+  .agree{
+    text-align: left;
+    padding-left: 5px;
+  }
+  .shop{
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  .one_shop{
+    max-height: 500px;
+    overflow: auto;
+  }
+  .shop_wrap{
+    padding-right: 20px;
   }
   @media screen and (min-height:800px){
     .kefu{

@@ -7,7 +7,7 @@
       :default-openeds="arrOpeneds"
       >
 
-      <el-menu-item index="1">
+      <el-menu-item index="1" v-if="showMenu('heartjo__y')">
         <i class="icon_menu heartjoy">icon_menu</i>
         <span slot="title">
           首页
@@ -89,6 +89,8 @@ var arrRouteName=[
   'HeartEVallGeographic'
 ];
 
+import {mapState} from 'vuex';
+
 export default {
   name:'LayoutNavMaster',
   data:function(){
@@ -161,6 +163,7 @@ export default {
     });
   },
   computed:{
+    ...mapState(['agent']),
     arrOpeneds:function(){
       var arrOpeneds=[];
       // console.log(this.isActive);
@@ -178,6 +181,11 @@ export default {
     }
   },
   methods:{
+    showMenu:function(strHeartIcon){
+      return (this.agent.agentMenus.some(function(v){
+        return (v.icon===strHeartIcon);
+      }));
+    },
     handleSelect:function(index){
       // console.log(index);
       this.$router.push({

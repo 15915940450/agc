@@ -23,6 +23,16 @@
             <el-dropdown-item></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
+        <!-- 切换网点 -->
+        <el-button 
+          v-if="modalStore.showChangeShop"
+          class="change_shop" 
+          type="text" 
+          size="medium"
+          @click="handleChangeShop()"
+          >
+          切换网点
+        </el-button>
       </el-col>
     </el-row>
 
@@ -35,10 +45,14 @@ import {mapState} from 'vuex';
 
 export default {
   name:'LayoutTopBar',
-  computed:{
-    ...mapState(['agent'])
+  data:function(){
+    return ({
+    });
   },
-  methods: {
+  computed:{
+    ...mapState(['agent','modalStore'])
+  },
+  methods:{
     logout:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userLogout,function(){
@@ -50,8 +64,13 @@ export default {
       this.$router.push({
         path:'/sys'
       });
+    },
+    handleChangeShop:function(){
+      this.$store.commit('setNeedFetchD');
     }
-  } //methods
+  }, //methods
+  created:function(){
+  }
 };
 </script>
 
@@ -89,11 +108,17 @@ export default {
   }
   .topbar_right_wrap .el-dropdown{
     float: right;
+    cursor: pointer;
   }
   .topbar_user{
     min-width: 66px;
     display: block;
     font-size: 13px;
   }
-  
+  .change_shop{
+    color:blueviolet;
+    float: right;
+    margin-right: 30px;
+    margin-top: 13px;
+  }
 </style>
