@@ -21,10 +21,10 @@
           <span>用户中心</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="9">
+          <el-menu-item index="9" v-if="showSubMenu('用户查询')">
             <small class="sec">用户查询</small>
           </el-menu-item>
-          <el-menu-item index="2">
+          <el-menu-item index="2" v-if="showSubMenu('群组管理')">
             <small class="sec">群组管理</small>
           </el-menu-item>
         </el-menu-item-group>
@@ -55,10 +55,10 @@
           <span>中控管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="7">
+          <el-menu-item index="7" v-if="showSubMenu('中控列表')">
             <small class="sec">中控列表</small>
           </el-menu-item>
-          <el-menu-item index="10">
+          <el-menu-item index="10" v-if="showSubMenu('中控分布')">
             <small class="sec">中控分布</small>
           </el-menu-item>
         </el-menu-item-group>
@@ -184,6 +184,16 @@ export default {
     showMenu:function(strHeartIcon){
       return (this.agent.agentMenus.some(function(v){
         return (v.icon===strHeartIcon);
+      }));
+    },
+    showSubMenu:function(strSubMenu){
+      return (this.agent.agentMenus.some(function(v){
+        if(!v.menus.length){
+          return false;
+        }
+        return (v.menus.some(function(vv){
+          return (vv.menuName===strSubMenu);
+        }));
       }));
     },
     handleSelect:function(index){
