@@ -281,6 +281,7 @@ export default {
     
     //處理objRps
     handleSuccess:function(objRps){
+      /*
       objRps={
         'code': 1000,
         'msg': '',
@@ -386,6 +387,7 @@ export default {
           ]
         }
       };
+      */
       
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
@@ -487,7 +489,7 @@ export default {
         protocol:1
       };
       //setProtocol
-      vueThis.$rqs(vueThis.$yApi.THILINA,function(){
+      vueThis.$rqs(vueThis.$yApi.setProtocol,function(){
         vueThis.$store.commit('hideAgreement');
         window.localStorage.setItem('objrpsprotocol',1);
         vueThis.agreeTimeLeft=5;
@@ -515,7 +517,8 @@ export default {
         type:2  //后代类型 1-代理商 2-门店 默认为1
       };
       //getDescendant
-      vueThis.$rqs(vueThis.$yApi.THILINA,function(objRps){
+      vueThis.$rqs(vueThis.$yApi.getDescendant,function(objRps){
+        /*
         objRps={
           'code': 1000,
           'result': {
@@ -610,6 +613,7 @@ export default {
             // ]
           }
         };
+        */
 
         var changeData=[];
         for(var i=0;i<objRps.result.list.length;i++){
