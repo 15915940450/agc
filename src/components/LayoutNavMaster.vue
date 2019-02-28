@@ -7,7 +7,7 @@
       :default-openeds="arrOpeneds"
       >
 
-      <el-menu-item index="1" v-if="showMenu('heartjo__y')">
+      <el-menu-item index="1" v-if="showMenu('heartjoy')">
         <i class="icon_menu heartjoy">icon_menu</i>
         <span slot="title">
           首页
@@ -15,7 +15,7 @@
         </span>
       </el-menu-item>
 
-      <el-submenu index="100">
+      <el-submenu index="100" v-if="showMenu('heartgroup')">
         <template slot="title">
           <i class="icon_menu heartgroup">icon_menu</i>
           <span>用户中心</span>
@@ -32,24 +32,24 @@
 
       
 
-      <el-menu-item index="3">
+      <el-menu-item index="3" v-if="showMenu('heartdeposit')">
         <i class="icon_menu heartdeposit">icon_menu</i>
         <span slot="title">押金管理</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="4" v-if="showMenu('heartcombo')">
         <i class="icon_menu heartcombo">icon_menu</i>
         <span slot="title">套餐管理</span>
       </el-menu-item>
-      <el-menu-item index="5">
+      <el-menu-item index="5" v-if="showMenu('heartbigamount')">
         <i class="icon_menu heartbigamount">icon_menu</i>
         <span slot="title">大额充值</span>
       </el-menu-item>
-      <el-menu-item index="6">
+      <el-menu-item index="6" v-if="showMenu('heartxls')">
         <i class="icon_menu heartxls">icon_menu</i>
         <span slot="title">报表管理</span>
       </el-menu-item>
 
-      <el-submenu index="200">
+      <el-submenu index="200" v-if="showMenu('heartevs')">
         <template slot="title">
           <i class="icon_menu heartevs">icon_menu</i>
           <span>中控管理</span>
@@ -65,7 +65,7 @@
       </el-submenu>
 
 
-      <el-menu-item index="8">
+      <el-menu-item index="8" v-if="showMenu('heartsyssetting')">
         <i class="icon_menu heartsyssetting">icon_menu</i>
         <span slot="title">系统设置</span>
       </el-menu-item>
