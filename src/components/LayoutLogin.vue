@@ -305,7 +305,7 @@ export default {
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
           'protocol': 1 ,// 是否同意协议 0 否 1是
-          'type': 2, //1-总代，2-普通代理 ，3-网点
+          'type': 3, //1-总代，2-普通代理 ，3-网点
           //門店管理系統菜單
           'agent_menus':[
             {
@@ -481,24 +481,16 @@ export default {
 
       //總代？
       this.type=+objRps.result.type;
-      // 協議已經同意
-      if(+objRps.result.protocol){
-        if(this.type===1){
-          //總代
-        }else{
-          //顯示網點列表
-          this.$store.commit('showShop');
-          this.fetchDescendant();
-        }
+      if(this.type===1){
+        //總代
+        this.$store.commit('hideShop');
+        this.$router.push({
+          path:'/general'
+        });
       }else{
-        // 協議沒有同意
-        if(this.type===1){
-          //總代
-        }else{
-          //顯示網點列表
-          this.$store.commit('showShop');
-          this.fetchDescendant();
-        }
+        //顯示網點列表
+        this.$store.commit('showShop');
+        this.fetchDescendant();
       }
     },
     //同意協議
