@@ -170,17 +170,17 @@ export default new Router({
       path:'/general',
       component:General,
       children:[{
-				path:'/:pn',
+				path:'/general/:pn',
 				name:'HeartSubAgent',
 				component: HeartSubAgent,
 			},
 			{
-				path:'/access/:agentId',
+				path:'/general/access/:agentId',
 				name:'HeartAgentAccess',
 				component:HeartAgentAccess
 			}
 			,{
-				path:'/stores/:pn',
+				path:'/general/stores/:pn',
 				name:'HeartStores',
 				component: HeartStores
 			}]

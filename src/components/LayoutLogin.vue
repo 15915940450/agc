@@ -473,7 +473,7 @@ export default {
         //總代
         this.$store.commit('hideShop');
         this.$router.push({
-          path:'/general'
+          path:'/general/1'
         });
       }else{
         //顯示網點列表

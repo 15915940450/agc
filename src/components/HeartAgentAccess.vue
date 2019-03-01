@@ -48,8 +48,6 @@ export default {
         children: "children",
         label: "label"
       },
-      //测试数据 id+1
-      index: 0
     };
   },
   methods: {
@@ -80,7 +78,6 @@ export default {
       checkedLeaf.forEach(function(element) {
         vueThis.checkedAccessList.push(element.id);
       });
-      console.log(vueThis.checkedAccessList);
       vueThis.saveDisable = false;
     },
     setupTreeViewData: function(data) {
@@ -89,8 +86,7 @@ export default {
       data.forEach(function(element) {
         var elData = [];
         elData.label = element.name;
-        elData.id = element.id + vueThis.index;
-        vueThis.index++;
+        elData.id = element.id;
         if (element.menus && element.menus.length > 0) {
           elData.children = vueThis.setupTreeViewData(element.menus);
         } else if (element.ops && element.ops.length > 0) {
@@ -118,8 +114,8 @@ export default {
           vueThis.accessTreeData = vueThis.setupTreeViewData(
             objRps.result.list
           );
-          vueThis.check;
           console.log(vueThis.accessTreeData);
+					console.log(vueThis.opsList);
         }, {
           objSendData: sendData
         }

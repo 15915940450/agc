@@ -26,13 +26,13 @@ export default {
           id: 1,
           name: "代理商管理",
           theClass: "HeartSubAgent",
-          link: "/1"
+          link: "/general/1"
         },
         {
           id: 2,
           name: "门店管理",
           theClass: "HeartStores",
-          link: "/stores/1"
+          link: "/general/stores/1"
         }
       ]
     };

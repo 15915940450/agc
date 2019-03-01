@@ -90,7 +90,7 @@
 			accessMangerAction: function(scope) {
 				console.log(scope.row.id);
 				this.$router.push({
-					path: "/access/" + scope.row.id
+					path: "/general/access/" + scope.row.id
 				});
 			},
 			imSearch: _.debounce(function() {
