@@ -114,6 +114,10 @@
 				this.selectStoresId = scope.row.id + "";
 				this.$store.commit("showSetStoresAgent");
 			},
+			imSearch: _.debounce(function() {
+				this.isNotSearch = false;
+				this.fetchData();
+			}, 690),
 			fetchData: function() {
 				var vueThis = this;
 				vueThis.loadingStores = true;
