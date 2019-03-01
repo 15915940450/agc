@@ -157,9 +157,9 @@ export default function(urlMethod,success,paramSettings){
   if(urlMethod.indexOf('/user/batchSet')!==-1){
     isUserBatchSet=true;
   }
-  if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone && !isUserBatchSet){
-    settings.objSendData.phone=window.localStorage.agentphone;
-  }
+//   if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone && !isUserBatchSet){
+//     settings.objSendData.phone=window.localStorage.agentphone;
+//   }
   if(method==='GET'){
     url=url+'?now='+(new Date().getTime())+'&'+_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';

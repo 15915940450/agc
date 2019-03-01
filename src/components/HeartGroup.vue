@@ -115,7 +115,8 @@ export default {
       group:[],
       msg:'群组设置成功',
       groupSetItem:null,
-      loadingGroupList:true
+      loadingGroupList:true,
+			pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
   computed:{
