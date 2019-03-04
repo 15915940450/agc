@@ -99,6 +99,12 @@
 				if (!val) {
 					this.fetchData();
 				}
+			},
+			//修改门店代理成功刷新下列表
+			"modalStore.baseStatus": function(val){
+				if(val){
+					this.fetchData();
+				}
 			}
 		},
 		methods: {
@@ -109,6 +115,9 @@
 			storesMangerAction: function(scope) {
 				window.sessionStorage.setItem('headerid', scope.row.id);
 				this.$router.push("/");
+				if(this.storesList.length > 1){
+					this.$store.commit("setChangeShop");
+				}
 			},
 			modifyAgentAction: function(scope) {
 				this.selectStoresId = scope.row.id + "";

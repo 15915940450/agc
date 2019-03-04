@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       agentId: "",
-      msg: "修改代理商权限成功",
+      msg: "修改权限成功",
       saveDisable: true,
       loadingAccess: true,
       //是否选中了全部

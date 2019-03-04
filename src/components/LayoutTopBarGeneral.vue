@@ -15,9 +15,6 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <a @click="toSys()" class="topbar_user">设置</a>
-            </el-dropdown-item>
-            <el-dropdown-item>
               <a @click="logout()" class="topbar_user">退出</a>
             </el-dropdown-item>
             <el-dropdown-item></el-dropdown-item>
@@ -45,12 +42,6 @@ export default {
         vueThis.$store.commit("showLogin");
       });
     },
-    toSys: function() {
-      // 编程式导航
-      this.$router.push({
-        path: "/sys"
-      });
-    }
   } //methods
 };
 </script>
