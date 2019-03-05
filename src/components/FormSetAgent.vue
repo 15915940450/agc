@@ -1,33 +1,13 @@
 <template>
-  <el-dialog
-    title="请选择管理网点的代理"
-    :visible.sync="modalStore.setStoresAgent"
-    :width="dialogWidth"
-    :show-close="false"
-    :close-on-click-modal="false"
-  >
+  <el-dialog title="请选择管理网点的代理" :visible.sync="modalStore.setStoresAgent" :width="dialogWidth" :show-close="false" :close-on-click-modal="false">
     <el-form>
       <el-form-item label="代理名称" :label-width="formLabelWidth">
-        <el-select
-          class="selectWidth"
-          v-model="agentId"
-          placeholder="请输入代理商名称的关键字"
-          @change="selectChanged"
-          filterable
-          clearable
-        >
+        <el-select class="selectWidth" v-model="agentId" placeholder="请输入代理商名称的关键字" @change="selectChanged" filterable clearable>
           <el-option v-for="item in agentList" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
     </el-form>
-    <el-dialog
-      :width="dialogWidth"
-      :show-close="false"
-      :close-on-click-modal="false"
-      title="提示"
-      :visible.sync="innerVisible"
-      append-to-body
-    >
+    <el-dialog :width="dialogWidth" :show-close="false" :close-on-click-modal="false" title="提示" :visible.sync="innerVisible" append-to-body>
       <span>确定修改吗？</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="cancelAction">取消</el-button>
@@ -40,7 +20,6 @@
     </div>
   </el-dialog>
 </template>
-
 <script>
 import { mapState } from "vuex";
 
@@ -48,7 +27,7 @@ export default {
   name: "FormSetAgent",
   props: {
     storesId: String,
-	storeAgentId: String,
+    storeAgentId: String,
   },
   data() {
     return {
@@ -64,11 +43,11 @@ export default {
     ...mapState(["modalStore"])
   },
   watch: {
-  	"modalStore.setStoresAgent": function(val) {
-  		if (val) {
-  			this.fetchData();
-  		}
-  	}
+    "modalStore.setStoresAgent": function(val) {
+      if (val) {
+        this.fetchData();
+      }
+    }
   },
   methods: {
     fetchData: function() {
@@ -77,7 +56,7 @@ export default {
       //判断search参数，如果为手机号，设置为phone参数，其它为name参数
       var sendData = {
         type: 1,
-		selfContained: 1,
+        selfContained: 1,
         pageNum: 1,
         pageSize: 10000
       };
@@ -85,14 +64,13 @@ export default {
         vueThis.$yApi.subAgentStoresList,
         function(objRps) {
           vueThis.agentList = objRps.result.list;
-		  vueThis.agentList.forEach(function(element, index, arr) {
-			  if(element.id == vueThis.storeAgentId){
-				  arr.splice(index, 1);
-				  return;
-			  }
-		  });
-        },
-        {
+          vueThis.agentList.forEach(function(element, index, arr) {
+            if (element.id == vueThis.storeAgentId) {
+              arr.splice(index, 1);
+              return;
+            }
+          });
+        }, {
           objSendData: sendData
         }
       );
@@ -112,8 +90,7 @@ export default {
           reqUrl,
           function(objRps) {
             vueThis.$store.commit("showBaseStatus");
-          },
-          {
+          }, {
             objSendData: sendData
           }
         );
@@ -154,10 +131,11 @@ export default {
     this.fetchData();
   }
 };
-</script>
 
+</script>
 <style>
 .selectWidth {
   width: 210px;
 }
+
 </style>
