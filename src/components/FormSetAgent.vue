@@ -47,7 +47,8 @@ import { mapState } from "vuex";
 export default {
   name: "FormSetAgent",
   props: {
-    storesId: String
+    storesId: String,
+	storeAgentId: String,
   },
   data() {
     return {
@@ -62,6 +63,13 @@ export default {
   computed: {
     ...mapState(["modalStore"])
   },
+  watch: {
+  	"modalStore.setStoresAgent": function(val) {
+  		if (val) {
+  			this.fetchData();
+  		}
+  	}
+  },
   methods: {
     fetchData: function() {
       var vueThis = this;
@@ -69,6 +77,7 @@ export default {
       //判断search参数，如果为手机号，设置为phone参数，其它为name参数
       var sendData = {
         type: 1,
+		selfContained: 1,
         pageNum: 1,
         pageSize: 10000
       };
@@ -76,6 +85,12 @@ export default {
         vueThis.$yApi.subAgentStoresList,
         function(objRps) {
           vueThis.agentList = objRps.result.list;
+		  vueThis.agentList.forEach(function(element, index, arr) {
+			  if(element.id == vueThis.storeAgentId){
+				  arr.splice(index, 1);
+				  return;
+			  }
+		  });
         },
         {
           objSendData: sendData
@@ -87,9 +102,8 @@ export default {
       var agentId = vueThis.agentId + "";
       if (agentId.length > 0) {
         var sendData = {
-          parentId: agentId
+          parentId: agentId,
         };
-        console.log(sendData);
         var reqUrl = vueThis.stringFormat(
           vueThis.$yApi.updateAgentStores,
           vueThis.storesId
@@ -97,7 +111,6 @@ export default {
         vueThis.$rqs(
           reqUrl,
           function(objRps) {
-            console.log(objRps);
             vueThis.$store.commit("showBaseStatus");
           },
           {

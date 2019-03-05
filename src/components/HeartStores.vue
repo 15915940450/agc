@@ -58,7 +58,7 @@
 				<p class="im_empty_p">您还没有门店哦！</p>
 			</div>
 		</div>
-		<FormSetAgent :storesId="selectStoresId" />
+		<FormSetAgent :storesId="selectStoresId" :storeAgentId="selectStoreAgentId"/>
 		<BaseStatus :msg="msg" />
 	</div>
 </template>
@@ -84,6 +84,7 @@
 				loadingStores: false,
 				msg: "修改门店代理成功",
 				selectStoresId: "",
+				selectStoreAgentId: "",
 				pageNum: window.Number(this.$route.params.pn) ?
 					window.Number(this.$route.params.pn) : 1
 			};
@@ -121,6 +122,7 @@
 			},
 			modifyAgentAction: function(scope) {
 				this.selectStoresId = scope.row.id + "";
+				this.selectStoreAgentId = scope.row.agentId + "";
 				this.$store.commit("showSetStoresAgent");
 			},
 			imSearch: _.debounce(function() {
