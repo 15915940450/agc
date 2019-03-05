@@ -110,7 +110,7 @@
 		methods: {
 			handleCurrentChange: function(val) {
 				this.pageNum = val;
-				this.$router.push("/stores/" + val);
+				this.$router.push("/general/stores/" + val);
 			},
 			storesMangerAction: function(scope) {
 				window.sessionStorage.setItem('headerid', scope.row.id);

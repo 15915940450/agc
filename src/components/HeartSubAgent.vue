@@ -85,7 +85,7 @@
 		methods: {
 			handleCurrentChange: function(val) {
 				this.pageNum = val;
-				this.$router.push("/" + val);
+				this.$router.push("/general/" + val);
 			},
 			accessMangerAction: function(scope) {
 				console.log(scope.row.id);
