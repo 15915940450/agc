@@ -170,7 +170,7 @@ export default {
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    'modalStore.needLogin':function(val){
+    'modalStore.needShop':function(val){
       if(!val){
         this.fetchComboList(1);
         this.fetchComboList(2);

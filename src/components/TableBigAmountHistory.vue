@@ -108,7 +108,7 @@ export default {
     }
   },
   watch:{
-    'modalStore.needLogin':function(val){
+    'modalStore.needShop':function(val){
       if(!val){
         this.fetchData();
       }

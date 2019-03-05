@@ -51,7 +51,7 @@ export default {
   },
   watch:{
     // deep watcher
-    'modalStore.needLogin':function(val){
+    'modalStore.needShop':function(val){
       if(!val){
         this.fetchData();
         this.fetchLastAdd();

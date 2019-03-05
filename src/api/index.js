@@ -62,9 +62,9 @@ export default function(urlMethod,success,paramSettings){
   if(method===3){
     method='POSTform';
   }
-	if(method===4){
-		method='PUTjson';
-	}
+  if(method===4){
+    method='PUTjson';
+  }
   success=success || function(objRps){console.log(objRps);};
 
   //=================settings is the target, will be overcover by param
@@ -152,14 +152,7 @@ export default function(urlMethod,success,paramSettings){
   };
 
   var ContentType,data2send='';
-  //批量设置那里 能不能把phone那个入参给去掉
-  var isUserBatchSet=false;
-  if(urlMethod.indexOf('/user/batchSet')!==-1){
-    isUserBatchSet=true;
-  }
-//   if(!settings.isLoginRqs && window.localStorage.agentphone && !settings.objSendData.phone && !isUserBatchSet){
-//     settings.objSendData.phone=window.localStorage.agentphone;
-//   }
+  
   if(method==='GET'){
     url=url+'?now='+(new Date().getTime())+'&'+_.serialize2querystring(settings.objSendData);
     ContentType='application/x-www-form-urlencoded';
@@ -174,13 +167,13 @@ export default function(urlMethod,success,paramSettings){
     data2send=JSON.stringify(settings.objSendData);
     ContentType='application/json';
   }
-	//add by sinclair put json
-	if(method==='PUTjson'){
-		method='PUT';
-		data2send=JSON.stringify(settings.objSendData);
-		ContentType='application/json';
-	}
-	//end
+  //add by sinclair put json
+  if(method==='PUTjson'){
+    method='PUT';
+    data2send=JSON.stringify(settings.objSendData);
+    ContentType='application/json';
+  }
+  //end
 
   xmlhttp.open(method,url,true);
   xmlhttp.setRequestHeader('Content-type',ContentType);

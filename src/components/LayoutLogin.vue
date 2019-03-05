@@ -17,7 +17,7 @@
 
           <el-collapse-item 
             v-for="(item,index) in shopList" 
-            :title="item.agentName" 
+            :title="''+item.agentName" 
             :name="index" 
             :key="index"
             >
@@ -191,7 +191,7 @@ export default {
     }
   },
   watch:{
-    'modalStore.needLogin':function(val){
+    'modalStore.needShop':function(val){
       if(!val){
         //不需要登錄（隱藏了模態）
         this.agreeTimeLeft=5;
@@ -648,11 +648,12 @@ export default {
         vueThis.shopList=changeData;
         console.log('shop list');
         if(+objRps.result.total===1){
+          console.log(changeData[0].shop[0].id);
+          window.sessionStorage.setItem('headerid',changeData[0].shop[0].id);
           // 只有一个门店，则直接进入门店，不需要选择门店,隱藏切換網點
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
           vueThis.$store.commit('clearChangeShop');
-          window.sessionStorage.setItem('headerid',changeData[0].shop[0].id);
         }else{
           window.sessionStorage.removeItem('totalshopisonly');
           vueThis.$store.commit('setChangeShop');
