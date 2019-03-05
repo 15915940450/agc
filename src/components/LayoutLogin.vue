@@ -209,7 +209,6 @@ export default {
     },
     $route:function(to){
       // 对路由变化作出响应...
-      // console.log(to.path); // /general
       //如果不只有一個網點
       if(!window.sessionStorage.totalshopisonly){
         this.handleGeneral(to.path);
@@ -648,7 +647,6 @@ export default {
         vueThis.shopList=changeData;
         console.log('shop list');
         if(+objRps.result.total===1){
-          console.log(changeData[0].shop[0].id);
           window.sessionStorage.setItem('headerid',changeData[0].shop[0].id);
           // 只有一个门店，则直接进入门店，不需要选择门店,隱藏切換網點
           window.sessionStorage.setItem('totalshopisonly',1);
