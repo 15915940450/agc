@@ -180,6 +180,7 @@
               <el-table-column
                 label="#"
                 type="index"
+                :index="indexMethod"
                 width="50">
               </el-table-column>
               <el-table-column
@@ -502,6 +503,9 @@ export default {
     },
     toUserCombo:function(userPhone){
       this.rrPush('/usercombo/'+userPhone+'/1');
+    },
+    indexMethod:function(index){
+      return ((this.pageNum-1)*this.pageSize+index);
     }
   },
   created:function(){
