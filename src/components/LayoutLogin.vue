@@ -514,7 +514,6 @@ export default {
       };
       //getDescendant
       vueThis.$rqs(vueThis.$yApi.getDescendant,function(objRps){
-        objRps.result.list[0].name='全环节零一的门店0001全环节零一的门店0001';
         /*
         objRps={
           'code': 1000,
@@ -650,6 +649,8 @@ export default {
           window.sessionStorage.setItem('totalshopisonly',1);
           vueThis.$store.commit('hideShop');
           vueThis.$store.commit('clearChangeShop');
+          vueThis.$store.commit('setStoreName',changeData[0].shop[0].name);
+          window.sessionStorage.setItem('storeName',changeData[0].shop[0].name);
         }else{
           window.sessionStorage.removeItem('totalshopisonly');
           vueThis.$store.commit('setChangeShop');
