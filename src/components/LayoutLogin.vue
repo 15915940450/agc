@@ -26,7 +26,8 @@
                 <el-col v-for="(shopItem,i) in item.shop" :span="8" :key="i">
                   <el-button 
                     :disabled="!shopItem.canOP"
-                    class="shop"
+                    class="shop overtext"
+                    :title="shopItem.name"
                     @click="handleShopClick(shopItem.id)"
                     >
                     {{shopItem.name}}
@@ -517,6 +518,7 @@ export default {
       };
       //getDescendant
       vueThis.$rqs(vueThis.$yApi.getDescendant,function(objRps){
+        objRps.result.list[0].name='全环节零一的门店0001全环节零一的门店0001';
         /*
         objRps={
           'code': 1000,
@@ -674,8 +676,9 @@ export default {
     //處理選擇網點
     handleShopClick:function(id){
       this.$store.commit('hideShop');
+      this.$store.commit('clearNeedFetchD');
       window.sessionStorage.setItem('headerid',id);
-      window.location.reload(false);
+      // window.location.reload(false);
     },
     handleGeneral:function(path){
       path=path || this.$route.path;

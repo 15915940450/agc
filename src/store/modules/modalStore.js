@@ -31,7 +31,7 @@ var state={
   statusEditPW:false,
   EVin:false,
   newUser:false,
-	setStoresAgent: false,
+  setStoresAgent: false,
 
   changePhoneLogEmpty:false,
   bigAmountHistoryEmpty:false,
@@ -82,7 +82,7 @@ var mutations={
     state.changePhoneLogEmpty=false;
     state.bigAmountHistoryEmpty=false;
     state.comboEmpty=false;
-		state.setStoresAgent=false;
+    state.setStoresAgent=false;
   },
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
@@ -244,14 +244,14 @@ var mutations={
   hideNewUser:function(state){
     state.newUser=false;
   },
-	//add by sinclair 2019/2/25
-	showSetStoresAgent:function(state){
-		state.setStoresAgent = true;
-	},
-	hideSetStoresAgent:function(state){
-		state.setStoresAgent = false;
-	},
-	//end
+  //add by sinclair 2019/2/25
+  showSetStoresAgent:function(state){
+    state.setStoresAgent = true;
+  },
+  hideSetStoresAgent:function(state){
+    state.setStoresAgent = false;
+  },
+  //end
 
   setEmptyChangePhoneLog:function(state){
     state.changePhoneLogEmpty=true;
