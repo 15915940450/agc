@@ -117,6 +117,7 @@ export default {
         scooterSNs:[],
         freeDayInput:0, //輸入框的免費天數值
         groupCode:'',
+        userName:'',
         depositId:'',
         phone:''
       },
