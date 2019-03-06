@@ -20,7 +20,7 @@
             </el-input-number>
           </el-form-item>
           <el-form-item label="充值金额" :label-width="formLabelWidth">
-            <strong class="amount">{{amount.toFixed(2)}}</strong>元
+            <strong class="amount">{{amount}}</strong>元
           </el-form-item>
           <el-form-item label="支付方式" :label-width="formLabelWidth">
             <el-radio-group v-model="formTopUp.payType" size="small">
@@ -68,10 +68,11 @@ export default {
     ...mapState(['modalStore']),
     amount:function(){
       var num=+this.formTopUp.batteryNum;
-      if(num===undefined){
+      if(num===undefined || window.isNaN(num)){
         num=0;
       }
-      return (this.price*num);
+      var objNum=new Number(num*+this.price);
+      return (objNum);
     },
     title:function(){
       return ('每颗虚拟电池充值押金 '+this.price+' 元');
@@ -80,11 +81,12 @@ export default {
       var payurl='javascript:;';
       //validate 是整数
       if(window.Number.isInteger(window.Number(this.formTopUp.batteryNum))){
+        var objNum=new Number(this.amount);
         var objSendData={
           phone:''+window.localStorage.agentphone,
           type:1,
           payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
-          amount:(window.Number(this.amount)).toFixed(2),
+          amount:objNum.toFixed(2),
           batteryNum:window.Number(this.formTopUp.batteryNum),
           status:1
         };
@@ -167,9 +169,10 @@ export default {
     userQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
+        var objNum=+objRps.result.batteryAmount;
+        vueThis.price=objNum.toFixed(2);
       });
-    },
+    }
   },
   created:function(){
     this.userQuery();

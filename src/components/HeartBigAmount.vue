@@ -278,12 +278,13 @@ export default {
   computed:{
     ...mapState(['agent','modalStore']),
     bigAmountAmount:function(){
-      var num=this.bigAmount.batteryNum;
+      var num=+this.bigAmount.batteryNum;
       // console.log(num);
       if(num===undefined || window.isNaN(num)){
         num=0;
       }
-      return (+(+num)*(+this.price)).toFixed(2);
+      var objNum=new Number(num*+this.price);
+      return (objNum.toFixed(2));
     }
   },
   watch:{
@@ -324,7 +325,8 @@ export default {
     userQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
+        var objNum=+objRps.result.batteryAmount;
+        vueThis.price=objNum.toFixed(2);
       });
     },
     fetchCityList:function(){

@@ -25,7 +25,7 @@
           </el-form-item>
 
           <el-form-item label="金额(元)" :label-width="formLabelWidth">
-            <strong class="amount">{{amount.toFixed(2)}}</strong>
+            <strong class="amount">{{amount}}</strong>
           </el-form-item>
 
           <el-form-item label="支付方式" :label-width="formLabelWidth">
@@ -77,22 +77,24 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      var num=this.formComboBuy.number;
-      if(num===undefined){
+      var num=+this.formComboBuy.number;
+      if(num===undefined || window.isNaN(num)){
         num=0;
       }
-      return (window.Number(this.agentPrice) * window.Number(num));
+      var objNum=new Number(num*+this.agentPrice);
+      return (objNum.toFixed(2));
     },
     payurl:function(){
       var payurl='javascript:;';
       
       if(window.Number.isInteger(window.Number(this.formComboBuy.number))){
+        var objNum=new Number(this.amount);
         var objSendData={
           phone:''+window.localStorage.agentphone,
           discountCode:this.discountCode,
           payType:window.Number(this.formComboBuy.payType),  //支付类型 1支付宝，2微信
           number:window.Number(this.formComboBuy.number),
-          amount:(window.Number(this.amount)).toFixed(2),
+          amount:objNum.toFixed(2),
           discountName:this.discount_name,
           from:'comboBuy'
         };

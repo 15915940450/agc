@@ -58,11 +58,12 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      var num=this.formRefund.batteryNum;
-      if(num===undefined){
+      var num=+this.formRefund.batteryNum;
+      if(num===undefined || window.isNaN(num)){
         num=0;
       }
-      return (this.price*num).toFixed(2);
+      var objNum=new Number(num*+this.price);
+      return (objNum.toFixed(2));
     },
     max:function(){
       return Math.floor(this.refundableDeposit/this.price);
@@ -111,7 +112,8 @@ export default {
     userQuery:function(){
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
-        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
+        var objNum=new Number(+objRps.result.batteryAmount);
+        vueThis.price=objNum.toFixed(2);
       });
     }
   },  //methods
