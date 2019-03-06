@@ -59,7 +59,7 @@ export default {
       var vueThis=this;
       vueThis.$rqs(vueThis.$yApi.userLogout,function(){
         vueThis.$store.commit('showLogin');
-        vueThis.$router.push("/");
+        vueThis.$router.push('/');
       });
     },
     toSys:function(){
@@ -119,7 +119,7 @@ export default {
     font-size: 13px;
   }
   .change_shop{
-    color:blueviolet;
+    color:#337ab7;
     float: right;
     margin-right: 30px;
     margin-top: 13px;
