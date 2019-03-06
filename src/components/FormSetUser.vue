@@ -55,6 +55,7 @@
               v-model="formSetUser.freeDayInput"
               :min="0"
               :max="maxFD"
+              @input.native="handleIN"
               >
             </el-input-number>
             <small>(剩余 <strong :class="{red:(computedFreeDays<=0)}">{{computedFreeDays}}</strong> 天)</small>
@@ -272,6 +273,9 @@ export default {
         }
       });
       */
+    },
+    handleIN:function(ev){
+      this.formSetUser.freeDayInput=ev.target.value;
     }
   },  //methods
   created:function(){
