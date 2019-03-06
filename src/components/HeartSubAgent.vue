@@ -93,6 +93,8 @@ export default {
     },
     imSearch: _.debounce(function() {
       this.isNotSearch = false;
+      this.pageNum = 1;
+      this.$router.push("/general/1");
       this.fetchData();
     }, 690),
     fetchData: function() {

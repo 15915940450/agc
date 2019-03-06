@@ -113,6 +113,8 @@ export default {
     },
     storesMangerAction: function(scope) {
       window.sessionStorage.setItem('headerid', scope.row.id);
+      window.sessionStorage.setItem('storeName', scope.row.name);
+      this.$store.commit('setStoreName',scope.row.name);
       this.$router.push("/");
       if (this.storesList.length > 1) {
         this.$store.commit("setChangeShop");
@@ -125,6 +127,8 @@ export default {
     },
     imSearch: _.debounce(function() {
       this.isNotSearch = false;
+      this.pageNum = 1;
+      this.$router.push("/general/stores/1");
       this.fetchData();
     }, 690),
     fetchData: function() {
