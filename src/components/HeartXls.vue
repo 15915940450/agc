@@ -82,7 +82,7 @@ export default {
         if(val){
           var startTime=_.toSlash(val[0],{slash:'-'}).slice(0,10);
           var endTime=_.toSlash(val[1],{slash:'-'}).slice(0,10);
-          this.hrefExport=this.$yApi.exportCombo+'?startTime='+startTime+'&endTime='+endTime;
+          this.hrefExport=this.$yApi.exportCombo+'?startTime='+startTime+'&endTime='+endTime + '&agentId=' + window.sessionStorage.headerid;
         }else{
           this.hrefExport=this.$yApi.exportCombo;
         }
