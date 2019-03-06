@@ -88,6 +88,7 @@ export default {
           payType:window.Number(this.formTopUp.payType),  //支付类型 1支付宝，2微信
           amount:objNum.toFixed(2),
           batteryNum:window.Number(this.formTopUp.batteryNum),
+          agentId:window.sessionStorage.headerid,
           status:1
         };
         //stringify, then encodeURIComponent

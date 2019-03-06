@@ -96,6 +96,7 @@ export default {
           number:window.Number(this.formComboBuy.number),
           amount:objNum.toFixed(2),
           discountName:this.discount_name,
+          agentId:window.sessionStorage.headerid,
           from:'comboBuy'
         };
         //stringify, then encodeURIComponent

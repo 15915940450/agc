@@ -187,6 +187,8 @@
         //手機端
         document.querySelector('.code_wrap-tip').style.display='none';
       }
+      var pay = JSON.parse(window.decodeURIComponent(_.querystringParse().yap));
+      // console.log(pay);
       var rqs=function(urlMethod,success,paramSettings){
         var defaultSettings={
           objSendData:{},
@@ -281,6 +283,7 @@
 
         xmlhttp.open(method,url,true);
         xmlhttp.setRequestHeader('Content-type',ContentType);
+        xmlhttp.setRequestHeader('agentId',pay.agentId);
         xmlhttp.withCredentials=true;
         xmlhttp.send(data2send);
       }
@@ -293,8 +296,7 @@
         HOST=protocol+'//119.23.155.83:8764/agent';
       }
 
-      var pay = JSON.parse(window.decodeURIComponent(_.querystringParse().yap));
-      // console.log(pay);
+      
       var rqsurl;
       if(pay.from==='comboBuy'){
         rqsurl=HOST+'/payPackage/recharge__2';
