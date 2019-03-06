@@ -175,9 +175,6 @@ export default {
     ...mapState(['agent','modalStore'])
   },
   watch:{
-    pageNum:function(){
-      this.fetchData();
-    },
     'modalStore.needShop':function(val){
       if(!val){
         this.fetchData();
@@ -226,6 +223,7 @@ export default {
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/evs/'+val);
+      this.fetchData();
     },
     handleEVoperation:function(scope,type){
       var vueThis=this;
@@ -255,10 +253,14 @@ export default {
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
+      this.pageNum=1;
+      this.$router.push('/evs/'+1);
       this.fetchData();
     },690),
     resetSearch:function(){
       this.search='';
+      this.pageNum=1;
+      this.$router.push('/evs/'+1);
       this.fetchData();
     },
     rrPush:function(ev,childrenPath){
@@ -280,7 +282,7 @@ export default {
       });
     },
     indexMethod:function(index){
-      return ((this.pageNum-1)*this.pageSize+index);
+      return ((this.pageNum-1)*this.$yApi.defaultPS+index+1);
     }
   },
   created:function(){
