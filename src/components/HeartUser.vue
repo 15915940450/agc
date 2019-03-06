@@ -311,7 +311,7 @@ export default {
       ],
       loadingUserList:true,
       pageSize:this.$yApi.defaultPS,
-      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
+      pageNum:1
     });
   },
   computed:{
@@ -326,9 +326,6 @@ export default {
     }
   },
   watch:{
-    pageNum:function(){
-      this.fetchData();
-    },
     pageSize:function(){
       this.fetchData();
     },
@@ -422,8 +419,8 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
-      // console.log(this.$route.params.groupcode);
       this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+val);
+      this.fetchData();
     },
     handleSizeChange:function(val){
       this.pageSize=val;
@@ -495,21 +492,26 @@ export default {
     },
     imSearch:_.debounce(function(){
       this.isNotSearch=false;
+      this.pageNum=1;
+      this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+1);
       this.fetchData();
     },690),
     resetSearch:function(){
       this.search='';
+      this.pageNum=1;
+      this.$router.push('/user/'+this.$route.params.groupcode+'/'+this.$route.params.type+'/'+1);
       this.fetchData();
     },
     toUserCombo:function(userPhone){
       this.rrPush('/usercombo/'+userPhone+'/1');
     },
     indexMethod:function(index){
-      return ((this.pageNum-1)*this.pageSize+index);
+      return ((this.pageNum-1)*this.pageSize+index+1);
     }
   },
   created:function(){
-    // console.log(this.$route.params);
+    // console.log(this.$route.path);
+    this.pageNum=(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1);
     //不是线上交押金（1）
     this.isType2=!(this.$route.params.type==='1');
     //search
