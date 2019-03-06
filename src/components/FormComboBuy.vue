@@ -30,8 +30,8 @@
 
           <el-form-item label="支付方式" :label-width="formLabelWidth">
             <el-radio-group v-model="formComboBuy.payType" size="small">
-              <el-radio label="1" border>支付宝</el-radio>
-              <el-radio label="2" border>微信</el-radio>
+              <el-radio label="1" class="pay_radio" border>支付宝</el-radio>
+              <el-radio label="2" class="pay_radio" border>微信</el-radio>
             </el-radio-group>
           </el-form-item>
 
