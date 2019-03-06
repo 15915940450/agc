@@ -46,7 +46,7 @@
     </el-dialog>
     <!-- 協議 -->
     <el-dialog
-      title="协议标题"
+      title="代理商后台系统使用协议"
       :visible.sync="modalStore.objRpsProtocol"
       width="600px"
       custom-class="one_agreement"
