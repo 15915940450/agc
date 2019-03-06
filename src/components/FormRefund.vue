@@ -45,6 +45,7 @@ export default {
           {type:'integer',message:'请输入一个整数',trigger:'blur'}
         ]
       },
+      price:0,
       formRefund:{
         batteryNum:1
       },
@@ -61,13 +62,13 @@ export default {
       if(num===undefined){
         num=0;
       }
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(num)).toFixed(2);
+      return (this.price*num).toFixed(2);
     },
     max:function(){
-      return Math.floor(this.refundableDeposit/this.modalStore.batteryAmount);
+      return Math.floor(this.refundableDeposit/this.price);
     },
     title:function(){
-      return ('每个虚拟电池退还押金 '+this.modalStore.batteryAmount+' 元');
+      return ('每个虚拟电池退还押金 '+this.price+' 元');
     }
   },
   watch:{
@@ -106,7 +107,16 @@ export default {
     },
     handleIN:function(ev){
       this.formRefund.batteryNum=ev.target.value;
+    },
+    userQuery:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
+      });
     }
+  },  //methods
+  created:function(){
+    this.userQuery();
   }
 };
 </script>

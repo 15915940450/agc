@@ -286,8 +286,6 @@ export default {
         'code': 1000,
         'msg': '',
         'result': {
-          'batteryAmount': 100,  //电池单价,充值和退款时计算金额
-          'groupType':0, //群组类型 默认0 不可退，1可退，2全部
           'phone': '15820480937',
           'name': 'chao',  //代理商姓名
           'id': 2,  //代理商id
@@ -402,8 +400,6 @@ export default {
 
       // this.$refs['formLogin'].clearValidate();
 
-      //电池单价
-      this.$store.commit('setBatteryAmount',objRps.result.batteryAmount);
 
       //设置完整登录用户信息
       window.localStorage.setItem('agentname',objRps.result.name);
@@ -677,7 +673,10 @@ export default {
     handleShopClick:function(shopItem){
       this.$store.commit('hideShop');
       this.$store.commit('clearNeedFetchD');
+      
       this.$store.commit('setStoreName',shopItem.name);
+      window.sessionStorage.setItem('storeName',shopItem.name);
+
       window.sessionStorage.setItem('headerid',shopItem.id);
       // window.location.reload(false);
     },

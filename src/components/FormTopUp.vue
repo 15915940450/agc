@@ -58,6 +58,7 @@ export default {
         batteryNum:1,
         payType:'1'
       },
+      price:0,
       numTimerCheckTrade:969,
 
       formLabelWidth:'80px'
@@ -66,14 +67,14 @@ export default {
   computed:{
     ...mapState(['modalStore']),
     amount:function(){
-      var num=this.formTopUp.batteryNum;
+      var num=+this.formTopUp.batteryNum;
       if(num===undefined){
         num=0;
       }
-      return (window.Number(this.modalStore.batteryAmount) * window.Number(num));
+      return (this.price*num);
     },
     title:function(){
-      return ('每颗虚拟电池充值押金 '+this.modalStore.batteryAmount+' 元');
+      return ('每颗虚拟电池充值押金 '+this.price+' 元');
     },
     payurl:function(){
       var payurl='javascript:;';
@@ -162,10 +163,16 @@ export default {
           vueThis.$store.commit('hideStatusTopUp');
         }
       },900);
-    }
+    },
+    userQuery:function(){
+      var vueThis=this;
+      vueThis.$rqs(vueThis.$yApi.userQuery,function(objRps){
+        vueThis.price=(+objRps.result.batteryAmount).toFixed(2);
+      });
+    },
   },
   created:function(){
-    // console.log(this.payurl);
+    this.userQuery();
   }
 };
 </script>

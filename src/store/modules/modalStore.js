@@ -16,7 +16,6 @@ var state={
   refund:false,
   statusTopUp:false,
   statusRefund:false,
-  batteryAmount:window.localStorage.batteryAmount?window.localStorage.batteryAmount:0,
   groupCreate:false,
   EVbind:false,
   EVunbind:false,
@@ -49,7 +48,6 @@ var mutations={
     window.localStorage.removeItem('agentphone');
     window.localStorage.removeItem('agentname');
     window.localStorage.removeItem('agentid');
-    window.localStorage.removeItem('batteryAmount');
     window.localStorage.removeItem('tradeCheck');
     window.sessionStorage.removeItem('payurl');
     state.needLogin=true;
@@ -155,10 +153,6 @@ var mutations={
   },
   hideStatusRefund:function(state){
     state.statusRefund=false;
-  },
-  setBatteryAmount:function(state,num){
-    window.localStorage.setItem('batteryAmount',num);
-    state.batteryAmount=num;
   },
   showGroupCreate:function(state){
     state.groupCreate=true;
