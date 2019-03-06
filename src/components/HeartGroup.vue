@@ -116,7 +116,7 @@ export default {
       msg:'群组设置成功',
       groupSetItem:null,
       loadingGroupList:true,
-			pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
+      pageNum:1
     });
   },
   computed:{
@@ -153,7 +153,7 @@ export default {
       vueThis.loadingGroupList=true;
       var sendData={
         pageNum:vueThis.pageNum,
-        pageSize:vueThis.$yApi.defaultPS,
+        pageSize:96900,
         advancedParam:JSON.stringify({
           name:vueThis.search
         })
