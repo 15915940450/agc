@@ -524,7 +524,7 @@ export default {
           var sendData={
             userPhone:vueThis.formGetChangePhoneInfo.userPhone,
             phone:vueThis.formGetChangePhoneInfo.phone,
-            authCode:vueThis.changePhone.authCode,
+            authCode:vueThis.changePhone.authCode.trim(),
             agentId:window.localStorage.agentid,
             remark:vueThis.remark
           };

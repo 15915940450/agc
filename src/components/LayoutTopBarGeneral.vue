@@ -40,6 +40,7 @@ export default {
       var vueThis = this;
       vueThis.$rqs(vueThis.$yApi.userLogout, function() {
         vueThis.$store.commit("showLogin");
+        vueThis.$router.push("/");
       });
     },
   } //methods
