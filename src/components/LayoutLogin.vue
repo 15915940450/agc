@@ -28,7 +28,7 @@
                     :disabled="!shopItem.canOP"
                     class="shop overtext"
                     :title="shopItem.name"
-                    @click="handleShopClick(shopItem.id)"
+                    @click="handleShopClick(shopItem)"
                     >
                     {{shopItem.name}}
                   </el-button>
@@ -674,10 +674,11 @@ export default {
       },1e3);
     },
     //處理選擇網點
-    handleShopClick:function(id){
+    handleShopClick:function(shopItem){
       this.$store.commit('hideShop');
       this.$store.commit('clearNeedFetchD');
-      window.sessionStorage.setItem('headerid',id);
+      this.$store.commit('setStoreName',shopItem.name);
+      window.sessionStorage.setItem('headerid',shopItem.id);
       // window.location.reload(false);
     },
     handleGeneral:function(path){

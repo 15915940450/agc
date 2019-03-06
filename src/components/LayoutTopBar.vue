@@ -10,13 +10,15 @@
         <el-dropdown>
           <span class="el-dropdown-link">
             <img class="top_bar-head" src="../assets/default_head.png" width="20" />
-            {{agent.name}}
+            {{agent.storeName}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
+
+            <!-- <el-dropdown-item>
               <a @click="toSys()" class="topbar_user">设置</a>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
+
             <el-dropdown-item>
               <a @click="logout()" class="topbar_user">退出</a>
             </el-dropdown-item>
