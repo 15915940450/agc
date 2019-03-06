@@ -99,9 +99,6 @@ export default {
       if(!val){
         this.fetchData();
       }
-    },
-    pageNum:function(){
-      this.fetchData();
     }
   },
   methods:{
@@ -133,6 +130,7 @@ export default {
     handleCurrentChange:function(val){
       this.pageNum=val;
       this.$router.push('/user/changephonehistory/'+val);
+      this.fetchData();
     }
   },
   created:function(){

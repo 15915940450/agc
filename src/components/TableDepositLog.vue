@@ -122,9 +122,6 @@ export default {
       handler:function(){
         this.fetchData();
       }
-    },
-    pageNum:function(){
-      this.fetchData();
     }
   },
   methods:{
@@ -164,9 +161,11 @@ export default {
       });
     },
     resetSearch:function(){
+      this.pageNum=1;
       this.se=[];
     },
     handleFilterType:function(obj){
+      this.pageNum=1;
       var vueThis=this;
       var sumType=(_.sum(Object.values(obj)[0])); //0,1,2
       if(sumType===1 || sumType===2){
@@ -178,6 +177,7 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
+      this.fetchData();
     }
   },
   created:function(){

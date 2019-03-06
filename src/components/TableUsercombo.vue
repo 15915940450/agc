@@ -126,9 +126,6 @@ export default {
       handler:function(){
         this.fetchData();
       }
-    },
-    pageNum:function(){
-      this.fetchData();
     }
   },
   methods:{
@@ -179,8 +176,10 @@ export default {
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
+      this.fetchData();
     },
     resetSE:function(){
+      this.pageNum=1;
       this.se=[];
     }
   },

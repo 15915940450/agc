@@ -115,9 +115,6 @@ export default {
       handler:function(){
         this.fetchData();
       }
-    },
-    pageNum:function(){
-      this.fetchData();
     }
   },
   methods:{
@@ -162,12 +159,15 @@ export default {
       });
     },
     resetSearch:function(){
+      this.pageNum=1;
       this.se=[];
     },
     handleCurrentChange:function(val){
       this.pageNum=val;
+      this.fetchData();
     },
     imSearch:_.debounce(function(){
+      this.pageNum=1;
       this.fetchData();
     },690)
   },
