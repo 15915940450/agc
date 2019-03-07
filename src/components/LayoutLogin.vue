@@ -386,6 +386,9 @@ export default {
         }
       };
       */
+
+      //存貯代理商類型
+      window.localStorage.setItem('agenttype',objRps.result.type);  //1-总代，2-普通代理 ，3-门店
       
       //设置登录信息,手机号必须
       window.localStorage.setItem('agentphone',objRps.result.phone);
