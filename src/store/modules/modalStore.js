@@ -4,7 +4,8 @@ var state={
   objRpsProtocol:false,
   //false:是總代，不顯示
   needShop:(window.sessionStorage.headerid || window.sessionStorage.totalshopisonly || window.sessionStorage.isgeneral)?false:true,
-
+  //是否需要重新设置agentId
+  needSetAgentId:false, 
   needFetchD:false,
 
   baseStatus:false,
@@ -53,6 +54,7 @@ var mutations={
     state.needLogin=true;
     state.objRpsProtocol=false;
     state.needShop=false,
+    state.needSetAgentId=false,
     state.needFetchD=false,
 
     state.baseStatus=false;
@@ -85,6 +87,12 @@ var mutations={
   hideLogin:function(state){
     //登录成功，在每个组件中设置会话
     state.needLogin=false;
+  },
+  clearNeedSetAgentId:function(){
+    state.needSetAgentId=false;
+  },
+  setNeedSetAgentId:function(){
+    state.needSetAgentId=true;
   },
   clearNeedFetchD:function(){
     state.needFetchD=false;

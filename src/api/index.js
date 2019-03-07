@@ -129,7 +129,9 @@ export default function(urlMethod,success,paramSettings){
             case 1050:  //need login
               store.commit('showLogin');
               break;
-
+            case 1028:
+              store.commit('setNeedSetAgentId');;
+              break;
             case 1000:
               success(objRps);
               break;

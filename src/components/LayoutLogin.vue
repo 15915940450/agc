@@ -220,6 +220,13 @@ export default {
         this.$store.commit('showShop');
         this.fetchDescendant();
       }
+    },
+    'modalStore.needSetAgentId': function(val){
+      if (val) {
+          this.$store.commit('showShop');
+          this.fetchDescendant();
+          this.#store.commit('clearNeedSetAgentId');
+      }
     }
   },
   components:{

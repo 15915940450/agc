@@ -130,9 +130,15 @@ export default {
     }
   },
   created: function() {
-    //初始化搜索
-    this.search = "";
-    this.fetchData();
+    //如果是总代
+    if (window.localStorage.agenttype == 1) {
+      //初始化搜索
+      this.search = "";
+      this.fetchData();
+    } else {
+      this.$router.push("/");
+      this.$store.commit('showLogin');
+    }
   }
 };
 

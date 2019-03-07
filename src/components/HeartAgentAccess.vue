@@ -109,13 +109,10 @@ export default {
       vueThis.$rqs(
         vueThis.$yApi.agentAccessList,
         function(objRps) {
-          console.log(objRps);
           vueThis.loadingAccess = false;
           vueThis.accessTreeData = vueThis.setupTreeViewData(
             objRps.result.list
           );
-          console.log(vueThis.accessTreeData);
-					console.log(vueThis.opsList);
         }, {
           objSendData: sendData
         }
@@ -134,7 +131,6 @@ export default {
       vueThis.$rqs(
         reqUrl,
         function(objRps) {
-          console.log(objRps);
           vueThis.$store.commit("showBaseStatus");
         }, {
           objSendData: sendData
@@ -151,10 +147,17 @@ export default {
       return str;
     }
   },
-  created: function() {
-    this.agentId = this.$route.params.agentId;
-    this.fetchData();
+  created: function(){
+  //如果是总代
+  if (window.localStorage.agenttype == 1) {
+     //初始化搜索
+     this.agentId = this.$route.params.agentId;
+     this.fetchData();
+   } else {
+    this.$router.push("/");
+    this.$store.commit('showLogin');
   }
+}
 };
 
 </script>
