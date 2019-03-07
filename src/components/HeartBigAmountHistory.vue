@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <section class="im_snow" v-if="!modalStore.bigAmountHistoryEmpty">
+    <section class="im_snow" v-show="!modalStore.bigAmountHistoryEmpty">
       <div class="im_snow_title">
         <el-row>
           <el-col :span="6">
@@ -29,7 +29,7 @@
     </section>
 
     <!-- empty -->
-    <div class="im_snow" v-else>
+    <div class="im_snow" v-show="modalStore.bigAmountHistoryEmpty">
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_combo_his.png" />
         <p class="im_empty_p">暂无申请记录.</p>

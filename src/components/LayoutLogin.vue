@@ -225,7 +225,7 @@ export default {
       if (val) {
           this.$store.commit('showShop');
           this.fetchDescendant();
-          this.#store.commit('clearNeedSetAgentId');
+          this.$store.commit('clearNeedSetAgentId');
       }
     }
   },

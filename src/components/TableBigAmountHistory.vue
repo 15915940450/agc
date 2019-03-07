@@ -112,7 +112,12 @@ export default {
       if(!val){
         this.fetchData();
       }
-    }
+    },
+		'modalStore.bigAmountHistoryEmpty':function(val){
+		  if(!val){
+		    this.fetchData();
+		  }
+		}
   },
   methods:{
     toDetail:function(id){
