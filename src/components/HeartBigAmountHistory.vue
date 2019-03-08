@@ -101,9 +101,10 @@ export default {
           if(k==='payType'){
             return (['','','','充值电池押金'][v]);
           }
-          // if(k==='checkStatus'){
-          //   return (['待审核','同意','拒绝'][v]);
-          // }
+          if(k==='amount'){
+            var objNum=new Number(v);
+            return (objNum.toFixed(2));
+          }
         }
       });
     }
