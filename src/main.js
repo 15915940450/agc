@@ -33,3 +33,15 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
+
+router.beforeEach(function(to,from,next){
+  // console.log(to);
+  var isDeposit=function(to){
+    return (/url/i.test(to.path));
+  };
+  if(isDeposit(to)){
+    next(false);
+  }else{
+    next();
+  }
+});
