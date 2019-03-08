@@ -1,6 +1,6 @@
 <template>
   <div class="table_wrap">
-    <div v-loading="loadingData">
+    <div v-loading="loading">
       <div class="table_wrap_real">
         <el-table
           :data="log"
@@ -57,7 +57,7 @@
       </div>
 
       <div class="table_wrap_pagination" v-show="total">
-        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pageNum" @current-change="handleCurrentChange">
+        <el-pagination :background="true" layout="total,->,jumper,prev,pager,next" :total="total" :current-page="pn" @current-change="handleCurrentChange">
           <!-- 分页 -->
         </el-pagination>
       </div>
@@ -70,30 +70,9 @@ import {mapState} from 'vuex';
 
 export default {
   name:'TableBigAmountHistory',
+  props:['log','loading','pn','total'],
   data:function(){
     return ({
-      total:0,
-      loadingData:true,
-      log:[
-        /*
-        {
-            "id":123,  // 押金id
-            "payType":3, //3大额支付 充值电池押金
-            "amount":42132, // 申请金额
-            "batteryNum":23,   //购买电池数
-            "checkStatus":1,  //0 待审批,1同意,2拒绝
-            "remark":"好的", //备注
-            "attachment": "http://imgcn.immotor.com/power/power/img/1509614587556filename.jpg", //附件
-            "cityName":"深圳市", //城市名
-            "agentCompany":"深圳", //代理名公司
-            "actualPayer":"深圳市万年青有限公司", //实际付款人
-            "payVoucher":"http://imgcn.immotor.com/power/power/img/1509614587556filename.jpg", //付款凭单
-            "price":23, //单价
-            "createTime":"2018-3-9 22:11:33.0" //创建时间
-        }
-        */
-      ],
-      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
   computed:{
@@ -112,7 +91,7 @@ export default {
       if(!val){
         this.fetchData();
       }
-    },
+    }
   },
   methods:{
     toDetail:function(id){
@@ -120,49 +99,11 @@ export default {
         path:'/bigamount/'+id
       });
     },
-    fetchData:function(){
-      var vueThis=this;
-      vueThis.loadingData=true;
-      var sendData={
-        pageSize:vueThis.$yApi.defaultPS,
-        pageNum:vueThis.pageNum,
-        advancedParam:JSON.stringify({
-          id:null
-        })
-      };
-      vueThis.$rqs(vueThis.$yApi.getBigAmountHistory,function(objRps){
-        // _.logErr(objRps);
-        vueThis.loadingData=false;
-        vueThis.total=objRps.result.total;
-        vueThis.log=objRps.result.list;
-        if(!vueThis.total){
-          vueThis.$store.commit('setEmptyBigAmountHistory');
-        }else{
-          vueThis.$store.commit('setBigAmountHistory');
-        }
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(k==='createTime'){
-            return (v.slice(0,-2));
-          }
-          if(k==='payType'){
-            return (['','','','充值电池押金'][v]);
-          }
-          // if(k==='checkStatus'){
-          //   return (['待审核','同意','拒绝'][v]);
-          // }
-        }
-      });
-    },
     handleCurrentChange:function(val){
-      this.pageNum=val;
-      this.$router.push('/bigamount/history/'+val);
-      this.fetchData();
+      this.$emit('son-page-num-change',val);
     }
   },
   created:function(){
-    this.fetchData();
   }
 };
 </script>

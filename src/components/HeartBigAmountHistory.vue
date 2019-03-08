@@ -12,7 +12,7 @@
       </el-breadcrumb>
     </div>
 
-    <section class="im_snow" v-show="!modalStore.bigAmountHistoryEmpty">
+    <section class="im_snow" v-if="!bigAmountHistoryEmpty">
       <div class="im_snow_title">
         <el-row>
           <el-col :span="6">
@@ -25,11 +25,11 @@
         </el-row>
       </div>
 
-      <TableBigAmountHistory />
+      <TableBigAmountHistory :log="log" :loading="loadingData" :pn="pageNum" :total="total" @son-page-num-change="handleCurrentChange" />
     </section>
 
     <!-- empty -->
-    <div class="im_snow" v-show="modalStore.bigAmountHistoryEmpty">
+    <div class="im_snow" v-else>
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_combo_his.png" />
         <p class="im_empty_p">暂无申请记录.</p>
@@ -46,10 +46,17 @@ export default {
   name:'HeartBigAmountHistory',
   data:function(){
     return ({
+      total:0,
+      loadingData:true,
+      log:[],
+      pageNum:(window.Number(this.$route.params.pn)?window.Number(this.$route.params.pn):1)
     });
   },
   computed:{
-    ...mapState(['agent','modalStore'])
+    ...mapState(['agent','modalStore']),
+    bigAmountHistoryEmpty:function(){
+      return (!this.total);
+    }
   },
   watch:{
     // deep watcher
@@ -63,8 +70,46 @@ export default {
     TableBigAmountHistory
   },
   methods: {
+
+    handleCurrentChange:function(val){
+      this.pageNum=val;
+      this.$router.push('/bigamount/history/'+val);
+      this.fetchData();
+    },
+    fetchData:function(){
+      var vueThis=this;
+      vueThis.loadingData=true;
+      var sendData={
+        pageSize:vueThis.$yApi.defaultPS,
+        pageNum:vueThis.pageNum,
+        advancedParam:JSON.stringify({
+          id:null
+        })
+      };
+      vueThis.$rqs(vueThis.$yApi.getBigAmountHistory,function(objRps){
+        // _.logErr(objRps);
+        vueThis.loadingData=false;
+        vueThis.total=objRps.result.total;
+        console.log(vueThis.total+Math.random());
+        vueThis.log=objRps.result.list;
+      },{
+        objSendData:sendData,
+        reviver:function(k,v){
+          if(k==='createTime'){
+            return (v.slice(0,-2));
+          }
+          if(k==='payType'){
+            return (['','','','充值电池押金'][v]);
+          }
+          // if(k==='checkStatus'){
+          //   return (['待审核','同意','拒绝'][v]);
+          // }
+        }
+      });
+    }
   },
   created:function(){
+    this.fetchData();
   }
 };
 </script>
