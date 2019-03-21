@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="component_joy">
     <h3 class="title">
-      <span class="title_span">数据看板</span>
+      <span class="title_span">门店数据</span>
       <el-popover
         placement="right"
         width="330"
@@ -16,8 +16,13 @@
           试用声明
         </el-button>
       </el-popover>
+      <el-select v-if="stores.length" @change="storeChanged" class="storeSelctClass" v-model="selectStoreId" placeholder="请选择">
+        <el-option v-for="item in stores" :key="item.id" :label="item.name" :value="item.id">
+        </el-option>
+      </el-select>
     </h3>
 
+    <div v-if="(stores.length || loadingStores)">
     <!-- 四個卡片 -->
     <el-row :gutter="10">
       <el-col :span="6" v-for="(card,index) in arrCard" :key="index">
@@ -89,20 +94,28 @@
         
       </section>
     </el-card>
+    </div>
+      <div class="empty_evs im_empty_wrap eqcalc" v-if="(!stores.length && !loadingStores)">
+      <div class="im_empty">
+        <img class="im_empty_img" src="../assets/no_stores.png" alt="您还没有门店">
+        <p class="im_empty_p">您还没有门店！</p>
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 
-var objEcharts=null;
+var objEcharts = null;
 
 //最重要的arrLabels，arrValues
-var arrLabels=[]; 
+var arrLabels = [];
 /*
 ["6/1","6/2","6/3","6/4","6/5","6/6","6/7"]
 */
-var arrValues=[];
+var arrValues = [];
 /*
 [
 {"value":[12,12,12,12,0,12,12]},
@@ -110,377 +123,432 @@ var arrValues=[];
 {"value":[34,34,34,34,0,34,34]}
 ]
 */
-var arrEC=[
+var arrEC = [
   {
-    title:'新增用戶',
-    key:'newIncreate',
-    stack:'净',
-    color:'#018ECB'
-  },{
-    title:'退出用戶',
-    key:'quit',
-    stack:'净',
-    color:'#CC2800'
-  },{
-    title:'净增用戶',
-    key:'netIncreate',
-    stack:'',
-    color:'#00CC66'
+    title: "新增用戶",
+    key: "newIncreate",
+    stack: "净",
+    color: "#018ECB"
+  },
+  {
+    title: "退出用戶",
+    key: "quit",
+    stack: "净",
+    color: "#CC2800"
+  },
+  {
+    title: "净增用戶",
+    key: "netIncreate",
+    stack: "",
+    color: "#00CC66"
   }
 ];
 
 export default {
-  name:'HeartJoy',
-  data:function(){
-    return ({
-      arrCard:[
+  name: "HeartJoy",
+  data: function() {
+    return {
+      arrCard: [
         {
-          h3:'押金用户数',
-          tooltipContent:'目前拥有押金的用户数',
-          dataH2:'─',  //9,102,928
-          footSpanLeftKey:'单电用户',
-          footSpanLeftValue:'─',
-          footSpanRightKey:'双电用户',
-          footSpanRightValue:'─'
-        },{
-          h3:'虚拟电池数',
-          tooltipContent:'通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。',
-          dataH2:'─',
-          footSpanLeftKey:'已分配',
-          footSpanLeftValue:'─',
-          footSpanRightKey:'可分配',
-          footSpanRightValue:'─'
-        },{
-          h3:'免费天数',
-          tooltipContent:'目前可分配和已分配的天数之和',
-          dataH2:'─',
-          footSpanLeftKey:'已分配',
-          footSpanLeftValue:'─',
-          footSpanRightKey:'可分配',
-          footSpanRightValue:'─'
-        },{
-          h3:'中控数',
-          tooltipContent:'已录入的所有中控总数',
-          dataH2:'─',
-          footSpanLeftKey:'已绑定',
-          footSpanLeftValue:'─',
-          footSpanRightKey:'未绑定',
-          footSpanRightValue:'─'
+          h3: "押金用户数",
+          tooltipContent: "目前拥有押金的用户数",
+          dataH2: "─", //9,102,928
+          footSpanLeftKey: "单电用户",
+          footSpanLeftValue: "─",
+          footSpanRightKey: "双电用户",
+          footSpanRightValue: "─"
+        },
+        {
+          h3: "虚拟电池数",
+          tooltipContent:
+            "通过充值押金获得的虚拟电池，在分配<br />押金方案时消耗相应的数量。申请退押<br />金会暂时冻结相应的电池数量。",
+          dataH2: "─",
+          footSpanLeftKey: "已分配",
+          footSpanLeftValue: "─",
+          footSpanRightKey: "可分配",
+          footSpanRightValue: "─"
+        },
+        {
+          h3: "免费天数",
+          tooltipContent: "目前可分配和已分配的天数之和",
+          dataH2: "─",
+          footSpanLeftKey: "已分配",
+          footSpanLeftValue: "─",
+          footSpanRightKey: "可分配",
+          footSpanRightValue: "─"
+        },
+        {
+          h3: "中控数",
+          tooltipContent: "已录入的所有中控总数",
+          dataH2: "─",
+          footSpanLeftKey: "已绑定",
+          footSpanLeftValue: "─",
+          footSpanRightKey: "未绑定",
+          footSpanRightValue: "─"
         }
       ],
-      idEC:'ec_main',
-      userNum:'─',
-      type:0  //type===0 日
-    });
+      idEC: "ec_main",
+      userNum: "─",
+      stores: [],
+      selectStoreId: "",
+      loadingStores: true,
+      type: 0 //type===0 日
+    };
   },
-  computed:{
-    ...mapState(['agent','modalStore']),
-    buttonColor0:function(){
-      var color='';
-      if(!this.type){
-        color='primary';
+  computed: {
+    ...mapState(["agent", "modalStore"]),
+    buttonColor0: function() {
+      var color = "";
+      if (!this.type) {
+        color = "primary";
       }
       return color;
     },
-    isPlain0:function(){
+    isPlain0: function() {
       return !!this.type;
     },
-    buttonColor1:function(){
-      var color='';
-      if(this.type){
-        color='primary';
+    buttonColor1: function() {
+      var color = "";
+      if (this.type) {
+        color = "primary";
       }
       return color;
     },
-    isPlain1:function(){
+    isPlain1: function() {
       return !this.type;
     },
-    typeLabel:function(){
-      return (['day','month'][this.type]);
+    typeLabel: function() {
+      return ["day", "month"][this.type];
     }
   },
-  filters:{
-    toK:function(value){
+  filters: {
+    toK: function(value) {
       return _.toK(value);
     }
   },
-  watch:{
-    'modalStore.needShop':function(val){
-      if(!val){
-        this.fetchData();
-        this.fetchCardData0();
-        this.fetchCardData1();
-        this.fetchCardData2();
-        this.fetchCardData3();
+  watch: {
+    "modalStore.needLogin": function(val) {
+      if (!val) {
+        this.fetchStoresData();
       }
     },
-    type:function(){
+    type: function() {
       this.fetchData();
     }
   },
-  methods:{
+  methods: {
+    storeChanged: function(selVal) {
+      window.sessionStorage.setItem("headerid", this.selectStoreId);
+      this.fetchCardData0();
+      this.fetchCardData1();
+      this.fetchCardData2();
+      this.fetchCardData3();
+      this.ec().fetchData();
+    },
+    //获取门店数据
+    fetchStoresData: function() {
+      var vueThis = this;
+      //判断search参数，如果为手机号，设置为phone参数，其它为name参数
+      var sendData = {
+        name: "",
+        type: 2,
+        pageNum: 1,
+        pageSize: vueThis.$yApi.defaultPS
+      };
+      vueThis.$rqs(
+        vueThis.$yApi.subAgentStoresList,
+        function(objRps) {
+          console.log(objRps);
+          vueThis.loadingStores = false;
+          vueThis.stores = objRps.result.list;
+          if (vueThis.stores.length > 0) {
+            vueThis.selectStoreId = vueThis.stores[0].id;
+            window.sessionStorage.setItem("headerid", vueThis.stores[0].id);
+            // window.sessionStorage.setItem("storeName", vueThis.stores[0].name);
+            // vueThis.$store.commit("setStoreName", vueThis.stores[0].name);
+            vueThis.fetchCardData0();
+            vueThis.fetchCardData1();
+            vueThis.fetchCardData2();
+            vueThis.fetchCardData3();
+            vueThis.ec().fetchData();
+          }
+        },
+        {
+          objSendData: sendData
+        }
+      );
+    },
     //卡片數據獲取
-    fetchCardData0:function(){
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.card0,function(objRps){
+    fetchCardData0: function() {
+      var vueThis = this;
+      vueThis.$rqs(vueThis.$yApi.card0, function(objRps) {
         // objRps={
         //   'code': 1000,
         //   'result': {
-        //     'depositUserNum':421311,   //押金用户数 
+        //     'depositUserNum':421311,   //押金用户数
         //     'singularBatteryNum':22,    // 单电用户数
-        //     'doubleBatteryNum':323    //双电用户 
+        //     'doubleBatteryNum':323    //双电用户
         //   }
         // };
-        vueThis.arrCard[0].dataH2=objRps.result.depositUserNum;
-        vueThis.arrCard[0].footSpanLeftValue=objRps.result.singularBatteryNum;
-        vueThis.arrCard[0].footSpanRightValue=objRps.result.doubleBatteryNum;
+        vueThis.arrCard[0].dataH2 = objRps.result.depositUserNum;
+        vueThis.arrCard[0].footSpanLeftValue = objRps.result.singularBatteryNum;
+        vueThis.arrCard[0].footSpanRightValue = objRps.result.doubleBatteryNum;
       });
     },
-    fetchCardData1:function(){
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.card1,function(objRps){
+    fetchCardData1: function() {
+      var vueThis = this;
+      vueThis.$rqs(vueThis.$yApi.card1, function(objRps) {
         // objRps={
         //   'code': 1000,
         //   'result': {
-        //     'batteryNum':421311,   //虚拟电池数  
+        //     'batteryNum':421311,   //虚拟电池数
         //     'assignNum':22,    // 已分配电池数
         //     'unAssignNum':323    //未分配电池数
         //   }
         // };
-        vueThis.arrCard[1].dataH2=objRps.result.batteryNum;
-        vueThis.arrCard[1].footSpanLeftValue=objRps.result.assignNum;
-        vueThis.arrCard[1].footSpanRightValue=objRps.result.unAssignNum;
+        vueThis.arrCard[1].dataH2 = objRps.result.batteryNum;
+        vueThis.arrCard[1].footSpanLeftValue = objRps.result.assignNum;
+        vueThis.arrCard[1].footSpanRightValue = objRps.result.unAssignNum;
       });
     },
-    fetchCardData2:function(){
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.card2,function(objRps){
+    fetchCardData2: function() {
+      var vueThis = this;
+      vueThis.$rqs(vueThis.$yApi.card2, function(objRps) {
         // objRps={
         //   'code': 1000,
         //   'result': {
-        //     'freeDayNum':421311,   //免费天数数  
+        //     'freeDayNum':421311,   //免费天数数
         //     'assignNum':22,    // 已分配数
         //     'unAssignNum':323    //未分配数
         //   }
         // };
-        vueThis.arrCard[2].dataH2=objRps.result.freeDayNum;
-        vueThis.arrCard[2].footSpanLeftValue=objRps.result.assignNum;
-        vueThis.arrCard[2].footSpanRightValue=objRps.result.unAssignNum;
+        vueThis.arrCard[2].dataH2 = objRps.result.freeDayNum;
+        vueThis.arrCard[2].footSpanLeftValue = objRps.result.assignNum;
+        vueThis.arrCard[2].footSpanRightValue = objRps.result.unAssignNum;
       });
     },
-    fetchCardData3:function(){
-      var vueThis=this;
-      vueThis.$rqs(vueThis.$yApi.card3,function(objRps){
+    fetchCardData3: function() {
+      var vueThis = this;
+      vueThis.$rqs(vueThis.$yApi.card3, function(objRps) {
         // objRps={
         //   'code': 1000,
         //   'result': {
-        //     'scooterNum':421311,   //中控数  
+        //     'scooterNum':421311,   //中控数
         //     'bindNum':22,    // 已绑定数
         //     'unbindNum':323    //未绑定数
         //   }
         // };
-        vueThis.arrCard[3].dataH2=objRps.result.scooterNum;
-        vueThis.arrCard[3].footSpanLeftValue=objRps.result.bindNum;
-        vueThis.arrCard[3].footSpanRightValue=objRps.result.unbindNum;
+        vueThis.arrCard[3].dataH2 = objRps.result.scooterNum;
+        vueThis.arrCard[3].footSpanLeftValue = objRps.result.bindNum;
+        vueThis.arrCard[3].footSpanRightValue = objRps.result.unbindNum;
       });
     },
 
     //獲取數據,生成 arrLabels 和 arrValues
-    fetchData:function(){
-      var vueThis=this;
-      var sendData={
-        type:vueThis.type
+    fetchData: function() {
+      var vueThis = this;
+      var sendData = {
+        id: vueThis.selectStoreId,
+        type: vueThis.type
       };
       //ecUser
-      vueThis.$rqs(vueThis.$yApi.ecUser,function(objRps){
-        // objRps={
-        //   'code': 1000,
-        //   'result': {
-        //     'userNum':421311,   //用户数  
-        //     'userNumInfo':[
-        //       {
-        //         'day': '6/1',  //哪一天 6/5   6月5号
-        //         'month':'11月', // 哪一个月
-        //         'newIncreate':12,  // 新增用户数
-        //         'quit':-1,  //退出用户数
-        //         'netIncreate':34   // 净增用户数
-        //       },
-        //       {
-        //         'day': '6/2',  //哪一天 6/5   6月5号
-        //         'month':'12月', // 哪一个月
-        //         'newIncreate':12,  // 新增用户数
-        //         'quit':-51,  //退出用户数
-        //         'netIncreate':34   // 净增用户数
-        //       }
-        //     ]
-        //   }
-        // };
-        // console.log(objRps);
-        vueThis.userNum=objRps.result.userNum;
-        //labels橫坐標
-        arrLabels=objRps.result.userNumInfo.map(function(v){
-          return (v[vueThis.typeLabel]);
-        });
-
-        // _.logErr(arrLabels);
-
-        //value值(series)
-        arrValues=arrEC.map(function(v){
-          var arr=objRps.result.userNumInfo.map(function(obj){
-            return (obj[v.key]);
+      vueThis.$rqs(
+        vueThis.$yApi.ecUser,
+        function(objRps) {
+          // objRps={
+          //   'code': 1000,
+          //   'result': {
+          //     'userNum':421311,   //用户数
+          //     'userNumInfo':[
+          //       {
+          //         'day': '6/1',  //哪一天 6/5   6月5号
+          //         'month':'11月', // 哪一个月
+          //         'newIncreate':12,  // 新增用户数
+          //         'quit':-1,  //退出用户数
+          //         'netIncreate':34   // 净增用户数
+          //       },
+          //       {
+          //         'day': '6/2',  //哪一天 6/5   6月5号
+          //         'month':'12月', // 哪一个月
+          //         'newIncreate':12,  // 新增用户数
+          //         'quit':-51,  //退出用户数
+          //         'netIncreate':34   // 净增用户数
+          //       }
+          //     ]
+          //   }
+          // };
+          // console.log(objRps);
+          vueThis.userNum = objRps.result.userNum;
+          //labels橫坐標
+          arrLabels = objRps.result.userNumInfo.map(function(v) {
+            return v[vueThis.typeLabel];
           });
-          return ({
-            value:arr  //array
+
+          // _.logErr(arrLabels);
+
+          //value值(series)
+          arrValues = arrEC.map(function(v) {
+            var arr = objRps.result.userNumInfo.map(function(obj) {
+              return obj[v.key];
+            });
+            return {
+              value: arr //array
+            };
           });
-        });
 
-        // _.logErr(arrValues);
+          // _.logErr(arrValues);
 
-        vueThis.setE();
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(k==='quit'){
-            return (-v);
+          vueThis.setE();
+        },
+        {
+          objSendData: sendData,
+          reviver: function(k, v) {
+            if (k === "quit") {
+              return -v;
+            }
           }
         }
-      }); //請求
+      ); //請求
     },
     //ec入口
-    ec:function(){
+    ec: function() {
       this.initE();
       return this;
     },
-    initE:function(){
-      var vueThis=this;
-      var eleE=document.getElementById(vueThis.idEC);
-      objEcharts=window.echarts.init(eleE,{renderer:'svg'});
+    initE: function() {
+      var vueThis = this;
+      var eleE = document.getElementById(vueThis.idEC);
+      objEcharts = window.echarts.init(eleE, { renderer: "svg" });
       objEcharts.setOption(vueThis.iliECoption());
       return vueThis;
     },
     // 我的option
-    iliECoption:function(){
-      return ({
-        tooltip : {
-          trigger: 'axis',
-          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    iliECoption: function() {
+      return {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
           },
-          formatter:function(params){
+          formatter: function(params) {
             // console.log(params);
-            var tmp=params.map(function(v){
-              //將負值顯示為正值
-              return `${v.seriesName}: ${Math.abs(v.data)}`;
-            }).join('<br />');
-            tmp=params[0].name+'<br />'+tmp;
+            var tmp = params
+              .map(function(v) {
+                //將負值顯示為正值
+                return `${v.seriesName}: ${Math.abs(v.data)}`;
+              })
+              .join("<br />");
+            tmp = params[0].name + "<br />" + tmp;
             return tmp;
           }
         },
         legend: {
-          data:arrEC.map(function(v){
-            return (v.title);
+          data: arrEC.map(function(v) {
+            return v.title;
           })
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
           containLabel: true
         },
-        yAxis : [
+        yAxis: [
           {
-            axisTick : {show: false},
+            axisTick: { show: false },
             minInterval: 1,
-            type : 'value'
+            type: "value",
+            splitLine: {show: false},
           }
         ],
-        xAxis : [
+        xAxis: [
           {
-            type : 'category',
-            axisTick : {show: false},
-            data : []
+            type: "category",
+            axisTick: { show: false },
+            data: []
           }
         ],
-        series : []
-      });
+        series: []
+      };
     },
-    setE:function(){
-      var vueThis=this;
+    setE: function() {
+      var vueThis = this;
       objEcharts.setOption({
-        xAxis:{
-          data:arrLabels
+        xAxis: {
+          data: arrLabels.reverse()
         },
-        series:arrEC.map(function(v,i){
-          return ({
-            type:'bar',
-            barWidth:10,
-            itemStyle:{
-              color:v.color
+        series: arrEC.map(function(v, i) {
+          return {
+            type: "bar",
+            barWidth: 10,
+            itemStyle: {
+              color: v.color
             },
-            stack:v.stack,
-            name:v.title,
-            data:arrValues[i].value
-          });
-        })  //series
+            stack: v.stack,
+            name: v.title,
+            data: arrValues[i].value.reverse()
+          };
+        }) //series
       });
       return vueThis;
     },
-    handleClickType:function(type){
-      var vueThis=this;
-      vueThis.type=type;
+    handleClickType: function(type) {
+      var vueThis = this;
+      vueThis.type = type;
     }
   },
-  created:function(){
-    this.fetchCardData0();
-    this.fetchCardData1();
-    this.fetchCardData2();
-    this.fetchCardData3();
-  }, //created
-  mounted:function(){
-    this.ec().fetchData();
-  }
+  created: function() {
+    //先获取门店
+    this.fetchStoresData();
+  } //created
 };
 </script>
 
 <style lang="css" scoped>
-  .title_span{
-    margin-right: 20px;
-  }
-  .gray_info{
-    color: #fc8989;
-    float: right;
-    margin-top: 4px;
-  }
-  .data_h2{
-    text-align: left;
-    margin:8px 0;
-    font-size: 29px;
-    color: #FF8933;
-  }
-  .key_span{
-    display: block;
-    color: #999;
-    font-size: 12px;
-    margin-top:8px;
-  }
-  .value_span{
-    display: block;
-    color: #555;
-    font-size: 1.3em;
-    margin-top:8px;
-  }
-  .type_group{
-    float: right;
-  }
-  .user_small{
-    margin-left: 20px;
-  }
-  .ec_card{
-    margin-top:10px;
-  }
-  #ec_main{
-    width: 100%;
-    min-height: 300px;
-    height: calc(100vh - 467px);
-  }
+.title_span {
+  margin-right: 20px;
+}
+.gray_info {
+  color: #fc8989;
+  float: right;
+  margin-top: 4px;
+}
+.data_h2 {
+  text-align: left;
+  margin: 8px 0;
+  font-size: 29px;
+  color: #ff8933;
+}
+.key_span {
+  display: block;
+  color: #999;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.value_span {
+  display: block;
+  color: #555;
+  font-size: 1.3em;
+  margin-top: 8px;
+}
+.type_group {
+  float: right;
+}
+.user_small {
+  margin-left: 20px;
+}
+.ec_card {
+  margin-top: 10px;
+}
+#ec_main {
+  width: 100%;
+  min-height: 300px;
+  height: calc(100vh - 467px);
+}
+.storeSelctClass {
+  right: 20px;
+  top: 20px;
+  position: absolute;
+}
 </style>

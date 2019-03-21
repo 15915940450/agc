@@ -53,8 +53,8 @@ export default {
     // deep watcher
     'modalStore.needShop':function(val){
       if(!val){
-        this.fetchData();
-        this.fetchLastAdd();
+        // this.fetchData();
+        // this.fetchLastAdd();
       }
     },
     'userPhone':_.debounce(function(val){

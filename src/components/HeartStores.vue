@@ -115,7 +115,7 @@ export default {
       window.sessionStorage.setItem('headerid', scope.row.id);
       window.sessionStorage.setItem('storeName', scope.row.name);
       this.$store.commit('setStoreName',scope.row.name);
-      this.$router.push("/");
+      this.$router.push("/searchuser");
       if (this.storesList.length > 1) {
         this.$store.commit("setChangeShop");
       }
@@ -155,15 +155,8 @@ export default {
     }
   },
   created: function() {
-    //如果是总代
-    if (window.localStorage.agenttype == 1) {
-      //初始化搜索
-      this.search = "";
-      this.fetchData();
-    } else {
-      this.$router.push("/");
-      this.$store.commit('showLogin');
-    }
+    this.search = "";
+    this.fetchData();
   }
 };
 

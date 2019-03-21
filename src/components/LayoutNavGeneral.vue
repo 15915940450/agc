@@ -1,20 +1,24 @@
 <template lang="html">
 	<div class="left_nav">
 		<el-menu :default-active="isActive" @select="handleSelect">
-			<el-menu-item index="1">
-				<i class="icon_menu heartsubagent">icon_menu</i>
-				<span slot="title">代理商管理</span>
+      <el-menu-item index="1">
+				<i class="icon_menu heartjoy">icon_menu</i>
+				<span slot="title">数据中心</span>
 			</el-menu-item>
 			<el-menu-item index="2">
 				<i class="icon_menu heartstores">icon_menu</i>
 				<span slot="title">门店管理</span>
+			</el-menu-item>
+			<el-menu-item index="3">
+				<i class="icon_menu heartsubagent">icon_menu</i>
+				<span slot="title">代理管理</span>
 			</el-menu-item>
 		</el-menu>
 	</div>
 </template>
 
 <script>
-var arrRouteName = ["HeartSubAgent", "HeartStores"];
+var arrRouteName = ["HeartJoy","HeartStores","HeartSubAgent"];
 
 export default {
   name: "LayoutNavGeneral",
@@ -24,15 +28,21 @@ export default {
       imNav: [
         {
           id: 1,
-          name: "代理商管理",
-          theClass: "HeartSubAgent",
-          link: "/general/1"
+          name: "数据中心",
+          theClass: "HeartJoy",
+          link: "/general/joy"
         },
         {
           id: 2,
           name: "门店管理",
           theClass: "HeartStores",
           link: "/general/stores/1"
+        },
+        {
+          id: 3,
+          name: "代理管理",
+          theClass: "HeartSubAgent",
+          link: "/general/subAgent/1"
         }
       ]
     };
@@ -101,11 +111,17 @@ export default {
   font-size: 13px;
   margin-left: 10px;
 }
+.left_nav .icon_menu.heartjoy {
+  background: url(../assets/menu_data.png) no-repeat 0 0;
+}
+.left_nav .is-active .icon_menu.heartjoy {
+  background: url(../assets/menu_data_active.png) no-repeat 0 0;
+}
 .left_nav .icon_menu.heartsubagent {
   background: url(../assets/menu_subAgent.png) no-repeat 0 0;
 }
 .left_nav .is-active .icon_menu.heartsubagent {
-  background: url(../assets/menu_subAgent_Active.png) no-repeat 0 0;
+  background: url(../assets/menu_subAgent_active.png) no-repeat 0 0;
 }
 .left_nav .icon_menu.heartstores {
   background: url(../assets/menu_stores.png) no-repeat 0 0;

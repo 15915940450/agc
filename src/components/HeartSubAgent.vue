@@ -83,7 +83,7 @@ export default {
   methods: {
     handleCurrentChange: function(val) {
       this.pageNum = val;
-      this.$router.push("/general/" + val);
+      this.$router.push("/general/subAgent/" + val);
     },
     accessMangerAction: function(scope) {
       console.log(scope.row.id);
@@ -94,7 +94,7 @@ export default {
     imSearch: _.debounce(function() {
       this.isNotSearch = false;
       this.pageNum = 1;
-      this.$router.push("/general/1");
+      this.$router.push("/general/subAgent/1");
       this.fetchData();
     }, 690),
     fetchData: function() {
@@ -130,15 +130,8 @@ export default {
     }
   },
   created: function() {
-    //如果是总代
-    if (window.localStorage.agenttype == 1) {
-      //初始化搜索
-      this.search = "";
-      this.fetchData();
-    } else {
-      this.$router.push("/");
-      this.$store.commit('showLogin');
-    }
+    this.search = "";
+    this.fetchData();
   }
 };
 
