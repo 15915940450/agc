@@ -243,7 +243,7 @@ export default {
       this.fetchCardData1();
       this.fetchCardData2();
       this.fetchCardData3();
-      this.ec().fetchData();
+      this.fetchData();
     },
     //获取门店数据
     fetchStoresData: function() {
@@ -498,10 +498,10 @@ export default {
       vueThis.type = type;
     }
   },
-  created: function() {
-    //先获取门店
+  mounted () {
+        //先获取门店
     this.fetchStoresData();
-  } //created
+  }
 };
 </script>
 

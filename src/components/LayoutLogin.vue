@@ -521,6 +521,9 @@ export default {
         //顯示網點列表
         this.$store.commit("showShop");
         this.fetchDescendant();
+        this.$router.push({
+          path: "/searchuser"
+        });
       }
     },
     //同意協議
@@ -548,6 +551,9 @@ export default {
             //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择门店】窗口
             vueThis.$store.commit("showShop");
             vueThis.fetchDescendant();
+            this.$router.push({
+              path: "/searchuser"
+            });
           }
         },
         {
@@ -835,12 +841,12 @@ export default {
   overflow: auto;
   position: relative;
 }
-.no_shop{
+.no_shop {
   width: 100%;
   height: 100px;
   position: relative;
 }
-.notitleClass{
+.notitleClass {
   width: 100%;
   height: 20px;
   text-align: center;
