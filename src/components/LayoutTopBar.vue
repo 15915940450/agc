@@ -58,8 +58,11 @@ export default {
     logout: function() {
       var vueThis = this;
       vueThis.$rqs(vueThis.$yApi.userLogout, function() {
-        vueThis.$store.commit("showLogin");
-        vueThis.$router.push("/");
+        window.localStorage.removeItem("agentphone");
+        window.localStorage.removeItem("agenttype");
+        vueThis.$router.push({
+          path: "/"
+        });
       });
     },
     toSys: function() {
@@ -128,7 +131,7 @@ export default {
   margin-right: 15px;
   margin-top: 13px;
 }
-.changeShopClass{
+.changeShopClass {
   width: 16px;
   height: 14px;
   margin-right: 15px;
@@ -136,12 +139,11 @@ export default {
   float: right;
 }
 
-.goWorkbenchClass{
+.goWorkbenchClass {
   width: 16px;
   height: 14px;
   margin-right: 15px;
   margin-top: 24px;
   float: right;
 }
-
 </style>

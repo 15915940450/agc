@@ -45,8 +45,11 @@ export default {
     logout: function() {
       var vueThis = this;
       vueThis.$rqs(vueThis.$yApi.userLogout, function() {
-        vueThis.$store.commit("showLogin");
-        vueThis.$router.push("/");
+        window.localStorage.removeItem("agentphone");
+        window.localStorage.removeItem("agenttype");
+        vueThis.$router.push({
+          path: "/"
+        });
       });
     }
   } //methods
