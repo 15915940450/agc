@@ -7,7 +7,7 @@
         </h1>
       </el-col>
       <el-col :span="18" class="topbar_right_wrap">
-        <el-dropdown>
+        <el-dropdown trigger="click">
           <span class="el-dropdown-link">
             <img class="top_bar-head" src="../assets/default_head.png" width="20"/>
             {{agent.name}}
