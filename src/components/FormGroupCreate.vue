@@ -44,7 +44,7 @@
 					</el-form-item>
 					<el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
 						<el-select v-model="formGroupCreate.packageScheme" multiple placeholder="请选择">
-							<el-option v-for="item in taocan" :key="item.id" :label="item.neroTaocan" :value="item.id">
+							<el-option v-for="item in taocan" :key="item.code" :label="item.neroTaocan" :value="item.code">
 							</el-option>
 						</el-select>
 					</el-form-item>

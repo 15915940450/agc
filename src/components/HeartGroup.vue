@@ -60,7 +60,7 @@
                 <p>套餐方案(种）</p>
               </el-col>
               <el-col :span="12">
-                <p class="p_val">{{item.packages.length}}</p>
+                <p class="p_val">{{item.packageList.length}}</p>
               </el-col>
             </el-row>
 

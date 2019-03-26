@@ -38,7 +38,7 @@
 					<el-form-item prop="packageScheme" label="套餐方案" :label-width="formLabelWidth">
 						<el-select v-model="formGroupSet.packageScheme" multiple placeholder="请选择">
 							<!-- 名称/类型/价格/次数/天数 -->
-							<el-option v-for="item in taocan" :key="item.id" :label="item.neroTaocan" :value="item.id">
+							<el-option v-for="item in taocan" :key="item.code" :label="item.neroTaocan" :value="item.code">
 							</el-option>
 						</el-select>
 					</el-form-item>
@@ -74,7 +74,7 @@
 
 	export default {
 		name: 'FormGroupSet',
-		props: ['userType', 'subAccountNumber', 'code', 'name', 'deposits', 'packages', 'type', 'freeDay', 'yajin', 'taocan'],
+		props: ['userType', 'subAccountNumber', 'code', 'name', 'deposits', 'packageList', 'type', 'freeDay', 'yajin', 'taocan'],
 		data: function() {
 			return ({
 				rules: {
@@ -126,7 +126,6 @@
 					groupCode: -1,
 					freeDayEnable: false,
 					freeDay: 0,
-					agentId: window.localStorage.agentid
 				},
 				loading: false,
 				userTypeString:'',
@@ -151,8 +150,8 @@
 					this.formGroupSet.depositScheme = this.deposits ? this.deposits.map(function(v) {
 						return window.Number(v);
 					}) : [];
-					this.formGroupSet.packageScheme = this.packages ? this.packages.map(function(v) {
-						return window.Number(v);
+					this.formGroupSet.packageScheme = this.packageList ? this.packageList.map(function(v) {
+						return window.Number(v.code);
 					}) : [];
 					this.formGroupSet.userType = this.userType,
 					this.userTypeString = this.userType == "2" ? "亲情账号": "普通账号"; 
@@ -176,7 +175,6 @@
 							name: vueThis.formGroupSet.name,
 							depositScheme: vueThis.formGroupSet.depositScheme,
 							packageScheme: vueThis.formGroupSet.packageScheme,
-							agentId: window.localStorage.agentid,
 							cityCode: 0,
 							freeDay: vueThis.computedFreeDay,
 							groupCode: vueThis.formGroupSet.groupCode,

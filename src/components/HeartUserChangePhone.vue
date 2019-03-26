@@ -395,14 +395,10 @@ export default {
     //1.所属代理商:agentId
     limit1:function(){
       var bLimit1=false;
-      /*
-      if(this.twoUsers[1].agentId!=='─' && this.twoUsers[1].agentId && window.Number(this.twoUsers[1].agentId)!==window.Number(window.localStorage.agentid)){
-        bLimit1=true;
-      }
-      */
+
       var numAgentId=+this.twoUsers[1].agentId; //0,NaN,224
       //&& && (...)
-      numAgentId && numAgentId!==+window.localStorage.agentid && (bLimit1=true);
+      numAgentId && numAgentId!==+window.sessionStorage.headerid && (bLimit1=true);
 
       return bLimit1;
     },
@@ -440,7 +436,6 @@ export default {
           var sendData={
             userPhone:vueThis.formGetChangePhoneInfo.userPhone,
             phone:vueThis.formGetChangePhoneInfo.phone,
-            agentId:window.localStorage.agentid
           };
           vueThis.$rqs(vueThis.$yApi.getChangePhoneInfo,function(objRps){
             if(objRps.result.length){
@@ -525,7 +520,6 @@ export default {
             userPhone:vueThis.formGetChangePhoneInfo.userPhone,
             phone:vueThis.formGetChangePhoneInfo.phone,
             authCode:vueThis.changePhone.authCode.trim(),
-            agentId:window.localStorage.agentid,
             remark:vueThis.remark
           };
           vueThis.$rqs(vueThis.$yApi.changePhone,function(objRps){
@@ -623,7 +617,7 @@ export default {
     text-align:right;
   }
   .input_yzm{
-    width:110px;
+    width:120px;
   }
   .remark_wrap{
     padding-top: 40px;
