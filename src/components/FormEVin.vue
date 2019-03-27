@@ -59,7 +59,6 @@ export default {
         scooterSN:'',
         scooterType:'0',
         groupCode:this.$route.params.groupcode,
-        agentId:window.localStorage.agentid
       },
       rules:{
         phone:[
@@ -110,7 +109,6 @@ export default {
             voltage:+vueThis.formEVin.voltage,
             scooterSN:vueThis.formEVin.scooterSN,
             scooterType:+vueThis.formEVin.scooterType,
-            agentId:window.localStorage.agentid,
             groupCode:vueThis.formEVin.groupCode
           };
           // console.log(JSON.stringify(sendData));

@@ -147,7 +147,6 @@
 					packageScheme: [],
 					freeDayEnable: false,
 					freeDay: 0,
-					agentId: window.localStorage.agentid
 				},
 				grouptype: 0,
 				groupUserType: 1,
@@ -202,7 +201,6 @@
 							name: vueThis.formGroupCreate.name,
 							depositScheme: vueThis.formGroupCreate.depositScheme,
 							packageScheme: vueThis.formGroupCreate.packageScheme,
-							agentId: window.localStorage.agentid,
 							cityCode: vueThis.formGroupCreate.cityCode,
 							freeDay: vueThis.computedFreeDay,
 							canRefund: window.Number(vueThis.formGroupCreate.canRefund),

@@ -15,7 +15,7 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <a @click="toSys()" class="topbar_user">设置</a>
+              <a @click="toSys()" class="topbar_user">修改密码</a>
             </el-dropdown-item>
             <el-dropdown-item>
               <a @click="logout()" class="topbar_user">退出</a>
