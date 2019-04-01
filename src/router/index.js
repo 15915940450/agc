@@ -36,145 +36,145 @@ Vue.use(Router);
 
 const router = new Router({
   routes: [{
-      //门店相关导航
-      path: '/',
-      // You could also have named views at tho top
-      component: Agent,
+    //门店相关导航
+    path: '/',
+    // You could also have named views at tho top
+    component: Agent,
+    children: [{
+      path: '/group', //群组
+      name: 'HeartGroup',
+      component: HeartGroup
+    },
+    {
+      path: '/searchuser', //群组
+      name: 'HeartSearchUser',
+      component: HeartSearchUser
+    },
+    {
+      path: '/user/:groupcode/:type/:pn', //用户,type:1(线上交押金),2(线下交押金)
+      name: 'HeartUser',
+      component: HeartUser
+    },
+    {
+      path: '/usercombo/:userphone/:pn', //userphone
+      name: 'HeartUserCombo',
+      component: HeartUserCombo
+    },
+    {
+      path: '/user/changephone',
+      name: 'HeartUserChangePhone',
+      component: HeartUserChangePhone
+    },
+    {
+      path: '/user/changephonehistory/:pn',
+      name: 'HeartUserChangePhoneHistory',
+      component: HeartUserChangePhoneHistory
+    },
+    {
+      path: '/deposit',
+      name: 'HeartDeposit',
+      component: HeartDeposit
+    },
+    {
+      path: '/combo',
+      name: 'HeartCombo',
+      component: HeartCombo
+    },
+    {
+      path: '/combo/history',
+      name: 'HeartComboHistory',
+      component: HeartComboHistory
+    },
+    {
+      path: '/bigamount',
+      name: 'HeartBigAmount',
+      component: HeartBigAmount
+    },
+    {
+      path: '/bigamount/history/:pn',
+      name: 'HeartBigAmountHistory',
+      component: HeartBigAmountHistory
+    },
+    {
+      path: '/bigamount/:id',
+      name: 'HeartBigAmountDetail',
+      component: HeartBigAmountDetail
+    },
+    {
+      path: '/xls',
+      name: 'HeartXls',
+      component: HeartXls
+    },
+    {
+      path: 'evs/:pn', //中控
+      name: 'HeartEVs',
+      component: HeartEVs
+    },
+    {
+      path: '/ev/:id', //轨迹与定位(sid)
+      name: 'HeartEVamap',
+      component: HeartEVamap,
       children: [{
-          path: '/group', //群组
-          name: 'HeartGroup',
-          component: HeartGroup
-        },
-        {
-          path: '/searchuser', //群组
-          name: 'HeartSearchUser',
-          component: HeartSearchUser
-        },
-        {
-          path: '/user/:groupcode/:type/:pn', //用户,type:1(线上交押金),2(线下交押金)
-          name: 'HeartUser',
-          component: HeartUser
-        },
-        {
-          path: '/usercombo/:userphone/:pn', //userphone
-          name: 'HeartUserCombo',
-          component: HeartUserCombo
-        },
-        {
-          path: '/user/changephone',
-          name: 'HeartUserChangePhone',
-          component: HeartUserChangePhone
-        },
-        {
-          path: '/user/changephonehistory/:pn',
-          name: 'HeartUserChangePhoneHistory',
-          component: HeartUserChangePhoneHistory
-        },
-        {
-          path: '/deposit',
-          name: 'HeartDeposit',
-          component: HeartDeposit
-        },
-        {
-          path: '/combo',
-          name: 'HeartCombo',
-          component: HeartCombo
-        },
-        {
-          path: '/combo/history',
-          name: 'HeartComboHistory',
-          component: HeartComboHistory
-        },
-        {
-          path: '/bigamount',
-          name: 'HeartBigAmount',
-          component: HeartBigAmount
-        },
-        {
-          path: '/bigamount/history/:pn',
-          name: 'HeartBigAmountHistory',
-          component: HeartBigAmountHistory
-        },
-        {
-          path: '/bigamount/:id',
-          name: 'HeartBigAmountDetail',
-          component: HeartBigAmountDetail
-        },
-        {
-          path: '/xls',
-          name: 'HeartXls',
-          component: HeartXls
-        },
-        {
-          path: 'evs/:pn', //中控
-          name: 'HeartEVs',
-          component: HeartEVs
-        },
-        {
-          path: '/ev/:id', //轨迹与定位(sid)
-          name: 'HeartEVamap',
-          component: HeartEVamap,
-          children: [{
-              path: 'track',
-              name: 'MapTrack',
-              component: MapTrack
-            },
-            {
-              path: 'point',
-              name: 'MapGeographic',
-              component: MapGeographic
-            }
-          ]
-        },
-        {
-          path: '/evallgeographic', //系统管理
-          name: 'HeartEVallGeographic',
-          component: HeartEVallGeographic
-        },
-
-        // just for thilina
-        {
-          path: '/thilina',
-          name: 'HelloWorld',
-          component: HelloWorld
-        },
-        {
-          path: '/ajax',
-          name: 'AjaxTest',
-          component: AjaxTest
-        }
+        path: 'track',
+        name: 'MapTrack',
+        component: MapTrack
+      },
+      {
+        path: 'point',
+        name: 'MapGeographic',
+        component: MapGeographic
+      }
       ]
     },
     {
-      //工作台相关导航
-      path: '/general',
-      component: General,
-      children: [{
-          path: '/general/joy',
-          name: 'HeartJoy', //数据中心看板
-          component: HeartJoy
-        },
-        {
-          path: '/general/subAgent/:pn',
-          name: 'HeartSubAgent',
-          component: HeartSubAgent
-        },
-        {
-          path: '/general/access/:agentId',
-          name: 'HeartAgentAccess',
-          component: HeartAgentAccess
-        }, {
-          path: '/general/stores/:pn',
-          name: 'HeartStores',
-          component: HeartStores
-        },
-        {
-          path: '/general/sys', //系统管理
-          name: 'HeartSysSetting',
-          component: HeartSysSetting
-        }
-      ]
+      path: '/evallgeographic', //系统管理
+      name: 'HeartEVallGeographic',
+      component: HeartEVallGeographic
+    },
+
+      // just for thilina
+    {
+      path: '/thilina',
+      name: 'HelloWorld',
+      component: HelloWorld
+    },
+    {
+      path: '/ajax',
+      name: 'AjaxTest',
+      component: AjaxTest
     }
+    ]
+  },
+  {
+    //工作台相关导航
+    path: '/general',
+    component: General,
+    children: [{
+      path: '/general/joy',
+      name: 'HeartJoy', //数据中心看板
+      component: HeartJoy
+    },
+    {
+      path: '/general/subAgent/:pn',
+      name: 'HeartSubAgent',
+      component: HeartSubAgent
+    },
+    {
+      path: '/general/access/:agentId',
+      name: 'HeartAgentAccess',
+      component: HeartAgentAccess
+    }, {
+      path: '/general/stores/:pn',
+      name: 'HeartStores',
+      component: HeartStores
+    },
+    {
+      path: '/general/sys', //系统管理
+      name: 'HeartSysSetting',
+      component: HeartSysSetting
+    }
+    ]
+  }
   ]
 });
 
@@ -186,14 +186,14 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     //门店管理相关的页面 判断下是否选择了门店
-    if (to.path == '/') {
-      if (window.localStorage.agenttype == 1) {
+    if (to.path === '/') {
+      if (window.localStorage.agenttype === 1) {
         next('/general/joy');
       } else {
         next('/searchuser');
       }
-    } else if (to.path.indexOf('/general') == 0) {
-       if (to.path == '/general') {
+    } else if (to.path.indexOf('/general') === 0) {
+      if (to.path === '/general') {
         next('/general/joy');
       } else {
         next();

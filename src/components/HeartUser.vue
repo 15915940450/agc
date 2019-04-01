@@ -198,7 +198,9 @@
                 width="250"
                 >
                 <template slot-scope="scope">
-                  <span class="sns" v-for="(sn) in scope.row.batteries" :key="sn">{{sn}}</span>
+                  <div>
+                    <span class="sns" v-for="(sn) in scope.row.batteries" :key="sn">{{sn}}</span>
+                  </div>
                 </template>
               </el-table-column>
 
@@ -253,7 +255,7 @@
       <div class="im_empty">
         <img class="im_empty_img" src="../assets/empty_user.png" />
         <p class="im_empty_p">您还没有用户哦！</p>
-        <el-button type="primary" @click="showNewUser()">添加</el-button>
+        <!-- <el-button type="primary" @click="showNewUser()">添加</el-button> -->
       </div>
     </div>
 

@@ -268,7 +268,6 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: ;
   }
   .map_track.full #a-map{
     min-height: calc(100vh - 50px);
