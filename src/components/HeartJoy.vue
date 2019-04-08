@@ -253,7 +253,7 @@ export default {
         name: "",
         type: 2,
         pageNum: 1,
-        pageSize: vueThis.$yApi.defaultPS
+        pageSize: 10000
       };
       vueThis.$rqs(
         vueThis.$yApi.subAgentStoresList,
