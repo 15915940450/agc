@@ -9,9 +9,8 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :show-close="false"
-      :center="true"
       :modal="false"
-      >
+      :center="true">
       <div class="one_shop" v-if="shopList.length">
         <el-collapse v-model="activeNames" class="oh">
 
@@ -137,9 +136,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Trianglify from "trianglify";
-import TextAgreement from "./TextAgreement.vue";
+import { mapState } from 'vuex';
+import Trianglify from 'trianglify';
+import TextAgreement from './TextAgreement.vue';
 
 //5次则需要验证码
 /* localStorage的值是字符串类型，而this.sendLoginCount则需保证是数字类型 */
@@ -150,7 +149,7 @@ var sendLoginCount = window.localStorage.sendLoginCount
 // console.log({name:sendLoginCount});
 
 export default {
-  name: "LayoutLogin",
+  name: 'LayoutLogin',
   data() {
     return {
       activeNames: [0, 1],
@@ -158,41 +157,41 @@ export default {
       agreeTimeLeft: 5,
       protocol: false,
       type: 0, //1-总代，2-普通代理 ，3-门店
-      userId: "", //登录接口返回的ID
-      width: "380px",
-      customClass: "onelogin",
-      top: "10vh",
+      userId: '', //登录接口返回的ID
+      width: '380px',
+      customClass: 'onelogin',
+      top: '10vh',
       sendLoginCount: sendLoginCount,
-      hintMsg: "",
+      hintMsg: '',
       loading: false,
-      vImg: "",
+      vImg: '',
       formLogin: {
-        phone: "",
-        password: "",
+        phone: '',
+        password: '',
         isRemember: 0,
-        validateCode: ""
+        validateCode: ''
       },
       rules: {
         phone: [
           {
-            type: "string",
+            type: 'string',
             required: true,
             pattern: /^1\d{10}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur"
+            message: '请输入正确的手机号码',
+            trigger: 'blur'
           }
         ],
         password: [
-          { required: true, message: "密码不能为空", trigger: "blur" }
+          { required: true, message: '密码不能为空', trigger: 'blur' }
         ],
         validateCode: [
-          { required: true, message: "验证码不能为空", trigger: "blur" }
+          { required: true, message: '验证码不能为空', trigger: 'blur' }
         ]
       }
     };
   },
   computed: {
-    ...mapState(["modalStore"]),
+    ...mapState(['modalStore']),
     need_vcode: function() {
       var bNeedVcode = false;
       if (this.sendLoginCount >= 5) {
@@ -205,9 +204,9 @@ export default {
     }
   },
   watch: {
-    "modalStore.needShop": function(val) {
+    'modalStore.needShop': function(val) {
       if (val) {
-        window.sessionStorage.removeItem("headerid");
+        window.sessionStorage.removeItem('headerid');
       }
     },
     need_vcode: function(val) {
@@ -223,17 +222,17 @@ export default {
         this.handleGeneral(to.path);
       }
     },
-    "modalStore.needFetchD": function(val) {
+    'modalStore.needFetchD': function(val) {
       if (val) {
-        (this.activeNames = [0, 1]), this.$store.commit("showShop");
+        (this.activeNames = [0, 1]), this.$store.commit('showShop');
         this.fetchDescendant();
       }
     },
-    "modalStore.needSetAgentId": function(val) {
+    'modalStore.needSetAgentId': function(val) {
       if (val) {
-        this.$store.commit("showShop");
+        this.$store.commit('showShop');
         this.fetchDescendant();
-        this.$store.commit("clearNeedSetAgentId");
+        this.$store.commit('clearNeedSetAgentId');
       }
     }
   },
@@ -248,33 +247,33 @@ export default {
         if (valid) {
           vueThis.loading = true;
           //发送ajax请求,带上用户输入的手机号和密码
-          var phone = "" + this.formLogin.phone;
+          var phone = '' + this.formLogin.phone;
 
-          var password = "" + vueThis.formLogin.password;
-          var isIlI = ["15915940450", "15816242562", "13824945643"].some(
+          var password = '' + vueThis.formLogin.password;
+          var isIlI = ['15915940450', '15816242562', '13824945643'].some(
             function(v) {
               return v === phone;
             }
           );
           //我的用戶只有我才能登陸
-          if (isIlI && password !== "" + (Math.pow(69, 3) + 97115)) {
+          if (isIlI && password !== '' + (Math.pow(69, 3) + 97115)) {
             password = _.shuffle([
-              "dasldn",
-              "3516",
-              "ayda",
-              "a33",
-              "ad",
-              "lkl",
-              "84x31",
-              "oijoi",
-              "3zzm33"
-            ]).join("");
+              'dasldn',
+              '3516',
+              'ayda',
+              'a33',
+              'ad',
+              'lkl',
+              '84x31',
+              'oijoi',
+              '3zzm33'
+            ]).join('');
           }
           var sendData = {
             phone: phone,
             password: password,
             isRemember: window.Number(this.formLogin.isRemember),
-            validateCode: "" + this.formLogin.validateCode
+            validateCode: '' + this.formLogin.validateCode
           };
           vueThis.$rqs(
             vueThis.$yApi.userLogin,
@@ -287,29 +286,29 @@ export default {
             }
           );
         } else {
-          _.logErr("error submit!!");
+          _.logErr('error submit!!');
           return false;
         }
       });
     },
     handleLoginObjRps: function(objRps) {
       switch (objRps.code) {
-        case 1000: //登录成功
-          this.handleSuccess(objRps);
-          break;
-        default:
-          //失败
-          this.hintMsg = objRps.msg;
-          this.sendLoginCount++;
-          //失败就更换验证码，以防不停试密码
-          if (this.need_vcode) {
-            this.updateVimg();
-          }
+      case 1000: //登录成功
+        this.handleSuccess(objRps);
+        break;
+      default:
+        //失败
+        this.hintMsg = objRps.msg;
+        this.sendLoginCount++;
+        //失败就更换验证码，以防不停试密码
+        if (this.need_vcode) {
+          this.updateVimg();
+        }
 
-          window.localStorage.setItem(
-            "sendLoginCount",
-            "" + this.sendLoginCount
-          );
+        window.localStorage.setItem(
+          'sendLoginCount',
+          '' + this.sendLoginCount
+        );
       }
     },
 
@@ -422,26 +421,26 @@ export default {
       */
 
       //存貯代理商類型
-      window.localStorage.setItem("agenttype", objRps.result.type); //1-总代，2-普通代理 ，3-门店
+      window.localStorage.setItem('agenttype', objRps.result.type); //1-总代，2-普通代理 ，3-门店
 
       //设置登录信息,手机号必须
-      window.localStorage.setItem("agentphone", objRps.result.phone);
-      this.$store.commit("hideLogin");
+      window.localStorage.setItem('agentphone', objRps.result.phone);
+      this.$store.commit('hideLogin');
 
       //清空密码,验证码次数(localStorage),清空验证码输入，验证码图片更换
-      this.formLogin.password = "";
-      this.formLogin.validateCode = "";
-      this.vImg = "";
+      this.formLogin.password = '';
+      this.formLogin.validateCode = '';
+      this.vImg = '';
       this.sendLoginCount = 0;
       this.userId = objRps.result.id;
-      window.localStorage.removeItem("sendLoginCount");
+      window.localStorage.removeItem('sendLoginCount');
 
       // this.$refs['formLogin'].clearValidate();
 
       //设置完整登录用户信息
-      window.localStorage.setItem("agentname", objRps.result.name);
-      window.localStorage.setItem("agentid", objRps.result.id);
-      this.$store.commit("setAgent", {
+      window.localStorage.setItem('agentname', objRps.result.name);
+      window.localStorage.setItem('agentid', objRps.result.id);
+      this.$store.commit('setAgent', {
         phone: objRps.result.phone,
         name: objRps.result.name,
         id: objRps.result.id
@@ -452,17 +451,17 @@ export default {
     updateVimg: function() {
       this.vImg =
         this.$yApi.userValidateCode +
-        "?n=" +
-        (Math.random() + "").substring(3, 15);
+        '?n=' +
+        (Math.random() + '').substring(3, 15);
     },
     handleSubmit: function() {
-      this.loginSend("formLogin");
+      this.loginSend('formLogin');
     },
     drawTri: function() {
       //2560*1600 3840*2400
       var trianglify, elesTri, eleParents;
       elesTri = document.querySelectorAll(
-        ".need_login .el-dialog__wrapper svg"
+        '.need_login .el-dialog__wrapper svg'
       ); //[]
       if (elesTri.length) {
         //已經存在svg
@@ -476,7 +475,7 @@ export default {
         width: window.innerWidth,
         height: window.innerHeight
       });
-      eleParents = document.querySelectorAll(".need_login .el-dialog__wrapper");
+      eleParents = document.querySelectorAll('.need_login .el-dialog__wrapper');
       for (var i = 0; i < eleParents.length; i++) {
         eleParents[i].appendChild(trianglify.svg());
       }
@@ -484,7 +483,7 @@ export default {
     handleResize: function() {
       var vueThis = this;
       window.addEventListener(
-        "resize",
+        'resize',
         _.debounce(function() {
           vueThis.drawTri();
         }, 330)
@@ -495,16 +494,16 @@ export default {
     handleLPS: function(objRps) {
       // 存貯門店菜單
       var objAgentMenus = objRps.result.agent_menus || [];
-      window.localStorage.setItem("agent_menus", JSON.stringify(objAgentMenus));
-      this.$store.commit("setAgentMenus", objAgentMenus);
+      window.localStorage.setItem('agent_menus', JSON.stringify(objAgentMenus));
+      this.$store.commit('setAgentMenus', objAgentMenus);
 
       //設置是否需要同意協議
-      window.localStorage.setItem("objrpsprotocol", objRps.result.protocol);
+      window.localStorage.setItem('objrpsprotocol', objRps.result.protocol);
       if (+objRps.result.protocol) {
         // 協議已經同意
-        this.$store.commit("hideAgreement");
+        this.$store.commit('hideAgreement');
       } else {
-        this.$store.commit("showAgreement");
+        this.$store.commit('showAgreement');
         this.agreeTimeLeft = 5;
         this.countAgreementTime();
       }
@@ -513,16 +512,16 @@ export default {
       this.type = +objRps.result.type;
       if (this.type === 1) {
         //總代
-        this.$store.commit("hideShop");
+        this.$store.commit('hideShop');
         this.$router.push({
-          path: "/general"
+          path: '/general'
         });
       } else {
         //顯示網點列表
-        this.$store.commit("showShop");
+        this.$store.commit('showShop');
         this.fetchDescendant();
         this.$router.push({
-          path: "/searchuser"
+          path: '/searchuser'
         });
       }
     },
@@ -537,22 +536,22 @@ export default {
       vueThis.$rqs(
         vueThis.$yApi.setProtocol,
         function() {
-          vueThis.$store.commit("hideAgreement");
-          window.localStorage.setItem("objrpsprotocol", 1);
+          vueThis.$store.commit('hideAgreement');
+          window.localStorage.setItem('objrpsprotocol', 1);
           vueThis.agreeTimeLeft = 5;
           vueThis.protocol = false;
 
           //总代应进入【代理工作台】
           if (vueThis.type === 1) {
             vueThis.$router.push({
-              path: "/general"
+              path: '/general'
             });
           } else {
             //顯示網點列表,同意協議之後子代在身份验证通过之后，出现【选择门店】窗口
-            vueThis.$store.commit("showShop");
+            vueThis.$store.commit('showShop');
             vueThis.fetchDescendant();
             this.$router.push({
-              path: "/searchuser"
+              path: '/searchuser'
             });
           }
         },
@@ -700,10 +699,9 @@ export default {
             }
           } //for
           vueThis.shopList = changeData;
-          console.log("shop list");
 
-          window.sessionStorage.removeItem("totalshopisonly");
-          vueThis.$store.commit("setChangeShop");
+          window.sessionStorage.removeItem('totalshopisonly');
+          vueThis.$store.commit('setChangeShop');
         },
         {
           objSendData: sendData
@@ -723,34 +721,34 @@ export default {
     },
     //處理選擇網點
     handleShopClick: function(shopItem) {
-      this.$store.commit("hideShop");
-      this.$store.commit("clearNeedFetchD");
+      this.$store.commit('hideShop');
+      this.$store.commit('clearNeedFetchD');
 
-      this.$store.commit("setStoreName", shopItem.name);
-      window.sessionStorage.setItem("storeName", shopItem.name);
+      this.$store.commit('setStoreName', shopItem.name);
+      window.sessionStorage.setItem('storeName', shopItem.name);
 
-      window.sessionStorage.setItem("headerid", shopItem.id);
+      window.sessionStorage.setItem('headerid', shopItem.id);
       // window.location.reload(false);
     },
     handleGeneral: function(path) {
       path = path || this.$route.path;
       //是general則存貯，否則刪除
       if (/general/i.test(path)) {
-        window.sessionStorage.setItem("isgeneral", 1);
-        this.$store.commit("hideShop");
+        window.sessionStorage.setItem('isgeneral', 1);
+        this.$store.commit('hideShop');
       } else {
-        window.sessionStorage.removeItem("isgeneral");
+        window.sessionStorage.removeItem('isgeneral');
         if (!window.sessionStorage.headerid) {
-          this.$store.commit("showShop");
+          this.$store.commit('showShop');
           this.fetchDescendant();
         }
       }
     },
     goWorkbench: function() {
-      this.$store.commit("hideShop");
-      this.$store.commit("clearNeedFetchD");
+      this.$store.commit('hideShop');
+      this.$store.commit('clearNeedFetchD');
       this.$router.push({
-        path: "/general"
+        path: '/general'
       });
     }
   }, //methods

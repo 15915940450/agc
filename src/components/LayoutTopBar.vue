@@ -44,39 +44,39 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-  name: "LayoutTopBar",
+  name: 'LayoutTopBar',
   data: function() {
     return {};
   },
   computed: {
-    ...mapState(["agent", "modalStore"])
+    ...mapState(['agent', 'modalStore'])
   },
   methods: {
     logout: function() {
       var vueThis = this;
       vueThis.$rqs(vueThis.$yApi.userLogout, function() {
-        window.localStorage.removeItem("agentphone");
-        window.localStorage.removeItem("agenttype");
+        window.localStorage.removeItem('agentphone');
+        window.localStorage.removeItem('agenttype');
         vueThis.$router.push({
-          path: "/"
+          path: '/'
         });
       });
     },
     toSys: function() {
       // 编程式导航
       this.$router.push({
-        path: "/sys"
+        path: '/sys'
       });
     },
     handleChangeShop: function() {
-      this.$store.commit("setNeedFetchD");
+      this.$store.commit('setNeedFetchD');
     },
     hanleGoWorkbench: function() {
       this.$router.push({
-        path: "/general"
+        path: '/general'
       });
     }
   }, //methods

@@ -21,29 +21,29 @@
   </el-dialog>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-  name: "FormSetAgent",
+  name: 'FormSetAgent',
   props: {
     storesId: String,
-    storeAgentId: String,
+    storeAgentId: String
   },
   data() {
     return {
       innerVisible: false,
       confirmDisable: true,
       agentList: [],
-      agentId: "",
-      formLabelWidth: "75px",
-      dialogWidth: "460px"
+      agentId: '',
+      formLabelWidth: '75px',
+      dialogWidth: '460px'
     };
   },
   computed: {
-    ...mapState(["modalStore"])
+    ...mapState(['modalStore'])
   },
   watch: {
-    "modalStore.setStoresAgent": function(val) {
+    'modalStore.setStoresAgent': function(val) {
       if (val) {
         this.fetchData();
       }
@@ -65,7 +65,7 @@ export default {
         function(objRps) {
           vueThis.agentList = objRps.result.list;
           vueThis.agentList.forEach(function(element, index, arr) {
-            if (element.id == vueThis.storeAgentId) {
+            if (element.id === vueThis.storeAgentId) {
               arr.splice(index, 1);
               return;
             }
@@ -77,10 +77,10 @@ export default {
     },
     setStoresAgent: function() {
       var vueThis = this;
-      var agentId = vueThis.agentId + "";
+      var agentId = vueThis.agentId + '';
       if (agentId.length > 0) {
         var sendData = {
-          parentId: agentId,
+          parentId: agentId
         };
         var reqUrl = vueThis.stringFormat(
           vueThis.$yApi.updateAgentStores,
@@ -88,8 +88,9 @@ export default {
         );
         vueThis.$rqs(
           reqUrl,
+          // eslint-disable-next-line no-unused-vars
           function(objRps) {
-            vueThis.$store.commit("showBaseStatus");
+            vueThis.$store.commit('showBaseStatus');
           }, {
             objSendData: sendData
           }
@@ -98,19 +99,19 @@ export default {
     },
     cancelAction: function() {
       this.innerVisible = false;
-      this.$store.commit("hideSetStoresAgent");
+      this.$store.commit('hideSetStoresAgent');
     },
     selectConfirmAction: function() {
-      this.$store.commit("hideSetStoresAgent");
+      this.$store.commit('hideSetStoresAgent');
       this.innerVisible = true;
     },
     updateConfirmAction: function() {
       this.setStoresAgent();
       this.innerVisible = false;
-      this.agentId = "";
+      this.agentId = '';
     },
     selectChanged: function() {
-      var agentId = this.agentId + "";
+      var agentId = this.agentId + '';
       if (agentId.length > 0) {
         this.confirmDisable = false;
       } else {
@@ -118,10 +119,10 @@ export default {
       }
     },
     stringFormat: function() {
-      if (arguments.length == 0) return null;
+      if (arguments.length === 0) return null;
       var str = arguments[0];
       for (var i = 1; i < arguments.length; i++) {
-        var re = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+        var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
         str = str.replace(re, arguments[i]);
       }
       return str;

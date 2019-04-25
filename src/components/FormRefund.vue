@@ -85,7 +85,7 @@ export default {
       vueThis.formRefund.batteryNum=1;
       vueThis.$store.commit('hideRefund');
     },
-    handleComfirm:function(){
+    handleComfirm:_.debounce(function() {
       var vueThis=this;
       vueThis.$refs.vueform.validate((valid) => {
         if(valid){
@@ -104,8 +104,7 @@ export default {
           });
         }
       });
-
-    },
+    }, 1000),
     handleIN:function(ev){
       this.formRefund.batteryNum=ev.target.value;
     },

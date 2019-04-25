@@ -29,26 +29,26 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-  name: "LayoutTopBarGeneral",
+  name: 'LayoutTopBarGeneral',
   computed: {
-    ...mapState(["agent"])
+    ...mapState(['agent'])
   },
   methods: {
     toSys: function() {
       this.$router.push({
-        path: "/general/sys"
+        path: '/general/sys'
       });
     },
     logout: function() {
       var vueThis = this;
       vueThis.$rqs(vueThis.$yApi.userLogout, function() {
-        window.localStorage.removeItem("agentphone");
-        window.localStorage.removeItem("agenttype");
+        window.localStorage.removeItem('agentphone');
+        window.localStorage.removeItem('agenttype');
         vueThis.$router.push({
-          path: "/"
+          path: '/'
         });
       });
     }

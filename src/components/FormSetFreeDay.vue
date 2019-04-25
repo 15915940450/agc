@@ -71,7 +71,8 @@ export default {
       return (this.formSetFreeDay.userIDs.length);
     },
     max:function(){
-      return (Math.floor(this.freeDayAvailable/this.total_select));
+      var maxValue = Math.floor(this.freeDayAvailable/this.total_select);
+      return (maxValue<61?maxValue: 60);
     },
     freeDayAfter:function(){
       return (this.freeDayAvailable-this.formSetFreeDay.freeDay*this.total_select);
@@ -96,7 +97,7 @@ export default {
     handleIN:function(ev){
       this.formSetFreeDay.freeDay=ev.target.value;
     },
-    handleComfirm:function(refName){
+    handleComfirm:_.debounce(function(refName) {
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
@@ -117,8 +118,7 @@ export default {
           });
         }
       });
-
-    }
+    }, 1000)
   },
   created:function(){
 

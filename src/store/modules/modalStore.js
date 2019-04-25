@@ -27,6 +27,9 @@ var state={
   setFreeDay:false,
   groupSet:false,
   statusGroupCreate:false,
+  //add by sinclair for V2200
+  groupSetItem: null,
+  //end
   statusEVoperation:false,
   statusEditPW:false,
   EVin:false,

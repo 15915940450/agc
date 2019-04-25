@@ -47,6 +47,29 @@
               <!-- </el-button> -->
             </td>
           </tr>
+          <tr>
+            <td>
+             用户电池中控套餐
+            <el-tooltip 
+                effect="dark" 
+                content="" 
+                placement="bottom"
+                >
+                <div slot="content">
+                  导出门店所有用户的数据，每天6：00更新
+                </div>
+                <span class="hint_info">
+                  <i class="el-icon-info"></i>
+                </span>
+            </el-tooltip>
+            </td>
+            <td></td>
+            <td>
+                <a class="exportXls mybtn" :href="hrefUserExport">导出</a>
+              <!-- <el-button type="primary"> -->
+              <!-- </el-button> -->
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -63,6 +86,7 @@ export default {
   data:function(){
     return ({
       hrefExport:'',
+      hrefUserExport:'',
       pickerOptions:{
         disabledDate:function(dateObj){
           return (dateObj.getTime()>_.dateAgo(0).getTime() || dateObj.getTime()<_.dateAgo(60).getTime());
@@ -95,6 +119,7 @@ export default {
   },
   created:function(){
     this.hrefExport=this.$yApi.exportCombo;
+    this.hrefUserExport = this.$yApi.exportUserData + '?agentId=' + window.sessionStorage.headerid;
   }
 };
 </script>

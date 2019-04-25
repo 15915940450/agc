@@ -20,18 +20,17 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import BaseStatus from "./BaseStatus.vue";
+import BaseStatus from './BaseStatus.vue';
 
 export default {
-  name: "HeartStores",
+  name: 'HeartStores',
   components: {
     BaseStatus
   },
   data() {
     return {
-      agentId: "",
-      msg: "修改权限成功",
+      agentId: '',
+      msg: '修改权限成功',
       saveDisable: true,
       loadingAccess: true,
       //是否选中了全部
@@ -45,9 +44,9 @@ export default {
       //后台返回的数据
       isIndeterminate: true,
       defaultProps: {
-        children: "children",
-        label: "label"
-      },
+        children: 'children',
+        label: 'label'
+      }
     };
   },
   methods: {
@@ -64,7 +63,7 @@ export default {
       vueThis.isIndeterminate = false;
       vueThis.saveDisable = false;
     },
-    handleCheckedAccessChange: function(value) {
+    handleCheckedAccessChange: function() {
       var vueThis = this;
       //所有叶子节点都被选中 更改全选状态
       var checkedLeaf = vueThis.$refs.tree.getCheckedNodes(true);
@@ -123,7 +122,6 @@ export default {
       var sendData = {
         ops: vueThis.checkedAccessList
       };
-      console.log(sendData);
       var reqUrl = vueThis.stringFormat(
         vueThis.$yApi.updateAgentStores,
         vueThis.agentId
@@ -131,17 +129,19 @@ export default {
       vueThis.$rqs(
         reqUrl,
         function(objRps) {
-          vueThis.$store.commit("showBaseStatus");
+          if(objRps.code === 1000){
+            vueThis.$store.commit('showBaseStatus');
+          }
         }, {
           objSendData: sendData
         }
       );
     },
     stringFormat: function() {
-      if (arguments.length == 0) return null;
+      if (arguments.length === 0) return null;
       var str = arguments[0];
       for (var i = 1; i < arguments.length; i++) {
-        var re = new RegExp("\\{" + (i - 1) + "\\}", "gm");
+        var re = new RegExp('\\{' + (i - 1) + '\\}', 'gm');
         str = str.replace(re, arguments[i]);
       }
       return str;
@@ -149,15 +149,15 @@ export default {
   },
   created: function(){
   //如果是总代
-  if (window.localStorage.agenttype == 1) {
-     //初始化搜索
-     this.agentId = this.$route.params.agentId;
-     this.fetchData();
-   } else {
-    this.$router.push("/");
-    this.$store.commit('showLogin');
+    if (window.localStorage.agenttype === 1) {
+      //初始化搜索
+      this.agentId = this.$route.params.agentId;
+      this.fetchData();
+    } else {
+      this.$router.push('/');
+      this.$store.commit('showLogin');
+    }
   }
-}
 };
 
 </script>

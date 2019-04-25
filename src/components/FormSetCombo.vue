@@ -107,7 +107,7 @@ export default {
         }
       });
     },
-    handleComfirm:function(refName){
+    handleComfirm:_.debounce(function(refName) {
       var vueThis=this;
       vueThis.$refs[refName].validate((valid) => {
         if(valid){
@@ -132,8 +132,7 @@ export default {
           });
         }
       });
-
-    },
+    }, 1000),
     push2record:function(msg){
       var vueThis=this;
       vueThis.$confirm(msg, '提示', {

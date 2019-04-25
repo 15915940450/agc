@@ -51,30 +51,30 @@
 <script>
 import {
   mapState
-} from "vuex";
+} from 'vuex';
 
 export default {
-  name: "HeartSubAgent",
+  name: 'HeartSubAgent',
   data: function() {
     return {
       total: 1,
-      search: "", //搜索用的
+      search: '', //搜索用的
       isNotSearch: true,
       agentList: [],
       loadingAgent: true,
-      msg: "",
+      msg: '',
       pageNum: window.Number(this.$route.params.pn) ?
         window.Number(this.$route.params.pn) : 1
     };
   },
   computed: {
-    ...mapState(["agent", "modalStore"])
+    ...mapState(['agent', 'modalStore'])
   },
   watch: {
     pageNum: function() {
       this.fetchData();
     },
-    "modalStore.needLogin": function(val) {
+    'modalStore.needLogin': function(val) {
       if (!val) {
         this.fetchData();
       }
@@ -83,18 +83,17 @@ export default {
   methods: {
     handleCurrentChange: function(val) {
       this.pageNum = val;
-      this.$router.push("/general/subAgent/" + val);
+      this.$router.push('/general/subAgent/' + val);
     },
     accessMangerAction: function(scope) {
-      console.log(scope.row.id);
       this.$router.push({
-        path: "/general/access/" + scope.row.id
+        path: '/general/access/' + scope.row.id
       });
     },
     imSearch: _.debounce(function() {
       this.isNotSearch = false;
       this.pageNum = 1;
-      this.$router.push("/general/subAgent/1");
+      this.$router.push('/general/subAgent/1');
       this.fetchData();
     }, 690),
     fetchData: function() {
@@ -130,7 +129,7 @@ export default {
     }
   },
   created: function() {
-    this.search = "";
+    this.search = '';
     this.fetchData();
   }
 };

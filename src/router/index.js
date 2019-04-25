@@ -6,6 +6,11 @@ import Agent from '@/components/Agent';
 import General from '@/components/General';
 import HeartJoy from '@/components/HeartJoy';
 import HeartGroup from '@/components/HeartGroup';
+//add by sinclair for V2200
+//remark 菜单用inclule判断 所有此处组件名改为HeartCreateGroup
+import HeartCreateGroup from '@/components/HeartGroupCreate';
+import HeartGroupSet from '@/components/HeartGroupSet';
+//end
 import HeartUser from '@/components/HeartUser';
 import HeartSearchUser from '@/components/HeartSearchUser';
 import HeartUserChangePhone from '@/components/HeartUserChangePhone';
@@ -45,6 +50,17 @@ const router = new Router({
       name: 'HeartGroup',
       component: HeartGroup
     },
+    //add by sinclair for V2200
+    {
+      path: '/groupcreate', //群组创建
+      name: 'HeartCreateGroup',
+      component: HeartCreateGroup
+    },{
+      path: '/groupset', //群组设置
+      name: 'HeartGroupSet',
+      component: HeartGroupSet
+    },
+    //end
     {
       path: '/searchuser', //群组
       name: 'HeartSearchUser',

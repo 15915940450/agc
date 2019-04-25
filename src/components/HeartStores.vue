@@ -63,12 +63,12 @@
 <script>
 import {
   mapState
-} from "vuex";
-import FormSetAgent from "./FormSetAgent.vue";
-import BaseStatus from "./BaseStatus.vue";
+} from 'vuex';
+import FormSetAgent from './FormSetAgent.vue';
+import BaseStatus from './BaseStatus.vue';
 
 export default {
-  name: "HeartStores",
+  name: 'HeartStores',
   components: {
     FormSetAgent,
     BaseStatus
@@ -76,31 +76,31 @@ export default {
   data: function() {
     return {
       total: 1,
-      search: "", //搜索用的
+      search: '', //搜索用的
       isNotSearch: true,
       storesList: [],
       loadingStores: false,
-      msg: "修改门店代理成功",
-      selectStoresId: "",
-      selectStoreAgentId: "",
+      msg: '修改门店代理成功',
+      selectStoresId: '',
+      selectStoreAgentId: '',
       pageNum: window.Number(this.$route.params.pn) ?
         window.Number(this.$route.params.pn) : 1
     };
   },
   computed: {
-    ...mapState(["agent", "modalStore"])
+    ...mapState(['agent', 'modalStore'])
   },
   watch: {
     pageNum: function() {
       this.fetchData();
     },
-    "modalStore.needLogin": function(val) {
+    'modalStore.needLogin': function(val) {
       if (!val) {
         this.fetchData();
       }
     },
     //修改门店代理成功刷新下列表
-    "modalStore.baseStatus": function(val) {
+    'modalStore.baseStatus': function(val) {
       if (val) {
         this.fetchData();
       }
@@ -109,26 +109,26 @@ export default {
   methods: {
     handleCurrentChange: function(val) {
       this.pageNum = val;
-      this.$router.push("/general/stores/" + val);
+      this.$router.push('/general/stores/' + val);
     },
     storesMangerAction: function(scope) {
       window.sessionStorage.setItem('headerid', scope.row.id);
       window.sessionStorage.setItem('storeName', scope.row.name);
       this.$store.commit('setStoreName',scope.row.name);
-      this.$router.push("/searchuser");
+      this.$router.push('/searchuser');
       if (this.storesList.length > 1) {
-        this.$store.commit("setChangeShop");
+        this.$store.commit('setChangeShop');
       }
     },
     modifyAgentAction: function(scope) {
-      this.selectStoresId = scope.row.id + "";
-      this.selectStoreAgentId = scope.row.agentId + "";
-      this.$store.commit("showSetStoresAgent");
+      this.selectStoresId = scope.row.id + '';
+      this.selectStoreAgentId = scope.row.agentId + '';
+      this.$store.commit('showSetStoresAgent');
     },
     imSearch: _.debounce(function() {
       this.isNotSearch = false;
       this.pageNum = 1;
-      this.$router.push("/general/stores/1");
+      this.$router.push('/general/stores/1');
       this.fetchData();
     }, 690),
     fetchData: function() {
@@ -144,7 +144,6 @@ export default {
       vueThis.$rqs(
         vueThis.$yApi.subAgentStoresList,
         function(objRps) {
-          console.log(objRps);
           vueThis.loadingStores = false;
           vueThis.total = objRps.result.total;
           vueThis.storesList = objRps.result.list;
@@ -155,7 +154,7 @@ export default {
     }
   },
   created: function() {
-    this.search = "";
+    this.search = '';
     this.fetchData();
   }
 };

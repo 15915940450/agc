@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="left_nav">
-
     <el-menu
       :default-active="isActive"
       @select="handleSelect"
@@ -18,32 +17,37 @@
           <el-menu-item index="2" v-if="showSubMenu('群组管理')">
             <small class="sec">群组管理</small>
           </el-menu-item>
+          <el-menu-item index="3" v-if="showSubMenu('群组管理')">
+            <small class="sec">添加群组</small>
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="3" v-if="showMenu('heartdeposit')">
+      <el-menu-item index="4" v-if="showMenu('heartdeposit')">
         <i class="icon_menu heartdeposit">icon_menu</i>
         <span slot="title">押金管理</span>
       </el-menu-item>
-      <el-menu-item index="4" v-if="showMenu('heartcombo')">
+      <el-menu-item index="5" v-if="showMenu('heartcombo')">
         <i class="icon_menu heartcombo">icon_menu</i>
         <span slot="title">套餐管理</span>
       </el-menu-item>
-      <el-menu-item index="5" v-if="showMenu('heartbigamount')">
+      <el-menu-item index="6" v-if="showMenu('heartbigamount')">
         <i class="icon_menu heartbigamount">icon_menu</i>
         <span slot="title">大额充值</span>
       </el-menu-item>
-      <el-menu-item index="6" v-if="showMenu('heartxls')">
+      <el-menu-item index="7" v-if="showMenu('heartxls')">
         <i class="icon_menu heartxls">icon_menu</i>
         <span slot="title">报表管理</span>
       </el-menu-item>
 
       <el-submenu index="200" v-if="showMenu('heartevs')">
         <template slot="title">
-  <i class="icon_menu heartevs">icon_menu</i>
-  <span>中控管理</span>
-</template>
+          <div>
+            <i class="icon_menu heartevs">icon_menu</i>
+            <span>中控管理</span>
+          </div>
+        </template>
         <el-menu-item-group>
-          <el-menu-item index="7" v-if="showSubMenu('中控列表')">
+          <el-menu-item index="8" v-if="showSubMenu('中控列表')">
             <small class="sec">中控列表</small>
           </el-menu-item>
           <el-menu-item index="9" v-if="showSubMenu('中控分布')">
@@ -51,107 +55,105 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="8" v-if="showMenu('heartsyssetting')">
-        <i class="icon_menu heartsyssetting">icon_menu</i>
-        <span slot="title">系统设置</span>
-      </el-menu-item>
     </el-menu>
-
   </div>
 </template>
 
 <script>
 var arrRouteName = [
-  "HeartSearchUser",
-  "HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartUserCombo",
-  "HeartDeposit",
-  "HeartCombo-HeartComboHistory",
-  "HeartBigAmount-HeartBigAmountHistory-HeartBigAmountDetail",
-  "HeartXls",
-  "HeartEVs-HeartEVamap-MapGeographic-MapTrack",
-  "HeartSysSetting",
-  "HeartEVallGeographic"
+  'HeartSearchUser',
+  'HeartGroup-HeartUser-HeartUserChangePhone-HeartUserChangePhoneHistory-HeartUserCombo-HeartGroupSet',
+  'HeartCreateGroup',
+  'HeartDeposit',
+  'HeartCombo-HeartComboHistory',
+  'HeartBigAmount-HeartBigAmountHistory-HeartBigAmountDetail',
+  'HeartXls',
+  'HeartEVs-HeartEVamap-MapGeographic-MapTrack',
+  'HeartEVallGeographic'
 ];
 
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
-  name: "LayoutNavMaster",
+  name: 'LayoutNavMaster',
   data: function() {
     return {
-      isActive: "1", //1,2,3,4,5(string)
+      isActive: '1', //1,2,3,4,5(string)
       imNav: [
         {
           id: 1,
-          name: "用户查询",
-          theClass: "heartsearchuser",
-          link: "/searchuser"
+          name: '用户查询',
+          theClass: 'heartsearchuser',
+          link: '/searchuser'
         },
         {
           id: 2,
-          name: "用户中心",
-          theClass: "heartgroup",
-          link: "/group",
+          name: '群组管理',
+          theClass: 'heartgroup',
+          link: '/group',
           navLevel: 2
         },
         {
           id: 3,
-          name: "押金管理",
-          theClass: "heartdeposit",
-          link: "/deposit"
+          name: '添加群组',
+          theClass: 'heartcreategroup',
+          link: '/groupcreate',
+          navLevel: 2
         },
         {
           id: 4,
-          name: "套餐管理",
-          theClass: "heartcombo",
-          link: "/combo"
+          name: '押金管理',
+          theClass: 'heartdeposit',
+          link: '/deposit'
         },
         {
           id: 5,
-          name: "大额充值",
-          theClass: "heartbigamount",
-          link: "/bigamount"
+          name: '套餐管理',
+          theClass: 'heartcombo',
+          link: '/combo'
         },
         {
           id: 6,
-          name: "报表管理",
-          theClass: "heartxls",
-          link: "/xls"
+          name: '大额充值',
+          theClass: 'heartbigamount',
+          link: '/bigamount'
         },
         {
           id: 7,
-          name: "中控管理",
-          theClass: "heartevs",
-          link: "/evs/1"
+          name: '报表管理',
+          theClass: 'heartxls',
+          link: '/xls'
         },
         {
           id: 8,
-          name: "系统设置",
-          theClass: "heartsyssetting",
-          link: "/sys"
+          name: '中控管理',
+          theClass: 'heartevs',
+          link: '/evs/1',
+          navLevel: 2
         },
         {
           id: 9,
-          name: "中控分布",
-          theClass: "heartevallgeographic",
-          link: "/evallgeographic"
+          name: '中控分布',
+          theClass: 'heartevallgeographic',
+          link: '/evallgeographic',
+          navLevel: 2
         }
       ]
     };
   },
   computed: {
-    ...mapState(["agent"]),
+    ...mapState(['agent']),
     arrOpeneds: function() {
       var arrOpeneds = [];
       // console.log(this.isActive);
       switch (true) {
-        case +this.isActive === 1 || +this.isActive === 2:
-          arrOpeneds = ["100"];
-          break;
-        case +this.isActive === 7 || +this.isActive === 9:
-          arrOpeneds = ["200"];
-          break;
-        default:
+      case +this.isActive === 1 || +this.isActive === 2 || +this.isActive === 3:
+        arrOpeneds = ['100'];
+        break;
+      case +this.isActive === 8 || +this.isActive === 9:
+        arrOpeneds = ['200'];
+        break;
+      default:
       }
       return arrOpeneds;
     }
@@ -173,7 +175,6 @@ export default {
       });
     },
     handleSelect: function(index) {
-      // console.log(index);
       this.$router.push({
         path: this.imNav[index - 1].link
       });
@@ -183,15 +184,15 @@ export default {
       var defaultNavActive = _.findIndexVague(
         arrRouteName,
         vueThis.$route.name
-      ); //-1,0,1,2,3,4
+      ); 
       vueThis.isActive =
-        "" + (defaultNavActive === -1 ? 1 : defaultNavActive + 1);
+        '' + (defaultNavActive === -1 ? 1 : defaultNavActive + 1);
     },
     listenRouteChange: function() {
       var vueThis = this;
       vueThis.$router.beforeEach((to, from, next) => {
         var navActive = _.findIndexVague(arrRouteName, to.name);
-        vueThis.isActive = "" + (navActive === -1 ? 1 : navActive + 1);
+        vueThis.isActive = '' + (navActive === -1 ? 1 : navActive + 1);
         next();
       });
     }

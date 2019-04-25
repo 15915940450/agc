@@ -31,7 +31,10 @@
                   <div :class="{group_online:item.type===1,group_offline:item.type===2}"></div>
                 </el-col>
                 <el-col :span="16">
-                  <h4 class="group_card-title overtext">{{item.name}}</h4>
+                  <el-tooltip class="item" effect="dark" placement="top-end">
+                    <div slot="content">{{item.name+''}}</div>
+                    <h4 class="group_card-title overtext">{{item.name}}</h4>
+                  </el-tooltip>
                   <p class="group_type">
                     线<span v-if="item.type===1">上</span><span v-if="item.type===2">下</span>交押金
                   </p>
@@ -65,10 +68,11 @@
             </el-row>
 
             <div class="group_card-footer">
-              <el-button size="mini" type="default" @click="groupSet(item)">设置</el-button>
-              <el-button size="mini" type="primary" @click="rrPush(item)">
+              <el-button size="mini" type="default" v-if="item.status===1" @click="groupSet(item)">设置</el-button>
+              <el-button size="mini" type="primary" v-if="item.status===1" @click="rrPush(item)">
                 查看用户
               </el-button>
+              <el-button type="default" style="width:140px"  v-if="item.status===2" plain disabled>待审核</el-button>
             </div>
           </div>
         </el-col>
@@ -81,16 +85,7 @@
         </el-col>
       </el-row>
     </div>
-
-    <FormGroupCreate
-      :yajin="yajin"
-      :taocan="taocan"
-      />
-    <FormGroupSet
-      v-bind="groupSetItem"
-      :yajin="yajin"
-      :taocan="taocan"
-      />
+    
     <StatusGroupCreate />
     <BaseStatus :msg="msg" />
 
@@ -98,204 +93,172 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 import FormGroupCreate from './FormGroupCreate.vue';
 import StatusGroupCreate from './StatusGroupCreate.vue';
 import FormGroupSet from './FormGroupSet.vue';
 import BaseStatus from './BaseStatus.vue';
 
 export default {
-  name:'HeartGroup',
-  data:function(){
-    return ({
-      search:'',
-      isNotSearch:true,
-      yajin:[],
-      taocan:[],
-      group:[],
-      msg:'群组设置成功',
-      groupSetItem:null,
-      loadingGroupList:true,
-      pageNum:1
-    });
+  name: 'HeartGroup',
+  data: function() {
+    return {
+      search: '',
+      isNotSearch: true,
+      group: [],
+      msg: '群组设置成功',
+      groupSetItem: null,
+      loadingGroupList: true,
+      pageNum: 1
+    };
   },
-  computed:{
-    ...mapState(['agent','modalStore'])
+  computed: {
+    ...mapState(['agent', 'modalStore'])
   },
-  watch:{
-    'modalStore.needShop':function(val){
-      if(!val){
-        this.fetchData();
-        this.fetchYajinOrTaocan('depositListScheme');
-        this.fetchYajinOrTaocan('packageListScheme');
-      }
-    },
-    'modalStore.statusGroupCreate':function(val){
-      if(!val){
+  watch: {
+    'modalStore.needShop': function(val) {
+      if (!val) {
         this.fetchData();
       }
     },
-    'modalStore.baseStatus':function(val){
-      if(!val){
+    'modalStore.statusGroupCreate': function(val) {
+      if (!val) {
+        this.fetchData();
+      }
+    },
+    'modalStore.baseStatus': function(val) {
+      if (!val) {
         this.fetchData();
       }
     }
   },
-  components:{
+  components: {
     FormGroupCreate,
     StatusGroupCreate,
     FormGroupSet,
     BaseStatus
   },
-  methods:{
-    fetchData:function(){
-      var vueThis=this;
-      vueThis.loadingGroupList=true;
-      var sendData={
-        pageNum:vueThis.pageNum,
-        pageSize:96900,
-        advancedParam:JSON.stringify({
-          name:vueThis.search
+  methods: {
+    fetchData: function() {
+      var vueThis = this;
+      vueThis.loadingGroupList = true;
+      var sendData = {
+        pageNum: vueThis.pageNum,
+        pageSize: 96900,
+        advancedParam: JSON.stringify({
+          name: vueThis.search
         })
       };
-      vueThis.$rqs(vueThis.$yApi.groupList,function(objRps){
-        vueThis.loadingGroupList=false;
-        vueThis.total=objRps.result.total;
-        vueThis.group=objRps.result.list;
-      },{
-        objSendData:sendData
-      });
+      vueThis.$rqs(
+        vueThis.$yApi.groupList,
+        function(objRps) {
+          vueThis.loadingGroupList = false;
+          vueThis.total = objRps.result.total;
+          vueThis.group = objRps.result.list;
+        },
+        {
+          objSendData: sendData
+        }
+      );
     },
-    imSearch:_.debounce(function(){
-      this.isNotSearch=false;
+    imSearch: _.debounce(function() {
+      this.isNotSearch = false;
       this.fetchData();
-    },690),
-    resetSearch:function(){
-      this.search='';
+    }, 690),
+    resetSearch: function() {
+      this.search = '';
       this.fetchData();
     },
-    fetchYajinOrTaocan:function(type){
-      var vueThis=this;
-      var advancedParam=JSON.stringify({
-        groupCode:null
-      });
-      var sendData={
-        advancedParam:advancedParam,
-        pageNum:1,
-        pageSize:969
-      };
-      vueThis.$rqs(vueThis.$yApi[type],function(objRps){
-        if(type==='depositListScheme'){
-          vueThis.yajin=objRps.result.list;
-        }
-        if(type==='packageListScheme'){
-          vueThis.taocan=objRps.result.list;
-        }
-      },{
-        objSendData:sendData,
-        reviver:function(k,v){
-          if(v.duration!==undefined){
-            var dORe=v.duration+'天';
-            if(+v.count>=20000){
-              v.count='无限';
-            }
-            if(v.duration==='' || v.duration==='─'){
-              dORe=v.expirationDate && v.expirationDate.replace(/-/gi,'');
-            }
-            v.neroTaocan=`${v.name} / ${['月套卡','次套卡','免费套餐'][v.type]} / ¥${v.price} / ${v.count}次 / ${dORe}`;
-            return (v);
-          }
-        }
-      });
-    },
-    groupCreate:function(){
-      this.$store.commit('showGroupCreate');
-    },
-    groupSet:function(item){
-      this.groupSetItem=item;
-      this.$store.commit('showGroupSet');
-    },
-    rrPush:function(item){
+    groupCreate: function() {
       this.$router.push({
-        path:'/user/'+item.code+'/'+item.type+'/1'
+        path: '/groupcreate'
+      });
+    },
+    groupSet: function(item) {
+      this.groupSetItem = item;
+      this.$store.state.groupSetItem = item;
+      this.$router.push({
+        path: '/groupset'
+      });
+    },
+    rrPush: function(item) {
+      this.$router.push({
+        path: '/user/' + item.code + '/' + item.type + '/1'
       });
     }
-  },  //methods
-  created:function(){
+  }, //methods
+  created: function() {
     this.fetchData();
-    this.fetchYajinOrTaocan('depositListScheme');
-    this.fetchYajinOrTaocan('packageListScheme');
   }
-
-
 };
 </script>
 
 <style lang="css" scoped>
-  .component_group{
-    background: #FFF;
-  }
-  .group-list{
-    padding:15px;
-  }
-  .group_card{
-    padding:24px;
-    box-shadow:0px 0px 1px 1px rgba(0,0,0,0.1);
-    box-sizing: border-box;
-    height: 250px;
-    margin-bottom: 15px;
-  }
+.component_group {
+  background: #fff;
+}
+.group-list {
+  padding: 15px;
+}
+.group_card {
+  padding: 24px;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  height: 250px;
+  margin-bottom: 15px;
+}
 
-  .group_card-header{
-    margin-bottom: 25px;
-  }
-  .group_online,.group_offline{
-    width: 46px;
-    height: 46px;
-    border-radius: 96px;
-  }
-  .group_online{
-    background: #fe7e73 url(../assets/online.png) no-repeat center center;
-  }
-  .group_offline{
-    background: #fe7e73 url(../assets/offline.png) no-repeat center center;
-  }
-  .group_card-title{
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: right;
-  }
-  .group_type{
-    text-align: right;
-    font-weight: 300;
-    color:#555;
-  }
-  .group_card p{
-    font-size: 12px;
-    margin: 5px 0;
-  }
-  .p_val{
-    color: #FF6666;
-    font-weight: 600;
-    text-align: right;
-  }
-  .group_card-new .group_card-title{
-    display: block;
-    height: 220px;
-    line-height: 220px;
-    text-align: center;
-    font-size: 12px;
-    color: #333;
-    font-weight: bold;
-    margin-left:-10px;
-  }
+.group_card-header {
+  margin-bottom: 25px;
+}
+.group_online,
+.group_offline {
+  width: 46px;
+  height: 46px;
+  border-radius: 96px;
+}
+.group_online {
+  background: #fe7e73 url(../assets/online.png) no-repeat center center;
+}
+.group_offline {
+  background: #fe7e73 url(../assets/offline.png) no-repeat center center;
+}
+.group_card-title {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: right;
+}
+.group_type {
+  text-align: right;
+  font-weight: 300;
+  color: #555;
+}
+.group_card p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+.p_val {
+  color: #ff6666;
+  font-weight: 600;
+  text-align: right;
+}
+.group_card-new .group_card-title {
+  display: block;
+  height: 220px;
+  line-height: 220px;
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+  font-weight: bold;
+  margin-left: -10px;
+}
 
-  .group_card-footer{
-    text-align:center;
-    margin-top: 20px;
-  }
-  .group_card-footer .el-button{
-    margin:0 8px;
-  }
+.group_card-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+.group_card-footer .el-button {
+  margin: 0 8px;
+}
 </style>

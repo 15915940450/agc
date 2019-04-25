@@ -18,31 +18,31 @@
 </template>
 
 <script>
-var arrRouteName = ["HeartJoy","HeartStores","HeartSubAgent"];
+var arrRouteName = ['HeartJoy','HeartStores','HeartSubAgent'];
 
 export default {
-  name: "LayoutNavGeneral",
+  name: 'LayoutNavGeneral',
   data: function() {
     return {
-      isActive: "1",
+      isActive: '1',
       imNav: [
         {
           id: 1,
-          name: "数据中心",
-          theClass: "HeartJoy",
-          link: "/general/joy"
+          name: '数据中心',
+          theClass: 'HeartJoy',
+          link: '/general/joy'
         },
         {
           id: 2,
-          name: "门店管理",
-          theClass: "HeartStores",
-          link: "/general/stores/1"
+          name: '门店管理',
+          theClass: 'HeartStores',
+          link: '/general/stores/1'
         },
         {
           id: 3,
-          name: "代理管理",
-          theClass: "HeartSubAgent",
-          link: "/general/subAgent/1"
+          name: '代理管理',
+          theClass: 'HeartSubAgent',
+          link: '/general/subAgent/1'
         }
       ]
     };
@@ -62,13 +62,13 @@ export default {
         vueThis.$route.name
       ); //-1,0,1,2,3,4
       vueThis.isActive =
-        "" + (defaultNavActive === -1 ? 1 : defaultNavActive + 1);
+        '' + (defaultNavActive === -1 ? 1 : defaultNavActive + 1);
     },
     listenRouteChange: function() {
       var vueThis = this;
       vueThis.$router.beforeEach((to, from, next) => {
         var navActive = _.findIndexVague(arrRouteName, to.name);
-        vueThis.isActive = "" + (navActive === -1 ? 1 : navActive + 1);
+        vueThis.isActive = '' + (navActive === -1 ? 1 : navActive + 1);
         next();
       });
     }
